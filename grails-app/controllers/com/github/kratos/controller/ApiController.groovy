@@ -1,8 +1,6 @@
 package com.github.kratos.controller
 
 import grails.converters.JSON
-import groovyx.net.http.RESTClient
-import org.springframework.beans.factory.annotation.Value
 
 class ApiController {
 

@@ -1,6 +1,5 @@
 package com.github.kratos.controller
 
-import com.github.kratos.controller.ApiController
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 

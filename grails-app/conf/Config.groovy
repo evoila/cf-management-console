@@ -11,10 +11,10 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
-kratos.cloudfoundry.api.url = "http://api"
-kratos.cloudfoundry.uaa.url = "http://uaa"
-kratos.cloudfoundry.token.id = "id"
-kratos.cloudfoundry.token.secret = "secret"
+kratos.cloudfoundry.api.url = "http://api.cf.eden.klm.com"
+kratos.cloudfoundry.uaa.url = "http://uaa.cf.eden.klm.com"
+kratos.cloudfoundry.token.id = "styx"
+kratos.cloudfoundry.token.secret = "styxsecret"
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 

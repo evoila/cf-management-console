@@ -1,13 +1,12 @@
 class UrlMappings {
 
 	static mappings = {
-//        "/$controller/$action?/$id?(.${format})?"{
-//            constraints {
-//                // apply constraints here
-//            }
-//        }
-
-        "/"(controller: "api", action: "root")
+        "/"(controller: "api") {
+            action = [GET: "root"]
+        }
+        "/api/access_token"(controller: "accessToken") {
+            action = [POST: "authenticate"]
+        }
         "500"(view:'/error')
 	}
 }
