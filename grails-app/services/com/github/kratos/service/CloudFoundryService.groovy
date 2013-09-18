@@ -17,8 +17,7 @@ class CloudFoundryService implements InitializingBean {
     }
 
     def getApplication(token, id) {
-        def headers = [authorization: token]
-        def response = api.get(path: '/v2/apps/'.concat(id), headers: headers, query: ['inline-relations-depth':'2'])
+        def response = api.get(path: '/v2/apps/'.concat(id), headers: [authorization: token], query: ['inline-relations-depth':'2'])
 
         def buildpack = response.entity.buildpack ? response.entity.buildpack : response.entity.detected.buildpack
 
@@ -29,13 +28,8 @@ class CloudFoundryService implements InitializingBean {
             urls.add(host.concat('.').concat(domain))
         }
 
-        [id: response.metadata.guid,
-                name: response.entity.name,
-                memory: response.entity.memory,
-                diskQuota: response.entity.disk_quota,
-                state: response.entity.state,
-                buildpack: buildpack,
-                urls: urls]
+        [id: response.metadata.guid, name: response.entity.name, memory: response.entity.memory, diskQuota: response.entity.disk_quota,
+                state: response.entity.state, buildpack: buildpack, urls: urls]
     }
 
 }
