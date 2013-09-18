@@ -16,8 +16,37 @@ class CloudFoundryService implements InitializingBean {
         api = new HTTPBuilder(baseApiUrl)
     }
 
+    def organizations(token) {
+        def organizations = api.get(path: '/v2/organizations',
+                headers: [authorization: token, accept:'application/json'],
+                query: ['inline-relations-depth' : '0'])
+        def result = []
+        for(organization in organizations.resources){
+            result.add([id:organization.metadata.guid, name:organization.entity.name, quotaId:organization.entity.quota_definition_guid])
+        }
+        return result
+    }
+
+    def organization(token, id) {
+        def cfOrganization = api.get(path: '/v2/organizations/'.concat(id),
+                headers: [authorization: token, accept:'application/json'],
+                query: ['inline-relations-depth' : '4'])
+        def organization = [id:cfOrganization.metadata.guid, name: cfOrganization.entity.name, quotaId:  cfOrganization.entity.quota_definition_guid, users:[], spaces:[]]
+        for(cfSpace in cfOrganization.entity.spaces){
+            def space = [id:cfSpace.metadata.guid, name: cfSpace.entity.name, apps:[]]
+            for(cfApp in cfSpace.entity.apps){
+                space.apps.add([id:cfApp.metadata.guid, name:cfApp.entity.name])
+            }
+            organization.spaces.add(space)
+        }
+        for(cfUser in cfOrganization.entity.users){
+            organization.users.add([id:cfUser.metadata.guid])
+        }
+        return organization
+    }
+
     def getApplication(token, id) {
-        def response = api.get(path: '/v2/apps/'.concat(id), headers: [authorization: token], query: ['inline-relations-depth':'3'])
+        def response = api.get(path: '/v2/apps/'.concat(id), headers: [authorization: token], query: ['inline-relations-depth': '3'])
 
         def buildpack = response.entity.buildpack ? response.entity.buildpack : response.entity.detected.buildpack
 

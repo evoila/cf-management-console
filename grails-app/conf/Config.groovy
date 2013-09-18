@@ -11,10 +11,10 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
-kratos.cloudfoundry.api.url = "http://api"
-kratos.cloudfoundry.uaa.url = "http://uaa"
-kratos.cloudfoundry.token.id = ""
-kratos.cloudfoundry.token.secret = "secret"
+kratos.cloudfoundry.api.url = "http://api.cf.eden.klm.com/"
+kratos.cloudfoundry.uaa.url = "http://uaa.cf.eden.klm.com/"
+kratos.cloudfoundry.token.id = "styx"
+kratos.cloudfoundry.token.secret = "styxsecret"
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
@@ -107,7 +107,7 @@ log4j = {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
     info 'com.github.styx'
-    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
+    info  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
@@ -117,5 +117,6 @@ log4j = {
            'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
            'org.springframework',
            'org.hibernate',
-           'net.sf.ehcache.hibernate'
+           'net.sf.ehcache.hibernate',
+            'groovyx.net'
 }

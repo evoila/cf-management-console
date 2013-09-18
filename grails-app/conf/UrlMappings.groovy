@@ -1,7 +1,10 @@
 class UrlMappings {
 
 	static mappings = {
-        "/"(controller: "api") {
+        "/api"(controller: "root") {
+            action = [GET: "root"]
+        }
+        "/api/$id"(controller: "root") {
             action = [GET: "root"]
         }
         "/api/access_token"(controller: "accessToken") {
@@ -11,5 +14,6 @@ class UrlMappings {
             action = [GET: "getApplication"]
         }
         "500"(view:'/error')
+        "404"(view:'/missing')
 	}
 }
