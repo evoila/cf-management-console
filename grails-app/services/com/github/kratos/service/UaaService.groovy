@@ -1,16 +1,28 @@
 package com.github.kratos.service
 
 import groovyx.net.http.HTTPBuilder
+import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Value
 
 import static groovyx.net.http.ContentType.URLENC
 
-class UaaService {
-
-    static transactional = false
+class UaaService implements InitializingBean {
 
     @Value('${kratos.cloudfoundry.api.url}')
-    private String baseApiUrl
+    def baseApiUrl
+
+    @Value('${kratos.cloudfoundry.uaa.url}')
+    def baseUaaUrl
+
+    def api
+
+    def uaa
+
+    @Override
+    void afterPropertiesSet() throws Exception {
+        api = new HTTPBuilder(baseApiUrl)
+        uaa = new HTTPBuilder(baseUaaUrl)
+    }
 
     def getAccessToken(username, password) {
         def login = new HTTPBuilder(getAuthorizationEndpoint());
@@ -21,7 +33,6 @@ class UaaService {
     }
 
     def getAuthorizationEndpoint() {
-        def api = new HTTPBuilder(baseApiUrl)
         def info = api.get(path: '/v2/info')
         info.authorization_endpoint
     }

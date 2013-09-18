@@ -1,17 +1,19 @@
 package com.github.kratos.service
 
+import groovyx.net.http.HTTPBuilder
+import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Value
 
-class CloudFoundryService {
-
-    static transactional = false
-
-    @Value('${kratos.cloudfoundry.uaa.url}')
-    private String baseUaaUrl
+class CloudFoundryService implements InitializingBean {
 
     @Value('${kratos.cloudfoundry.api.url}')
-    private String baseApiUrl
+    def baseApiUrl
 
+    def api
 
+    @Override
+    void afterPropertiesSet() throws Exception {
+        api = new HTTPBuilder(baseApiUrl)
+    }
 
 }
