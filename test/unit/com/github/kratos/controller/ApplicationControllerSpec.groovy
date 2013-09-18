@@ -1,14 +1,13 @@
-package com.github.styx.controller
+package com.github.kratos.controller
 
-import com.github.kratos.controller.ApiController
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
-@TestFor(ApiController)
-class ApiControllerSpec extends Specification {
+@TestFor(ApplicationController)
+class ApplicationControllerSpec extends Specification {
 
     def setup() {
     }

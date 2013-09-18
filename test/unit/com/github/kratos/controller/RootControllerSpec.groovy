@@ -1,4 +1,4 @@
-package com.github.styx.controller
+package com.github.kratos.controller
 
 import com.github.kratos.controller.RootController
 import grails.test.mixin.TestFor
