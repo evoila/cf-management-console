@@ -19,7 +19,18 @@ class RootController {
                 userDetails.roles.add('ADMIN')
             }
 
-            def organization = [id: cfOrganization.metadata.guid, name: cfOrganization.entity.name, quotaId: cfOrganization.entity.quota_definition_guid, users: [], spaces: []]
+            def quotaDefinition = cfOrganization.entity.quota_definition
+            def organization = [id: cfOrganization.metadata.guid,
+                    name: cfOrganization.entity.name,
+                    quota: [
+                            id:quotaDefinition.metadata.guid,
+                            username: quotaDefinition.entity.name,
+                            services: quotaDefinition.entity.total_services,
+                            memoryLimit: quotaDefinition.entity.memory_limit,
+                            nonBasicServicesAllowed: quotaDefinition.entity.non_basic_services_allowed,
+                            trialDbAllowed: quotaDefinition.entity.trial_db_allowed],
+                    users: [],
+                    spaces: []]
 
             for (cfUser in cfOrganization.entity.users) {
                 def user = [id: cfUser.metadata.guid, username: '', roles: []]
