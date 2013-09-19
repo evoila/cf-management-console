@@ -45,7 +45,17 @@ class CloudFoundryService implements InitializingBean {
         return organization
     }
 
-    def getApplication(token, id) {
+    def applications(token) {
+        def response = api.get(path: '/v2/apps', headers: [authorization: token])
+
+        def applications = []
+        for (application in response.resources) {
+            applications.add([id: application.metadata.guid, name: application.entity.name])
+        }
+        applications
+    }
+
+    def application(token, id) {
         def response = api.get(path: '/v2/apps/'.concat(id), headers: [authorization: token], query: ['inline-relations-depth': '3'])
 
         def buildpack = response.entity.buildpack ? response.entity.buildpack : response.entity.detected.buildpack

@@ -11,7 +11,7 @@ class UrlMappings {
             action = [POST: "authenticate"]
         }
         "/api/apps/$id"(controller: "application") {
-            action = [GET: "getApplication"]
+            action = [GET: "application"]
         }
         "500"(view:'/error')
         "404"(view:'/missing')

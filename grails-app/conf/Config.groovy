@@ -11,8 +11,8 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
-kratos.cloudfoundry.api.url = "http://api.cf.eden.klm.com/"
-kratos.cloudfoundry.uaa.url = "http://uaa.cf.eden.klm.com/"
+kratos.cloudfoundry.api.url = "http://api.cf.eden.klm.com"
+kratos.cloudfoundry.uaa.url = "http://uaa.cf.eden.klm.com"
 kratos.cloudfoundry.token.id = "styx"
 kratos.cloudfoundry.token.secret = "styxsecret"
 

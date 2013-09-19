@@ -6,9 +6,13 @@ class ApplicationController {
 
     def cloudFoundryService
 
-    def getApplication() {
-        def selectedApplication = cloudFoundryService.getApplication(request.getHeader('authorization'), params.id)
-        def response = [selectedApplication: selectedApplication]
+    def application() {
+        def token = request.getHeader('authorization')
+
+        def availableApplications = cloudFoundryService.applications(token)
+        def selectedApplication = cloudFoundryService.application(token, params.id)
+
+        def response = [availableApplications: availableApplications, selectedApplication: selectedApplication]
         withFormat {
             json {
                 render response as JSON
