@@ -50,33 +50,58 @@ class CloudFoundryService implements InitializingBean {
             applications.add([id: application.metadata.guid, name: application.entity.name])
         }
         return applications
+        return applications
     }
 
     def application(token, id) {
-        def response = api.get(path: '/v2/apps/'.concat(id), headers: [authorization: token], query: ['inline-relations-depth': '3'])
+        def cfApplication = api.get(path: '/v2/apps/'.concat(id), headers: [authorization: token], query: ['inline-relations-depth': '3'])
+        def cfServices = api.get(path: '/v2/services', headers: [authorization: token])
 
-        def buildpack = response.entity.buildpack ? response.entity.buildpack : response.entity.detected.buildpack
+        def buildpack = (cfApplication.entity.buildpack == null) ? cfApplication.entity.buildpack : cfApplication.entity.detected_buildpack
+
+        def application = [id: cfApplication.metadata.guid, name: cfApplication.entity.name, memory: cfApplication.entity.memory, diskQuota: cfApplication.entity.disk_quota,
+                state: cfApplication.entity.state, buildpack: buildpack]
 
         def urls = []
-        for (route in response.entity.routes) {
+        for (route in cfApplication.entity.routes) {
             def host = route.entity.host
             def domain = route.entity.domain.entity.name
             urls.add(host.concat('.').concat(domain))
         }
+        if (!urls.isEmpty()) {
+            application.put('urls', urls)
+        }
 
-        def serviceBindings = []
-        for (binding in response.entity.service_bindings) {
+        def events = []
+        for (event in cfApplication.entity.events) {
+            events.add([id: event.metadata.guid, status: event.entity.exit_status, description: event.entity.exit_description,
+                        timestamp: event.entity.timestamp])
+        }
+        if (!events.isEmpty()) {
+            application.put('events', events)
+        }
+
+        def services = []
+        for (binding in cfApplication.entity.service_bindings) {
             def plan = binding.entity.service_instance.entity.service_plan
             def servicePlan = [id: plan.metadata.guid, name: plan.entity.name, description: plan.entity.description]
 
-            def instance = binding.entity.service_instance
-            def serviceInstance = [id: instance.metadata.guid, name: instance.entity.name, servicePlan: servicePlan]
+            def serviceType = []
+            for (cfService in cfServices.resources) {
+                if (cfService.metadata.guid == plan.entity.service_guid) {
+                    serviceType = [id: cfService.metadata.guid, name: cfService.entity.label, description: cfService.entity.description,
+                            version: cfService.entity.version]
+                }
+            }
 
-            serviceBindings.add([id: binding.metadata.guid, serviceInstance: serviceInstance])
+            def instance = binding.entity.service_instance
+            services.add([id: instance.metadata.guid, name: instance.entity.name, plan: servicePlan, type: serviceType])
+        }
+        if (!services.isEmpty()) {
+            application.put('services', services)
         }
 
-        return [id: response.metadata.guid, name: response.entity.name, memory: response.entity.memory, diskQuota: response.entity.disk_quota,
-                state: response.entity.state, buildpack: buildpack, urls: urls, serviceBindings: serviceBindings]
+        return application
     }
 
 }
