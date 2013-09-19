@@ -50,14 +50,18 @@ class CloudFoundryService implements InitializingBean {
             applications.add([id: application.metadata.guid, name: application.entity.name])
         }
         return applications
-        return applications
     }
 
     def application(token, id) {
         def cfApplication = api.get(path: '/v2/apps/'.concat(id), headers: [authorization: token], query: ['inline-relations-depth': '3'])
         def cfServices = api.get(path: '/v2/services', headers: [authorization: token])
 
-        def buildpack = (cfApplication.entity.buildpack == null) ? cfApplication.entity.buildpack : cfApplication.entity.detected_buildpack
+        def buildpack = ''
+        if (cfApplication.entity.buildpack == null) {
+            cfApplication.entity.detected_buildpack
+        } else {
+            cfApplication.entity.buildpack
+        }
 
         def application = [id: cfApplication.metadata.guid, name: cfApplication.entity.name, memory: cfApplication.entity.memory, diskQuota: cfApplication.entity.disk_quota,
                 state: cfApplication.entity.state, buildpack: buildpack]
