@@ -10,6 +10,7 @@ class CloudFoundryService implements InitializingBean {
     def baseApiUrl
 
     def api
+    def uaaService
 
     @Override
     void afterPropertiesSet() throws Exception {
@@ -31,6 +32,13 @@ class CloudFoundryService implements InitializingBean {
         return api.get(path: '/v2/organizations/'.concat(id),
                 headers: [authorization: token, accept:'application/json'],
                 query: ['inline-relations-depth' : '4'])
+    }
+
+    def isAdmin(id) {
+        def userDetails = api.get(path: '/v2/users/'.concat(id),
+                headers: [authorization: uaaService.applicationToken(), accept:'application/json'],
+                query: ['inline-relations-depth' : '0'])
+        return userDetails.entity.admin
     }
 
 

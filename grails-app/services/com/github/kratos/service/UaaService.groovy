@@ -37,7 +37,7 @@ class UaaService implements InitializingBean {
         def uaa = new HTTPBuilder(baseUaaUrl)
         def userDetails = uaa.get(path: '/userinfo',
                 headers: [authorization: token, accept: 'application/json'])
-        return [id:userDetails.user_id, username: userDetails.user_name]
+        return [id:userDetails.user_id, username: userDetails.user_name, roles:[]]
     }
 
     def userNames(filter){

@@ -15,10 +15,17 @@ class RootController {
             def userDetails = uaaService.userDetails(token)
             def cfUserNames = uaaService.userNames(fComposeFilter(cfOrganization.entity.users))
 
+            if (cloudFoundryService.isAdmin(userDetails.id)){
+                userDetails.roles.add('ADMIN')
+            }
+
             def organization = [id: cfOrganization.metadata.guid, name: cfOrganization.entity.name, quotaId: cfOrganization.entity.quota_definition_guid, users: [], spaces: []]
 
             for (cfUser in cfOrganization.entity.users) {
                 def user = [id: cfUser.metadata.guid, username: '', roles: []]
+                if (cfUser.entity.admin){
+                    user.roles.add('ADMIN')
+                }
                 for (cfUsername in cfUserNames.resources) {
                     if (user.id == cfUsername.id) {
                         user.username = cfUsername.userName
@@ -72,7 +79,11 @@ class RootController {
                             }
                         }
                         if (!found) {
-                            users.add([id: cfUser.metadata.guid, roles:[role]])
+                            def user = [id: cfUser.metadata.guid, roles:[role]]
+                            if(cfUser.entity.admin){
+                                user.roles.add('ADMIN')
+                            }
+                            users.add(user)
                         }
                     }
                 }) as JSON
