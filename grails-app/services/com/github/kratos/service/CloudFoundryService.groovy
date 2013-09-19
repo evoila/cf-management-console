@@ -28,22 +28,11 @@ class CloudFoundryService implements InitializingBean {
     }
 
     def organization(token, id) {
-        def cfOrganization = api.get(path: '/v2/organizations/'.concat(id),
+        return api.get(path: '/v2/organizations/'.concat(id),
                 headers: [authorization: token, accept:'application/json'],
                 query: ['inline-relations-depth' : '4'])
-        def organization = [id:cfOrganization.metadata.guid, name: cfOrganization.entity.name, quotaId:  cfOrganization.entity.quota_definition_guid, users:[], spaces:[]]
-        for(cfSpace in cfOrganization.entity.spaces){
-            def space = [id:cfSpace.metadata.guid, name: cfSpace.entity.name, apps:[]]
-            for(cfApp in cfSpace.entity.apps){
-                space.apps.add([id:cfApp.metadata.guid, name:cfApp.entity.name])
-            }
-            organization.spaces.add(space)
-        }
-        for(cfUser in cfOrganization.entity.users){
-            organization.users.add([id:cfUser.metadata.guid])
-        }
-        return organization
     }
+
 
     def applications(token) {
         def response = api.get(path: '/v2/apps', headers: [authorization: token])
@@ -52,7 +41,7 @@ class CloudFoundryService implements InitializingBean {
         for (application in response.resources) {
             applications.add([id: application.metadata.guid, name: application.entity.name])
         }
-        applications
+        return applications
     }
 
     def application(token, id) {
@@ -78,7 +67,7 @@ class CloudFoundryService implements InitializingBean {
             serviceBindings.add([id: binding.metadata.guid, serviceInstance: serviceInstance])
         }
 
-        [id: response.metadata.guid, name: response.entity.name, memory: response.entity.memory, diskQuota: response.entity.disk_quota,
+        return [id: response.metadata.guid, name: response.entity.name, memory: response.entity.memory, diskQuota: response.entity.disk_quota,
                 state: response.entity.state, buildpack: buildpack, urls: urls, serviceBindings: serviceBindings]
     }
 
