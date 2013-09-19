@@ -54,7 +54,7 @@ class RootController {
                 def space = [id: cfSpace.metadata.guid, name: cfSpace.entity.name, apps: [], users: []]
                 def appendSpaceRole = fAppendRole.curry(space.users);
                 for (spaceApp in cfSpace.entity.apps) {
-                    space.apps.add([id: spaceApp.metadata.guid, name: spaceApp.entity.name])
+                    space.apps.add([id: spaceApp.metadata.guid, name: spaceApp.entity.name, memory: spaceApp.entity.memory, state: spaceApp.entity.state])
                 }
                 appendSpaceRole(cfSpace.entity.developers, 'DEVELOPER')
                 appendSpaceRole(cfSpace.entity.auditors, 'MANAGER')
