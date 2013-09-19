@@ -52,7 +52,7 @@ class CloudFoundryService implements InitializingBean {
         for (application in response.resources) {
             applications.add([id: application.metadata.guid, name: application.entity.name])
         }
-        applications
+        return applications
     }
 
     def application(token, id) {
@@ -78,7 +78,7 @@ class CloudFoundryService implements InitializingBean {
             serviceBindings.add([id: binding.metadata.guid, serviceInstance: serviceInstance])
         }
 
-        [id: response.metadata.guid, name: response.entity.name, memory: response.entity.memory, diskQuota: response.entity.disk_quota,
+        return [id: response.metadata.guid, name: response.entity.name, memory: response.entity.memory, diskQuota: response.entity.disk_quota,
                 state: response.entity.state, buildpack: buildpack, urls: urls, serviceBindings: serviceBindings]
     }
 

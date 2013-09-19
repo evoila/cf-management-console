@@ -51,12 +51,12 @@ class UaaService implements InitializingBean {
         def login = new HTTPBuilder(getAuthorizationEndpoint());
         def request = [grant_type: 'password', username: username, password: password]
         def response = login.post(path: '/oauth/token', headers: [authorization: 'Basic Y2Y6'], body: request, requestContentType: URLENC)
-        response.token_type + ' ' + response.access_token
+        return response.token_type + ' ' + response.access_token
     }
 
     def getAuthorizationEndpoint() {
         def info = api.get(path: '/v2/info')
-        info.authorization_endpoint
+        return info.authorization_endpoint
     }
 
 }
