@@ -15,7 +15,6 @@ class ApplicationController {
         def selectedApplication = cloudFoundryService.application(token, params.id)
 
         def response = [user: userDetails, availableApplications: availableApplications, selectedApplication: selectedApplication]
-        println response
         withFormat {
             json {
                 render response as JSON

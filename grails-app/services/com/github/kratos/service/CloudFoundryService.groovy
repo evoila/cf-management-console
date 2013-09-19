@@ -29,9 +29,80 @@ class CloudFoundryService implements InitializingBean {
     }
 
     def organization(token, id) {
-        return api.get(path: '/v2/organizations/'.concat(id),
+        def cfOrganization = api.get(path: '/v2/organizations/'.concat(id),
                 headers: [authorization: token, accept:'application/json'],
                 query: ['inline-relations-depth' : '4'])
+
+        def fComposeFilter = { cfUsers ->
+            def filter = ''
+            cfUsers.each({cfUser ->
+                filter = filter.concat("id eq \'${cfUser.metadata.guid}\'")
+                filter = (cfUsers.findIndexOf({item -> item.metadata.guid == cfUser.metadata.guid}) < cfUsers.size()-1) ? filter.concat(' or ') : filter
+            })
+            return filter
+        }
+
+        def fAppendRole = { users, cfUsers, role ->
+            cfUsers.each({ cfUser ->
+                def userExists = users.find {user -> user.id == cfUser.metadata.guid}
+                if (userExists) { userExists.roles.add(role)}
+                else {
+                    users.add([id: cfUser.metadata.guid, roles: [role]])
+                    if (cfUser.entity.admin) { users.find({item -> item.id == cfUser.metadata.guid}).roles.add('ADMIN') }
+                }
+            })
+            return users
+        }
+
+        def cfUserNames = uaaService.userNames(fComposeFilter(cfOrganization.entity.users))
+
+        def quotaDefinition = cfOrganization.entity.quota_definition
+        def organization = [id: cfOrganization.metadata.guid,
+                name: cfOrganization.entity.name,
+                quota: [
+                        id: quotaDefinition.metadata.guid,
+                        username: quotaDefinition.entity.name,
+                        services: quotaDefinition.entity.total_services,
+                        memoryLimit: quotaDefinition.entity.memory_limit,
+                        nonBasicServicesAllowed: quotaDefinition.entity.non_basic_services_allowed,
+                        trialDbAllowed: quotaDefinition.entity.trial_db_allowed],
+                users: [],
+                spaces: []]
+
+        for (cfUser in cfOrganization.entity.users) {
+            def user = [id: cfUser.metadata.guid, username: '', roles: []]
+            if (cfUser.entity.admin) {
+                user.roles.add('ADMIN')
+            }
+            for (cfUsername in cfUserNames.resources) {
+                if (user.id == cfUsername.id) {
+                    user.username = cfUsername.userName
+                }
+            }
+            organization.users.add(user)
+        }
+
+        def appendOrganizationRole = fAppendRole.curry(organization.users)
+        appendOrganizationRole(cfOrganization.entity.managers, 'MANAGER')
+        appendOrganizationRole(cfOrganization.entity.auditors, 'AUDITOR')
+        appendOrganizationRole(cfOrganization.entity.billing_managers, 'BILLING_MANAGER')
+
+        for (cfSpace in cfOrganization.entity.spaces) {
+            def space = [id: cfSpace.metadata.guid, name: cfSpace.entity.name, apps: [], users: []]
+            def appendSpaceRole = fAppendRole.curry(space.users);
+            for (spaceApp in cfSpace.entity.apps) {
+                def app = [id: spaceApp.metadata.guid, name: spaceApp.entity.name, memory: spaceApp.entity.memory, state: spaceApp.entity.state, urls: []]
+                for (route in spaceApp.entity.routes) {
+                    app.urls.add("http://$route.entity.host.$route.entity.domain.entity.name")
+                }
+                space.apps.add(app)
+            }
+            appendSpaceRole(cfSpace.entity.developers, 'DEVELOPER')
+            appendSpaceRole(cfSpace.entity.auditors, 'MANAGER')
+            appendSpaceRole(cfSpace.entity.managers, 'AUDITOR')
+            organization.spaces.add(space)
+        }
+        return organization
     }
 
     def isAdmin(id) {
