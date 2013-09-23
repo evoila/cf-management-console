@@ -161,7 +161,6 @@ class CloudFoundryService implements InitializingBean {
 
     def application(token, id) {
         def cfApplication = api.get(path: '/v2/apps/'.concat(id), headers: [authorization: token], query: ['inline-relations-depth': '3'])
-        def cfServices = api.get(path: '/v2/services', headers: [authorization: token])
 
         def buildpack = ''
         if (cfApplication.entity.buildpack == null) {
@@ -192,6 +191,8 @@ class CloudFoundryService implements InitializingBean {
             application.put('events', events)
         }
 
+        def cfServices = api.get(path: '/v2/services', headers: [authorization: token])
+
         def services = []
         for (binding in cfApplication.entity.service_bindings) {
             def plan = binding.entity.service_instance.entity.service_plan
@@ -210,6 +211,18 @@ class CloudFoundryService implements InitializingBean {
         }
         if (!services.isEmpty()) {
             application.put('services', services)
+        }
+
+        if (cfApplication.entity.state == 'STARTED') {
+            def cfInstances = api.get(path: '/v2/apps/'.concat(id).concat('/instances'), headers: [authorization: token])
+
+            def instances = []
+            for (entry in cfInstances) {
+                instances.add([id: entry.key, state: entry.value.state, consoleIp: entry.value.console_ip, consolePort: entry.value.console_port])
+            }
+            if (!instances.isEmpty()) {
+                application.put('instances', instances)
+            }
         }
 
         return application
