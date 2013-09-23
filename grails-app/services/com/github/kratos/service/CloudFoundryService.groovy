@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value
 
 class CloudFoundryService implements InitializingBean {
 
+    static transactional = false
+
     @Value('${kratos.cloudfoundry.api.url}')
     def baseApiUrl
 
@@ -28,8 +30,39 @@ class CloudFoundryService implements InitializingBean {
         return result
     }
 
+    def quotas(token) {
+        def cfQuotas = api.get(path: '/v2/quota_definitions',
+                headers: [authorization: token, accept:'application/json'])
+        def result = []
+        cfQuotas.resources.each{cfQuota ->
+            result << [id:cfQuota.metadata.guid,
+                    name: cfQuota.entity.name,
+                    services: cfQuota.entity.total_services,
+                    memoryLimit:  cfQuota.entity.memory_limit,
+                    trialDbAllowed: cfQuota.entity.trial_db_allowed,
+                    nonBasicServicesAllowed: cfQuota.entity.non_basic_services_allowed]
+        }
+        return result
+    }
+
+    def quota(token, id) {
+        def cfQuota = api.get(path: "/v2/quota_definitions/$id",
+                headers: [authorization: token, accept:'application/json'])
+        return [id:cfQuota.metadata.guid,
+                name: cfQuota.entity.name,
+                services: cfQuota.entity.total_services,
+                memoryLimit:  cfQuota.entity.memory_limit,
+                trialDbAllowed: cfQuota.entity.trial_db_allowed,
+                nonBasicServicesAllowed: cfQuota.entity.non_basic_services_allowed]
+    }
+
+    def saveQuota(token, quota) {
+        def cfQuota = api.get(path: "/v2/quota_definitions/$id",
+                headers: [authorization: token, accept:'application/json'])
+    }
+
     def organization(token, id) {
-        def cfOrganization = api.get(path: '/v2/organizations/'.concat(id),
+        def cfOrganization = api.get(path: "/v2/organizations/${id}",
                 headers: [authorization: token, accept:'application/json'],
                 query: ['inline-relations-depth' : '4'])
 
@@ -61,7 +94,7 @@ class CloudFoundryService implements InitializingBean {
                 name: cfOrganization.entity.name,
                 quota: [
                         id: quotaDefinition.metadata.guid,
-                        username: quotaDefinition.entity.name,
+                        name: quotaDefinition.entity.name,
                         services: quotaDefinition.entity.total_services,
                         memoryLimit: quotaDefinition.entity.memory_limit,
                         nonBasicServicesAllowed: quotaDefinition.entity.non_basic_services_allowed,
@@ -100,6 +133,9 @@ class CloudFoundryService implements InitializingBean {
             appendSpaceRole(cfSpace.entity.developers, 'DEVELOPER')
             appendSpaceRole(cfSpace.entity.auditors, 'MANAGER')
             appendSpaceRole(cfSpace.entity.managers, 'AUDITOR')
+            space.users.each({user ->
+                user.username = organization.users.find({orgUser -> orgUser.id == user.id}).username
+            })
             organization.spaces.add(space)
         }
         return organization

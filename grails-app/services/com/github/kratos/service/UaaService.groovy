@@ -8,6 +8,8 @@ import static groovyx.net.http.ContentType.URLENC
 
 class UaaService implements InitializingBean {
 
+    static transactional = false
+
     @Value('${kratos.cloudfoundry.api.url}')
     def baseApiUrl
     @Value('${kratos.cloudfoundry.uaa.url}')
