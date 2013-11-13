@@ -1,0 +1,19 @@
+<div class="container">
+	<h2 ng-init="initList()">IP Adressen</h2>
+	<p>Die folgende Tabelle gibt eines Übersicht über alle aktuell definierten IP Adressen.</p>
+	<table class="table table-bordered table-striped" ng-grid>
+		<legend></legend>
+	    <tr ng-repeat="ipAdress in ipAddresses">
+	      	<td ng-grid-title="IP Address"><a href="#/manage/ipaddresses/{{ipAdress.id}}">{{ipAdress.ip}}</a></td>
+			<td ng-grid-title="VM Id">{{ipAdress.cpu}}</td>
+			<td ng-grid-title="NIC Id">{{ipAdress.memory}}</td>
+			<td ng-grid-title="Organisation Id">{{ipAdress.disk}}</td>
+			<td ng-grid-title="State">{{ipAdress.disk}}</td>
+			<td ng-grid-title="Options" ng-grid-name="options">
+				<button class="btn btn-danger" ng-click="delete(ipAdress)">
+					<i class="glyphicon glyphicon-trash icon-white"></i>
+				</button>
+			</td>
+	    </tr>		  
+	</table>
+</div>

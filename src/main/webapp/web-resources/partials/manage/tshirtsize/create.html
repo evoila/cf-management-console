@@ -1,0 +1,48 @@
+<div class="container">
+	<form class="form-standard form-horizontal" ng-init="inittshirtsize()" ng-submit="save('tshirtsize')" name="form">
+		<h2>T-Shirt size erstellen</h2>
+		<p>Mit T-Shirt sizes können Sie die Größe der jeweiligen Vorlagen für die VMs bestimmen. Eine T-Shirt size wird bei der Erstellung eines
+			Auftrages als Auswahl zur Verfügung gestellt. Änderung an einer T-Shirt size ziehen aktuell keine vollautomatischen Anpassung der Größen
+			bei den existierenden VMs nach sich.</p>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="name">Name:</label>
+			<div class="input-group col-lg-10">
+				<input placeholder="Enter the name..." type="text" class="form-control" ng-model="tshirtsize.name" name="name" />						 
+				<span class="help-block">{{errors.name}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="cpu">CPUs:</label>
+			<div class="input-group col-lg-10">
+				<input placeholder="Enter the number of CPUs..." type="text" class="form-control" ng-model="tshirtsize.cpu" name="cpu" />						 
+				<span class="help-block">{{errors.cpu}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="memory">Memory:</label>
+			<div class="input-group col-lg-10">
+				<input placeholder="Enter the amount of memory..." type="text" class="form-control" ng-model="tshirtsize.memory" name="memory" />						 
+				<span class="help-block">{{errors.memory}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="disk">Disk:</label>
+			<div class="input-group col-lg-10">
+				<input placeholder="Enter the disk size..." type="text" class="form-control" ng-model="tshirtsize.disk" name="disk" />
+				<span class="help-block">{{errors.disk}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="disk">T-Shirt size:</label>
+			<div class="input-group col-lg-10">
+				{{tshirtsize}}
+			</div>
+		</div>		
+		<div class="form-group form-buttons">
+			<div class="col-lg-offset-2 col-lg-10">
+				<button class="btn btn-default" ng-click="reset()">Cancel</button>
+				<button class="btn btn-primary" type="submit">Save</button>
+			</div>
+		</div>
+	</form>	
+</div>

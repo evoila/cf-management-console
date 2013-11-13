@@ -1,33 +1,32 @@
 <!doctype html>
 <html lang="en" ng-app="styx">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Cloudfoundry dashboard</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="css/bootstrap.css" rel="stylesheet" media="screen">  
 
-<head>
-    <meta charset="UTF-8"/>
-    <title>Cloudfoundry dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="css/styx.css" rel="stylesheet" media="screen">
-</head>
 
-<body ng-controller="MainController">
-    <div ui-view="navigation"></div>
-    <div ui-view="body"></div>
-    <div ui-view="footer"></div>
+		<style>[ng-cloak] {display: none}</style>
+			<!--[if IE]>
+			<script src="libs/ie/ie.js"></script>
+			<![endif]-->
+		<script>
+		// Include angular-loader to allow modules to be loaded in any order.
+		/*
+		AngularJS v1.0.2
+		(c) 2010-2012 Google, Inc. http://angularjs.org
+		License: MIT
+		*/
+		(function(i){'use strict';function d(c,b,e){return c[b]||(c[b]=e())}return d(d(i,"angular",Object),"module",function(){var c={};return function(b,e,f){e&&c.hasOwnProperty(b)&&(c[b]=null);return d(c,b,function(){function a(a,b,d){return function(){c[d||"push"]([a,b,arguments]);return g}}if(!e)throw Error("No module: "+b);var c=[],d=[],h=a("$injector","invoke"),g={_invokeQueue:c,_runBlocks:d,requires:e,name:b,provider:a("$provide","provider"),factory:a("$provide","factory"),service:a("$provide","service"),value:a("$provide","value"),constant:a("$provide","constant","unshift"),filter:a("$filterProvider","register"),controller:a("$controllerProvider","register"),directive:a("$compileProvider","directive"),config:h,run:function(a){d.push(a);return this}};f&&h(f);return g})}})})(window);
 
-    <script src="js/spin.js"></script>
-    <script src="js/angular.js"></script>
-    <script src="js/angular-cookies.js"></script>
-    <script src="js/angular-local-storage-service.js"></script>
-    <script src="js/angular-spin.js"></script>
-    <script src="js/angular-ui-router.js"></script>
-    <script src="js/ui-bootstrap-0.6.0-SNAPSHOT.min.js"></script>
-    <script src="js/ui-bootstrap-tpls-0.6.0-SNAPSHOT.min.js"></script>
-    <script src="js/jquery-2.0.3.js"></script>
-    <script src="js/styx-controllers.js"></script>
-    <script src="js/styx-services.js"></script>
-    <script src="js/styx-user-services.js"></script>
-    <script src="js/styx.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-</body>
+	  </script>  
+	</head>
+	<body ng-controller="homeController">
+		<div ui-view="navigation"></div>
+		<div ui-view="body"></div>
+		<div ui-view="footer"></div>
 
+		<script data-main="js/main" src="lib/require/require-2.1.4.js"></script>
+	</body>
 </html>

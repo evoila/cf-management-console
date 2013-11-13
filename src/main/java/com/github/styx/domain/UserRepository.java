@@ -72,12 +72,9 @@ public class UserRepository extends BaseRepository {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
         httpHeaders.add("Accept", "application/json;charset=utf-8");
-        httpHeaders.add("Authorization", getAuthorization(clientId, clientSecret));
+        httpHeaders.add("Authorization", "Basic Y2Y6");
 
-        MultiValueMap<String, String> model = new LinkedMultiValueMap();
-        model.add("grant_type", "password");
-        model.add("username", username);
-        model.add("password", password);
+        String model = "grant_type=password&username=" + username + "&password=" + password;
 
         ResponseEntity<Map<String, Object>> loginResponse = getRestTemplate().exchange(authorizationEndpoint.concat("/oauth/token"), HttpMethod.POST, new HttpEntity(model, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
         if (loginResponse.getStatusCode().equals(HttpStatus.OK)) {

@@ -1,0 +1,73 @@
+<div class="row" ng-init="init()">
+	<div class="col-md-2">
+		<div class="bs-sidebar hidden-print">
+			<ul class="nav bs-sidenav">
+				<li class="dropdown-header">Auftragsverwaltung</li>
+				<li>
+					<a href="#/manage/orders">
+						<i class="glyphicon glyphicon-tasks"></i>
+						Aufträge
+					</a>
+				</li>
+				<li class="dropdown-header">Allgemeine Verwaltung</li>
+				<li>
+					<a href="#/manage/ipaddresses">
+						<i class="glyphicon glyphicon-tasks"></i>
+						IP Adressen
+					</a>
+				</li>
+				<li>
+					<a href="#/manage/organisations">
+						<i class="glyphicon glyphicon-tasks"></i>
+						Organisationen
+					</a>
+				</li>
+				<li>
+					<a href="#/manage/zones">
+						<i class="glyphicon glyphicon-tasks"></i>
+						Zonen
+					</a>
+				</li>
+				<li>
+					<a href="#/manage/tshirtsizes">
+						<i class="glyphicon glyphicon-tasks"></i>
+						T-Shirt Sizes
+					</a>
+				</li>
+				<li>
+					<a href="#/manage/logging">
+						<i class="glyphicon glyphicon-tasks"></i>
+						Logging
+					</a>
+				</li>
+				<li class="dropdown-header">Reporting</li>
+				<li>
+					<a href="#/manage/reportings">
+						<i class="glyphicon glyphicon-tasks"></i>
+						REGIS Export
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-md-10" style="padding-top: 30px">
+		<div class="container">
+			<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle">
+					Actions <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li role="presentation" class="dropdown-header">Auftragsverwaltung</li>
+					<li role="presentation">
+						<a href="#/manage/orders/">Auftrag hinzufügen</a>
+					</li>
+					<li role="presentation" class="dropdown-header">Allgemeine Verwaltung</li>
+					<li role="presentation">
+						<a href="#/manage/tshirtsizes/">T-Shirt Size hinzufügen</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-10" style="padding-top: 30px" ui-view></div>
+</div>

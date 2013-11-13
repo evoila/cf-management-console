@@ -1,0 +1,44 @@
+<form class="form-horizontal form-standard" style="width: 600px; margin: 0 auto; margin-top: 100px" ng-submit="save('user')" name="form">
+	<h2>Register</h2>
+	<div class="form-group">
+		<label class="col-lg-2 control-label" for="firstName">Surname</label>				
+		<div class="input-group col-lg-10">
+			<input placeholder="Enter your surname..." type="text" class="form-control" ng-model="user.firstName" name="firstName" />
+		</div>
+		<span class="help-block">{{errors.firstName}}</span>			
+	</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="name">Name</label>
+			<div class="input-group col-lg-10">
+				<input placeholder="Enter your name..." type="text" class="form-control" ng-model="user.name" name="name" />
+				<span class="help-block">{{errors.name}}</span>				 
+			</div>			
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="email">E-Mail</label>
+			<div class="input-group col-lg-10">
+				<input placeholder="Enter your e-mail..." type="text" class="form-control" ng-model="user.email" name="email" />
+				<span class="help-block">{{errors.email}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="password">Password</label>
+			<div class="input-group col-lg-10">
+				<input placeholder="Enter your password..." type="password" class="form-control" ng-model="user.password" name="password" />
+				<span ng-show="form.password.$error" class="help-block">{{errors.password}}</span>
+			</div>			
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="confirmPassword">Confirm Password</label>				
+			<div class="input-group col-lg-10">
+				<input placeholder="Enter your password..." type="password" class="form-control" ng-model="user.confirmedPassword" name="confirmedPassword" />
+				<span ng-show="form.confirmedPassword.$error" class="help-block">{{errors.confirmedPassword}}</span>
+			</div>			
+		</div>
+		<div class="form-group form-buttons">
+			<div class="col-lg-offset-2 col-lg-10">
+				<button class="btn btn-default" ng-click="reset()">Cancel</button>
+				<button class="btn btn-primary" type="submit">Register</button>		
+			</div>
+		</div>
+</form>

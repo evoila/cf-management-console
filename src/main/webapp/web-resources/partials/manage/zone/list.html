@@ -1,0 +1,15 @@
+<div class="container">
+	<h2 ng-init="initList()">Zonen</h2>
+	<p>Die folgende Tabelle gibt eines Übersicht über alle aktuell definierten Zonen.</p>
+	<table class="table table-bordered table-striped" ng-grid>
+		<legend></legend>
+	    <tr ng-repeat="zone in zones">
+	      	<td ng-grid-title="Name"><a href="#/manage/zone/{{zone.id}}">{{zone.name}}</a></td>
+			<td ng-grid-title="Options" ng-grid-name="options">
+				<button class="btn btn-danger" ng-click="delete(zone)">
+					<i class="glyphicon glyphicon-trash icon-white"></i>
+				</button>
+			</td>
+	    </tr>		  
+	</table>
+</div>

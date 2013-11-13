@@ -102,6 +102,7 @@ public class StyxWebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/css/**").addResourceLocations("/web-resources/css/");
         registry.addResourceHandler("/fonts/**").addResourceLocations("/web-resources/fonts/");
         registry.addResourceHandler("/img/**").addResourceLocations("/web-resources/img/");
+        registry.addResourceHandler("/lib/**").addResourceLocations("/web-resources/lib/");
         registry.addResourceHandler("/js/**").addResourceLocations("/web-resources/js/");
         registry.addResourceHandler("/partials/**").addResourceLocations("/web-resources/partials/");
         registry.addResourceHandler("/styx.html").addResourceLocations("/web-resources/styx.html");
