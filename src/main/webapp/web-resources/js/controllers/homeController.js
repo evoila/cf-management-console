@@ -5,9 +5,9 @@
 define(function () {
 	'use strict';
 	
-	function HomeController($scope, Restangular, clientStorage, $location, $route) {
+	function HomeController($scope, Restangular, clientCacheService, $location, $route) {
 		
-		if (!clientStorage.isAuthenticated()) {
+		if (!clientCacheService.isAuthenticated()) {
 			if ($location.path() != '/login' && $location.path() != '/register') {
 				$location.path('/login');
 				return;
@@ -18,15 +18,15 @@ define(function () {
 			Restangular.all('organizations').getList().then(function(organisations) {
 				$location.path('/app-spaces/' + organisations[0].id);
 			}, function(response) {
-				clientStorage.clear;
+				clientCacheService.clear;
 				$location.path('/login');
 			});			
-		} else {
-			$route.reload();
-		}
+		} //else {
+		//	$route.reload();
+		//}
 	}
 
-	HomeController.$inject = ['$scope', 'Restangular', 'clientStorage', '$location', '$route'];
+	HomeController.$inject = ['$scope', 'Restangular', 'clientCacheService', '$location', '$route'];
 
 	return HomeController;
 });

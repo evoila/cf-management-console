@@ -48,6 +48,11 @@ define(['angular'], function (angular) {
 			return cache.getUser() != null;
 		};
 
+		cache.authenticate = function(authenticationDetails) {
+			cache.clear();			
+			cache.storeUser(authenticationDetails);
+		}
+
 		cache.logout = function() {
 			cache.clear();
 		}

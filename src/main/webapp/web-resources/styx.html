@@ -2,28 +2,20 @@
 <html lang="en" ng-app="styx">
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Cloudfoundry dashboard</title>
+		<title>CloudFoundry Dashboard</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="css/bootstrap.css" rel="stylesheet" media="screen">  
-
-
+		<script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
 		<style>[ng-cloak] {display: none}</style>
-			<!--[if IE]>
-			<script src="libs/ie/ie.js"></script>
-			<![endif]-->
-		<script>
-		// Include angular-loader to allow modules to be loaded in any order.
-		/*
-		AngularJS v1.0.2
-		(c) 2010-2012 Google, Inc. http://angularjs.org
-		License: MIT
-		*/
-		(function(i){'use strict';function d(c,b,e){return c[b]||(c[b]=e())}return d(d(i,"angular",Object),"module",function(){var c={};return function(b,e,f){e&&c.hasOwnProperty(b)&&(c[b]=null);return d(c,b,function(){function a(a,b,d){return function(){c[d||"push"]([a,b,arguments]);return g}}if(!e)throw Error("No module: "+b);var c=[],d=[],h=a("$injector","invoke"),g={_invokeQueue:c,_runBlocks:d,requires:e,name:b,provider:a("$provide","provider"),factory:a("$provide","factory"),service:a("$provide","service"),value:a("$provide","value"),constant:a("$provide","constant","unshift"),filter:a("$filterProvider","register"),controller:a("$controllerProvider","register"),directive:a("$compileProvider","directive"),config:h,run:function(a){d.push(a);return this}};f&&h(f);return g})}})})(window);
-
-	  </script>  
 	</head>
 	<body ng-controller="homeController">
 		<div ui-view="navigation"></div>
+		<div class="container" ng-controller="alertController" style="padding-top: 60px">
+			<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">
+				<h4 class="alert-heading" ng-cloak>{{alert.title}}</h4>
+				<p ng-cloak>{{alert.msg}}<p>
+			</alert>
+		</div>
 		<div ui-view="body"></div>
 		<div ui-view="footer"></div>
 

@@ -60,9 +60,12 @@ define(['angular',
 			}
 		};
 
-		RestangularProvider.setBaseUrl("http://localhost:8080/api");
-		//RestangularProvider.setBaseUrl("http://localhost:8080/vcloudmonitor");
+		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
+		$httpProvider.defaults.headers.common['Accept'] = 'application/json;charset=UTF-8';
+		
+		RestangularProvider.setBaseUrl("http://localhost:8080/styx/api");
 		RestangularProvider.setListTypeIsArray(false);
+		
 		RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
 			if (operation === "getList") {
 				if (angular.isObject(response.content) && angular.isArray(response.content)) {
@@ -79,6 +82,7 @@ define(['angular',
 			}
 			return response;
 		});
+		
 		RestangularProvider.setRequestInterceptor(function(request, operation, route) {
 			if (operation === 'put') {
 				if (request.links)
@@ -87,8 +91,7 @@ define(['angular',
 			return request;
 		});
 
-		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
-		$httpProvider.defaults.headers.common['Accept'] = 'application/json;charset=UTF-8';
+		
 
 	}).constant('REST_API', 'http://localhost:8080/web');
 });

@@ -5,19 +5,18 @@
 define(function () {
 	'use strict';	
 	
-	function NavigationController($scope, Restangular, clientStorage, $location) {
+	function NavigationController($scope, Restangular, clientCacheService, $location, $stateParams) {
 		
 		$scope.logout = function () {
-			clientStorage.logout();
+			clientCacheService.logout();
 			$location.path('/login');
 		}
 
 		$scope.loadingData = true;
-		$scope.isAuthenticated = clientStorage.isAuthenticated();
+		$scope.isAuthenticated = clientCacheService.isAuthenticated();
 
-		if (clientStorage.isAuthenticated()) {
-			var organizationsPromise = cloudfoundry.getOrganizations();
-			organizationsPromise.success(function (data, status, headers) {
+		if (clientCacheService.isAuthenticated()) {
+			Restangular.all('organizations').getList().then(function(data) {
 				angular.forEach(data, function (organization, organizationIndex) {
 					if (organization.id == $stateParams.organizationId) {
 						organization.selected = true;
@@ -27,14 +26,13 @@ define(function () {
 				$scope.user = cache.getUser();
 				$scope.organizations = data;
 				$scope.loadingData = false;
-			});
-			organizationsPromise.error(function (data, status, headers) {
-				$scope.forceLogin(status);
-			});
+			});				
+		} else {
+			$scope.forceLogin(status);
 		}
 	}
 
-	NavigationController.$inject = ['$scope', 'Restangular', 'clientStorage', '$location'];
+	NavigationController.$inject = ['$scope', 'Restangular', 'clientCacheService', '$location', '$stateParams'];
 
 	return NavigationController;
 });

@@ -2,7 +2,7 @@
  * Services
  **/
 define(['angular', 
-	'services/general/clientStorage',
+	'services/general/clientCacheService',
 	'services/general/cookieService',
 	'services/general/localStorageService',
 	'services/general/messageEmitter',
@@ -12,12 +12,12 @@ define(['angular',
 
 	'resource',
 	'underscore',
-	], function (angular, ClientStorage, CookieService, LocalStorageService,
+	], function (angular, ClientCacheService, CookieService, LocalStorageService,
 		MessageEmitter, ResponseService, UiContentService, UserDetailsService) {
 
 	var services = angular.module('services', []);
 
-	services.factory('clientStorage', ClientStorage);
+	services.factory('clientCacheService', ClientCacheService);
 	services.factory('cookieService', CookieService);
 	services.factory('localStorageService', LocalStorageService);
 	services.factory('messageEmitter', MessageEmitter);

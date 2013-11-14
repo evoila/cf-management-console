@@ -1,40 +1,40 @@
 <div class="container" style="width: 500px; margin: 0 auto; margin-top: 100px">
-    <div ng-show="error" class="alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Error!</strong> {{error}}
-    </div>
-    <div ng-show="authenticating">
-        <div class="well loading-well">
-            <h3 class="text-center">Hold on...</h3>
-            <h5 class="text-center">We are validating your request!</h5>
-            <div spin="defaultSpinnerConfig" spin-if="authenticating"></div>
-        </div>
-    </div>
-    <div ng-hide="authenticating">
-        <div class="well well-large text-center">
-            <h2>Log in to Cloud Foundry</h2>
-            <form name="loginForm" class="form-horizontal" novalidate>
-                <div class="form-group">
-                    <div class="col-lg-4 col-lg-offset-4">
-                        <input name="userForm.email" id="username" type="text" class="form-control" placeholder="Email" ng-model="userForm.email" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-4 col-lg-offset-4">
-                        <input name="userForm.password" id="password" type="password" class="form-control" placeholder="Password" ng-model="userForm.password" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" ng-click="login(userForm)" ng-disabled="authenticate">Sign in</button>
-                    <a href="#/register">Create an account >></a>
-                </div>
-            </form>
+	<div ng-show="authenticating">
+		<div class="well loading-well">
+			<h3 class="text-center">Hold on...</h3>
+			<h5 class="text-center">We are validating your request!</h5>
+			<div spin="defaultSpinnerConfig" spin-if="authenticating"></div>
+		</div>
+	</div>
+	<div ng-hide="authenticating">
+		<div class="well well-large">
+			<h2>Log in to Cloud Foundry</h2>
+			<form name="loginForm" class="form-horizontal" novalidate>
+				<div class="form-group">
+					<label class="col-lg-2 control-label" for="username">Username</label>
+					<div class="input-group col-lg-10">
+						<input name="userForm.email" id="username" type="text" class="form-control" placeholder="Email" ng-model="userForm.email" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-2 control-label" for="password">Password</label>
+					<div class="input-group col-lg-10">
+						<input name="userForm.password" id="password" type="password" class="form-control" placeholder="Password" ng-model="userForm.password" required>
+					</div>
+				</div>
+				<div class="form-group form-buttons">
+					<div class="col-lg-offset-2 col-lg-10">
+						<button class="btn btn-primary" ng-click="login(userForm)" ng-disabled="authenticate">Sign in</button>
+						<a href="#/register">Create an account >></a>
+					</div>
+				</div>
+			</form>
 
-            <div spin="loginSpinnerConfig" spin-if="authenticate"></div>
+			<div spin="loginSpinnerConfig" spin-if="authenticate"></div>
 
-            <ul ng-show="status.error" class="nav nav-list">
-                <li><span class="label label-important">{{status.error}}</span></li>
-            </ul>
-        </div>
-    </div>
+			<ul ng-show="status.error" class="nav nav-list">
+				<li><span class="label label-important">{{status.error}}</span></li>
+			</ul>
+		</div>
+	</div>
 </div>

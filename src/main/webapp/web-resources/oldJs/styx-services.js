@@ -66,50 +66,6 @@ styxServices.factory('cloudfoundry', function ($http, cache, $q) {
         return promise;
     }
 
-    var retrieveResource = function (promise, cacheFn) {
-        promise.success = function (fn) {
-            promise.then(function (response) {
-                if (cacheFn) {
-                    cacheFn(response.data);
-                }
-                fn(response.data, response.status, response.headers);
-            });
-            return promise;
-        };
-        promise.error = function (fn) {
-            promise.then(null, function (response) {
-                fn(response.data, response.status, response.headers);
-            });
-            return promise;
-        };
-        return promise;
-    }
-
-    cloudfoundry.getUser = function() {
-        return cache.getUser();
-    }
-
-    cloudfoundry.isAuthenticated = function () {
-        return cache.getUser() != null;
-    }
-
-    cloudfoundry.authenticate = function (userForm) {
-        cache.clear();
-        var promise = $http({
-            method: 'POST',
-            url: 'api/login',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-                'Accept': 'application/json;charset=utf-8'},
-            data: $.param({'grant_type': 'password',
-                'username': userForm.email,
-                'password': userForm.password})
-        });
-        return retrieveResource(promise, function (authenticationDetails) {
-            cache.storeUser(authenticationDetails);
-        });
-
-    }
-
     cloudfoundry.register = function(userForm) {
         var promise = $http({
             method: 'POST',
