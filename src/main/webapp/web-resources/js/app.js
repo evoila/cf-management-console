@@ -21,7 +21,7 @@ define(['angular',
 		'filters',
 		'controllers',
 		'directive.table',
-		'ui.bootstrap',
+		'ui.bootstrap'
 	]).config(function($httpProvider, RestangularProvider) {
 		console.log('app.js called');
 
