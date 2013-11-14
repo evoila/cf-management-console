@@ -5,20 +5,18 @@
 define(function () {
 	'use strict';	
 	
-	function AppSpacesController($scope) {
+	function AppSpacesController($scope, $state, Restangular) {
 		$scope.loading = true;
-		$scope.organizationId = $stateParams.organizationId;
-
-		var spacesPromise = cloudfoundry.getSpaces($stateParams.organizationId);
-		spacesPromise.success(function (data, status, headers) {
+		$scope.organizationId = $state.params.organizationId;
+		
+		Restangular.one('organizations', $scope.organizationId).all('spaces').getList().then(function(data) {
 			if (data[0] != undefined) {
 				$scope.space = {selected: data[0].name};
 				data[0].selected = true;    		
 			}
 			$scope.spaces = data;
 			$scope.loading = false;
-		});
-		spacesPromise.error(function (data, status, headers) {
+		}, function(response) {
 			$scope.forceLogin(status);
 			$scope.error = 'Failed to load spaces. Reason: ' + data.code + ' - ' + data.description;
 			$scope.loading = false;
@@ -73,7 +71,7 @@ define(function () {
 		}
 	}
 
-	AppSpacesController.$inject = ['$scope'];
+	AppSpacesController.$inject = ['$scope', '$state', 'Restangular'];
 
 	return AppSpacesController;
 });
