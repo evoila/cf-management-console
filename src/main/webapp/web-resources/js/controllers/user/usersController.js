@@ -5,7 +5,7 @@
 define(function () {
 	'use strict';	
 	
-	function UsersController($scope) {
+	function UsersController($scope, $state, Restangular, clientCacheService) {
 		$scope.loading = true;
 		$scope.blockInput = true;
 
@@ -17,24 +17,25 @@ define(function () {
 				}
 			}
 			return false;
-		}
+		};
 
-		userManager.getUsers($stateParams.organizationId).then(function (organization) {
-			$scope.loggedInUser = cloudfoundry.getUser();
+		Restangular.one('organizations', $state.params.organizationId).getList().then(function (organization) {
+			$scope.loggedInUser = clientCacheService.getUser();
 			var mayManipulate = false;
-			angular.forEach(organization.data.users, function(orgUser, orgUserIndex){
+
+			angular.forEach(organization.users, function(orgUser, orgUserIndex){
 				if($scope.loggedInUser.id === orgUser.id && orgUser.manager){
 					mayManipulate = true;
 				}
-				angular.forEach(organization.data.spaces, function(space, spaceIndex){
+				angular.forEach(organization.spaces, function(space, spaceIndex){
 					if(!containsUser(space.users, orgUser)){
-						space.users.push({id:orgUser.id, username:orgUser.username, developer:false, manager:false, auditor:false});
+						space.users.push({id : orgUser.id, username:orgUser.username, developer : false, manager : false, auditor : false});
 					}
 				});
 			});
-			$scope.selectedGroup = organization.data.name;
+			$scope.selectedGroup = organization.name;
 			$scope.showOrganizationUsers = true;
-			$scope.organization = organization.data;
+			$scope.organization = organization;
 			$scope.loading = false;
 			if(mayManipulate === true){
 				$scope.blockInput = false;
@@ -168,7 +169,7 @@ define(function () {
 		}
 	}
 
-	UsersController.$inject = ['$scope'];
+	UsersController.$inject = ['$scope', '$state', 'Restangular', 'clientCacheService'];
 
 	return UsersController;
 });

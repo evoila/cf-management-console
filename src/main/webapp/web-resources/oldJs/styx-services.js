@@ -120,53 +120,6 @@ styxServices.factory('cloudfoundry', function ($http, cache, $q) {
         return retrieveResource(resourcePromise('api/applications/' + applicationId, 'DELETE', ''));
     }
 
-    cloudfoundry.getOrganizations = function () {
-        if (cache.getOrganizations() !== null) {
-            var deferred = $q.defer();
-            deferred.resolve(cache.getOrganizations());
-            var promise = deferred.promise;
-            promise.success = function (fn) {
-                promise.then(function (organizations) {
-                    fn(organizations, 200, null);
-                });
-            }
-            promise.error = function (fn) {
-                promise.then(null, function (reason) {
-                    fn(reason, 200, null);
-                });
-            }
-            return promise;
-        }
-        return retrieveResource(resourcePromise('api/organizations', 'GET'), function (organizations) {
-            cache.storeOrganizations(organizations);
-        });
-    }
-
-    cloudfoundry.getOrganization = function (organizationId) {
-        if (cache.getOrganizations() !== null) {
-            var deferred = $q.defer();
-            var organizations = cache.getOrganizations();
-            angular.forEach(organizations, function (item, index) {
-                if (item.id === organizationId) {
-                    deferred.resolve(item);
-                }
-            });
-            var promise = deferred.promise;
-            promise.success = function (fn) {
-                promise.then(function (organization) {
-                    fn(organization, 200, null);
-                });
-            }
-            promise.error = function (fn) {
-                promise.then(null, function (reason) {
-                    fn(reason, 200, null);
-                });
-            }
-            return promise;
-        }
-        return retrieveResource(resourcePromise('api/organizations/' + organizationId, 'GET'));
-    }
-
     cloudfoundry.getApplication = function(applicationId) {
         return retrieveResource(resourcePromise('api/applications/' + applicationId, 'GET'));
     }

@@ -5,32 +5,30 @@
 define(function () {
 	'use strict';	
 	
-	function OrganisationSettingsController($scope) {
+	function OrganisationSettingsController($scope, $state, Restangular) {
 		
-		$scope.createOrganization = function (organizationForm) {
-        var organizationPromise = cloudfoundry.createOrganization(organizationForm);
-        organizationPromise.success(function (organization, status, headers) {
-            var spacesPromise = cloudfoundry.createSpace(organization.metadata.guid, 'development');
-            spacesPromise.success(function (space, status, headers) {
-                $location.path('/app-spaces/' + organization.metadata.guid);
-            });
-            spacesPromise.error(function (data, status, headers) {
-                $scope.error = 'Failed to create organization. Reason: ' + data.code + ' - ' + data.description;
-            });
-        });
-        organizationPromise.error(function (data, status, headers) {
-            $scope.error = 'Failed to create organization. Reason: ' + data.code + ' - ' + data.description;
-        });
-    }
-
-		var organizationPromise = cloudfoundry.getOrganization($stateParams.organizationId);
-		organizationPromise.success(function (data, status, headers) {
+		Restangular.one('organizations', $state.params.organizationId).getList().then(function (data, status, headers) {
 			$scope.organization = data;
-		});
-		organizationPromise.error(function (data, status, headers) {
+		}, function (data, status, headers) {
 			$scope.forceLogin(status);
 			$scope.error = 'Failed to load organizations. Reason: ' + data.code + ' - ' + data.description;
 		});
+
+		$scope.createOrganization = function (organizationForm) {
+			var organizationPromise = cloudfoundry.createOrganization(organizationForm);
+			organizationPromise.success(function (organization, status, headers) {
+				var spacesPromise = cloudfoundry.createSpace(organization.metadata.guid, 'development');
+				spacesPromise.success(function (space, status, headers) {
+					$location.path('/app-spaces/' + organization.metadata.guid);
+				});
+				spacesPromise.error(function (data, status, headers) {
+					$scope.error = 'Failed to create organization. Reason: ' + data.code + ' - ' + data.description;
+				});
+			});
+			organizationPromise.error(function (data, status, headers) {
+				$scope.error = 'Failed to create organization. Reason: ' + data.code + ' - ' + data.description;
+			});
+		}
 
 		$scope.deleteOrganization = function () {
 			$scope.loading = true;
@@ -51,7 +49,7 @@ define(function () {
 		}
 	}
 
-	OrganisationSettingsController.$inject = ['$scope'];
+	OrganisationSettingsController.$inject = ['$scope', '$state', 'Restangular'];
 
 	return OrganisationSettingsController;
 });

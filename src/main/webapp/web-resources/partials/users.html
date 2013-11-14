@@ -1,15 +1,10 @@
 <div class="container">
-    <div ng-show="error" class="alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Error!</strong> {{error}}
-    </div>
     <div ng-show="loading">
         <div class="well loading-well">
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="text-center">Keep your pants on...</h3>
                     <h5 class="text-center">We are loading your users!</h5>
-
                     <div spin="defaultSpinnerConfig" spin-if="loading"></div>
                 </div>
             </div>
@@ -19,11 +14,10 @@
         <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span class="panel-title">USERS AND ROLES</span>
+                    <span class="panel-title">Users and Roles</span>
                     <button class="btn btn-sm btn-success pull-right" ng-click="addNewUser(organization)"
-                            ng-hide="blockInput">ADD USER TO ORGANIZATION
+                            ng-hide="blockInput">AAdd User to Organisation
                     </button>
-
                     </div>
                 </div>
                 <div class="panel-body">
@@ -31,27 +25,29 @@
                         <thead>
                         <tr>
                             <th width="30%">
-                                <div class="btn-group">
-                                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                                       style="text-transform: uppercase;">{{selectedGroup}}<b class="caret"></b></a>
+                                <div class="dropdown">  
+                                    <button class="btn btn-primary dropdown-toggle">
+                                        {{selectedGroup}} <span class="caret"></span>
+                                    </button>
                                     <ul class="dropdown-menu">
-                                        <li>ORGANIZATION ROLES</li>
+                                        <li role="presentation" class="dropdown-header">Customer</li>
+                                        <li role="presentation" class="dropdown-header">Organisation Roles</li>
                                         <li><a ng-click="selectOrganizationUsers(organization.name)"
                                                style="text-transform: uppercase;">{{organization.name}}</a></li>
                                         <li class="divider"></li>
-                                        <li>SPACE ROLES</li>
+                                        <li role="presentation" class="dropdown-header">Space Roles</li>
                                         <li ng-repeat="space in organization.spaces track by $id($index)"><a
                                                 ng-click="selectSpaceUsers(space.name, organization)"
                                                 style="text-transform: uppercase;">{{space.name}}</a></li>
                                     </ul>
                                 </div>
                             </th>
-                            <th width="20%"><span ng-show="showOrganizationUsers">ORG. MANAGER</span><span
-                                    ng-hide="showOrganizationUsers">SPACE MANAGER</span></th>
-                            <th width="20%"><span ng-show="showOrganizationUsers">BILLING MANAGER</span><span
-                                    ng-hide="showOrganizationUsers">DEVELOPER</span></th>
-                            <th width="20%"><span ng-show="showOrganizationUsers">ORG. AUDITOR</span><span
-                                    ng-hide="showOrganizationUsers">SPACE AUDITOR</span></th>
+                            <th width="20%"><span ng-show="showOrganizationUsers">Org. Manager</span><span
+                                    ng-hide="showOrganizationUsers">Space Manager</span></th>
+                            <th width="20%"><span ng-show="showOrganizationUsers">Billing Manager</span><span
+                                    ng-hide="showOrganizationUsers">Developer</span></th>
+                            <th width="20%"><span ng-show="showOrganizationUsers">Org. Auditor</span><span
+                                    ng-hide="showOrganizationUsers">Space Auditor</span></th>
                             <th width="10%"></th>
                         </tr>
                         </thead>

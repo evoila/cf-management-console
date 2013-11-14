@@ -5,8 +5,8 @@
 define(function () {
 	'use strict';	
 	
-	function SpaceSettingsController($scope) {
-		$scope.organizationId = $stateParams.organizationId;
+	function SpaceSettingsController($scope, $state) {
+		$scope.organizationId = $state.params.organizationId;
 
 		$scope.createSpace = function (spaceForm) {
 			var spacesPromise = cloudfoundry.createSpace($scope.organizationId, spaceForm.name);
@@ -38,7 +38,7 @@ define(function () {
 		}
 	}
 
-	SpaceSettingsController.$inject = ['$scope'];
+	SpaceSettingsController.$inject = ['$scope', '$state'];
 
 	return SpaceSettingsController;
 });

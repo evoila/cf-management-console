@@ -20,8 +20,13 @@
 				<!--li><a href="#/marketplace/{{organization.id}}">MARKETPLACE</a></li-->
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#/userinfo/{{ organization.id }}" class="uppercase">{{user.username}}</a></li>
-				<li><button href="#" class="btn btn-default navbar-btn" ng-click="logout()">Logout</button></li>
+				<li class="dropdown uppercase">
+					<a class="dropdown-toggle" data-toggle="dropdown">{{user.username}} <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#/userinfo/{{ organization.id }}" class="uppercase">User info</a></li>
+						<li><a href="#" ng-click="logout()">Logout</button></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</div>
