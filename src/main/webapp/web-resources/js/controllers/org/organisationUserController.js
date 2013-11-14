@@ -7,6 +7,7 @@ define(function () {
 	
 	function UserInfoController($scope) {
 		$scope.loading = true;
+
 		var containsUser = function (orgUsers, userId) {
 			for (var i = 0; i < orgUsers.length; i++) {
 				if (orgUsers[i].id === userId) {
@@ -14,7 +15,8 @@ define(function () {
 				}
 			}
 			return false;
-		}
+		};
+
 		$scope.addUser = function (organization, user) {
 			if (user) {
 				organization.users.push(user);
@@ -29,6 +31,7 @@ define(function () {
 				);
 			}
 		}
+		
 		userManager.getAllUsers().then(
 			function (users, status, headers) {
 				userManager.getUsers($stateParams.organizationId).then(

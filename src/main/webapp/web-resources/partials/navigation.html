@@ -5,26 +5,26 @@
 		</div>
 		<div ng-hide="loadingData">
 			<ul class="nav navbar-nav">
-				<li class="dropdown uppercase">
-					<a class="dropdown-toggle" data-toggle="dropdown">Org: {{organization.name}} <b class="caret"></b></a>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown">Organisation: {{organization.name}} <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li ng-repeat="organization in organizations" ng-hide="organization.selected"><a
-								href="#/app-spaces/{{organization.id}}">{{organization.name}}</a>
+						<li ng-repeat="organization in organizations" ng-hide="organization.selected">
+							<a href="#/app-spaces/{{organization.id}}">{{organization.name}}</a>
 						</li>
 						<li><a href="#/create-org/{{organization.id}}">Create new Organization</a></li>
 					</ul>
 				</li>
 				<li><a href="#/app-spaces/{{organization.id}}">App Spaces</a></li>
 				<li><a href="#/users/{{organization.id}}">Users</a></li>
-				<li><a href="#/org-settings/{{organization.id}}">Org Settings</a></li>
-				<!--li><a href="#/marketplace/{{organization.id}}">MARKETPLACE</a></li-->
+				<li><a href="#/org-settings/{{organization.id}}">Organisation Settings</a></li>
+				<li><a href="#/marketplace/{{organization.id}}">Marketplace</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown uppercase">
+				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown">{{user.username}} <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="#/userinfo/{{ organization.id }}" class="uppercase">User info</a></li>
-						<li><a href="#" ng-click="logout()">Logout</button></li>
+						<li><a href="#/userinfo/{{organization.id}}">User info</a></li>
+						<li><a href="#" ng-click="logout()">Logout</a></li>					
 					</ul>
 				</li>
 			</ul>

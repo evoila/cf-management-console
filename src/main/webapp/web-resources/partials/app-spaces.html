@@ -10,16 +10,16 @@
         <div class="well well-sm">
             <div class="row">
                 <div class="col-md-11" ng-hide="loading">
-                    APP SPACES:
+                    App Spaces:
                     <span ng-repeat="s in spaces">
                         <span ng-show="space.selected == s.name">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-primary uppercase">{{s.name}}</button>
+                                <button type="button" class="btn btn-primary">{{s.name}}</button>
                                 <a href="#/space-settings/{{organizationId}}/{{s.id}}" class="btn btn-primary"><span class="glyphicon glyphicon-wrench"></span></a>
                             </div>
                         </span>
                         <span ng-show="space.selected != s.name">
-                            <button class="btn btn-default uppercase" ng-click="selectSpace(s.name)">{{s.name}}</button>
+                            <button class="btn btn-default" ng-click="selectSpace(s.name)">{{s.name}}</button>
                         </span>
                     </span>
                 </div>
@@ -39,16 +39,17 @@
                             <table class="table table-condensed">
                                 <thead>
                                 <tr>
-                                    <th>STATUS</th>
-                                    <th>APP</th>
-                                    <th>INSTANCES</th>
-                                    <th>MEMORY</th>
+                                    <th>Status</th>
+                                    <th>App</th>
+                                    <th>Instances</th>
+                                    <th>Memory</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="app in s.applications">
-                                    <td><span class="label label-success" ng-show="app.state == 'STARTED'">STARTED</span>
+                                    <td>
+                                        <span class="label label-success" ng-show="app.state == 'STARTED'">STARTED</span>
                                         <span class="label label-danger" ng-hide="app.state == 'STARTED'">STOPPED</span>
                                     </td>
                                     <td>
@@ -59,8 +60,10 @@
                                     </td>
                                     <td>{{app.instances}}</td>
                                     <td>{{app.memory}} MB</td>
-                                    <td><button class="btn btn-danger btn-xs" ng-show="app.state == 'STARTED'" ng-click="stopApplication(app.id)"><span class="glyphicon glyphicon-stop"></span> STOP</button>
-                                        <button class="btn btn-success btn-xs" ng-hide="app.state == 'STARTED'" ng-click="startApplication(app.id)"><span class="glyphicon glyphicon-play"></span> START</button></td>
+                                    <td>
+                                        <button class="btn btn-danger btn-xs" ng-show="app.state == 'STARTED'" ng-click="stopApplication(app.id)"><span class="glyphicon glyphicon-stop"></span>STOP</button>
+                                        <button class="btn btn-success btn-xs" ng-hide="app.state == 'STARTED'" ng-click="startApplication(app.id)"><span class="glyphicon glyphicon-play"></span>START</button>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -74,10 +77,10 @@
                             <table class="table table-condensed">
                                 <thead>
                                 <tr>
-                                    <th>NAME</th>
-                                    <th>SERVICE</th>
-                                    <th>PLAN LEVEL</th>
-                                    <th>BOUND APPS</th>
+                                    <th>Name</th>
+                                    <th>Service</th>
+                                    <th>Plan Level</th>
+                                    <th>Bound Apps</th>
                                 </tr>
                                 </thead>
                                 <tbody>

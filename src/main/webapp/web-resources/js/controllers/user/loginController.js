@@ -23,15 +23,14 @@ define(function () {
 
 			    	$http.defaults.headers.common['Authorization'] = 'bearer ' + clientCacheService.getUser().accessToken;
 			    	
-			    	responseService.executeSuccess(data, headers, null);
-
-					Restangular.all('organizations').getList().then(function(data) {
-						responseService.executeSuccess(data, headers, 'dashboard');
+					Restangular.all('organizations').getList().then(function(data) {						
 						if (data.length > 0) {
+							responseService.executeSuccess(data, headers, 'dashboard');
 							$location.path('/app-spaces/' + data[0].id);
 						} else {
-							$scope.error = 'You are not associated with any organization, please ask an organization manager to add you an organization.';
+							data = 'You are not associated with any organization, please ask an organization manager to add you an organization.';
 							$scope.authenticating = false;
+							responseService.executeError(data, status, headers, $scope, 'user');
 						}
 					});						
 				}).error(function(data, status, headers, config) {
