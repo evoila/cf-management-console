@@ -5,7 +5,7 @@
 define(function () {
 	'use strict';	
 	
-	function UserInfoController($scope) {
+	function UserInfoController($scope, $state, $location, Restangular, responseService) {
 		$scope.loading = true;
 
 		var containsUser = function (orgUsers, userId) {
@@ -20,47 +20,44 @@ define(function () {
 		$scope.addUser = function (organization, user) {
 			if (user) {
 				organization.users.push(user);
-				userManager.setOrgUsers(organization).then(
-					function (result, status, headers) {
-						$location.path('/users/' + organization.id);
-					},
-					function (reason, status, headers) {
-						$scope.forceLogin(status);
-						$scope.error = 'Failed to set user role for ' + user.userName + ' user details. Reason: ' + JSON.stringify(reason.data);
+				var ids = [];
+
+				angular.forEach(organization.users, function(user, userIndex){
+					if(user.billingManager) {
+						ids.push(user.id);
 					}
-				);
+				});
+
+				Restangular.all('organizations').customPUT(organization.id, null, null, {user_guids: ids}).then(function(response) {
+					responseService.executeSuccess(response, response.headers, null);
+				});	
 			}
 		}
-		
-		userManager.getAllUsers().then(
-			function (users, status, headers) {
-				userManager.getUsers($stateParams.organizationId).then(
-					function (organization, status, headers) {
-						var filteredUsers = [];
-						angular.forEach(users.data, function (user, userIndex) {
-							if (!containsUser(organization.data.users, user.id)) {
-								filteredUsers.push(user);
-							}
-						});
-						$scope.organization = organization.data;
-						$scope.users = filteredUsers;
-						$scope.loading = false;
-					},
-					function (reason, status, headers) {
-						$scope.loading = false;
-						$scope.error = 'Failed to retrieve users details. Reason: ' + JSON.stringify(reason.data);
-					}
-				);
+
+		/**
+		Restangular.all('users').getList().then(function (users) {
 			},
 			function (response) {
 				$scope.forceLogin(response.status);
 				$scope.loading = false;
 				$scope.error = 'Failed to retrieve users. Reason: ' + JSON.stringify(response.reason);
 			}
+		); **/
+
+		Restangular.one('organizations', $state.params.organizationId).get().then(function (organization) {				
+				$scope.organization = organization;
+				$scope.users = organization.users;
+				$scope.loading = false;
+			},
+			function (reason, status, headers) {
+				$scope.loading = false;
+				$scope.error = 'Failed to retrieve users details. Reason: ' + JSON.stringify(reason.data);
+			}
 		);
+			
 	}
 
-	UserInfoController.$inject = ['$scope'];
+	UserInfoController.$inject = ['$scope', '$state', '$location', 'Restangular', 'responseService'];
 
 	return UserInfoController;
 });

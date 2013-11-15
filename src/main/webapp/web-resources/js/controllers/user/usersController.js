@@ -5,7 +5,7 @@
 define(function () {
 	'use strict';	
 	
-	function UsersController($scope, $state, Restangular, clientCacheService) {
+	function UsersController($scope, $state, $location, Restangular, clientCacheService, responseService) {
 		$scope.loading = true;
 		$scope.blockInput = true;
 
@@ -78,80 +78,47 @@ define(function () {
 		};
 
 		$scope.setOrgManager = function (organization) {
-			$scope.blockinput = true;
-			userManager.setOrgManagers(organization).then(
-				function (result, status, headers) {
-					$scope.blockinput = false;
-				},
-				function (result, status, headers) {
-					$scope.blockinput = false;
-					$scope.error = 'Failed to add manager to organization ' + organization.name + '. Reason: ' + JSON.stringify(reason.data);
-				}
-			);
+			updateEntity('organizations', space.id, extractUserIds(organization.users), "manager_guids");			
 		};
 
 		$scope.setOrgBillingManager = function (organization, user) {
-			$scope.blockinput = true;
-			userManager.setOrgBillingManagers(organization).then(
-				function (result, status, headers) {
-					$scope.blockinput = false;
-				},
-				function (result, status, headers) {
-					$scope.blockinput = false;
-					$scope.error = 'Failed to add billing manager to organization ' + organization.name + '. Reason: ' + JSON.stringify(reason.data);
-				}
-			);
+			updateEntity('organizations', space.id, extractUserIds(organization.users), "billing_manager_guids");
 		};
 
 		$scope.setOrgAuditor = function (organization, user) {
-			$scope.blockinput = true;
-			userManager.setOrgAuditors(organization).then(
-				function (result, status, headers) {
-					$scope.blockinput = false;
-				},
-				function (result, status, headers) {
-					$scope.blockinput = false;
-					$scope.error = 'Failed to add auditor to organization ' + organization.name + '. Reason: ' + JSON.stringify(reason.data);
-				}
-			);
+			updateEntity('organizations', space.id, extractUserIds(organization.users), "auditor_guids");		
 		};
 
 		$scope.setSpaceManager = function (space, user) {
-			$scope.blockinput = true;
-			userManager.setSpaceManagers(space).then(
-				function (result, status, headers) {
-					$scope.blockinput = false;
-				},
-				function (result, status, headers) {
-					$scope.blockinput = false;
-					$scope.error = 'Failed to add manager to space ' + space.name + '. Reason: ' + JSON.stringify(reason.data);
-				}
-			);
+			updateEntity('spaces', space.id, extractUserIds(space.users), "manager_guids");
 		};
 
 		$scope.setSpaceDeveloper = function (space, user) {
-			$scope.blockinput = true;
-			userManager.setSpaceDevelopers(space).then(
-				function (result, status, headers) {
-					$scope.blockinput = false;
-				},
-				function (result, status, headers) {
-					$scope.error = 'Failed to add developer to space ' + space.name + '. Reason: ' + JSON.stringify(reason.data);
-				}
-			);
+			updateEntity('spaces', space.id, extractUserIds(space.users), "developer_guids");
 		};
 
 		$scope.setSpaceAuditor = function (space, user) {
-			$scope.blockinput = true;
-			userManager.setSpaceAuditors(space).then(
-				function (result, status, headers) {
-					$scope.blockinput = false;
-				},
-				function (result, status, headers) {
-					$scope.error = 'Failed to add auditor to space ' + space.name + '. Reason: ' + JSON.stringify(reason.data);
-				}
-			);
+			updateEntity('spaces', space.id, extractUserIds(space.users), "auditor_guids");
 		};
+
+		$scope.extractUserIds = function(users) {
+			var ids = [];
+
+			angular.forEach(users, function(user, userIndex){
+				if(user.billingManager) {
+					ids.push(user.id);
+				}
+			});
+			return ids;
+		};
+
+		$scope.updateEntity = function(entity, entityId, userIds, type) {
+			$scope.blockinput = true;
+			Restangular.all(entity).customPUT(entityId, null, null, {type: userIds}).then(function(response) {
+				responseService.executeSuccess(response, response.headers, null);
+				$scope.blockinput = false;
+			});	
+		}
 
 		$scope.selectOrganizationUsers = function (organizationName) {
 			$scope.selectedGroup = organizationName;
@@ -169,7 +136,7 @@ define(function () {
 		}
 	}
 
-	UsersController.$inject = ['$scope', '$state', 'Restangular', 'clientCacheService'];
+	UsersController.$inject = ['$scope', '$state', '$location', 'Restangular', 'clientCacheService', 'responseService'];
 
 	return UsersController;
 });

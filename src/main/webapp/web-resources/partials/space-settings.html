@@ -3,7 +3,6 @@
         <div class="well loading-well">
             <h3 class="text-center">Hold on...</h3>
             <h5 class="text-center">We are deleting your space!</h5>
-            <div spin="loginSpinnerConfig" spin-if="loading"></div>
         </div>
     </div>
     <div ng-hide="loading" ng-init="init()">
@@ -15,6 +14,6 @@
                 <!--button class="btn btn-inverse">EDIT</button-->
             </div>
         </div>
-        <button class="btn btn-danger" ng-click="deleteSpace">Delete Space</button>
+        <button class="btn btn-danger" ng-click="deleteSpace()">Delete Space</button>
     </div>
 </div>

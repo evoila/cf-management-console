@@ -89,7 +89,7 @@ define(['app'], function (app) {
 				'navigation': navigation,
 				'body': {
 					templateUrl: 'partials/org-users.html',
-					controller: 'organisationUsersController'
+					controller: 'organisationUserController'
 				}
 			}
 		}).state('users', {

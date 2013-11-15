@@ -1,65 +1,55 @@
 <div class="container">
-    <div ng-show="loading">
-        <div class="well loading-well">
-            <h3 class="text-center">Hold on...</h3>
-            <h5 class="text-center">We are deleting your organization!</h5>
-            <div spin="loginSpinnerConfig" spin-if="loading"></div>
-        </div>
-    </div>
-    <div ng-hide="loading">
-        <div class="row">
-            <div class="col-md-11">
-                <h5>Organisatoin Name: {{organization.name}}</h5>
-            </div>
-            <div class="col-md-1">
-                <!--button class="btn btn-inverse">EDIT</button-->
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">System Domains</h3>
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-condensed">
-                            <thead>
-                            <tr>
-                                <th>Domain</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="domain in organization.domains">
-                                <td>{{domain}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Organisation quota</h3>
-                    </div>
-                    <div class="panel-body">
-                        <dl class="dl-horizontal">
-                            <dt>Name</dt>
-                            <dd>{{organization.quota.name}}</dd>
-                            <dt>Total Services</dt>
-                            <dd>{{organization.quota.totalServices}}</dd>
-                            <dt>Memory Limit</dt>
-                            <dd>{{organization.quota.memoryLimit}} MB</dd>
-                            <dt>None Basic Services</dt>
-                            <dd>{{organization.quota.nonBasicServicesAllowed}}</dd>
-                            <dt>Trial DB Allowed</dt>
-                            <dd>{{organization.quota.trialDbAllowed}}</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button ng-click="deleteOrganization()" type="button" class="btn btn-danger">Delete Organisation</button>
-    </div>
+	<div ng-show="loading">
+		<div class="well loading-well">
+			<h3 class="text-center">Hold on...</h3>
+			<h5 class="text-center">We are deleting your organization!</h5>			
+		</div>
+	</div>
+	<div ng-hide="loading">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">System Domains for Organisation: {{organization.name}}</h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Domain</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="domain in organization.domains">
+									<td>{{domain}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Organisation quota</h3>
+					</div>
+					<div class="panel-body">
+						<dl class="dl-horizontal">
+							<dt>Name</dt>
+							<dd>{{organization.quota.name}}</dd>
+							<dt>Total Services</dt>
+							<dd>{{organization.quota.totalServices}}</dd>
+							<dt>Memory Limit</dt>
+							<dd>{{organization.quota.memoryLimit}} MB</dd>
+							<dt>None Basic Services</dt>
+							<dd>{{organization.quota.nonBasicServicesAllowed}}</dd>
+							<dt>Trial DB Allowed</dt>
+							<dd>{{organization.quota.trialDbAllowed}}</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button ng-click="deleteOrganization()" type="button" class="btn btn-danger">Delete Organisation</button>
+	</div>
 </div>

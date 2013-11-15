@@ -1,5 +1,5 @@
 /**
- * CookieService
+ * ClientCacheService
  **/
 
 define(['angular'], function (angular) {
@@ -8,15 +8,15 @@ define(['angular'], function (angular) {
 	var service = function(localStorageService) {
 		var cache = {};
 
-		cache.storeOrganizations = function (organizations) {
+		cache.storeOrganizations = function(organizations) {
 			localStorageService.add("styx.organizations", JSON.stringify(organizations));
 		}
 
-		cache.clearOrganizations = function () {
+		cache.clearOrganizations = function() {
 			localStorageService.remove("styx.organizations");
 		}
 
-		cache.getOrganizations = function () {
+		cache.getOrganizations = function() {
 			var organizations = localStorageService.get("styx.organizations");
 			if (organizations) {
 				return JSON.parse(organizations);
@@ -24,11 +24,11 @@ define(['angular'], function (angular) {
 			return organizations;
 		}
 
-		cache.storeUser = function (user) {
+		cache.storeUser = function(user) {
 			localStorageService.add("styx.user", user);
 		}
 
-		cache.getUser = function () {
+		cache.getUser = function() {
 			return localStorageService.get("styx.user");
 		}
 
@@ -40,7 +40,7 @@ define(['angular'], function (angular) {
 			return localStorageService.get("styx.facts");
 		}
 
-		cache.clear = function () {
+		cache.clear = function() {
 			localStorageService.clearAll();
 		}
 

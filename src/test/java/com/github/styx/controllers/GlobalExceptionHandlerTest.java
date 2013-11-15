@@ -1,6 +1,7 @@
 package com.github.styx.controllers;
 
-import com.github.styx.domain.RepositoryException;
+import com.github.styx.api.repositories.RepositoryException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;

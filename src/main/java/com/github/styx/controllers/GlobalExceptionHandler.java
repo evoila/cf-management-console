@@ -1,6 +1,10 @@
+/**
+ * 
+ */
 package com.github.styx.controllers;
 
-import com.github.styx.domain.RepositoryException;
+import com.github.styx.api.repositories.RepositoryException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -9,21 +13,17 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
- * Handles all global exceptions.
+ * TODO: Add previous authors
+ * @author Johannes Hiemer
+ *
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    /**
-     * Handles an exception an returns an appropriate response entity.
-     *
-     * @param ex  the exception to handle
-     *
-     * @return a response entity
-     */
-    @ExceptionHandler(Exception.class)
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception ex) {
         LOGGER.debug("Handling exception of type {} with message {}", ex.getClass(), ex.getMessage());
 
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
             LOGGER.debug("Found nested repository exception with response {}", repositoryException.getResponse().toString());
             return repositoryException.getResponse();
         } else {
-            return new ResponseEntity("{\"code\":\"500\",\"message\":\"" + ex.getMessage() + "\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+        	return new ResponseEntity(new ExceptionContainer("5005", ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

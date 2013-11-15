@@ -5,7 +5,7 @@
 define(function () {
 	'use strict';	
 	
-	function AppSpacesController($scope, $state, Restangular) {
+	function AppSpacesController($scope, $state, Restangular, responseService) {
 		$scope.loading = true;
 		$scope.organizationId = $state.params.organizationId;
 		
@@ -23,8 +23,8 @@ define(function () {
 		});
 
 		$scope.startApplication = function (applicationId) {
-			var applicationPromise = cloudfoundry.updateApplication(applicationId, {'state': 'STARTED'});
-			applicationPromise.success(function (data, status, headers) {
+			Restangular.all('applications').customPUT(applicationId, null, null, {'state': 'STARTED'}).then(function(data) {
+				responseService.executeSuccess(response, response.headers, null);
 				angular.forEach($scope.spaces, function (space, spaceIndex) {
 					if (space.selected) {
 						var index = -1;
@@ -38,15 +38,14 @@ define(function () {
 						}
 					}
 				});
-			});
-			applicationPromise.error(function (data, status, headers) {
+			}, function(response) {
 				$scope.error = 'Failed to start application. Reason: ' + data.code + ' - ' + data.description;
 			});
 		};
 
 		$scope.stopApplication = function (applicationId) {
-			var applicationPromise = cloudfoundry.updateApplication(applicationId, {'state': 'STOPPED'});
-			applicationPromise.success(function (data, status, headers) {
+			Restangular.all('applications').customPUT(applicationId, null, null, {'state': 'STOPPED'}).then(function(data) {
+				responseService.executeSuccess(response, response.headers, null);
 				angular.forEach($scope.spaces, function (space, spaceIndex) {
 					if (space.selected) {
 						var index = -1;
@@ -60,8 +59,7 @@ define(function () {
 						}
 					}
 				});
-			});
-			applicationPromise.error(function (data, status, headers) {
+			}, function(response) {
 				$scope.error = 'Failed to start application. Reason: ' + data.code + ' - ' + data.description;
 			});
 		}
@@ -71,7 +69,7 @@ define(function () {
 		}
 	}
 
-	AppSpacesController.$inject = ['$scope', '$state', 'Restangular'];
+	AppSpacesController.$inject = ['$scope', '$state', 'Restangular', 'responseService'];
 
 	return AppSpacesController;
 });

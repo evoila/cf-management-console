@@ -1,7 +1,8 @@
 package com.github.styx.controllers;
 
-import com.github.styx.domain.Service;
-import com.github.styx.domain.ServiceRepository;
+import com.github.styx.api.model.Service;
+import com.github.styx.api.repositories.ServiceRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;

@@ -10,7 +10,6 @@ define(function () {
 		if (!clientCacheService.isAuthenticated()) {
 			if ($location.path() != '/login' && $location.path() != '/register') {
 				$location.path('/login');
-				return;
 			}
 		}
 		

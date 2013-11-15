@@ -32,11 +32,7 @@ define(function () {
 							$scope.authenticating = false;
 							responseService.executeError(data, status, headers, $scope, 'user');
 						}
-					});						
-				}).error(function(data, status, headers, config) {
-					data = 'Invalid user credentials';
-					$scope.authenticating = false;
-			    	responseService.executeError(data, status, headers, $scope, 'user');
+					});				
 			}).error(function (data, status, headers) {
 				data = 'Invalid user credentials';
 				$scope.authenticating = false;
