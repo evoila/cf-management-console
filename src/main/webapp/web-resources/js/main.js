@@ -10,13 +10,13 @@ require({
 		marked : '../lib/marked/marked',
 		highlight : '../lib/highlight/highlight',
 		highcharts : '../lib/highchart/highchart',
-		stomp : '../lib/stomp/stomp',
+		stomp : '../lib/stomp/stomp'
 	},
 	shim: {
 		'angular' : {'exports' : 'angular'},
 		'states' : { 'deps' : ['angular']},
 		'underscore' : {'exports' : '_'},
-		'highcharts' : { 'exports' : 'Highcharts'},		
+		'highcharts' : { 'exports' : 'Highcharts'}
 	},
 	priority: [
 		'angular'
@@ -32,7 +32,7 @@ require({
 	'providers/providers', 
 	'filters/filters', 
 	'moment', 'highcharts', 'marked', 'highlight'], function (app) {
-		app.run(['$rootScope', '$state', '$stateParams', 'clientCacheService' 
+		app.run(['$rootScope', '$state', '$stateParams', 'clientCacheService',
 			function ($rootScope, $state, $stateParams, clientCacheService) {
 				console.log('main.js - called');
 
