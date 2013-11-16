@@ -62,7 +62,7 @@ define(['app'], function (app) {
 				'navigation': navigation,
 				'body': {
 					templateUrl: 'partials/marketplace.html',
-					controller: 'marketplaceController'
+					controller: 'marketPlaceController'
 				}
 			}
 		}).state('org-settings', {

@@ -24,17 +24,14 @@
 											{{selectedGroup}} <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
-											<li role="presentation" class="dropdown-header">Customer</li>
 											<li role="presentation" class="dropdown-header">Organisation Roles</li>
 											<li>
-												<a ng-click="selectOrganizationUsers(organization.name)"
-												   style="text-transform: uppercase;">{{organization.name}}</a>
+												<a ng-click="selectOrganizationUsers(organization.name)">{{organization.name}}</a>
 											</li>
 											<li class="divider"></li>
 											<li role="presentation" class="dropdown-header">Space Roles</li>
 											<li ng-repeat="space in organization.spaces track by $id($index)">
-												<a ng-click="selectSpaceUsers(space.name, organization)"
-													style="text-transform: uppercase;">{{space.name}}</a>
+												<a ng-click="selectSpaceUsers(space.name, organization)">{{space.name}}</a>
 											</li>
 										</ul>
 									</div>

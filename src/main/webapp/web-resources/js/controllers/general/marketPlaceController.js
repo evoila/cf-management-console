@@ -7,8 +7,8 @@ define(function () {
 	
 	function MarketPlaceController($scope, Restangular) {
 
-		Restangular.all('services').get().then(function (services) {
-			$scope.services = application;				
+		Restangular.all('services').getList().then(function (services) {
+			$scope.services = services;				
 		});
 	}
 

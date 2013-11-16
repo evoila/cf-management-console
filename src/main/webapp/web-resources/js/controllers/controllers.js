@@ -10,7 +10,7 @@ define(['angular',
 	'controllers/app/appSpacesController',
 	
 	'controllers/general/deleteController',
-	
+
 	'controllers/general/marketPlaceController',
 	'controllers/general/navigationController',
 	

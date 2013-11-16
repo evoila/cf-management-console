@@ -9,12 +9,10 @@
 		</div>
 		<!-- TODO this will not work when there are more than 3 services -->
 		<div class="col-md-3" ng-repeat="resource in services.resources">
-			<div class="well well-small light">
-				<img src="img/{{resource.entity.label}}.png"/>
-				<h5 class="uppercase">{{resource.entity.label}} {{resource.entity.version}}</h5>
-				<p>{{resource.entity.description}}</p>
-				<button class="btn">Plan Options</button>
-			</div>
+			<img src="img/{{resource.entity.label}}.png"/>
+			<h5 class="uppercase">{{resource.entity.label}} {{resource.entity.version}}</h5>
+			<p>{{resource.entity.description}}</p>
+			<button class="btn">Plan Options</button>
 		</div>
 	</div>
 </div>
