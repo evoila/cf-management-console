@@ -208,11 +208,11 @@ public abstract class BaseRepository {
     }
 
     private String getUserDetailsPath(Set<String> userIds) {
-        String path = "ids/Users?filter=";
+        String path = "Users?q=";
 
         int i = 0;
         for (String userId : userIds) {
-            path = path.concat("id eq '").concat(userId).concat("'");
+            path = path.concat("id:").concat(userId);
             if (i < userIds.size() - 1) {
                 path = path.concat(" or ");
             }

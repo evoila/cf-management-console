@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.github.styx.controllers;
 
 import com.github.styx.api.model.Service;
@@ -14,6 +17,11 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+/**
+ * TODO: Add previous authors
+ * @author Johannes Hiemer.
+ *
+ */
 @Controller
 @RequestMapping("/api/services")
 public class ServiceController {

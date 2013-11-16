@@ -5,18 +5,14 @@
 define(function () {
 	'use strict';	
 	
-	function MarketPlaceController($scope) {
-		var servicesPromise = cloudfoundry.getServices();
-		servicesPromise.success(function (data, status, headers) {
-			$scope.services = data;
-		});
-		servicesPromise.error(function (data, status, headers) {
-			$scope.forceLogin(status);
-			$scope.error = 'Failed to load services. Reason: ' + data.code + ' - ' + data.description;
+	function MarketPlaceController($scope, Restangular) {
+
+		Restangular.all('services').get().then(function (services) {
+			$scope.services = application;				
 		});
 	}
 
-	MarketPlaceController.$inject = ['$scope'];
+	MarketPlaceController.$inject = ['$scope', 'Restangular'];
 
 	return MarketPlaceController;
 });

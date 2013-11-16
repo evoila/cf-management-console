@@ -60,8 +60,12 @@
 										<td>{{app.instances}}</td>
 										<td>{{app.memory}} MB</td>
 										<td>
-											<button class="btn btn-danger btn-xs" ng-show="app.state == 'STARTED'" ng-click="stopApplication(app.id)"><span class="glyphicon glyphicon-stop"></span>STOP</button>
-											<button class="btn btn-success btn-xs" ng-hide="app.state == 'STARTED'" ng-click="startApplication(app.id)"><span class="glyphicon glyphicon-play"></span>START</button>
+											<button class="btn btn-danger btn-sm" ng-show="app.state == 'STARTED'" ng-click="stopApplication(app.id)">
+												<span class="glyphicon glyphicon-stop"></span>STOP
+											</button>
+											<button class="btn btn-success btn-sm" ng-hide="app.state == 'STARTED'" ng-click="startApplication(app.id)">
+												<span class="glyphicon glyphicon-play"></span>START
+											</button>
 										</td>
 									</tr>
 								</tbody>

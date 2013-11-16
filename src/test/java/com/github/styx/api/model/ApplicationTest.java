@@ -34,16 +34,16 @@ public class ApplicationTest {
     @Test
     public void shouldFailWhenHealthIsNot100() {
         Application application = new Application("123", "styx", "Spring", "STARTED", 1, 512, new ImmutableMap.Builder<String, String>().put("key", "value").build(), Arrays.asList("styx.cf.com"));
-        application.addInstance(new ApplicationInstance("0", "RUNNING", "127.0.0.1", 80));
-        application.addInstance(new ApplicationInstance("1", "RUNNING", "127.0.0.1", 80));
+        application.addInstance(new ApplicationInstance("0", "RUNNING", "127.0.0.1", "80"));
+        application.addInstance(new ApplicationInstance("1", "RUNNING", "127.0.0.1", "80"));
         assertEquals("Unexpected health", Integer.valueOf(100), application.getHealth());
     }
 
     @Test
     public void shouldFailWhenHealthIsNot50() {
         Application application = new Application("123", "styx", "Spring", "STARTED", 1, 512, new ImmutableMap.Builder<String, String>().put("key", "value").build(), Arrays.asList("styx.cf.com"));
-        application.addInstance(new ApplicationInstance("0", "RUNNING", "127.0.0.1", 80));
-        application.addInstance(new ApplicationInstance("1", "FLAPPING", "127.0.0.1", 80));
+        application.addInstance(new ApplicationInstance("0", "RUNNING", "127.0.0.1", "80"));
+        application.addInstance(new ApplicationInstance("1", "FLAPPING", "127.0.0.1", "80"));
         assertEquals("Unexpected health", Integer.valueOf(50), application.getHealth());
     }
 

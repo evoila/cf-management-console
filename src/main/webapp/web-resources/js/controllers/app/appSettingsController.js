@@ -5,11 +5,11 @@
 define(function () {
 	'use strict';	
 	
-	function AppSettingsController($scope $state, $location, Restangular, responseService) {
+	function AppSettingsController($scope, $state, $location, Restangular, responseService) {
 		$scope.loading = true;
-		$scope.organizationId = $stateParams.organizationId;
+		$scope.organizationId = $state.params.organizationId;
 
-		Restangular.one('applications', $state.params.applicationId).get().then(function (data, status, headers) {
+		Restangular.one('applications', $state.params.applicationId).get().then(function (application) {
 				$scope.application = application;
 				$scope.loading = false;
 		});

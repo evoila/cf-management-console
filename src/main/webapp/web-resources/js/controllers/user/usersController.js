@@ -78,27 +78,27 @@ define(function () {
 		};
 
 		$scope.setOrgManager = function (organization) {
-			updateEntity('organizations', space.id, extractUserIds(organization.users), "manager_guids");			
+			$scope.updateEntity('organizations', space.id, extractUserIds(organization.users), "manager_guids");			
 		};
 
 		$scope.setOrgBillingManager = function (organization, user) {
-			updateEntity('organizations', space.id, extractUserIds(organization.users), "billing_manager_guids");
+			$scope.updateEntity('organizations', space.id, extractUserIds(organization.users), "billing_manager_guids");
 		};
 
 		$scope.setOrgAuditor = function (organization, user) {
-			updateEntity('organizations', space.id, extractUserIds(organization.users), "auditor_guids");		
+			$scope.updateEntity('organizations', space.id, extractUserIds(organization.users), "auditor_guids");		
 		};
 
 		$scope.setSpaceManager = function (space, user) {
-			updateEntity('spaces', space.id, extractUserIds(space.users), "manager_guids");
+			$scope.updateEntity('spaces', space.id, extractUserIds(space.users), "manager_guids");
 		};
 
 		$scope.setSpaceDeveloper = function (space, user) {
-			updateEntity('spaces', space.id, extractUserIds(space.users), "developer_guids");
+			$scope.updateEntity('spaces', space.id, extractUserIds(space.users), "developer_guids");
 		};
 
 		$scope.setSpaceAuditor = function (space, user) {
-			updateEntity('spaces', space.id, extractUserIds(space.users), "auditor_guids");
+			$scope.updateEntity('spaces', space.id, extractUserIds(space.users), "auditor_guids");
 		};
 
 		$scope.extractUserIds = function(users) {

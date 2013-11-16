@@ -14,9 +14,9 @@ public class ApplicationInstance {
 
     private final String consoleIp;
 
-    private final int consolePort;
+    private final String consolePort;
 
-    public ApplicationInstance(String id, String state, String consoleIp, int consolePort) {
+    public ApplicationInstance(String id, String state, String consoleIp, String consolePort) {
         this.id = id;
         this.state = state;
         this.consoleIp = consoleIp;
@@ -35,7 +35,7 @@ public class ApplicationInstance {
         return consoleIp;
     }
 
-    public int getConsolePort() {
+    public String getConsolePort() {
         return consolePort;
     }
 
@@ -46,7 +46,7 @@ public class ApplicationInstance {
     public static ApplicationInstance fromCloudFoundryModel(String key, Object response) {
         return new ApplicationInstance(key, evalToString("state", response),
                 evalToString("console_ip", response),
-                eval("console_port", response, int.class));
+                evalToString("console_port", response));
     }
 
     @Override

@@ -89,11 +89,6 @@ public class UserRepository extends BaseRepository {
     }
 
     public AccessToken login(String username, String password) {
-    	
-    	//CloudCredentials credentials = new CloudCredentials(username, password);
-        //CloudFoundryClient client = new CloudFoundryClient(credentials, getTargetURL(apiBaseUri));
-        //client.login();
-        
         String authorizationEndpoint = getAuthorizationEndpoint();
 
         HttpHeaders httpHeaders = new HttpHeaders();
