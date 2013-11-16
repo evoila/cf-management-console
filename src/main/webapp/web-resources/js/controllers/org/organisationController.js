@@ -1,57 +1,66 @@
 /**
- * OrganisationSettingsController
+ * OrganisationController
  **/
 
 define(function () {
 	'use strict';	
 	
-	function OrganisationSettingsController($scope) {
-		
-		$scope.createOrganization = function (organizationForm) {
-        var organizationPromise = cloudfoundry.createOrganization(organizationForm);
-        organizationPromise.success(function (organization, status, headers) {
-            var spacesPromise = cloudfoundry.createSpace(organization.metadata.guid, 'development');
-            spacesPromise.success(function (space, status, headers) {
-                $location.path('/app-spaces/' + organization.metadata.guid);
-            });
-            spacesPromise.error(function (data, status, headers) {
-                $scope.error = 'Failed to create organization. Reason: ' + data.code + ' - ' + data.description;
-            });
-        });
-        organizationPromise.error(function (data, status, headers) {
-            $scope.error = 'Failed to create organization. Reason: ' + data.code + ' - ' + data.description;
-        });
-    }
+	function OrganisationController($scope, $state, $location, $modal, Restangular, clientCacheService, responseService) {
+		$scope.DEBUG = true;
 
-		var organizationPromise = cloudfoundry.getOrganization($stateParams.organizationId);
-		organizationPromise.success(function (data, status, headers) {
+		Restangular.one('organizations', $state.params.organizationId).getList().then(function (data, status, headers) {
 			$scope.organization = data;
-		});
-		organizationPromise.error(function (data, status, headers) {
+		}, function (data, status, headers) {
 			$scope.forceLogin(status);
 			$scope.error = 'Failed to load organizations. Reason: ' + data.code + ' - ' + data.description;
 		});
 
-		$scope.deleteOrganization = function () {
-			$scope.loading = true;
+		$scope.createOrganization = function(organizationForm) {
+			if ($scope.DEBUG)
+				console.log("createOrganization was clicked");
+			
+			var user = clientCacheService.getUser();
+			var orgnisationContent = {'name': organizationForm.name, 'user_guids': [user.id], 'manager_guids': [user.id]};
+			Restangular.all('organizations').post(orgnisationContent).then(function(organization) {
 
-			var organizationDeletePromise = cloudfoundry.deleteOrganization($scope.organization.id);
-			organizationDeletePromise.success(function (data, status, headers) {
-				var organizationsPromise = cloudfoundry.getOrganizations();
-				organizationsPromise.success(function (data, status, headers) {
-					$location.path('/app-spaces/' + data[0].id);
+				var spaceContent = {'organization_guid': organization.metadata.guid, 'name': 'development', 'manager_guids': [user.id], 'developer_guids': [user.id]};
+				Restangular.all('spaces').post(spaceContent).then(function(space) {
+					
+					$location.path('/app-spaces/' + organization.metadata.guid);
+					responseService.executeSuccess(space, null, null);
+				}, function(data, status, header) {
+					$scope.error = 'Failed to create organization. Reason: ' + data.code + ' - ' + data.description;
+					responseService.executeError(data, status, headers, $scope, 'organization');
 				});
-				organizationsPromise.error(function (data, status, headers) {
-					$scope.error = 'Failed to load organization. Reason: ' + data.code + ' - ' + data.description;
+			}, function(data, status, header) {
+				$scope.error = 'Failed to create organization. Reason: ' + data.code + ' - ' + data.description;
+				responseService.executeError(data, status, headers, $scope, 'organization');
+			});
+		};
+
+		$scope.deleteOrganization = function() {
+			if ($scope.DEBUG)
+				console.log("deleteOrganization was clicked");
+
+			var modalInstance = $modal.open({
+				templateUrl : 'partials/general/delete.html',
+				controller: 'deleteController'
+			});
+
+			modalInstance.result.then(function (response) {
+				$scope.loading = true;
+				Restangular.one('organizations', $scope.organization.id).remove().then(function (data, status, headers) {							
+						$location.path('/app-spaces/' + data[0].id);
+						responseService.executeSuccess(data, null, null);
+					},function (data, status, headers) {
+						$scope.error = 'Failed to load organization. Reason: ' + data.code + ' - ' + data.description;
+						responseService.executeError(data, status, headers, $scope, 'organization');
 				});
 			});
-			organizationDeletePromise.error(function (data, status, headers) {
-				$scope.error = 'Failed to delete organization. Reason: ' + data.code + ' - ' + data.description;
-			});
-		}
+		};
 	}
 
-	OrganisationSettingsController.$inject = ['$scope'];
+	OrganisationController.$inject = ['$scope', '$state', '$location', '$modal', 'Restangular', 'clientCacheService', 'responseService'];
 
-	return OrganisationSettingsController;
+	return OrganisationController;
 });

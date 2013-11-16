@@ -5,33 +5,36 @@
 define(function () {
 	'use strict';	
 	
-	function AppSettingsController($scope) {
+	function AppSettingsController($scope, $state, $location, Restangular, responseService) {
 		$scope.loading = true;
-		$scope.organizationId = $stateParams.organizationId;
+		$scope.organizationId = $state.params.organizationId;
 
-		var applicationPromise = cloudfoundry.getApplication($stateParams.applicationId);
-		applicationPromise.success(function (application, status, headers) {
-			$scope.application = application;
-			$scope.loading = false;
-		});
-		applicationPromise.error(function (data, status, headers) {
-			$scope.forceLogin(status);
-			$scope.error = 'Failed to load application. Reason: ' + data.code + ' - ' + data.description;
-			$scope.loading = false;
+		Restangular.one('applications', $state.params.applicationId).get().then(function (application) {
+				$scope.application = application;
+				$scope.loading = false;
 		});
 
 		$scope.deleteApplication = function() {
-			var applicationPromise = cloudfoundry.deleteApplication($scope.application.metadata.guid);
-			applicationPromise.success(function (services, status, headers) {
-				$location.path('/app-spaces/' + $scope.organizationId);
+
+			var modalInstance = $modal.open({
+				templateUrl : 'partials/general/delete.html',
+				controller: 'deleteController'
 			});
-			applicationPromise.error(function (data, status, headers) {
-				$scope.error = 'Failed to delete application. Reason: ' + data.code + ' - ' + data.description;
+
+			modalInstance.result.then(function (response) {
+				$scope.loading = true;
+				Restangular.one('applications', $scope.application.metadata.guid).remove().then(function (data, status, headers) {							
+						$location.path('/app-spaces/' + $scope.organizationId);
+						responseService.executeSuccess(data, null, null);
+					},function (data, status, headers) {
+						$scope.error = 'Failed to load organization. Reason: ' + data.code + ' - ' + data.description;
+						responseService.executeError(data, status, headers, $scope, 'organization');
+				});
 			});
 		}
 	}
 
-	AppSettingsController.$inject = ['$scope'];
+	AppSettingsController.$inject = ['$scope', '$state', '$location', 'Restangular', 'responseService'];
 
 	return AppSettingsController;
 });

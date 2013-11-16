@@ -5,19 +5,15 @@
 define(function () {
 	'use strict';	
 	
-	function UserInfoController($scope) {
+	function UserInfoController($scope, $state, $location, Restangular) {
 		$scope.loading = true;
-		var userInfoPromise = cloudfoundry.getUserInfo();
-		userInfoPromise.success(function (data, status, headers) {
+		Restangular.all('userinfo').getList().then(function(userInfo) {
 			$scope.userInfo = data;
 			$scope.loading = false;
-		});
-		userInfoPromise.error(function (data, status, headers) {
-			$scope.error = 'Failed to get user info. Reason: ' + data.code + ' - ' + data.description;
-		});
+		});		
 	}
 
-	UserInfoController.$inject = ['$scope'];
+	UserInfoController.$inject = ['$scope', '$state', '$location', 'Restangular'];
 
 	return UserInfoController;
 });

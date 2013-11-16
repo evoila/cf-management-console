@@ -1,7 +1,8 @@
 package com.github.styx.controllers;
 
-import com.github.styx.domain.Organization;
-import com.github.styx.domain.OrganizationRepository;
+import com.github.styx.api.model.Organization;
+import com.github.styx.api.repositories.OrganizationRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

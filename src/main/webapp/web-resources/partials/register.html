@@ -1,45 +1,35 @@
-<div class="container">
-    <div ng-show="success" class="alert alert-success">
-        {{success}}
-    </div>
-    <div ng-show="error" class="alert alert-error">
-        {{error}}
-    </div>
-    <div>
-        <div class="well well-large text-center">
-            <h2 class="form-signin-heading">Create a Cloud Foundry account</h2>
-            <form name="registerForm" class="form-horizontal" novalidate>
-                <div class="form-group">
-                    <label class="col-lg-2 col-lg-offset-3 control-label" for="email">EMAIL</label>
-                    <div class="col-lg-4">
-                        <input name="registerForm.email" id="email" type="text" class="form-control" ng-model="registerForm.email" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 col-lg-offset-3 control-label" for="email">FIRST NAME</label>
-                    <div class="col-lg-4">
-                        <input name="registerForm.firstName" id="firstName" type="text" class="form-control" ng-model="registerForm.firstName" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 col-lg-offset-3 control-label" for="lastName">LAST NAME</label>
-                    <div class="col-lg-4">
-                        <input name="registerForm.lastName" id="lastName" type="text" class="form-control" ng-model="registerForm.lastName" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 col-lg-offset-3 control-label" for="password">PASSWORD</label>
-                    <div class="col-lg-4">
-                        <input name="registerForm.password" id="password" type="password" class="form-control" ng-model="registerForm.password" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-4 col-lg-offset-4">
-                        <button class="btn btn-lg btn-primary" ng-click="register(registerForm)" ng-disabled="authenticate">Register</button>
-                        <a href="#/login">Back to login >></a>
-                    </div>
-                </div>
-            </form>
+<div class="container" style="width: 600px; margin: 0 auto; margin-top: 100px"> 
+    <form name="registerForm" class="form-standard form-horizontal" novalidate>
+        <h5>Create a Cloud Foundry account</h5>
+        <div class="form-group">
+            <label class="col-lg-2 control-label" for="email">Email</label>
+            <div class="input-group col-lg-10">
+                <input name="registerForm.email" id="email" type="text" class="form-control" ng-model="registerForm.email" required>
+            </div>
         </div>
-    </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label" for="username">First name</label>
+            <div class="input-group col-lg-10">
+               <input name="registerForm.firstName" id="firstName" type="text" class="form-control" ng-model="registerForm.firstName" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label" for="username">Last name</label>
+            <div class="input-group col-lg-10">
+                <input name="registerForm.lastName" id="lastName" type="text" class="form-control" ng-model="registerForm.lastName" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label" for="username">Password</label>
+            <div class="input-group col-lg-10">
+                 <input name="registerForm.password" id="password" type="password" class="form-control" ng-model="registerForm.password" required>
+            </div>
+        </div>
+        <div class="form-group form-buttons">  
+            <div class="col-lg-offset-2 col-lg-10">          
+                <a href="#/login" class="btn btn-default">Back to login</a>
+                <button class="btn btn-primary" ng-click="register(registerForm)" ng-disabled="authenticate">Register</button>
+            </div>
+        </div>
+    </form>
 </div>

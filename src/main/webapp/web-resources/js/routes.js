@@ -44,7 +44,7 @@ define(['app'], function (app) {
 				'navigation': navigation,
 				'body': {
 					templateUrl: 'partials/create-org.html',
-					controller: 'organizationController'
+					controller: 'organisationController'
 				}
 			}
 		}).state('create-space', {
@@ -71,7 +71,7 @@ define(['app'], function (app) {
 				'navigation': navigation,
 				'body': {
 					templateUrl: 'partials/org-settings.html',
-					controller: 'organizationController'
+					controller: 'organisationController'
 				}
 			}
 		}).state('space-settings', {
@@ -89,7 +89,7 @@ define(['app'], function (app) {
 				'navigation': navigation,
 				'body': {
 					templateUrl: 'partials/org-users.html',
-					controller: 'organisationUsersController'
+					controller: 'organisationUserController'
 				}
 			}
 		}).state('users', {

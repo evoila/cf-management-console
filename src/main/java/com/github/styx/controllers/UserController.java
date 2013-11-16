@@ -1,8 +1,9 @@
 package com.github.styx.controllers;
 
-import com.github.styx.domain.User;
-import com.github.styx.domain.UserInfo;
-import com.github.styx.domain.UserRepository;
+import com.github.styx.api.model.User;
+import com.github.styx.api.model.UserInfo;
+import com.github.styx.api.repositories.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

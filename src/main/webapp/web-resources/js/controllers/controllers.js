@@ -9,6 +9,8 @@ define(['angular',
 	'controllers/app/appSettingsController',
 	'controllers/app/appSpacesController',
 	
+	'controllers/general/deleteController',
+	
 	'controllers/general/marketPlaceController',
 	'controllers/general/navigationController',
 	
@@ -26,6 +28,7 @@ define(['angular',
 	],
  	function (angular, AlertController,
  		AppLogController, AppSettingsController, AppSpacesController,
+ 		DeleteController,
  		MarketPlaceController, NavigationController,
  		OrganisationController, OrganisationUserController,
  		SpaceController,
@@ -39,6 +42,8 @@ define(['angular',
  		controllers.controller('appLogController', AppLogController);
  		controllers.controller('appSettingsController', AppSettingsController);
  		controllers.controller('appSpacesController', AppSpacesController);
+
+ 		controllers.controller('deleteController', DeleteController);
  		
  		controllers.controller('marketPlaceController', MarketPlaceController);
  		controllers.controller('navigationController', NavigationController);

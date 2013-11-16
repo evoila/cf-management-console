@@ -5,22 +5,22 @@
 define(function () {
 	'use strict';	
 	
-	function RegisterController($scope) {
+	function RegisterController($scope, $http, responseService) {
+		
 		$scope.register = function(userForm) {
-			$scope.success = '';
-			$scope.error = '';
+			var head = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Accept': 'application/json;charset=utf-8'}};
+			var data = $.param({'username': userForm.email, 'firstName': userForm.firstName, 'lastName': userForm.lastName, 'password': userForm.password});
 
-			var registrationPromise = cloudfoundry.register(userForm);
-			registrationPromise.success(function (data, status, headers) {
-				$scope.success = 'Registration successful! Your user is active, ask an organization manager to add you to an organization.';
-			});
-			registrationPromise.error(function (data, status, headers) {
-				$scope.error = 'Registration failed. Reason: ' + data.message;
-			});
-		}
+
+			$http.post('api/users', data, head).success(function(data, status, headers, config) {
+					responseService.executeSuccess(data, headers, 'dashboard');
+				}).error(function(data, status, headers, config) {					
+					responseService.executeError(data, status, headers, $scope, 'user');
+			});			
+		};
 	}
 
-	RegisterController.$inject = ['$scope'];
+	RegisterController.$inject = ['$scope', '$http', 'responseService'];
 
 	return RegisterController;
 });
