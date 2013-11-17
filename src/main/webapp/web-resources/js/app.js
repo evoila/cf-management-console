@@ -63,7 +63,7 @@ define(['angular',
 		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 		$httpProvider.defaults.headers.common['Accept'] = 'application/json;charset=UTF-8';
 		
-		RestangularProvider.setBaseUrl("http://localhost:8080/styx/api");
+		RestangularProvider.setBaseUrl("/api");
 		RestangularProvider.setListTypeIsArray(false);
 		
 		RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
@@ -93,5 +93,5 @@ define(['angular',
 
 		
 
-	}).constant('REST_API', 'http://localhost:8080/web');
+	});
 });

@@ -4,11 +4,11 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.styx</groupId>
-	<artifactId>styx</artifactId>
+	<groupId>com.github.cfc</groupId>
+	<artifactId>cfc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Styx</name>
+	<name>cfc</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -38,12 +38,6 @@
 			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>org.cloudfoundry</groupId>
-			<artifactId>cloudfoundry-client-lib</artifactId>
-			<version>1.0.0</version>
-		</dependency>-->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -125,6 +119,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>cfc</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -151,7 +146,7 @@
 				<version>2.1</version>
 				<configuration>
 					<port>8080</port>
-					<path>/styx</path>
+					<path>/cfc</path>
 				</configuration>
 			</plugin>
 		</plugins>

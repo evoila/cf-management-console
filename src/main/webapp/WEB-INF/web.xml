@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
-    <display-name>Styx</display-name>
+    <display-name>CloudFoundry Control</display-name>
 
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
@@ -15,7 +15,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.github.styx.config.StyxWebConfig</param-value>
+            <param-value>com.github.cfc.config.ApplicationWebConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

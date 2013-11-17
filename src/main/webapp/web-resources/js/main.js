@@ -36,10 +36,10 @@ require({
 			function ($rootScope, $state, $stateParams, clientCacheService) {
 				console.log('main.js - called');
 
-				$rootScope.forceLogin = function(status){
-					if(status === 401){
+				$rootScope.forceLogin = function(status) {
+					if(status === 401) {
 						clientCacheService.logout();
-						$location.path('/login')
+						$location.path('/login');
 					}
 				};
 		}]);
