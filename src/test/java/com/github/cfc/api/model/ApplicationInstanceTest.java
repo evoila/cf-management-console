@@ -3,7 +3,6 @@ package com.github.cfc.api.model;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.cfc.api.model.ApplicationInstance;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -25,7 +24,7 @@ public class ApplicationInstanceTest {
         assertEquals("Unexpected id", "0", instance.getId());
         assertEquals("Unexpected state", "RUNNING", instance.getState());
         assertEquals("Unexpected console ip", "172.21.28.149", instance.getConsoleIp());
-        assertEquals("Unexpected console port", 61012, instance.getConsolePort());
+        assertEquals("Unexpected console port", "61012", instance.getConsolePort());
     }
 
 }
