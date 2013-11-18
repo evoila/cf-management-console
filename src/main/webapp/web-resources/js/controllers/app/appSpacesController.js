@@ -24,7 +24,7 @@ define(function () {
 
 		$scope.startApplication = function (applicationId) {
 			Restangular.all('applications').customPUT(applicationId, null, null, {'state': 'STARTED'}).then(function(data) {
-				responseService.executeSuccess(response, response.headers, null);
+				responseService.executeSuccess(data, data.headers, null);
 				angular.forEach($scope.spaces, function (space, spaceIndex) {
 					if (space.selected) {
 						var index = -1;
@@ -38,14 +38,14 @@ define(function () {
 						}
 					}
 				});
-			}, function(response) {
+			}, function(data) {
 				$scope.error = 'Failed to start application. Reason: ' + data.code + ' - ' + data.description;
 			});
 		};
 
 		$scope.stopApplication = function (applicationId) {
 			Restangular.all('applications').customPUT(applicationId, null, null, {'state': 'STOPPED'}).then(function(data) {
-				responseService.executeSuccess(response, response.headers, null);
+				responseService.executeSuccess(data, data.headers, null);
 				angular.forEach($scope.spaces, function (space, spaceIndex) {
 					if (space.selected) {
 						var index = -1;
@@ -59,10 +59,10 @@ define(function () {
 						}
 					}
 				});
-			}, function(response) {
+			}, function(data) {
 				$scope.error = 'Failed to start application. Reason: ' + data.code + ' - ' + data.description;
 			});
-		}
+		};
 
 		$scope.selectSpace = function (spaceName) {
 			$scope.space.selected = spaceName;

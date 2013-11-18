@@ -5,7 +5,7 @@
 define(function () {
 	'use strict';	
 	
-	function AppSettingsController($scope, $state, $location, Restangular, responseService) {
+	function AppSettingsController($scope, $state, $modal, $location, Restangular, responseService) {
 		$scope.loading = true;
 		$scope.organizationId = $state.params.organizationId;
 
@@ -31,10 +31,10 @@ define(function () {
 						responseService.executeError(data, status, headers, $scope, 'organization');
 				});
 			});
-		}
+		};
 	}
 
-	AppSettingsController.$inject = ['$scope', '$state', '$location', 'Restangular', 'responseService'];
+	AppSettingsController.$inject = ['$scope', '$state', '$modal', '$location', 'Restangular', 'responseService'];
 
 	return AppSettingsController;
 });

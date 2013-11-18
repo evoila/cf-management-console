@@ -43,6 +43,7 @@
 										<th>Instances</th>
 										<th>Memory</th>
 										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -52,7 +53,7 @@
 											<span class="label label-danger" ng-hide="app.state == 'STARTED'">STOPPED</span>
 										</td>
 										<td>
-											{{app.name}} <a href="#/app-settings/{{organizationId}}/{{app.id}}" style="text-decoration: none"><span class="glyphicon glyphicon-info-sign"></span></a>
+											{{app.name}}
 											<div ng-repeat="url in app.urls">
 												<a href="http://{{url}}">{{url}}</a>
 											</div>
@@ -60,11 +61,14 @@
 										<td>{{app.instances}}</td>
 										<td>{{app.memory}} MB</td>
 										<td>
-											<button class="btn btn-danger btn-sm" ng-show="app.state == 'STARTED'" ng-click="stopApplication(app.id)">
-												<span class="glyphicon glyphicon-stop"></span>STOP
+											<a class="btn btn-info" href="#/app-settings/{{organizationId}}/{{app.id}}">Details</a>
+										</td>
+										<td>
+											<button class="btn btn-danger" ng-show="app.state == 'STARTED'" ng-click="stopApplication(app.id)">
+												<span class="glyphicon glyphicon-stop"></span> Stop Application
 											</button>
-											<button class="btn btn-success btn-sm" ng-hide="app.state == 'STARTED'" ng-click="startApplication(app.id)">
-												<span class="glyphicon glyphicon-play"></span>START
+											<button class="btn btn-success" ng-hide="app.state == 'STARTED'" ng-click="startApplication(app.id)">
+												<span class="glyphicon glyphicon-play"></span> Start Application	
 											</button>
 										</td>
 									</tr>

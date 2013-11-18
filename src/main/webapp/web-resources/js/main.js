@@ -36,6 +36,11 @@ require({
 			function ($rootScope, $state, $stateParams, clientCacheService) {
 				console.log('main.js - called');
 
+				if (clientCacheService.getUser != null)
+					$http.defaults.headers.common['Authorization'] = 'bearer ' + clientCacheService.getUser().accessToken;
+				else 
+					$rootScope.forceLogin();
+				
 				$rootScope.forceLogin = function(status) {
 					if(status === 401) {
 						clientCacheService.logout();
