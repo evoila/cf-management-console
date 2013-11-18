@@ -8,10 +8,12 @@ define(function () {
 	function AppSettingsController($scope, $state, $modal, $location, Restangular, responseService) {
 		$scope.loading = true;
 		$scope.organizationId = $state.params.organizationId;
+		$scope.applicationId = null;
 
 		Restangular.one('applications', $state.params.applicationId).get().then(function (application) {
 				$scope.application = application;
-				$scope.loading = false;
+				$scope.applicationId = $scope.application.id;
+				$scope.loading = false;				
 		});
 
 		$scope.deleteApplication = function() {
@@ -23,7 +25,7 @@ define(function () {
 
 			modalInstance.result.then(function (response) {
 				$scope.loading = true;
-				Restangular.one('applications', $scope.application.metadata.guid).remove().then(function (data, status, headers) {							
+				Restangular.one('applications', $scope.applicationId).remove().then(function (data, status, headers) {							
 						$location.path('/app-spaces/' + $scope.organizationId);
 						responseService.executeSuccess(data, null, null);
 					},function (data, status, headers) {

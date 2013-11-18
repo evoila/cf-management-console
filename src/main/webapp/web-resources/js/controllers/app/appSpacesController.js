@@ -16,7 +16,7 @@ define(function () {
 			}
 			$scope.spaces = data;
 			$scope.loading = false;
-		}, function(response) {
+		}, function(data) {
 			$scope.forceLogin(status);
 			$scope.error = 'Failed to load spaces. Reason: ' + data.code + ' - ' + data.description;
 			$scope.loading = false;
@@ -66,7 +66,7 @@ define(function () {
 
 		$scope.selectSpace = function (spaceName) {
 			$scope.space.selected = spaceName;
-		}
+		};
 	}
 
 	AppSpacesController.$inject = ['$scope', '$state', 'Restangular', 'responseService'];

@@ -28,7 +28,9 @@ import static org.mvel2.MVEL.evalToString;
 @Repository
 public class OrganizationRepository extends BaseRepository {
 
-    private final SpaceRepository spaceRepository;
+    private static final String V2_ORGANIZATIONS = "v2/organizations/";
+    
+	private final SpaceRepository spaceRepository;
 
     @Autowired
     protected OrganizationRepository(final RestTemplate restTemplate, final AsyncTaskExecutor asyncTaskExecutor, 
@@ -41,16 +43,16 @@ public class OrganizationRepository extends BaseRepository {
 
     public void deleteById(String token, String id) {
     	
-        Map<String, Object> organizationResponse = apiGet(token, "v2/organizations/".concat(id).concat("?inline-relations-depth=1"));
+        Map<String, Object> organizationResponse = apiGet(token, V2_ORGANIZATIONS.concat(id).concat("?inline-relations-depth=1"));
         for (Object app : eval("entity.spaces", organizationResponse, List.class)) {
             spaceRepository.deleteById(token, evalToString("metadata.guid", app));
         }
-        apiDelete(token, "v2/organizations/".concat(id));
+        apiDelete(token, V2_ORGANIZATIONS.concat(id));
     }
 
     public Organization getById(final String token, final String id, final int depth) {
     	
-        Map<String, Object> organizationResponse = apiGet(token, "v2/organizations/".concat(id).concat("?inline-relations-depth=").concat(valueOf(depth)));
+        Map<String, Object> organizationResponse = apiGet(token, V2_ORGANIZATIONS.concat(id).concat("?inline-relations-depth=").concat(valueOf(depth)));
         Organization organization = Organization.fromCloudFoundryModel(organizationResponse);
         return appendUsername(token, organization);
     }
@@ -69,7 +71,7 @@ public class OrganizationRepository extends BaseRepository {
 
     public String updateOrganization(String token, String id, String body) {
     	
-        return apiPut(token, "v2/organizations/".concat(id).concat("?collection-method=add"), body);
+        return apiPut(token, V2_ORGANIZATIONS.concat(id).concat("?collection-method=add"), body);
     }
 
     public String createOrganization(String token, String body) {

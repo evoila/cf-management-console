@@ -31,7 +31,11 @@ import com.github.cfc.api.model.ServiceInstance;
 @Repository
 public class ApplicationRepository extends BaseRepository {
 
-    private final String apiBaseUri;
+    private static final String INSTANCES = "/instances";
+
+	private static final String V2_APPS = "v2/apps/";
+    
+	private final String apiBaseUri;
 
     @Autowired
     protected ApplicationRepository(RestTemplate restTemplate, AsyncTaskExecutor asyncTaskExecutor, ObjectMapper objectMapper, String apiBaseUri, String uaaBaseUri) {
@@ -40,13 +44,13 @@ public class ApplicationRepository extends BaseRepository {
     }
 
     public void deleteById(String token, String id) {
-        apiDelete(token, "v2/applications/".concat(id));
+        apiDelete(token, V2_APPS.concat(id));
     }
 
     public Application getById(String token, String id) {
-        Future<ResponseEntity<Map<String, Object>>> applicationResponseFuture = asyncApiGet(token, "v2/apps/".concat(id).concat("?inline-relations-depth=2"));
-        Future<ResponseEntity<Map<String, Object>>> applicationInstancesResponseFuture = asyncApiGet(token, "v2/apps/".concat(id).concat("/instances"));
-        Future<ResponseEntity<Map<String, Object>>> serviceInstancesResponseFuture = asyncApiGet(token, "v2/apps/".concat(id).concat("/service_bindings?inline-relations-depth=3"));
+        Future<ResponseEntity<Map<String, Object>>> applicationResponseFuture = asyncApiGet(token, V2_APPS.concat(id).concat("?inline-relations-depth=2"));
+        Future<ResponseEntity<Map<String, Object>>> applicationInstancesResponseFuture = asyncApiGet(token, V2_APPS.concat(id).concat(INSTANCES));
+        Future<ResponseEntity<Map<String, Object>>> serviceInstancesResponseFuture = asyncApiGet(token, V2_APPS.concat(id).concat("/service_bindings?inline-relations-depth=3"));
 
         try {
             ResponseEntity<Map<String, Object>> applicationResponseEntity = applicationResponseFuture.get();
@@ -82,14 +86,14 @@ public class ApplicationRepository extends BaseRepository {
     }
 
     public ResponseEntity<String> getInstanceLog(String token, String id, String instance, String logName) {
-        String path = "v2/apps/".concat(id).concat("/instances/").concat(instance).concat("/files/logs/").concat(logName).concat(".log");
+        String path = V2_APPS.concat(id).concat("/instances/").concat(instance).concat("/files/logs/").concat(logName).concat(".log");
         return exchange(token, apiBaseUri, HttpMethod.GET, path, null, new ParameterizedTypeReference<String>() {});
     }
 
     public Application updateApplication(String token, String id, String body) {
-        apiPut(token, "v2/apps/".concat(id).concat("?inline-relations-depth=2"), body);
+        apiPut(token, V2_APPS.concat(id).concat("?inline-relations-depth=2"), body);
 
-        Map<String, Object> applicationResponse = apiGet(token, "v2/apps/".concat(id).concat("?inline-relations-depth=2"));
+        Map<String, Object> applicationResponse = apiGet(token, V2_APPS.concat(id).concat("?inline-relations-depth=2"));
         return Application.fromCloudFoundryModel(applicationResponse);
     }
 }

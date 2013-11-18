@@ -1,27 +1,25 @@
 require({
 	paths: {
-		angular : '../lib/angular/angular',
+		angular : '../lib/angular/angular.min',
 		resource : '../lib/angular/angular-resource.min',
 		underscore : '../lib/underscore/underscore.min',
 		domReady : '../lib/require/domReady',
 		states : '../lib/angular-ui/angular-ui-states',
 		restangular : '../lib/restangular/restangular',
-		moment : '../lib/moment/moment',
-		marked : '../lib/marked/marked',
-		highlight : '../lib/highlight/highlight',
-		highcharts : '../lib/highchart/highchart',
+		angularui : '../js/directives/angular-ui/ui-bootstrap-0.6.0',
 		stomp : '../lib/stomp/stomp'
 	},
 	shim: {
 		'angular' : {'exports' : 'angular'},
 		'states' : { 'deps' : ['angular']},
 		'underscore' : {'exports' : '_'},
-		'highcharts' : { 'exports' : 'Highcharts'}
+		'restangular' : { 'deps' : ['angular']},
+		'angularui' : { 'deps' : ['angular']}
 	},
 	priority: [
 		'angular'
 	],
-	urlArgs: 'v=0.1'
+	urlArgs: 'v=1.1'
 }, ['app', 
 	'angular', 
 	'routes', 
@@ -30,16 +28,10 @@ require({
 	'services/services', 
 	'directives/directives', 
 	'providers/providers', 
-	'filters/filters', 
-	'moment', 'highcharts', 'marked', 'highlight'], function (app) {
-		app.run(['$rootScope', '$state', '$stateParams', 'clientCacheService',
-			function ($rootScope, $state, $stateParams, clientCacheService) {
+	'filters/filters'], function (app) {
+		app.run(['$rootScope', '$state', '$stateParams', 'clientCacheService', '$http',
+			function ($rootScope, $state, $stateParams, clientCacheService, $http) {
 				console.log('main.js - called');
-
-				if (clientCacheService.getUser != null)
-					$http.defaults.headers.common['Authorization'] = 'bearer ' + clientCacheService.getUser().accessToken;
-				else 
-					$rootScope.forceLogin();
 				
 				$rootScope.forceLogin = function(status) {
 					if(status === 401) {
@@ -47,6 +39,13 @@ require({
 						$location.path('/login');
 					}
 				};
+				
+				if (clientCacheService.getUser() != null) {
+					var token = clientCacheService.getUser().accessToken;
+					$http.defaults.headers.common['Authorization'] = 'bearer ' + token;
+				} else 
+					$rootScope.forceLogin();
+
 		}]);
 
 });

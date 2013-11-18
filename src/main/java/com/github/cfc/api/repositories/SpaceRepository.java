@@ -21,7 +21,9 @@ import static org.mvel2.MVEL.evalToString;
 @Repository
 public class SpaceRepository extends BaseRepository {
 
-    private final ApplicationRepository applicationRepository;
+    private static final String V2_SPACES = "v2/spaces/";
+    
+	private final ApplicationRepository applicationRepository;
 
     @Autowired
     protected SpaceRepository(RestTemplate restTemplate, AsyncTaskExecutor asyncTaskExecutor, ObjectMapper objectMapper, String apiBaseUri, String uaaBaseUri, ApplicationRepository applicationRepository) {
@@ -30,15 +32,15 @@ public class SpaceRepository extends BaseRepository {
     }
 
     public void deleteById(String token, String id) {
-        Map<String, Object> spaceResponse = apiGet(token, "v2/spaces/".concat(id).concat("?inline-relations-depth=1"));
+        Map<String, Object> spaceResponse = apiGet(token, V2_SPACES.concat(id).concat("?inline-relations-depth=1"));
         for (Object app : eval("entity.apps", spaceResponse, List.class)) {
             applicationRepository.deleteById(token, evalToString("metadata.guid", app));
         }
-        apiDelete(token, "v2/spaces/".concat(id));
+        apiDelete(token, V2_SPACES.concat(id));
     }
 
     public Space getById(String token, String id) {
-        Map<String, Object> spaceResponse = apiGet(token, "v2/spaces/".concat(id).concat("?inline-relations-depth=2"));
+        Map<String, Object> spaceResponse = apiGet(token, V2_SPACES.concat(id).concat("?inline-relations-depth=2"));
         Space space = Space.fromCloudFoundryModel(spaceResponse);
         return appendUsername(token, Arrays.asList(space)).get(0); // TODO refactor this
     }
@@ -61,7 +63,7 @@ public class SpaceRepository extends BaseRepository {
     }
 
     public String updateSpace(String token, String id, String body) {
-        return apiPut(token, "v2/spaces/".concat(id).concat("?collection-method=add"), body);
+        return apiPut(token, V2_SPACES.concat(id).concat("?collection-method=add"), body);
     }
 
     public String createSpace(String token, String body) {

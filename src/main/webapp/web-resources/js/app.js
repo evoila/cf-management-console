@@ -7,7 +7,7 @@ define(['angular',
 	'filters/filters',
 	'controllers/controllers',
 	'directives/tableDirective',
-	'directives/angular-ui/ui-bootstrap-0.6.0'],
+	'angularui'],
 	function (angular) {
 
 	'use strict';

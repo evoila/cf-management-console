@@ -12,7 +12,7 @@ define(['app'], function (app) {
 		};
 
 		$stateProvider.state('app-log', {
-			url: '/app-log/:organizationId/:applicationId/:instanceId/:fileName',
+			url: '/app-log/:organizationId/:applicationId/instances/:instanceId/:fileName',
 			views: {
 				'navigation': navigation,		
 				'body': {
@@ -21,7 +21,7 @@ define(['app'], function (app) {
 				}
 			}
 		}).state('app-settings', {
-			url: '/app-settings/:organizationId/:applicationId',
+			url: '/app-settings/:organizationId/applications/:applicationId',
 			views: {
 				'navigation': navigation,
 				'body': {
@@ -75,7 +75,7 @@ define(['app'], function (app) {
 				}
 			}
 		}).state('space-settings', {
-			url: '/space-settings/:organizationId/:spaceId',
+			url: '/space-settings/:organizationId/spaces/:spaceId',
 			views: {
 				'navigation': navigation,
 				'body': {
