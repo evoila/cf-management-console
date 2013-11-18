@@ -25,6 +25,8 @@ define(['angular',
 	]).config(function($httpProvider, RestangularProvider) {
 		console.log('app.js called');
 
+        $httpProvider.interceptors.push('httpTransferInterceptor');
+
 		var entityId = function(entity) {
 			var link = relations(entity, 'self');
 			if (link != undefined) {
