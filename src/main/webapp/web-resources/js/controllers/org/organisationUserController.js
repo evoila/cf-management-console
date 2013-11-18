@@ -32,7 +32,7 @@ define(function () {
 					responseService.executeSuccess(response, response.headers, null);
 				});	
 			}
-		}
+		};
 
 		/**
 		Restangular.all('users').getList().then(function (users) {
@@ -45,15 +45,10 @@ define(function () {
 		); **/
 
 		Restangular.one('organizations', $state.params.organizationId).get().then(function (organization) {				
-				$scope.organization = organization;
-				$scope.users = organization.users;
-				$scope.loading = false;
-			},
-			function (reason, status, headers) {
-				$scope.loading = false;
-				$scope.error = 'Failed to retrieve users details. Reason: ' + JSON.stringify(reason.data);
-			}
-		);
+			$scope.organization = organization;
+			$scope.users = organization.users;
+			$scope.loading = false;
+		});
 			
 	}
 

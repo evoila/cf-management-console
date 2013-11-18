@@ -20,9 +20,7 @@ define(function () {
 				clientCacheService.clear;
 				$location.path('/login');
 			});			
-		} //else {
-		//	$route.reload();
-		//}
+		}
 	}
 
 	HomeController.$inject = ['$scope', 'Restangular', 'clientCacheService', '$location', '$route'];

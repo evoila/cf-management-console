@@ -10,9 +10,6 @@ define(function () {
 
 		Restangular.one('organizations', $state.params.organizationId).getList().then(function (data, status, headers) {
 			$scope.organization = data;
-		}, function (data, status, headers) {
-			$scope.forceLogin(status);
-			$scope.error = 'Failed to load organizations. Reason: ' + data.code + ' - ' + data.description;
 		});
 
 		$scope.createOrganization = function(organizationForm) {
@@ -28,13 +25,7 @@ define(function () {
 					
 					$location.path('/app-spaces/' + organization.metadata.guid);
 					responseService.executeSuccess(space, null, null);
-				}, function(data, status, header) {
-					$scope.error = 'Failed to create organization. Reason: ' + data.code + ' - ' + data.description;
-					responseService.executeError(data, status, headers, $scope, 'organization');
 				});
-			}, function(data, status, header) {
-				$scope.error = 'Failed to create organization. Reason: ' + data.code + ' - ' + data.description;
-				responseService.executeError(data, status, headers, $scope, 'organization');
 			});
 		};
 
@@ -50,11 +41,8 @@ define(function () {
 			modalInstance.result.then(function (response) {
 				$scope.loading = true;
 				Restangular.one('organizations', $scope.organization.id).remove().then(function (data, status, headers) {							
-						$location.path('/app-spaces/' + data[0].id);
-						responseService.executeSuccess(data, null, null);
-					},function (data, status, headers) {
-						$scope.error = 'Failed to load organization. Reason: ' + data.code + ' - ' + data.description;
-						responseService.executeError(data, status, headers, $scope, 'organization');
+					$location.path('/app-spaces/' + data[0].id);
+					responseService.executeSuccess(data, null, null);
 				});
 			});
 		};

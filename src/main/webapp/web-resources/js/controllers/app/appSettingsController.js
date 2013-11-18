@@ -26,11 +26,8 @@ define(function () {
 			modalInstance.result.then(function (response) {
 				$scope.loading = true;
 				Restangular.one('applications', $scope.applicationId).remove().then(function (data, status, headers) {							
-						$location.path('/app-spaces/' + $scope.organizationId);
-						responseService.executeSuccess(data, null, null);
-					},function (data, status, headers) {
-						$scope.error = 'Failed to load organization. Reason: ' + data.code + ' - ' + data.description;
-						responseService.executeError(data, status, headers, $scope, 'organization');
+					$location.path('/app-spaces/' + $scope.organizationId);
+					responseService.executeSuccess(data, null, null);
 				});
 			});
 		};

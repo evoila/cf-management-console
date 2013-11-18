@@ -16,10 +16,6 @@ define(function () {
 			}
 			$scope.spaces = data;
 			$scope.loading = false;
-		}, function(data) {
-			$scope.forceLogin(status);
-			$scope.error = 'Failed to load spaces. Reason: ' + data.code + ' - ' + data.description;
-			$scope.loading = false;
 		});
 
 		$scope.startApplication = function (applicationId) {
@@ -38,8 +34,6 @@ define(function () {
 						}
 					}
 				});
-			}, function(data) {
-				$scope.error = 'Failed to start application. Reason: ' + data.code + ' - ' + data.description;
 			});
 		};
 
@@ -59,8 +53,6 @@ define(function () {
 						}
 					}
 				});
-			}, function(data) {
-				$scope.error = 'Failed to start application. Reason: ' + data.code + ' - ' + data.description;
 			});
 		};
 

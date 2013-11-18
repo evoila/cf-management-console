@@ -1,8 +1,8 @@
 <div class="container">
-	<div ng-show="loading">
+		<div ng-show="loading">
 		<div class="well loading-well">
-			<h3 class="text-center">Keep your pants on...</h3>
-			<h5 class="text-center">We are loading your users!</h5>			
+			<p class="text-center"><i class="fa fa-5x fa-spinner fa-spin"></i></p>
+			<h5 class="text-center">Hold on... We are loading your spaces!</h5>
 		</div>
 	</div>
 	<div ng-hide="loading">
@@ -10,8 +10,8 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<span class="panel-title">Users and Roles</span>
-					<button class="btn btn-success pull-right" ng-click="addNewUser(organization)" ng-hide="blockInput">
-						Add User to Organisation
+					<button class="btn btn-success btn-sm pull-right" style="margin-top: -3px" ng-click="addNewUser(organization)" ng-hide="blockInput">
+						Add User to Organisation <span class="glyphicon glyphicon-plus"></span>
 					</button>
 				</div>
 				<div class="panel-body">
