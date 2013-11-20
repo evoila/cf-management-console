@@ -11,6 +11,10 @@
 		<style>[ng-cloak] {display: none}</style>
 	</head>
 	<body ng-controller="homeController">
+    <div wc-overlay wc-overlay-delay="1000">
+        <span ng-cloak>Loading... please wait!</span>
+        <img src="img/ajax-loader.gif">
+    </div>
 		<div ui-view="navigation"></div>
 		<div class="container" ng-controller="alertController" style="padding-top: 60px">
 			<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">

@@ -7,10 +7,12 @@ require({
 		states : '../lib/angular-ui/angular-ui-states',
 		restangular : '../lib/restangular/restangular',
 		angularui : '../js/directives/angular-ui/ui-bootstrap-0.6.0',
+        angularoverlay: '../lib/angular-overlay/wcAngularOverlay',
 		stomp : '../lib/stomp/stomp'
 	},
 	shim: {
 		'angular' : {'exports' : 'angular'},
+        'resource': {'deps' : ['angular']},
 		'states' : { 'deps' : ['angular']},
 		'underscore' : {'exports' : '_'},
 		'restangular' : { 'deps' : ['angular']},
@@ -27,7 +29,7 @@ require({
 	'controllers/controllers', 
 	'services/services', 
 	'directives/directives', 
-	'providers/providers', 
+	'providers/providers',
 	'filters/filters'], function (app) {
 		app.run(['$rootScope', '$state', '$stateParams', 'clientCacheService', '$http',
 			function ($rootScope, $state, $stateParams, clientCacheService, $http) {
