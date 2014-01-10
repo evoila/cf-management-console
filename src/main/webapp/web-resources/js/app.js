@@ -25,7 +25,7 @@ define(['angular',
 	]).config(function($httpProvider, RestangularProvider) {
 		console.log('app.js called');
 
-        $httpProvider.interceptors.push('httpTransferInterceptor');
+        //$httpProvider.interceptors.push('httpTransferInterceptor');
 
 		var entityId = function(entity) {
 			var link = relations(entity, 'self');
@@ -65,7 +65,7 @@ define(['angular',
 		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 		$httpProvider.defaults.headers.common['Accept'] = 'application/json;charset=UTF-8';
 		
-		RestangularProvider.setBaseUrl("/styx/api");
+		RestangularProvider.setBaseUrl("/cfc/api");
 		RestangularProvider.setListTypeIsArray(false);
 		
 		RestangularProvider.setResponseExtractor(function(response, operation, what, url) {

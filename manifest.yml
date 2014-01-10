@@ -1,8 +1,10 @@
 ---
 applications:
-- name: styx
-  memory: 1G
+- name: cfc
+  memory: 512M
   instances: 1
-  path: target/styx-0.0.1-SNAPSHOT.war
+  path: target/cfc-0.0.1-SNAPSHOT.war
+  host: cfc
+  domain: 192.168.178.232.xip.io
   buildpack: git://github.com/cloudfoundry/cloudfoundry-buildpack-java.git
 
