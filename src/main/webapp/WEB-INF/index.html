@@ -6,15 +6,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="css/bootstrap.css">  
 		<link rel="stylesheet" href="css/main.css">
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
 		<style>[ng-cloak] {display: none}</style>
 	</head>
 	<body ng-controller="homeController">
-    <div wc-overlay wc-overlay-delay="1000">
-        <span ng-cloak>Loading... please wait!</span>
-        <img src="img/ajax-loader.gif">
-    </div>
 		<div ui-view="navigation"></div>
 		<div class="container" ng-controller="alertController" style="padding-top: 60px">
 			<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">

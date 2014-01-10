@@ -3,17 +3,17 @@
  */
 package com.github.cfc.config;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.CoreConnectionPNames;
-import org.apache.http.params.HttpParams;
+import java.util.List;
+
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,7 +32,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * 
@@ -43,28 +44,35 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @PropertySource("classpath:application.properties")
-public class ApplicationWebConfig extends WebMvcConfigurerAdapter {
+public class CustomWebConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private Environment env;
 
     @Bean
     public RestTemplate getRestTemplate() {
-        final HttpParams httpParams = new BasicHttpParams();
-        httpParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 5 * 1000);
-        httpParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 5 * 1000);
-        httpParams.setBooleanParameter(CoreConnectionPNames.STALE_CONNECTION_CHECK, false);
-        
-        SchemeRegistry schemeRegistry = new SchemeRegistry();
-        schemeRegistry.register(new Scheme("http", 80, PlainSocketFactory.getSocketFactory()));
-        schemeRegistry.register(new Scheme("https", 443, SSLSocketFactory.getSocketFactory()));
-        
-        final PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager(schemeRegistry);
-        connectionManager.setMaxTotal(100);
-        connectionManager.setDefaultMaxPerRoute(10);
+    	RequestConfig requestConfig = RequestConfig.custom()
+    			.setConnectTimeout(5 * 1000)
+    			.setSocketTimeout(5 * 1000)
+    			.setStaleConnectionCheckEnabled(false)
+    			.build();
+    	
+    	
+        Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
+        		.register("http", PlainConnectionSocketFactory.getSocketFactory())
+        		.register("https", SSLConnectionSocketFactory.getSocketFactory())
+        		.build();
+    	
+        PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = new PoolingHttpClientConnectionManager(registry);
+        poolingHttpClientConnectionManager.setMaxTotal(100);
         
         final RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(new DefaultHttpClient(connectionManager, httpParams)));
+        CloseableHttpClient httpClientBuilder = HttpClientBuilder.create()
+        		.setConnectionManager(poolingHttpClientConnectionManager)
+        		.setDefaultRequestConfig(requestConfig)
+        		.build();
+        
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(httpClientBuilder));
         return new RestTemplate();
     }
 
@@ -110,13 +118,13 @@ public class ApplicationWebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/css/**").addResourceLocations("/web-resources/css/");
-        registry.addResourceHandler("/fonts/**").addResourceLocations("/web-resources/fonts/");
-        registry.addResourceHandler("/img/**").addResourceLocations("/web-resources/img/");
-        registry.addResourceHandler("/lib/**").addResourceLocations("/web-resources/lib/");
-        registry.addResourceHandler("/js/**").addResourceLocations("/web-resources/js/");
-        registry.addResourceHandler("/partials/**").addResourceLocations("/web-resources/partials/");
-        registry.addResourceHandler("/index.html").addResourceLocations("/web-resources/index.html");
+        registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/");
+        registry.addResourceHandler("/fonts/**").addResourceLocations("/WEB-INF/fonts/");
+        registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/img/");
+        registry.addResourceHandler("/lib/**").addResourceLocations("/WEB-INF/lib/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
+        registry.addResourceHandler("/partials/**").addResourceLocations("/WEB-INF/partials/");
+        registry.addResourceHandler("/index.html").addResourceLocations("/WEB-INF/index.html");
     }
 
     @Override

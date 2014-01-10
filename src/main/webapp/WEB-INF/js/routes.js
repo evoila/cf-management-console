@@ -4,7 +4,7 @@
 define(['app'], function (app) {
 	return app.config(['$stateProvider', '$routeProvider', '$urlRouterProvider', 
 		function($stateProvider, $routeProvider, $urlRouterProvider) {
-		console.log('routes.js - called', app);
+		console.log('routes.js - called');
 		
 		var navigation = {
 			templateUrl: 'partials/navigation.html',

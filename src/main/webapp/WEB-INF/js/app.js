@@ -65,7 +65,8 @@ define(['angular',
 		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 		$httpProvider.defaults.headers.common['Accept'] = 'application/json;charset=UTF-8';
 		
-		RestangularProvider.setBaseUrl("/cfc/api");
+		RestangularProvider.setBaseUrl("/api");
+		//RestangularProvider.setBaseUrl("/cfc/api");
 		RestangularProvider.setListTypeIsArray(false);
 		
 		RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
