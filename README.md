@@ -33,8 +33,8 @@ scim:
 
 # Screenshots
 
-![App Spaces](https://raw.github.com/ravanrijn/styx/master/appspaces.png)
-![App](https://raw.github.com/ravanrijn/styx/master/app.png)
+![App Spaces](https://github.com/jhiemer/cfc/blob/master/app-spaces.png)
+![App](https://github.com/jhiemer/cfc/blob/master/application-details.png)
 
 # Copyright and license
 
