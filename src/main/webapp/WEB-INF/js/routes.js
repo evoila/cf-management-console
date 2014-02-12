@@ -11,7 +11,8 @@ define(['app'], function (app) {
 			controller: 'navigationController'
 		};
 
-		$stateProvider.state('app-log', {
+		$stateProvider
+		.state('app-log', {
 			url: '/app-log/:organizationId/:applicationId/instances/:instanceId/:fileName',
 			views: {
 				'navigation': navigation,		
@@ -20,7 +21,8 @@ define(['app'], function (app) {
 					controller: 'appLogController'
 				}
 			}
-		}).state('app-settings', {
+		})
+		.state('app-settings', {
 			url: '/app-settings/:organizationId/applications/:applicationId',
 			views: {
 				'navigation': navigation,
@@ -29,7 +31,8 @@ define(['app'], function (app) {
 					controller: 'appSettingsController'
 				}
 			}
-		}).state('app-spaces', {
+		})
+		.state('app-spaces', {
 			url: '/app-spaces/:organizationId',
 			views: {
 				'navigation': navigation,
@@ -38,7 +41,8 @@ define(['app'], function (app) {
 					controller: 'appSpacesController'
 				}
 			}
-		}).state('create-org', {
+		})
+		.state('create-org', {
 			url: '/create-org/:organizationId',
 			views: {
 				'navigation': navigation,
@@ -47,7 +51,8 @@ define(['app'], function (app) {
 					controller: 'organisationController'
 				}
 			}
-		}).state('create-space', {
+		})
+		.state('create-space', {
 			url: '/create-space/:organizationId',
 			views: {
 				'navigation': navigation,
@@ -56,7 +61,8 @@ define(['app'], function (app) {
 					controller: 'spaceController'
 				}
 			}
-		}).state('marketplace', {
+		})
+		.state('marketplace', {
 			url: '/marketplace/:organizationId',
 			views: {
 				'navigation': navigation,
@@ -65,7 +71,8 @@ define(['app'], function (app) {
 					controller: 'marketPlaceController'
 				}
 			}
-		}).state('org-settings', {
+		})
+		.state('org-settings', {
 			url: '/org-settings/:organizationId',
 			views: {
 				'navigation': navigation,
@@ -74,7 +81,8 @@ define(['app'], function (app) {
 					controller: 'organisationController'
 				}
 			}
-		}).state('space-settings', {
+		})
+		.state('space-settings', {
 			url: '/space-settings/:organizationId/spaces/:spaceId',
 			views: {
 				'navigation': navigation,
@@ -83,7 +91,8 @@ define(['app'], function (app) {
 					controller: 'spaceController'
 				}
 			}
-		}).state('newUsers', {
+		})
+		.state('newUsers', {
 			url: '/organization/:organizationId/users',
 			views: {
 				'navigation': navigation,
@@ -92,7 +101,8 @@ define(['app'], function (app) {
 					controller: 'organisationUserController'
 				}
 			}
-		}).state('users', {
+		})
+		.state('users', {
 			url: '/users/:organizationId',
 			views: {
 				'navigation': navigation,
@@ -101,7 +111,8 @@ define(['app'], function (app) {
 					controller: 'usersController'
 				}
 			}
-		}).state('userinfo', {
+		})
+		.state('userinfo', {
 			url: '/userinfo/:organizationId',
 			views: {
 				'navigation': navigation,
@@ -110,7 +121,8 @@ define(['app'], function (app) {
 					controller: 'userInfoController'
 				}
 			}
-		}).state('login', {
+		})
+		.state('login', {
 			url: '/login',
 			views: {
 				'navigation': navigation,
@@ -119,7 +131,8 @@ define(['app'], function (app) {
 					controller: 'loginController'
 				}
 			}
-		}).state('register', {
+		})
+		.state('register', {
 			url: '/register',
 			views: {
 				'navigation': navigation,

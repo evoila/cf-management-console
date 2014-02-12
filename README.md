@@ -1,10 +1,16 @@
-# STYX
+# CloudFoundry Management Console
 
-Styx is a web console for Cloud Foundry V2.
+CloudFoundry Management Console is a web console for CloudFoundry V2.
 
 # Requirements
 
-* Styx requires the Java7 JDK installed locally (in order to build the project with Maven)
+* CloudFoundry Management Console requires the Java7 JDK installed locally. This project is a branch of https://github.com/ravanrijn/styx. The improvments are mostly under the cover 
+and are as follows:
+
+- Migration to Spring Framework 4.0.X
+- Migration to Angular 1.2.5
+- Migration to Bootstrap 3
+
 
 # Installation
 

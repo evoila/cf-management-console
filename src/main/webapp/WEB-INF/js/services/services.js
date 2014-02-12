@@ -7,14 +7,10 @@ define(['angular',
 	'services/general/localStorageService',
 	'services/general/messageEmitter',
 	'services/general/responseService',
-	'services/general/uiContentService',
 	'services/general/userDetailsService',
-    'services/general/httpTransferInterceptor',
-
-	'resource',
 	'underscore'
 	], function (angular, ClientCacheService, CookieService, LocalStorageService,
-		MessageEmitter, ResponseService, UiContentService, UserDetailsService, HttpTransferInterceptor) {
+		MessageEmitter, ResponseService, UserDetailsService) {
 
 	var services = angular.module('services', []);
 
@@ -23,8 +19,6 @@ define(['angular',
 	services.factory('localStorageService', LocalStorageService);
 	services.factory('messageEmitter', MessageEmitter);
 	services.factory('responseService', ResponseService);
-	services.factory('uiContentService', UiContentService)
 	services.factory('userDetailsService', UserDetailsService);
-    services.factory('httpTransferInterceptor', HttpTransferInterceptor);
 
 });

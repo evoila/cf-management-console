@@ -1,2 +1,0 @@
-PATH=$PATH:/home/cs/.rbenv/versions/1.9.3-p448/bin/
-export LC_CTYPE="en_US.UTF-8"

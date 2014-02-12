@@ -3,17 +3,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.cfc</groupId>
-	<artifactId>cfc</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>com.github.cfmc</groupId>
+	<artifactId>cfmc</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>cfc</name>
+	<name>cfmc</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		
-		<spring.version>4.0.0.RELEASE</spring.version>
+		<spring.version>4.0.1.RELEASE</spring.version>
 		
 		<jackson.version>2.2.2</jackson.version>
 		<guava.version>14.0</guava.version>
@@ -127,10 +127,16 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -140,18 +146,9 @@
 				<configuration>
 					<excludes>
 						<exclude>**/*ITest.java</exclude>
-					</excludes>
+					</excludes>					
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.1</version>
-				<configuration>
-					<port>8080</port>
-					<path>/cfc</path>
-				</configuration>
-			</plugin>
+			</plugin>			
 		</plugins>
 	</build>
 

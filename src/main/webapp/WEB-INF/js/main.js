@@ -1,22 +1,18 @@
 require({
 	paths: {
-		angular : '../lib/angular/angular.min',
-		resource : '../lib/angular/angular-resource.min',
+		angular : '../lib/angular/angular',		
 		underscore : '../lib/underscore/underscore.min',
 		domReady : '../lib/require/domReady',
-		states : '../lib/angular-ui/angular-ui-states',
+		router : '../lib/ui-router/angular-ui-router',
 		restangular : '../lib/restangular/restangular',
-		angularui : '../js/directives/angular-ui/ui-bootstrap-0.6.0',
-        angularoverlay: '../lib/angular-overlay/wcAngularOverlay',
-		stomp : '../lib/stomp/stomp'
+		angularui : '../lib/angularui/ui-bootstrap',
 	},
 	shim: {
 		'angular' : {'exports' : 'angular'},
-        'resource': {'deps' : ['angular']},
-		'states' : { 'deps' : ['angular']},
+        'angularui': {'deps' : ['angular']},
+		'router' : { 'deps' : ['angular']},
 		'underscore' : {'exports' : '_'},
-		'restangular' : { 'deps' : ['angular']},
-		'angularui' : { 'deps' : ['angular']}
+		'restangular' : { 'deps' : ['angular']}
 	},
 	priority: [
 		'angular'

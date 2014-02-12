@@ -12,8 +12,8 @@ import javax.servlet.ServletRegistration.Dynamic;
 import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import com.github.cfc.config.CustomWebConfig;
-import com.github.cfc.config.cors.CORSFilter;
+import com.github.cfmc.config.CustomWebConfig;
+import com.github.cfmc.config.cors.CORSFilter;
 
 /**
  * 

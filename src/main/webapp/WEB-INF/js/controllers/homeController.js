@@ -5,7 +5,7 @@
 define(function () {
 	'use strict';
 	
-	function HomeController($scope, Restangular, clientCacheService, $location, $route) {
+	function HomeController($scope, Restangular, clientCacheService, $location) {
 		
 		if (!clientCacheService.isAuthenticated()) {
 			if ($location.path() != '/login' && $location.path() != '/register') {
@@ -23,7 +23,7 @@ define(function () {
 		}
 	}
 
-	HomeController.$inject = ['$scope', 'Restangular', 'clientCacheService', '$location', '$route'];
+	HomeController.$inject = ['$scope', 'Restangular', 'clientCacheService', '$location'];
 
 	return HomeController;
 });
