@@ -40,7 +40,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author Johannes Hiemer.
  *
  */
-@ComponentScan("com.github.cfc")
+@ComponentScan("com.github.cfmc")
 @Configuration
 @EnableWebMvc
 @PropertySource("classpath:application.properties")

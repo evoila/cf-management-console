@@ -18,7 +18,7 @@ define(function () {
 				'Accept': 'application/json;charset=utf-8'}
 			};
 
-		    $http.post('api/login', data, head).success(function(data, status, headers, config) {
+		    $http.post('/api/login', data, head).success(function(data, status, headers, config) {
 			    	clientCacheService.authenticate(data);
 
 			    	$http.defaults.headers.common['Authorization'] = 'bearer ' + clientCacheService.getUser().accessToken;
