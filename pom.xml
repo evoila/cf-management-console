@@ -15,7 +15,10 @@
 		
 		<spring.version>4.0.1.RELEASE</spring.version>
 		
-		<jackson.version>2.2.2</jackson.version>
+		<org.slf4j>1.6.6</org.slf4j>
+		<org.logback>1.0.7</org.logback>
+		<org.jackson>2.3.0</org.jackson>
+		
 		<guava.version>14.0</guava.version>
 		
 		<commons-io.version>2.4</commons-io.version>
@@ -69,16 +72,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
@@ -94,17 +87,39 @@
 			<version>${commons-io.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Jackson Mapper -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${org.jackson}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${org.jackson}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${org.jackson}</version>
+		</dependency>
 
 		<!-- Logging -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${org.logback}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${org.logback}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j}</version>
 		</dependency>
 		
 		<!-- Testing -->
@@ -122,7 +137,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>cfc-${version}</finalName>
+		<finalName>${name}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -136,6 +151,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
+					<warName>${name}</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>

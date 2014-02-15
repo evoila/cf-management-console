@@ -5,7 +5,7 @@
 define(function () {
 	'use strict';	
 	
-	function LoginController($scope, Restangular, clientCacheService, $location, $http, responseService) {
+	function LoginController($scope, Restangular, clientCacheService, $location, $http, responseService, REST_API) {
 		$scope.authenticating = false;
 
 		
@@ -18,7 +18,7 @@ define(function () {
 				'Accept': 'application/json;charset=utf-8'}
 			};
 
-		    $http.post('/api/login', data, head).success(function(data, status, headers, config) {
+		    $http.post(REST_API + '/login', data, head).success(function(data, status, headers, config) {
 			    	clientCacheService.authenticate(data);
 
 			    	$http.defaults.headers.common['Authorization'] = 'bearer ' + clientCacheService.getUser().accessToken;
@@ -41,7 +41,7 @@ define(function () {
 		};
 	}
 
-	LoginController.$inject = ['$scope', 'Restangular', 'clientCacheService', '$location', '$http', 'responseService'];
+	LoginController.$inject = ['$scope', 'Restangular', 'clientCacheService', '$location', '$http', 'responseService', 'REST_API'];
 
 	return LoginController;
 });

@@ -12,8 +12,8 @@ import javax.servlet.ServletRegistration.Dynamic;
 import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import com.github.cfmc.config.CustomWebConfig;
-import com.github.cfmc.config.cors.CORSFilter;
+import com.github.config.web.CustomMvcConfiguration;
+import com.github.config.web.cors.CORSFilter;
 
 /**
  * 
@@ -29,7 +29,7 @@ public class CustomWebInitializer extends AbstractAnnotationConfigDispatcherServ
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] { CustomWebConfig.class };
+		return new Class<?>[] { CustomMvcConfiguration.class };
 	}
 
 	@Override
@@ -46,12 +46,11 @@ public class CustomWebInitializer extends AbstractAnnotationConfigDispatcherServ
 	protected void customizeRegistration(Dynamic registration) {
 		registration.setInitParameter("dispatchOptionsRequest", "true");
 		registration.setAsyncSupported(true);
-		
 	}
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {		       
-        FilterRegistration.Dynamic corsFilter = servletContext.addFilter("corsFilter", CORSFilter.class);
+		FilterRegistration.Dynamic corsFilter = servletContext.addFilter("corsFilter", CORSFilter.class);
         corsFilter.addMappingForUrlPatterns(null, false, "/*");
         
 	    super.onStartup(servletContext);

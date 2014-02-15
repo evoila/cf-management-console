@@ -12,13 +12,13 @@
 	</head>
 	<body ng-controller="homeController">
 		<div ui-view="navigation"></div>
-		<div class="container" ng-controller="alertController" style="padding-top: 60px">
+		<div class="container-fluid-fluid" ng-show="alerts.length > 0" ng-controller="alertController">
 			<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">
 				<h4 class="alert-heading" ng-cloak>{{alert.title}}</h4>
 				<p ng-cloak>{{alert.msg}}<p>
 			</alert>
 		</div>
-		<div ui-view="body"></div>
+		<div ui-view="body" style="padding-top: 60px"></div>
 		<div ui-view="footer"></div>
 
 		<script data-main="js/main" src="lib/require/require-2.1.4.js"></script>

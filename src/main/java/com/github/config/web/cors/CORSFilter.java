@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.github.cfmc.config.cors;
+package com.github.config.web.cors;
 
 import java.io.IOException;
 
@@ -18,18 +18,19 @@ import org.springframework.web.filter.OncePerRequestFilter;
  *
  */
 public class CORSFilter extends OncePerRequestFilter {
- 
+	 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    	response.addHeader("Access-Control-Allow-Origin", "*");
+    	response.addHeader("Access-Control-Allow-Headers", "Accept, Content-Type, Authorization");
+    	response.addHeader("Access-Control-Max-Age", "1800");
  
         if(request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {
-        	response.addHeader("Access-Control-Allow-Origin", "*");
- 
             response.addHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
-            response.addHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
-            response.addHeader("Access-Control-Max-Age", "1800");
-        } 
-        
+        } else {
+            response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        }
+ 
         filterChain.doFilter(request, response);
     }
 }

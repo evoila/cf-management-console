@@ -40,7 +40,8 @@ require({
 				
 				if (clientCacheService.getUser() != null) {
 					var token = clientCacheService.getUser().accessToken;
-					$http.defaults.headers.common['Authorization'] = 'bearer ' + token;
+
+					$http.defaults.headers.common['Authorization'] = 'bearer ' + token;					
 				} else 
 					$rootScope.forceLogin();
 

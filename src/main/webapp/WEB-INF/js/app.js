@@ -22,13 +22,13 @@ define(['angular',
 		'controllers',
 		'directive.table',
 		'ui.bootstrap'
-	]).config(function(RestangularProvider, appUrlManipulationProvider) {
+	]).config(function(RestangularProvider, appUrlManipulationProvider, REST_API) {
 		console.log('app.js called');
 
         RestangularProvider.setDefaultHeaders({ 
 			"Content-Type" : "application/json;charset=UTF-8",
 			"Accept" :"application/json;charset=UTF-8" });
-		RestangularProvider.setBaseUrl("/api");
+		RestangularProvider.setBaseUrl(REST_API);
 		RestangularProvider.setListTypeIsArray(false);
 		RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
 			if (operation === "getList") {
@@ -57,5 +57,5 @@ define(['angular',
 			return request;
 		});
 
-	});
+	}).constant('REST_API', 'http://localhost:8080/cfmc/api');
 });

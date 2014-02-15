@@ -195,4 +195,11 @@ html, body {
   }
 }
 
-
+.alert {
+  position: fixed;
+  margin-right: 30px;
+  top: 55px;
+  width: 500px;
+  right: 0;
+  z-index: 7000;
+}

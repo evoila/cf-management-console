@@ -1055,49 +1055,49 @@ module.provider('Restangular', function() {
               service.restangularizeCollection = _.bind(restangularizeCollection, service);
 
               service.entityId = function(entity) {
-					var link = relations(entity, 'self');
-					if (link != undefined) {
-						entity.id = link.href.substring(link.href.lastIndexOf('/') + 1, link.href.length);
-					}
-					return entity;
-				};
+          var link = relations(entity, 'self');
+          if (link != undefined) {
+            entity.id = link.href.substring(link.href.lastIndexOf('/') + 1, link.href.length);
+          }
+          return entity;
+        };
 
-				var relations = function(entity, relation) {
-					if (entity.links.length > 0) {
-						for (var i = 0; i < entity.links.length; i++) {
-							var position = -1;
-							if (entity.links[i].rel !== 'self') {
-								position = entity.links[i].rel.lastIndexOf('.') + 1;
-							} else {
-								position = 0;
-							}
-							var length = entity.links[i].rel.length;
-							if (position !== -1) {
-								var rel = entity.links[i].rel.substring(position, length);
-								if (rel === relation) {
-									return entity.links[i];
-								}
-							}
-						}
-					}
-					return undefined;
-				};
+        var relations = function(entity, relation) {
+          if (entity.links.length > 0) {
+            for (var i = 0; i < entity.links.length; i++) {
+              var position = -1;
+              if (entity.links[i].rel !== 'self') {
+                position = entity.links[i].rel.lastIndexOf('.') + 1;
+              } else {
+                position = 0;
+              }
+              var length = entity.links[i].rel.length;
+              if (position !== -1) {
+                var rel = entity.links[i].rel.substring(position, length);
+                if (rel === relation) {
+                  return entity.links[i];
+                }
+              }
+            }
+          }
+          return undefined;
+        };
 
-				service.self = function (entity) {
-					if (angular.isDefined(entity.links)) {
-						for (var i = 0; i < entity.links.length; i++) {
-							var position = -1;
-							if (entity.links[i].rel === 'self') {
-								return entity.links[i];
-							}
-						}
-					} 
-					return null;
-				};
+        service.self = function (entity) {
+          if (angular.isDefined(entity.links)) {
+            for (var i = 0; i < entity.links.length; i++) {
+              var position = -1;
+              if (entity.links[i].rel === 'self') {
+                return entity.links[i];
+              }
+            }
+          } 
+          return null;
+        };
 
-				service.getUriHeader = function () {
-					return { 'Content-Type': 'text/uri-list; charset=UTF-8' };
-				};
+        service.getUriHeader = function () {
+          return { 'Content-Type': 'text/uri-list; charset=UTF-8' };
+        };
 
               return service;
           }
