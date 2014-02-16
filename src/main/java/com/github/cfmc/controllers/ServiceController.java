@@ -22,13 +22,13 @@ import com.github.cfmc.api.repositories.ServiceRepository;
  *
  */
 @Controller
-@RequestMapping("/api/services")
+@RequestMapping("/api")
 public class ServiceController {
 
 	@Autowired
     private ServiceRepository serviceRepository;
 
-    @RequestMapping(method = GET)
+    @RequestMapping(value = "/services", method = GET)
     public @ResponseBody List<Service> getServices(@RequestHeader("Authorization") String token) {
         return serviceRepository.getAll(token);
     }

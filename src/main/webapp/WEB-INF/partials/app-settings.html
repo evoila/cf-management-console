@@ -1,8 +1,7 @@
 <div class="container-fluid">
 	<div ng-show="loading">
 		<div class="well loading-well">
-			<p class="text-center"><i class="fa fa-5x fa-spinner fa-spin"></i></p>
-			<h5 class="text-center">Hold on... We are loading your spaces!</h5>
+			<h5 class="text-center"><i class="fa fa-1x fa-spinner fa-spin"></i> Hold on... We are loading your spaces!</h5>
 		</div>
 	</div>
 	<div ng-hide="loading">
@@ -37,7 +36,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<button class="btn btn-danger" ng-click="deleteApplication()">Delete App</button>
+				<button class="btn btn-danger pull-right" ng-click="deleteApplication()">Delete App <i class="fa fa-trash-o"></i></button>
 			</div>
 		</div>
 		<div class="panel panel-default">
@@ -84,8 +83,8 @@
 							<td>{{instance.state}}</td>
 							<td>{{instance.consoleIp}}</td>
 							<td>{{instance.consolePort}}</td>
-							<td><div><a href="#/app-log/{{organizationId}}/{{application.id}}/{{$index}}/stdout">stdout.log</a></div>
-								<div><a href="#/app-log/{{organizationId}}/{{application.id}}/{{$index}}/stderr">stderr.log</a></div></td>
+							<td><div><a href="#/app-log/{{organizationId}}/applications/{{application.id}}/instances/{{$index}}/stdout">stdout.log</a></div>
+								<div><a href="#/app-log/{{organizationId}}/applications/{{application.id}}/instances/{{$index}}/stderr">stderr.log</a></div></td>
 						</tr>
 					</tbody>
 				</table>

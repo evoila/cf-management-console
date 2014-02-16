@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 @Controller
-@RequestMapping("/api")
+@RequestMapping(value = "/api")
 public class LoginController {
 
 	@Autowired

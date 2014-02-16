@@ -1,18 +1,56 @@
 <div class="container-fluid">
-	<h5>Services Marketplace</h5>
-	<div class="row">
-		<div class="col-md-3">
-			<div class="well well-small light">
-				<h5>Welcome to the Cloud Foundry Marketplace</h5>
-				<p>Instantly add these services to your apps.</p>
+	<div ng-show="loading">
+		<div class="well loading-well">			
+			<h5 class="text-center"><i class="fa fa-1x fa-spinner fa-spin"></i> Hold on... We are loading all services!</h5>
+		</div>
+	</div>
+	<div ng-hide="loading">
+		<div ng-hide="loading" class="col-md-3">
+			<div class="well well-small">
+				<h5>SERVICES</h5>				
+				<p>View only access to all org and space info, settings, reports</p>
+				<hr/>
+				<h5>PLANS</h5>						
+				<p>View only access to all space information, settings, reports, logs</p>
 			</div>
 		</div>
-		<!-- TODO this will not work when there are more than 3 services -->
-		<div class="col-md-3" ng-repeat="resource in services.resources">
-				<img src="img/{{resource.entity.label}}.png"/>
-				<h5 class="uppercase">{{resource.entity.label}} {{resource.entity.version}}</h5>
-				<p>{{resource.entity.description}}</p>
-				<button class="btn">Plan Options</button>
-		</div>
+		<div class="col-md-9">
+			<h2>Services Marketplace</h2>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Currently available services
+				</div>
+				<div class="panel-body">
+					<table class="table table-condensed">
+						<thead>
+							<tr>
+								<th width="25%">
+									Name
+								</th>
+								<th width="35%">
+									Description
+								</th>
+								<th width="40%">
+									Plans
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="service in services">
+								<td>{{service.name}}</td>
+								<td>{{service.description}}</td>
+								<td>
+									<ul>
+										<li ng-repeat="plan in service.plans">
+											{{plan.name}} - {{plan.description}}
+										</li>
+									</ul>
+								</td>	
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>		
 	</div>
 </div>

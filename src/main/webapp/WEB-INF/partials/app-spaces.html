@@ -1,31 +1,37 @@
 <div class="container-fluid">
 	<div ng-show="loading">
-		<div class="well loading-well">
-			<p class="text-center"><i class="fa fa-5x fa-spinner fa-spin"></i></p>
-			<h5 class="text-center">Hold on... We are loading your spaces!</h5>
+		<div class="well">			
+			<h5 class="text-center"> <i class="fa fa-1x fa-spinner fa-spin"></i> Hold on... We are loading your spaces!</h5>
 		</div>
 	</div>
-	<div ng-hide="loading">
-		<div class="well well-sm">
-			<div class="row">
-				<div class="col-md-11" ng-hide="loading">
-					App Spaces:
-					<span ng-repeat="s in spaces">
-						<span ng-show="space.selected == s.name">
-							<div class="btn-group">
-								<button type="button" class="btn btn-primary">{{s.name}}</button>
-									<a href="#/space-settings/{{organizationId}}/spaces/{{s.id}}" class="btn btn-primary">
-										<span class="glyphicon glyphicon-wrench"></span>
-									</a>
+	<div ng-hide="loading">	
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-1">
+								<h4>SPACES:</h4>
 							</div>
-						</span>
-						<span ng-show="space.selected != s.name">
-							<button class="btn btn-default" ng-click="selectSpace(s.name)">{{s.name}}</button>
-						</span>
-					</span>
-				</div>
-				<div class="col-md-1">
-					<a href="#/create-space/{{organizationId}}" class="btn btn-success pull-right">Add Space <span class="glyphicon glyphicon-plus"></span></a>
+							<div class="col-md-10">
+								<span ng-repeat="s in spaces">
+									<span ng-show="space.selected == s.name">
+										<div class="btn-group">
+											<a href="#/space-settings/{{organizationId}}/spaces/{{s.id}}" class="btn btn-primary">
+												{{s.name}} <i class="fa fa-wrench"></i>
+											</a>
+										</div>
+									</span>
+									<span ng-show="space.selected != s.name">
+										<button class="btn btn-default" ng-click="selectSpace(s.name)">{{s.name}}</button>
+									</span>
+								</span>
+							</div>
+							<div class="col-md-1">
+								<a href="#/create-space/{{organizationId}}" class="btn btn-success pull-right">Add Space <i class="glyphicon glyphicon-plus"></i></a>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

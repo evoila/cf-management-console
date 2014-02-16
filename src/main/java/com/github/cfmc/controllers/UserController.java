@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.github.cfmc.controllers;
 
 import java.util.List;
@@ -14,21 +17,25 @@ import com.github.cfmc.api.model.User;
 import com.github.cfmc.api.model.UserInfo;
 import com.github.cfmc.api.repositories.UserRepository;
 
+/**
+ * 
+ * @author Johannes Hiemer.
+ *
+ */
 @Controller
-@RequestMapping("/api")
+@RequestMapping(value = "/api")
 public class UserController {
 
 	@Autowired
     private UserRepository userRepository;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public @ResponseBody List<User> getAllUsers(@RequestHeader("Authorization") final String token) {
+    public @ResponseBody List<User> getAllUsers(@RequestHeader("Authorization") String token) {
         return userRepository.getAllUsers(token);
     }
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
-   
-    public  @ResponseBody UserInfo getUserInfo(@RequestHeader("Authorization") final String token) {
+    public  @ResponseBody UserInfo getUserInfo(@RequestHeader("Authorization") String token) {
         return userRepository.getUserInfo(token);
     }
 

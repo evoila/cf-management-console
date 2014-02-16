@@ -7,7 +7,7 @@
 	</div>
 	<div ng-hide="authenticating">			
 		<form name="loginForm" class="form-standard form-horizontal" name="form" novalidate>
-			<h2>Cloud Foundry Control - Login</h2>
+			<h2>Cloud Foundry Management Console</h2>
 			<div class="form-group">
 				<label class="col-lg-2 control-label" for="username">Username:</label>
 				<div class="input-group col-lg-10">
@@ -21,9 +21,9 @@
 				</div>
 			</div>
 			<div class="form-group form-buttons">
-				<div class="col-lg-offset-2 col-lg-10">
-					<a href="#/register" class="btn btn-warning">Create an account</a>
-					<button class="btn btn-primary" ng-click="login(userForm)" ng-disabled="authenticate">Sign in</button>
+				<div class="col-lg-offset-2 col-lg-10">					
+					<a href="#/register" class="btn btn-warning">Create an account <i class="fa fa-user"></i></a>
+					<button class="btn btn-primary" ng-click="login(userForm)" ng-disabled="authenticate">Sign in <i class="fa fa-sign-in"></i></i></button>
 				</div>
 			</div>
 		</form>

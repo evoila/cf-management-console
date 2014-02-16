@@ -44,7 +44,7 @@ public class CustomWebInitializer extends AbstractAnnotationConfigDispatcherServ
 
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
-		registration.setInitParameter("dispatchOptionsRequest", "true");
+		registration.setInitParameter("dispatchOptionsRequest", "false");
 		registration.setAsyncSupported(true);
 	}
 

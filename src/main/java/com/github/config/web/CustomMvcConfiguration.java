@@ -39,7 +39,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.github.cfmc")
+@ComponentScan(basePackages = {"com.github.cfmc"})
 @PropertySource("classpath:application.properties")
 public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
 

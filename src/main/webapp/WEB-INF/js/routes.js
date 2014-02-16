@@ -13,7 +13,7 @@ define(['app'], function (app) {
 
 		$stateProvider
 		.state('app-log', {
-			url: '/app-log/:organizationId/:applicationId/instances/:instanceId/:fileName',
+			url: '/app-log/:organizationId/applications/:applicationId/instances/:instanceId/:fileName',
 			views: {
 				'navigation': navigation,		
 				'body': {

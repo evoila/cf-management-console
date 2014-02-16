@@ -23,34 +23,34 @@ import com.github.cfmc.api.repositories.OrganizationRepository;
  *
  */
 @Controller
-@RequestMapping("/api/organizations")
+@RequestMapping(value = "/api")
 public class OrganizationController {
 	
 	@Autowired
     private OrganizationRepository organizationRepository;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/organizations", method = RequestMethod.POST)
     public @ResponseBody String createOrganization(@RequestHeader("Authorization") String token, @RequestBody String body) {
         return organizationRepository.createOrganization(token, body);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/organizations/{id}", method = RequestMethod.DELETE)
     public void deleteOrganizationById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
         organizationRepository.deleteById(token, id);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Organization getOrganization(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
+    @RequestMapping(value = "/organizations/{id}", method = RequestMethod.GET)
+    public @ResponseBody Organization getOrganization(@RequestHeader("Authorization") String token, @PathVariable("id") final String id) {
         return organizationRepository.getById(token, id, 2);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public @ResponseBody List<Organization> getOrganizations(@RequestHeader("Authorization") final String token) {
         return organizationRepository.getAll(token, 2);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public  @ResponseBody String updateOrganization(@RequestHeader("Authorization") String token, 
+    @RequestMapping(value = "/organizations/{id}", method = RequestMethod.PUT)
+    public @ResponseBody String updateOrganization(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody String body) {
         return organizationRepository.updateOrganization(token, id, body);
     }

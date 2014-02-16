@@ -22,7 +22,7 @@ public class CORSFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
     	response.addHeader("Access-Control-Allow-Origin", "*");
-    	response.addHeader("Access-Control-Allow-Headers", "Accept, Content-Type, Authorization");
+    	response.addHeader("Access-Control-Allow-Headers", "Accept, Content-Type, Authorization, X-Requested-With");
     	response.addHeader("Access-Control-Max-Age", "1800");
  
         if(request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {

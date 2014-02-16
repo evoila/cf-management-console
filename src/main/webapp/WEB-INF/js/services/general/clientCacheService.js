@@ -9,15 +9,15 @@ define(['angular'], function (angular) {
 		var cache = {};
 
 		cache.storeOrganizations = function(organizations) {
-			localStorageService.add("styx.organizations", JSON.stringify(organizations));
+			localStorageService.add("cfmc.organizations", JSON.stringify(organizations));
 		}
 
 		cache.clearOrganizations = function() {
-			localStorageService.remove("styx.organizations");
+			localStorageService.remove("cfmc.organizations");
 		}
 
 		cache.getOrganizations = function() {
-			var organizations = localStorageService.get("styx.organizations");
+			var organizations = localStorageService.get("cfmc.organizations");
 			if (organizations) {
 				return JSON.parse(organizations);
 			}
@@ -25,19 +25,19 @@ define(['angular'], function (angular) {
 		}
 
 		cache.storeUser = function(user) {
-			localStorageService.add("styx.user", user);
+			localStorageService.add("cfmc.user", user);
 		}
 
 		cache.getUser = function() {
-			return localStorageService.get("styx.user");
+			return localStorageService.get("cfmc.user");
 		}
 
 		cache.storeFacts = function(facts) {
-			localStorageService.add("styx.facts", facts);
+			localStorageService.add("cfmc.facts", facts);
 		}
 
 		cache.getFacts = function() {
-			return localStorageService.get("styx.facts");
+			return localStorageService.get("cfmc.facts");
 		}
 
 		cache.clear = function() {

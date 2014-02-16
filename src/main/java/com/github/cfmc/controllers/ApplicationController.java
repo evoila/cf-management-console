@@ -24,33 +24,33 @@ import com.github.cfmc.api.repositories.ApplicationRepository;
  *
  */
 @Controller
-@RequestMapping("/api/applications")
+@RequestMapping(value = "/api")
 public class ApplicationController {
 
 	@Autowired
     private ApplicationRepository applicationRepository;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/applications/{id}", method = RequestMethod.DELETE)
     public void deleteApplicationById(@RequestHeader("Authorization") final String token, 
     		@PathVariable("id") final String id) {
     	
         applicationRepository.deleteById(token, id);
     }
 
-    @RequestMapping(value = "/{id}", method = GET)    
+    @RequestMapping(value = "/applications/{id}", method = GET)    
     public @ResponseBody Application getApplicationById(@RequestHeader("Authorization") final String token, 
     		@PathVariable("id") String id) {
         return applicationRepository.getById(token, id);
     }
 
-    @RequestMapping(value = "/{id}/instances/{instance}/logs/{logName}", method = GET)
+    @RequestMapping(value = "/applications/{id}/instances/{instance}/logs/{logName}", method = GET)
     public ResponseEntity<String> getApplicationInstanceLog(@RequestHeader("Authorization") final String token,
     		@PathVariable("id") String id, @PathVariable("instance") String instance,
     		@PathVariable("logName") String logName) {
         return applicationRepository.getInstanceLog(token, id, instance, logName);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/applications/{id}", method = RequestMethod.PUT)
     public Application updateApplication(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody String body) {
         return applicationRepository.updateApplication(token, id, body);

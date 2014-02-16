@@ -26,14 +26,13 @@ import com.github.cfmc.api.repositories.SpaceRepository;
  *
  */
 @Controller
-@RequestMapping("/api")
+@RequestMapping(value = "/api")
 public class SpaceController {
 
 	@Autowired
     private SpaceRepository spaceRepository;
 
     @RequestMapping(value = "/spaces", method = RequestMethod.POST)
-   
     public @ResponseBody String createSpace(@RequestHeader("Authorization") String token, @RequestBody String body) {
         return spaceRepository.createSpace(token, body);
     }
