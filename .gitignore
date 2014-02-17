@@ -1,6 +1,9 @@
 # Binary Files #
 *.class
 
+# Setting Files #
+.settings
+
 # IntelliJ Files #
 *.iml
 /.idea
