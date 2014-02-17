@@ -2,7 +2,7 @@
 *.class
 
 # Setting Files #
-.settings
+/.settings
 
 # IntelliJ Files #
 *.iml
