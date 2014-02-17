@@ -6,6 +6,11 @@
 .settings
 /settings
 
+# Eclipse Files
+.classpath
+.project
+.bash_profile
+
 # IntelliJ Files #
 *.iml
 /.idea
