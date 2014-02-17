@@ -3,6 +3,8 @@
 
 # Setting Files #
 /.settings
+.settings
+/settings
 
 # IntelliJ Files #
 *.iml
