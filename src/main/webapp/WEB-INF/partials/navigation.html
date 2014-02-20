@@ -7,8 +7,8 @@
 			<span class="icon-bar"></span>
 		</button>
 		<a class="navbar-brand" href="#">CloudFoundry</a>
-		<div class="navbar-collapse collapse" ng-class="!navCollapsed && 'in'" ng-hide="loadingData">
-			<ul class="nav navbar-nav">
+		<div class="navbar-collapse collapse" ng-class="!navCollapsed && 'in'">
+			<ul class="nav navbar-nav" ng-show="isAuthenticated">
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown">Organisation: {{organization.name}} <b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -23,7 +23,7 @@
 				<li><a href="#/org-settings/{{organization.id}}">Organisation Settings</a></li>
 				<li><a href="#/marketplace/{{organization.id}}">Marketplace</a></li>
 			</ul>
-			<ul class="nav navbar-nav navbar-right">
+			<ul class="nav navbar-nav navbar-right" ng-show="isAuthenticated">
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown">{{user.username}} <b class="caret"></b></a>
 					<ul class="dropdown-menu">
