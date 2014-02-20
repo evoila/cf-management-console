@@ -37,7 +37,7 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="service in services">
-								<td>{{service.name}}</td>
+								<td><a href="" ng-click="showDetails(service)">{{service.name}}</a></td>
 								<td>{{service.description}}</td>
 								<td>
 									<ul>
@@ -52,5 +52,37 @@
 				</div>
 			</div>
 		</div>		
+	</div>
+	<div ng-show="service">
+		<div ng-hide="loading" class="col-md-3">
+		</div>
+		<div class="col-md-9">
+			<h3>Plans for Service: {{service.name}}</h3>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					&nbsp;
+				</div>
+				<div class="panel-body">
+					<table class="table table-condensed">
+						<thead>
+							<tr>
+								<th width="35%">
+									Name
+								</th>
+								<th width="65%">
+									Description
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="plan in service.plans">
+								<td>{{plan.name}}</td>
+								<td>{{plan.description}}</td>								
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
