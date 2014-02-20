@@ -3,108 +3,204 @@
  */
 package com.github.cfmc.api.model;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import java.util.UUID;
 
-import java.util.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.cfmc.api.model.base.CloudFoundryResources;
 
-import static java.util.Collections.unmodifiableList;
-import static org.mvel2.MVEL.eval;
-import static org.mvel2.MVEL.evalToString;
 
 /**
- * TODO: Add previous authors
- * @author Johannes Hiemer
+ * 
+ * @author Johannes Hiemer.
  *
  */
 public class Space {
 
-    private final String id;
-    private final String name;
-    private final List<SpaceUser> users;
+	@JsonProperty("name")
+	private String name;
+	
+	@JsonProperty("organization_guid")
+	private UUID organizationGuid;
+	
+	@JsonProperty("organization_url")
+	private String organizationUrl;
+	
+	@JsonProperty("developers_url")
+	private String developersUrl;
+	
+	@JsonProperty("managers_url")
+	private String managersUrl;
+	
+	@JsonProperty("auditors_url")
+	private String auditorsUrl;
+	
+	@JsonProperty("apps_url")
+	private String appsUrl;
+	
+	@JsonProperty("domains_url")
+	private String domainsUrl;
+	
+	@JsonProperty("service_instances_url")
+	private String serviceInstancesUrl;
+	
+	@JsonProperty("app_events_url")
+	private String appEventsUrl;
+	
+	@JsonProperty("events_url")
+	private String eventsUrl;
+	
+	@JsonProperty("apps")
+	private CloudFoundryResources<Application> apps;
+	
+	@JsonProperty("domains")
+	private CloudFoundryResources<Domain> domains;
+	
+	@JsonProperty("events")
+	private CloudFoundryResources<Event> events;
+	
+	@JsonProperty("developers")
+	private CloudFoundryResources<SpaceUser> developers;
+	
+	@JsonProperty("managers")
+	private CloudFoundryResources<SpaceUser> managers;
+	
+	@JsonProperty("auditors")
+	private CloudFoundryResources<SpaceUser> auditors;
 
-    private final List<Application> applications = new ArrayList<Application>();
+	public String getName() {
+		return name;
+	}
 
-    private final List<ServiceInstance> serviceInstances = new ArrayList<ServiceInstance>();
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Space(final String id, final String name, final List<SpaceUser> users) {
-        this.id = id;
-        this.name = name;
-        this.users = users;
-    }
+	public UUID getOrganizationGuid() {
+		return organizationGuid;
+	}
 
-    public void addApplication(Application application) {
-        applications.add(application);
-    }
+	public void setOrganizationGuid(UUID organizationGuid) {
+		this.organizationGuid = organizationGuid;
+	}
 
-    public void addServiceInstance(ServiceInstance serviceInstance) {
-        serviceInstances.add(serviceInstance);
-    }
+	public String getOrganizationUrl() {
+		return organizationUrl;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public void setOrganizationUrl(String organizationUrl) {
+		this.organizationUrl = organizationUrl;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getDevelopersUrl() {
+		return developersUrl;
+	}
 
-    public List<Application> getApplications() {
-        return Collections.unmodifiableList(applications);
-    }
+	public void setDevelopersUrl(String developersUrl) {
+		this.developersUrl = developersUrl;
+	}
 
-    public List<ServiceInstance> getServiceInstances() {
-        return Collections.unmodifiableList(serviceInstances);
-    }
+	public String getManagersUrl() {
+		return managersUrl;
+	}
 
-    public List<SpaceUser> getUsers() {
-        return users;
-    }
+	public void setManagersUrl(String managersUrl) {
+		this.managersUrl = managersUrl;
+	}
 
-    public static Space fromCloudFoundryModel(Object response) {
-        final Map<String, SpaceUser.Builder> spaceUserBuilders = new HashMap<String, SpaceUser.Builder>();
-        for (Object developer : eval("entity.developers", response, List.class)) {
-            final String id = eval("metadata.guid", developer, String.class);
-            if (spaceUserBuilders.containsKey(id)) {
-                spaceUserBuilders.get(id).setDeveloperRole();
-                continue;
-            }
-            spaceUserBuilders.put(id, SpaceUser.Builder.newBuilder(id).setDeveloperRole());
-        }
-        
-        for (Object manager : eval("entity.managers", response, List.class)) {
-            final String id = eval("metadata.guid", manager, String.class);
-            if (spaceUserBuilders.containsKey(id)) {
-                spaceUserBuilders.get(id).setManagerRole();
-                continue;
-            }
-            spaceUserBuilders.put(id, SpaceUser.Builder.newBuilder(id).setManagerRole());
-        }
-        
-        for (Object auditor : eval("entity.auditors", response, List.class)) {
-            final String id = eval("metadata.guid", auditor, String.class);
-            if (spaceUserBuilders.containsKey(id)) {
-                spaceUserBuilders.get(id).setAuditorRole();
-                continue;
-            }
-            spaceUserBuilders.put(id, SpaceUser.Builder.newBuilder(id).setAuditorRole());
-        }
-        
-        final List<SpaceUser> spaceUsers = new ArrayList<SpaceUser>();
-        for (SpaceUser.Builder builder : spaceUserBuilders.values()) {
-            spaceUsers.add(builder.build());
-        }
-        return new Space(evalToString("metadata.guid", response), evalToString("entity.name", response), unmodifiableList(spaceUsers));
-    }
+	public String getAuditorsUrl() {
+		return auditorsUrl;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("name", name)
-                .append("applications", applications)
-                .append("serviceInstances", serviceInstances)
-                .append("users", users).toString();
-    }
+	public void setAuditorsUrl(String auditorsUrl) {
+		this.auditorsUrl = auditorsUrl;
+	}
 
+	public String getAppsUrl() {
+		return appsUrl;
+	}
+
+	public void setAppsUrl(String appsUrl) {
+		this.appsUrl = appsUrl;
+	}
+
+	public String getDomainsUrl() {
+		return domainsUrl;
+	}
+
+	public void setDomainsUrl(String domainsUrl) {
+		this.domainsUrl = domainsUrl;
+	}
+
+	public String getServiceInstancesUrl() {
+		return serviceInstancesUrl;
+	}
+
+	public void setServiceInstancesUrl(String serviceInstancesUrl) {
+		this.serviceInstancesUrl = serviceInstancesUrl;
+	}
+
+	public String getAppEventsUrl() {
+		return appEventsUrl;
+	}
+
+	public void setAppEventsUrl(String appEventsUrl) {
+		this.appEventsUrl = appEventsUrl;
+	}
+
+	public String getEventsUrl() {
+		return eventsUrl;
+	}
+
+	public void setEventsUrl(String eventsUrl) {
+		this.eventsUrl = eventsUrl;
+	}
+
+	public CloudFoundryResources<Application> getApps() {
+		return apps;
+	}
+
+	public void setApps(CloudFoundryResources<Application> apps) {
+		this.apps = apps;
+	}
+
+	public CloudFoundryResources<Domain> getDomains() {
+		return domains;
+	}
+
+	public void setDomains(CloudFoundryResources<Domain> domains) {
+		this.domains = domains;
+	}
+
+	public CloudFoundryResources<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(CloudFoundryResources<Event> events) {
+		this.events = events;
+	}
+
+	public CloudFoundryResources<SpaceUser> getDevelopers() {
+		return developers;
+	}
+
+	public void setDevelopers(CloudFoundryResources<SpaceUser> developers) {
+		this.developers = developers;
+	}
+
+	public CloudFoundryResources<SpaceUser> getManagers() {
+		return managers;
+	}
+
+	public void setManagers(CloudFoundryResources<SpaceUser> managers) {
+		this.managers = managers;
+	}
+
+	public CloudFoundryResources<SpaceUser> getAuditors() {
+		return auditors;
+	}
+
+	public void setAuditors(CloudFoundryResources<SpaceUser> auditors) {
+		this.auditors = auditors;
+	}
+	
 }

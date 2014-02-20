@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.cfmc.api.model.Service;
-import com.github.cfmc.api.repositories.ServiceRepository;
+import com.github.cfmc.api.model.base.CloudFoundryResource;
+import com.github.cfmc.api.model.base.CloudFoundryResources;
+import com.github.cfmc.api.repositories.RestRepository;
 
 /**
  * 
@@ -26,11 +28,14 @@ import com.github.cfmc.api.repositories.ServiceRepository;
 public class ServiceController {
 
 	@Autowired
-    private ServiceRepository serviceRepository;
+    private RestRepository restRepository;
+	
+	private static String V2_SERVICES = "v2/services";
 
     @RequestMapping(value = "/services", method = GET)
-    public @ResponseBody List<Service> getServices(@RequestHeader("Authorization") String token) {
-        return serviceRepository.getAll(token);
+    public @ResponseBody List<CloudFoundryResource<Service>> getServices(@RequestHeader("Authorization") String token) {
+        CloudFoundryResources<Service> services = restRepository.apiGetv2(token, V2_SERVICES);
+        return services.getResources();
     }
 
 }

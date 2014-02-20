@@ -1,63 +1,125 @@
 package com.github.cfmc.api.model;
 
+import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * 
  * @author Johannes Hiemer.
  *
  */
-public class SpaceUser extends User {
+public class SpaceUser {
+	
+	@JsonProperty("admin")
+	private boolean admin;
+	
+	@JsonProperty("active")
+	private boolean active;
+	
+	@JsonProperty("default_space_guid")
+	private UUID defaultSpaceGuid;
+	
+	@JsonProperty("spaces_url")
+	private String spacesUrl;
+	
+	@JsonProperty("organizations_url")
+	private String organizationsUrl;
+	
+	@JsonProperty("managed_organizations_url")
+	private String managedOrganizationUrl;
+	
+	@JsonProperty("billing_managed_organizations_url")
+	private String billingManagetOrganizationUrl;
+	
+	@JsonProperty("audited_organizations_url")
+	private String auditedOrganzationUrl;
+	
+	@JsonProperty("managed_spaces_url")
+	private String managedSpacesUrl;
+	
+	@JsonProperty("audited_spaces_url")
+	private String auditedSpacesUrl;
 
-    private final boolean developer;
+	public boolean isAdmin() {
+		return admin;
+	}
 
-    public SpaceUser(final String id, final String username, final boolean manager, final boolean auditor, final boolean developer) {
-        super(id, username, manager, auditor);
-        this.developer = developer;
-    }
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 
-    public boolean isDeveloper() {
-        return developer;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public static final class Builder{
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
-        private final String id;
-        private String username;
-        private boolean manager;
-        private boolean auditor;
-        private boolean developer;
+	public UUID getDefaultSpaceGuid() {
+		return defaultSpaceGuid;
+	}
 
-        private Builder(final String id){
-            this.id = id;
-        }
+	public void setDefaultSpaceGuid(UUID defaultSpaceGuid) {
+		this.defaultSpaceGuid = defaultSpaceGuid;
+	}
 
-        public static Builder newBuilder(final String id){
-            return new Builder(id);
-        }
+	public String getSpacesUrl() {
+		return spacesUrl;
+	}
 
-        public Builder setUserName(final String userName){
-            this.username = userName;
-            return this;
-        }
+	public void setSpacesUrl(String spacesUrl) {
+		this.spacesUrl = spacesUrl;
+	}
 
-        public Builder setManagerRole(){
-            manager = true;
-            return this;
-        }
+	public String getOrganizationsUrl() {
+		return organizationsUrl;
+	}
 
-        public Builder setDeveloperRole(){
-            developer = true;
-            return this;
-        }
+	public void setOrganizationsUrl(String organizationsUrl) {
+		this.organizationsUrl = organizationsUrl;
+	}
 
-        public Builder setAuditorRole(){
-            auditor = true;
-            return this;
-        }
+	public String getManagedOrganizationUrl() {
+		return managedOrganizationUrl;
+	}
 
-        public SpaceUser build(){
-            return new SpaceUser(id, username, manager, auditor, developer);
-        }
+	public void setManagedOrganizationUrl(String managedOrganizationUrl) {
+		this.managedOrganizationUrl = managedOrganizationUrl;
+	}
 
-    }
+	public String getBillingManagetOrganizationUrl() {
+		return billingManagetOrganizationUrl;
+	}
 
+	public void setBillingManagetOrganizationUrl(
+			String billingManagetOrganizationUrl) {
+		this.billingManagetOrganizationUrl = billingManagetOrganizationUrl;
+	}
+
+	public String getAuditedOrganzationUrl() {
+		return auditedOrganzationUrl;
+	}
+
+	public void setAuditedOrganzationUrl(String auditedOrganzationUrl) {
+		this.auditedOrganzationUrl = auditedOrganzationUrl;
+	}
+
+	public String getManagedSpacesUrl() {
+		return managedSpacesUrl;
+	}
+
+	public void setManagedSpacesUrl(String managedSpacesUrl) {
+		this.managedSpacesUrl = managedSpacesUrl;
+	}
+
+	public String getAuditedSpacesUrl() {
+		return auditedSpacesUrl;
+	}
+
+	public void setAuditedSpacesUrl(String auditedSpacesUrl) {
+		this.auditedSpacesUrl = auditedSpacesUrl;
+	}
+    
 }

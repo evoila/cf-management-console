@@ -1,97 +1,191 @@
 package com.github.cfmc.api.model;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static org.mvel2.MVEL.eval;
-import static org.mvel2.MVEL.evalToString;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.cfmc.api.model.base.CloudFoundryResources;
 
 /**
- * TODO: Add previous authors
+ * 
  * @author Johannes Hiemer
- *
+ * 
  */
 public class Service {
 
-    private final String id;
+	@JsonProperty("label")
+	private String label;
 
-    private final String name;
+	@JsonProperty("provider")
+	private String provider;
 
-    private final String provider;
+	@JsonProperty("url")
+	private String url;
 
-    private final String version;
+	@JsonProperty("description")
+	private String description;
 
-    private final String description;
+	@JsonProperty("long_description")
+	private String longDescription;
 
-    private final List<ServicePlan> plans;
+	@JsonProperty("version")
+	private String version;
 
-    public Service(String id, String name, String provider, String version, String description, List<ServicePlan> plans) {
-        this.id = id;
-        this.name = name;
-        this.provider = provider;
-        this.version = version;
-        this.description = description;
-        this.plans = plans;
-    }
+	@JsonProperty("info_url")
+	private String infoUrl;
 
-    public void addPlan(ServicePlan servicePlan) {
-        plans.add(servicePlan);
-    }
+	@JsonProperty("active")
+	private boolean active;
 
-    public String getId() {
-        return id;
-    }
+	@JsonProperty("bindable")
+	private boolean bindable;
 
-    public String getName() {
-        return name;
-    }
+	@JsonProperty("unique_id")
+	private String uniqueId;
 
-    public String getProvider() {
-        return provider;
-    }
+	@JsonProperty("extra")
+	private Object extra;
+	
+	@JsonProperty("tags")
+	private List<String> tags;
+	
+	@JsonProperty("requires")
+	private List<String> requires;
+	
+	@JsonProperty("documentation_url")
+	private String documationUrl;
+	
+	@JsonProperty("service_plans_url")
+	private String servicePlanUrl;
+	
+	@JsonProperty("service_plans")
+	private CloudFoundryResources<ServicePlan> servicePlans;
 
-    public String getVersion() {
-        return version;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-    public List<ServicePlan> getPlans() {
-        return Collections.unmodifiableList(plans);
-    }
+	public String getProvider() {
+		return provider;
+	}
 
-    @SuppressWarnings("rawtypes")
-    public static Service fromCloudFoundryModel(Object response) {
-        List<ServicePlan> plans = new ArrayList<ServicePlan>();
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
 
-		List servicePlanResource = eval("entity.?service_plans", response, List.class);
-        if (servicePlanResource != null) {
-            for (Object servicePlan : eval("entity.service_plans", response, List.class)) {
-                plans.add(ServicePlan.fromCloudFoundryModel(servicePlan));
-            }
-        }
-        return new Service(evalToString("metadata.guid", response),
-                evalToString("entity.label", response),
-                evalToString("entity.provider", response),
-                evalToString("entity.version", response),
-                evalToString("entity.description", response), plans);
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("name", name)
-                .append("provider", provider)
-                .append("version", version)
-                .append("description", description)
-                .append("plans", plans).toString();
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getLongDescription() {
+		return longDescription;
+	}
+
+	public void setLongDescription(String longDescription) {
+		this.longDescription = longDescription;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public String getInfoUrl() {
+		return infoUrl;
+	}
+
+	public void setInfoUrl(String infoUrl) {
+		this.infoUrl = infoUrl;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public boolean isBindable() {
+		return bindable;
+	}
+
+	public void setBindable(boolean bindable) {
+		this.bindable = bindable;
+	}
+
+	public String getUniqueId() {
+		return uniqueId;
+	}
+
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
+	}
+
+	public Object getExtra() {
+		return extra;
+	}
+
+	public void setExtra(Object extra) {
+		this.extra = extra;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+
+	public List<String> getRequires() {
+		return requires;
+	}
+
+	public void setRequires(List<String> requires) {
+		this.requires = requires;
+	}
+
+	public String getDocumationUrl() {
+		return documationUrl;
+	}
+
+	public void setDocumationUrl(String documationUrl) {
+		this.documationUrl = documationUrl;
+	}
+
+	public String getServicePlanUrl() {
+		return servicePlanUrl;
+	}
+
+	public void setServicePlanUrl(String servicePlanUrl) {
+		this.servicePlanUrl = servicePlanUrl;
+	}
+
+	public CloudFoundryResources<ServicePlan> getServicePlans() {
+		return servicePlans;
+	}
+
+	public void setServicePlans(CloudFoundryResources<ServicePlan> servicePlans) {
+		this.servicePlans = servicePlans;
+	}
+	
 }

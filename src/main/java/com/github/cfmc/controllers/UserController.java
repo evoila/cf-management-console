@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.cfmc.api.model.User;
+import com.github.cfmc.api.model.SpaceUser;
 import com.github.cfmc.api.model.UserInfo;
+import com.github.cfmc.api.model.base.CloudFoundryResource;
 import com.github.cfmc.api.repositories.UserRepository;
 
 /**
@@ -30,7 +31,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public @ResponseBody List<User> getAllUsers(@RequestHeader("Authorization") String token) {
+    public @ResponseBody List<CloudFoundryResource<SpaceUser>> getAllUsers(@RequestHeader("Authorization") String token) {
         return userRepository.getAllUsers(token);
     }
 

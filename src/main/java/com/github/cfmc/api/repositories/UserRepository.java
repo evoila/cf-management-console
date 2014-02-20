@@ -3,19 +3,14 @@
  */
 package com.github.cfmc.api.repositories;
 
-import static org.mvel2.MVEL.eval;
 import static org.mvel2.MVEL.evalToString;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,67 +20,48 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.cfmc.api.model.AccessToken;
-import com.github.cfmc.api.model.OrganizationUser;
-import com.github.cfmc.api.model.User;
+import com.github.cfmc.api.model.SpaceUser;
 import com.github.cfmc.api.model.UserInfo;
+import com.github.cfmc.api.model.base.CloudFoundryResource;
+import com.github.cfmc.api.model.base.CloudFoundryResources;
 
 /**
- * TODO: Add previous authors
+ * 
  * @author johanneshiemer
  *
  */
 @Repository
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class UserRepository extends BaseRepository {
-
-    private final String apiBaseUri;
-
-    private final String uaaBaseUri;
+public class UserRepository extends RestRepository {
 
     private final String clientId;
 
     private final String clientSecret;
 
     @Autowired
-    protected UserRepository(RestTemplate restTemplate, AsyncTaskExecutor asyncTaskExecutor, ObjectMapper objectMapper, String apiBaseUri, String uaaBaseUri, String clientId, String clientSecret) {
-        super(restTemplate, asyncTaskExecutor, objectMapper, apiBaseUri, uaaBaseUri);
-        this.apiBaseUri = concatSlashIfNeeded(apiBaseUri);
-        this.uaaBaseUri = concatSlashIfNeeded(uaaBaseUri);
+    protected UserRepository(String clientId, String clientSecret) {
+        super();
         this.clientId = clientId;
         this.clientSecret = clientSecret;
     }
 
-    public List<User> getAllUsers(String token) {
+    public List<CloudFoundryResource<SpaceUser>> getAllUsers(String token) {
         final String accessToken = getAccessToken(clientId, clientSecret);
-        Map<String, Object> usersResponse = apiGet(accessToken, "v2/users");
-
-        Set<String> userIds = new HashSet<String>();
-        for (Object userResource : eval("resources", usersResponse, List.class)) {
-            userIds.add(evalToString("metadata.guid", userResource));
-        }
-
-        List<User> users = new ArrayList<User>();
-
-        Map<String, String> userNames = getUserNames(token, userIds);
-        for (Map.Entry<String, String> entry : userNames.entrySet()) {
-            users.add(OrganizationUser.Builder.newBuilder(entry.getKey()).setUserName(entry.getValue()).build());
-        }
-        return users;
+        CloudFoundryResources<SpaceUser> users = apiGetv2(accessToken, "v2/users");
+        
+        return users.getResources();
     }
 
     public UserInfo getUserInfo(String token) {
         Map<String, Object> userInfoResponse = uaaGet(token, "userinfo");
         String userId = evalToString("user_id", userInfoResponse);
 
-        // use Styx' token to retrieve the user details
         String accessToken = getAccessToken(clientId, clientSecret);
         Map<String, Object> uaaUserResponse = uaaGet(accessToken, "Users/".concat(userId));
-        Map<String, Object> apiUserResponse = apiGet(accessToken, "v2/users/".concat(userId).concat("?inline-relations-depth=1"));
-        return UserInfo.fromCloudFoundryModel(uaaUserResponse, apiUserResponse);
+        CloudFoundryResource<SpaceUser> user = one(accessToken, "v2/users", userId.concat("?inline-relations-depth=1"));
+        return UserInfo.fromCloudFoundryModel(uaaUserResponse, user.getEntity());
     }
 
     public AccessToken login(String username, String password) {
@@ -98,7 +74,8 @@ public class UserRepository extends BaseRepository {
 
         String model = "grant_type=password&username=" + username + "&password=" + password;
         String endpoint = authorizationEndpoint.concat("/oauth/token");
-        ResponseEntity<Map<String, Object>> loginResponse = getRestTemplate().exchange(endpoint, HttpMethod.POST, new HttpEntity(model, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
+        ResponseEntity<Map<String, Object>> loginResponse = restTemplate.exchange(endpoint, HttpMethod.POST, 
+        		new HttpEntity(model, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
         
         if (loginResponse.getStatusCode().equals(HttpStatus.OK)) {
             AccessToken accessToken = AccessToken.fromCloudFoundryModel(loginResponse.getBody());
@@ -115,7 +92,8 @@ public class UserRepository extends BaseRepository {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Accept", "application/json;charset=utf-8");
 
-		ResponseEntity<Map<String, Object>> infoResponse = getRestTemplate().exchange(apiBaseUri.concat("info"), HttpMethod.GET, new HttpEntity(httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
+		ResponseEntity<Map<String, Object>> infoResponse = restTemplate.exchange(apiBaseUri.concat("info"), HttpMethod.GET, 
+				new HttpEntity(httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
         if (!infoResponse.getStatusCode().equals(HttpStatus.OK)) {
             throw new RepositoryException("Unable to retrieve info", infoResponse);
         }
@@ -139,7 +117,8 @@ public class UserRepository extends BaseRepository {
         model.add("response_type", "token");
 
         try {            
-			ResponseEntity<Map<String, Object>> tokenResponse = getRestTemplate().exchange(uaaBaseUri.concat("oauth/token"), HttpMethod.POST, new HttpEntity(model, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
+			ResponseEntity<Map<String, Object>> tokenResponse = restTemplate.exchange(uaaBaseUri.concat("oauth/token"), HttpMethod.POST, 
+					new HttpEntity(model, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
             if (!tokenResponse.getStatusCode().equals(HttpStatus.OK)) {
                 throw new RepositoryException("Problem retrieving access token", tokenResponse);
             }
@@ -172,7 +151,8 @@ public class UserRepository extends BaseRepository {
                 .append("\"}}\"").toString();
 
         try {
-            ResponseEntity<Map<String, Object>> createUserResponse = getRestTemplate().exchange(uaaBaseUri.concat("Users"), HttpMethod.POST, new HttpEntity(body, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
+            ResponseEntity<Map<String, Object>> createUserResponse = restTemplate.exchange(uaaBaseUri.concat("Users"), HttpMethod.POST, 
+            		new HttpEntity(body, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
             if (!createUserResponse.getStatusCode().equals(HttpStatus.CREATED)) {
                 throw new RepositoryException("Unable to create user in uaa", createUserResponse);
             }
@@ -191,7 +171,8 @@ public class UserRepository extends BaseRepository {
         String body = "{\"guid\":\"".concat(userId).concat("\"}");
 
         try {
-            ResponseEntity<Map<String, Object>> createUserResponse = getRestTemplate().exchange(apiBaseUri.concat("v2/users"), HttpMethod.POST, new HttpEntity(body, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
+            ResponseEntity<Map<String, Object>> createUserResponse = restTemplate.exchange(apiBaseUri.concat("v2/users"), HttpMethod.POST, 
+            		new HttpEntity(body, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
             if (!createUserResponse.getStatusCode().equals(HttpStatus.CREATED)) {
                 throw new RepositoryException("Unable to create user using api", createUserResponse);
             }

@@ -3,146 +3,214 @@
  */
 package com.github.cfmc.api.model;
 
-import static org.mvel2.MVEL.eval;
-import static org.mvel2.MVEL.evalToString;
+import java.util.UUID;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * TODO: Add previous authors
+ * 
  * @author johanneshiemer
  *
  */
 public class Application {
 
-    private final String id;
+	@JsonProperty("name")
+	private String name;
+	
+	@JsonProperty("production")
+	private boolean production;
+	
+	@JsonProperty("environment_json")
+	private String environmentJson;
+	
+	@JsonProperty("memory")
+	private int memory;
+	
+	@JsonProperty("instances")
+	private int instances;
+	
+	@JsonProperty("file_descriptors")
+	private int fileDescriptors;
+	
+	@JsonProperty("disk_quota")
+	private int diskQuota;
+	
+	@JsonProperty("state")
+	private String state;
+	
+	@JsonProperty("command")
+	private String command;
+	
+	@JsonProperty("console")
+	private boolean console;
+	
+	@JsonProperty("space_guid")
+	private UUID spaceGuid;
+	
+	@JsonProperty("space_url")
+	private String spaceUrl;
+	
+	@JsonProperty("runtime_guid")
+	private UUID runtimeGuid;
+	
+	@JsonProperty("runtime_url")
+	private String runtimeUrl;
+	
+	@JsonProperty("framework_guid")
+	private UUID frameworkGuid;
+	
+	@JsonProperty("framework_url")
+	private String frameworkUrl;
+	
+	@JsonProperty("service_bindings_url")
+	private String serviceBindingUrl;
+	
+	@JsonProperty("routes_url")
+	private String routeUrl;
 
-    private final String name;
+	public String getName() {
+		return name;
+	}
 
-    private final String buildpack;
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    private final String state;
+	public boolean isProduction() {
+		return production;
+	}
 
-    private final int instances;
+	public void setProduction(boolean production) {
+		this.production = production;
+	}
 
-    private final int memory;
+	public String getEnvironmentJson() {
+		return environmentJson;
+	}
 
-    private final Map<String, String> environment;
+	public void setEnvironmentJson(String environmentJson) {
+		this.environmentJson = environmentJson;
+	}
 
-    private final List<String> urls;
+	public int getMemory() {
+		return memory;
+	}
 
-    private final List<ServiceInstance> serviceInstances = new ArrayList<ServiceInstance>();
+	public void setMemory(int memory) {
+		this.memory = memory;
+	}
 
-    private final List<ApplicationInstance> applicationInstances = new ArrayList<ApplicationInstance>();
+	public int getInstances() {
+		return instances;
+	}
 
-    public Application(String id, String name, String buildpack, String state, int instances, int memory, Map<String, String> environment, List<String> urls) {
-        this.id = id;
-        this.name = name;
-        this.buildpack = buildpack;
-        this.state = state;
-        this.instances = instances;
-        this.memory = memory;
-        this.environment = environment;
-        this.urls = urls;
-    }
+	public void setInstances(int instances) {
+		this.instances = instances;
+	}
 
-    public void addInstance(ApplicationInstance instance) {
-        applicationInstances.add(instance);
-    }
+	public int getFileDescriptors() {
+		return fileDescriptors;
+	}
 
-    public void addServiceInstance(ServiceInstance instance) {
-        serviceInstances.add(instance);
-    }
+	public void setFileDescriptors(int fileDescriptors) {
+		this.fileDescriptors = fileDescriptors;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public int getDiskQuota() {
+		return diskQuota;
+	}
 
-    public String getBuildpack() {
-        return buildpack;
-    }
+	public void setDiskQuota(int diskQuota) {
+		this.diskQuota = diskQuota;
+	}
 
-    public int getInstances() {
-        return instances;
-    }
+	public String getState() {
+		return state;
+	}
 
-    public int getMemory() {
-        return memory;
-    }
+	public void setState(String state) {
+		this.state = state;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getCommand() {
+		return command;
+	}
 
-    public String getState() {
-        return state;
-    }
+	public void setCommand(String command) {
+		this.command = command;
+	}
 
-    public Integer getHealth() {
-        if (applicationInstances.size() > 0) {
-            int instancesRunning = 0;
-            for (ApplicationInstance instance : applicationInstances) {
-                if (instance.isRunning()) {
-                    instancesRunning++;
-                }
-            }
-            return (100 / applicationInstances.size() * instancesRunning);
-        }
-        return null;
-    }
+	public boolean isConsole() {
+		return console;
+	}
 
-    public Map<String, String> getEnvironment() {
-        return Collections.unmodifiableMap(environment);
-    }
+	public void setConsole(boolean console) {
+		this.console = console;
+	}
 
-    public List<String> getUrls() {
-        return urls;
-    }
+	public UUID getSpaceGuid() {
+		return spaceGuid;
+	}
 
-    public List<ApplicationInstance> getApplicationInstances() {
-        return Collections.unmodifiableList(applicationInstances);
-    }
+	public void setSpaceGuid(UUID spaceGuid) {
+		this.spaceGuid = spaceGuid;
+	}
 
-    public List<ServiceInstance> getServiceInstances() {
-        return Collections.unmodifiableList(serviceInstances);
-    }
-    
-    @SuppressWarnings("unchecked")
-    public static Application fromCloudFoundryModel(Object response) {
-        List<String> urls = new ArrayList<String>();
-        for (Object route : eval("entity.routes", response, List.class)) {
-            String host = evalToString("entity.host", route);
-            String domain = evalToString("entity.domain.entity.name", route);
-            urls.add(host.concat(".").concat(domain));
-        }
+	public String getSpaceUrl() {
+		return spaceUrl;
+	}
 
-		Application application = new Application(evalToString("metadata.guid", response),
-                evalToString("entity.name", response),
-                evalToString("entity.buildpack", response),
-                evalToString("entity.state", response),
-                eval("entity.instances", response, int.class),
-                eval("entity.memory", response, int.class),
-                eval("entity.environment_json", response, Map.class), urls);
-        return application;
-    }
+	public void setSpaceUrl(String spaceUrl) {
+		this.spaceUrl = spaceUrl;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("name", name)
-                .append("buildpack", buildpack)
-                .append("memory", memory)
-                .append("environment", environment)
-                .append("urls", urls)
-                .append("applicationInstances", applicationInstances)
-                .append("serviceInstances", serviceInstances).toString();
-    }
+	public UUID getRuntimeGuid() {
+		return runtimeGuid;
+	}
 
+	public void setRuntimeGuid(UUID runtimeGuid) {
+		this.runtimeGuid = runtimeGuid;
+	}
+
+	public String getRuntimeUrl() {
+		return runtimeUrl;
+	}
+
+	public void setRuntimeUrl(String runtimeUrl) {
+		this.runtimeUrl = runtimeUrl;
+	}
+
+	public UUID getFrameworkGuid() {
+		return frameworkGuid;
+	}
+
+	public void setFrameworkGuid(UUID frameworkGuid) {
+		this.frameworkGuid = frameworkGuid;
+	}
+
+	public String getFrameworkUrl() {
+		return frameworkUrl;
+	}
+
+	public void setFrameworkUrl(String frameworkUrl) {
+		this.frameworkUrl = frameworkUrl;
+	}
+
+	public String getServiceBindingUrl() {
+		return serviceBindingUrl;
+	}
+
+	public void setServiceBindingUrl(String serviceBindingUrl) {
+		this.serviceBindingUrl = serviceBindingUrl;
+	}
+
+	public String getRouteUrl() {
+		return routeUrl;
+	}
+
+	public void setRouteUrl(String routeUrl) {
+		this.routeUrl = routeUrl;
+	}
+	
 }

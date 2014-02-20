@@ -18,9 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -124,9 +122,4 @@ public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
         return env.getProperty("clientSecret");
     }
 
-    @Bean
-    public AsyncTaskExecutor getAsyncTaskExecutor(){
-        return new ConcurrentTaskExecutor();
-    }
-    
 }

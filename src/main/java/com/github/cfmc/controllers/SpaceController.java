@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.cfmc.api.model.Space;
-import com.github.cfmc.api.repositories.SpaceRepository;
+import com.github.cfmc.api.model.base.CloudFoundryResource;
+import com.github.cfmc.api.model.base.CloudFoundryResources;
+import com.github.cfmc.api.repositories.RestRepository;
 
 /**
  * 
@@ -30,31 +32,39 @@ import com.github.cfmc.api.repositories.SpaceRepository;
 public class SpaceController {
 
 	@Autowired
-    private SpaceRepository spaceRepository;
+    private RestRepository restRepository;
+	
+	private static final String V2_SPACES = "v2/spaces";
+
+    @RequestMapping(value = "/spaces/{id}", method = GET)
+    public @ResponseBody Space getSpaceById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
+    	CloudFoundryResource<Space> space = restRepository.one(token, V2_SPACES, id);
+    	
+    	return space.getEntity();
+    }
+
+    @RequestMapping(value = "/organizations/{id}/spaces", method = GET)
+    public @ResponseBody List<CloudFoundryResource<Space>> getSpacesByOrganizationId(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("id") final String id) {
+    	CloudFoundryResources<Space> spaces =  restRepository.apiGetv2(token, "v2/organizations/".concat(id).concat("/spaces"));
+    	return spaces.getResources();
+    }
 
     @RequestMapping(value = "/spaces", method = RequestMethod.POST)
-    public @ResponseBody String createSpace(@RequestHeader("Authorization") String token, @RequestBody String body) {
-        return spaceRepository.createSpace(token, body);
+    public @ResponseBody CloudFoundryResource<Space> createSpace(@RequestHeader("Authorization") String token, 
+    		@RequestBody CloudFoundryResource<Space> space) {
+        return restRepository.save(token, V2_SPACES, space);
+    }
+    
+    @RequestMapping(value = "/spaces/{id}", method = RequestMethod.PUT)
+    public @ResponseBody CloudFoundryResource<Space> updateSpace(@RequestHeader("Authorization") String token, @PathVariable("id") String id, 
+    		@RequestBody CloudFoundryResource<Space> space) {
+    	 return restRepository.update(token, V2_SPACES.concat(id).concat("?collection-method=add"), space);
     }
 
     @RequestMapping(value = "/spaces/{id}", method = DELETE)
     public void deleteSpaceById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
-        spaceRepository.deleteById(token, id);
-    }
-
-    @RequestMapping(value = "/spaces/{id}", method = GET)
-    public @ResponseBody Space getSpaceById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
-        return spaceRepository.getById(token, id);
-    }
-
-    @RequestMapping(value = "/organizations/{id}/spaces", method = GET)
-    public @ResponseBody List<Space> getSpacesByOrganizationId(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
-        return spaceRepository.getByOrganizationId(token, id);
-    }
-
-    @RequestMapping(value = "/spaces/{id}", method = RequestMethod.PUT)
-    public @ResponseBody String updateSpace(@RequestHeader("Authorization") String token, @PathVariable("id") String id, @RequestBody String body) {
-        return spaceRepository.updateSpace(token, id, body);
+    	restRepository.delete(token, V2_SPACES, id);
     }
 
 }

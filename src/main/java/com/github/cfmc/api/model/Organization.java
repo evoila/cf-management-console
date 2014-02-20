@@ -3,122 +3,182 @@
  */
 package com.github.cfmc.api.model;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import java.util.UUID;
 
-import java.util.*;
-
-import static org.mvel2.MVEL.eval;
-import static org.mvel2.MVEL.evalToString;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.cfmc.api.model.base.CloudFoundryResource;
+import com.github.cfmc.api.model.base.CloudFoundryResources;
 
 /**
- * TODO: Add previous authors
+ * 
  * @author Johannes Hiemer
  *
  */
 public class Organization {
 
-    private final String id;
-    private final String name;
-    private final OrganizationQuota quota;
-    private final List<OrganizationUser> users;
-    private final List<Space> spaces;
-    private final List<String> domains;
+	@JsonProperty("name")
+    private String name;
+    
+	@JsonProperty("billing_enabled")
+    private boolean billingEnabled;
+    
+	@JsonProperty("quota_definition_guid")
+    private UUID quotaDefinitionGuid;
+    
+	@JsonProperty("status")
+    private String status;
+    
+	@JsonProperty("quota_definition_url")
+    private String quotaDefinitionUrl;
+    
+	@JsonProperty("spaces_url")
+    private String spacesUrl;
+    
+	@JsonProperty("domains_url")
+    private String domainsUrl;
+    
+	@JsonProperty("private_domains_url")
+    private String privateDomains;
+    
+	@JsonProperty("users_url")
+    private String usersUrl;
+    
+	@JsonProperty("managers_url")
+    private String managersUrl;
+    
+	@JsonProperty("billing_managers_url")
+    private String billingManagersUrl;
+    
+	@JsonProperty("auditors_url")
+    private String auditorsUrl;
+    
+	@JsonProperty("app_events_url")
+    private String appEventsUrl;
+	
+	@JsonProperty("quota_definition")
+	private CloudFoundryResource<OrganizationQuota> quota;
+	
+	@JsonProperty("spaces")
+	private CloudFoundryResources<Space> spaces;
 
-    public Organization(final String id, final String name, final OrganizationQuota quota, final List<OrganizationUser> users, final List<Space> spaces, final List<String> domains) {
-        this.id = id;
-        this.name = name;
-        this.quota = quota;
-        this.users = users;
-        this.spaces = spaces;
-        this.domains = domains;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public boolean isBillingEnabled() {
+		return billingEnabled;
+	}
 
-    public OrganizationQuota getQuota() {
-        return quota;
-    }
+	public void setBillingEnabled(boolean billingEnabled) {
+		this.billingEnabled = billingEnabled;
+	}
 
-    public List<OrganizationUser> getUsers() {
-        return users;
-    }
+	public UUID getQuotaDefinitionGuid() {
+		return quotaDefinitionGuid;
+	}
 
-    public List<Space> getSpaces() {
-        return spaces;
-    }
+	public void setQuotaDefinitionGuid(UUID quotaDefinitionGuid) {
+		this.quotaDefinitionGuid = quotaDefinitionGuid;
+	}
 
-    public List<String> getDomains() {
-        return domains;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public static Organization fromCloudFoundryModel(final Object response) {
-        final List<OrganizationUser> orgUsers = new ArrayList<OrganizationUser>();
-        final List<Space> spaces = new ArrayList<Space>();
-        final Map<String, OrganizationUser.Builder> organizationUserBuilders = new HashMap<String, OrganizationUser.Builder>();
-        
-        for (Object user : eval("entity.users", response, List.class)) {
-            final String id = eval("metadata.guid", user, String.class);
-            organizationUserBuilders.put(id, OrganizationUser.Builder.newBuilder(id));
-        }
-        
-        for (Object user : eval("entity.managers", response, List.class)) {
-            final String id = eval("metadata.guid", user, String.class);
-            if(organizationUserBuilders.containsKey(id)){
-                organizationUserBuilders.get(id).setManagerRole();
-                continue;
-            }
-            organizationUserBuilders.put(id, OrganizationUser.Builder.newBuilder(id).setManagerRole());
-        }
-        
-        for (Object user : eval("entity.billing_managers", response, List.class)) {
-            final String id = eval("metadata.guid", user, String.class);
-            if(organizationUserBuilders.containsKey(id)){
-                organizationUserBuilders.get(id).setBillingManager();
-                continue;
-            }
-            organizationUserBuilders.put(id, OrganizationUser.Builder.newBuilder(id).setBillingManager());
-        }
-        
-        for (Object user : eval("entity.auditors", response, List.class)) {
-            final String id = eval("metadata.guid", user, String.class);
-            if(organizationUserBuilders.containsKey(id)){
-                organizationUserBuilders.get(id).setAuditorRole();
-                continue;
-            }
-            organizationUserBuilders.put(id, OrganizationUser.Builder.newBuilder(id).setAuditorRole());
-        }
-        for(OrganizationUser.Builder builder : organizationUserBuilders.values()){
-            orgUsers.add(builder.build());
-        }
-        for (Object space : eval("entity.spaces", response, List.class)) {
-            spaces.add(Space.fromCloudFoundryModel(space));
-        }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-        OrganizationQuota organizationQuota = OrganizationQuota.fromCloudFoundryModel(eval("entity.quota_definition", response, Map.class));
+	public String getQuotaDefinitionUrl() {
+		return quotaDefinitionUrl;
+	}
 
-        List<String> domains = new ArrayList<String>();
-        for (Object domain : eval("entity.domains", response, List.class)) {
-            domains.add(eval("entity.name", domain, String.class));
-        }
-        return new Organization(evalToString("metadata.guid", response), evalToString("entity.name", response), organizationQuota, Collections.unmodifiableList(orgUsers), Collections.unmodifiableList(spaces), domains);
-    }
+	public void setQuotaDefinitionUrl(String quotaDefinitionUrl) {
+		this.quotaDefinitionUrl = quotaDefinitionUrl;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("name", name)
-                .append("quota", quota)
-                .append("users", users)
-                .append("spaces", spaces)
-                .append("domains", domains).toString();
-    }
+	public String getSpacesUrl() {
+		return spacesUrl;
+	}
 
+	public void setSpacesUrl(String spacesUrl) {
+		this.spacesUrl = spacesUrl;
+	}
+
+	public String getDomainsUrl() {
+		return domainsUrl;
+	}
+
+	public void setDomainsUrl(String domainsUrl) {
+		this.domainsUrl = domainsUrl;
+	}
+
+	public String getPrivateDomains() {
+		return privateDomains;
+	}
+
+	public void setPrivateDomains(String privateDomains) {
+		this.privateDomains = privateDomains;
+	}
+
+	public String getUsersUrl() {
+		return usersUrl;
+	}
+
+	public void setUsersUrl(String usersUrl) {
+		this.usersUrl = usersUrl;
+	}
+
+	public String getManagersUrl() {
+		return managersUrl;
+	}
+
+	public void setManagersUrl(String managersUrl) {
+		this.managersUrl = managersUrl;
+	}
+
+	public String getBillingManagersUrl() {
+		return billingManagersUrl;
+	}
+
+	public void setBillingManagersUrl(String billingManagersUrl) {
+		this.billingManagersUrl = billingManagersUrl;
+	}
+
+	public String getAuditorsUrl() {
+		return auditorsUrl;
+	}
+
+	public void setAuditorsUrl(String auditorsUrl) {
+		this.auditorsUrl = auditorsUrl;
+	}
+
+	public String getAppEventsUrl() {
+		return appEventsUrl;
+	}
+
+	public void setAppEventsUrl(String appEventsUrl) {
+		this.appEventsUrl = appEventsUrl;
+	}
+
+	public CloudFoundryResource<OrganizationQuota> getQuota() {
+		return quota;
+	}
+
+	public void setQuota(CloudFoundryResource<OrganizationQuota> quota) {
+		this.quota = quota;
+	}
+
+	public CloudFoundryResources<Space> getSpaces() {
+		return spaces;
+	}
+
+	public void setSpaces(CloudFoundryResources<Space> spaces) {
+		this.spaces = spaces;
+	}
+	
 }

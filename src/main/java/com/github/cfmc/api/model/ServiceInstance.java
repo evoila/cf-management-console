@@ -3,80 +3,82 @@
  */
 package com.github.cfmc.api.model;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import java.util.UUID;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import static org.mvel2.MVEL.eval;
-import static org.mvel2.MVEL.evalToString;
 
 /**
- * TODO Add previous authors
- * @author johanneshiemer
+ * 
+ * @author Johannes Hiemer.
  *
  */
 public class ServiceInstance {
 
-    private final String id;
+	@JsonProperty("name")
+	private String name;
+	
+	@JsonProperty("space_guid")
+	private UUID spaceGuid;
+	
+	@JsonProperty("space_url")
+	private String spaceUrl;
+	
+	@JsonProperty("service_plan_guid")
+	private UUID servicePlanGuid;
+	
+	@JsonProperty("service_plan_url")
+	private String servicePlanUrl;
+	
+	@JsonProperty("service_bindings_url")
+	private String serviceBindingUrl;
 
-    private final String name;
+	public String getName() {
+		return name;
+	}
 
-    private final int boundApplications;
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    private final ServicePlan servicePlan;
+	public UUID getSpaceGuid() {
+		return spaceGuid;
+	}
 
-    public ServiceInstance(String id, String name, int boundApplications, ServicePlan servicePlan) {
-        this.id = id;
-        this.name = name;
-        this.boundApplications = boundApplications;
-        this.servicePlan = servicePlan;
-    }
+	public void setSpaceGuid(UUID spaceGuid) {
+		this.spaceGuid = spaceGuid;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getSpaceUrl() {
+		return spaceUrl;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setSpaceUrl(String spaceUrl) {
+		this.spaceUrl = spaceUrl;
+	}
 
-    public int getBoundApplications() {
-        return boundApplications;
-    }
+	public UUID getServicePlanGuid() {
+		return servicePlanGuid;
+	}
 
-    public ServicePlan getServicePlan() {
-        return servicePlan;
-    }
+	public void setServicePlanGuid(UUID servicePlanGuid) {
+		this.servicePlanGuid = servicePlanGuid;
+	}
 
-    @SuppressWarnings("rawtypes")
-    public static ServiceInstance fromCloudFoundryModel(Object response) {
-        ServicePlan servicePlan = null;
-        Object servicePlanResource = eval("entity.?service_plan", response, Object.class);
-        if (servicePlanResource != null) {
-            servicePlan = ServicePlan.fromCloudFoundryModel(servicePlanResource);
-        }
+	public String getServicePlanUrl() {
+		return servicePlanUrl;
+	}
 
-        int serviceBindings = 0;
-        
-		List serviceBindingsResource = eval("entity.?service_bindings", response, List.class);
-        if (serviceBindingsResource != null) {
-            serviceBindings = serviceBindingsResource.size();
-        }
+	public void setServicePlanUrl(String servicePlanUrl) {
+		this.servicePlanUrl = servicePlanUrl;
+	}
 
-        return new ServiceInstance(evalToString("metadata.guid", response),
-                evalToString("entity.name", response),
-                serviceBindings,
-                servicePlan);
-    }
+	public String getServiceBindingUrl() {
+		return serviceBindingUrl;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("name", name)
-                .append("boundApplications", boundApplications)
-                .append("servicePlan", servicePlan).toString();
-    }
-
+	public void setServiceBindingUrl(String serviceBindingUrl) {
+		this.serviceBindingUrl = serviceBindingUrl;
+	}
+	
 }

@@ -28,23 +28,16 @@ define(['angular',
         RestangularProvider.setDefaultHeaders({ 
 			"Content-Type" : "application/json;charset=UTF-8",
 			"Accept" :"application/json;charset=UTF-8" });
-		RestangularProvider.setBaseUrl(REST_API);
-		RestangularProvider.setListTypeIsArray(false);
+		RestangularProvider.setBaseUrl(REST_API);		
 		RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
 			if (operation === "getList") {
-				if (angular.isArray(response.content)) {
-					angular.forEach(response.content, function(content, key) {
-						appUrlManipulationProvider.entityId(content);
-					});
-				} else {
-					appUrlManipulationProvider.entityId(response);
-				}
+				angular.forEach(response, function(item, index) {					
+					item.entity.id = item.metadata.guid;
+				});				
 			} else if (operation == "get") {
-				if (angular.isObject(response))
-					appUrlManipulationProvider.entityId(response);
+				response.entity.id = response.metadata.guid;
 			} else if (operation == "post") {
-				if (angular.isObject(response))
-					appUrlManipulationProvider.entityId(response);
+				response.entity.id = response.metadata.guid;
 			}
 			return response;
 		});

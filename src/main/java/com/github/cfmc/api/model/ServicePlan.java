@@ -1,63 +1,116 @@
+/**
+ * 
+ */
 package com.github.cfmc.api.model;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import java.util.UUID;
 
-import static org.mvel2.MVEL.eval;
-import static org.mvel2.MVEL.evalToString;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * 
+ * @author Johannes Hiemer. 
+ *
+ */
 public class ServicePlan {
 
-    private final String id;
+	@JsonProperty("name")
+    private String name;
+    
+	@JsonProperty("free")
+    private boolean free;
+    
+	@JsonProperty("description")
+    private String description;
+    
+	@JsonProperty("service_guid")	
+    private UUID serviceGuid;
+    
+	@JsonProperty("extra")
+    private Object extra;
+    
+	@JsonProperty("unique_id")
+    private String uniqueId;
+    
+	@JsonProperty("public")
+    private boolean pub;
+    
+	@JsonProperty("service_url")
+    private String serviceUrl;
+    
+	@JsonProperty("service_instances_url")
+    private String serviceInstanceUrl;
 
-    private final String name;
+	public String getName() {
+		return name;
+	}
 
-    private final String description;
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    private final Service service;
+	public boolean isFree() {
+		return free;
+	}
 
-    public ServicePlan(String id, String name, String description, Service service) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.service = service;
-    }
+	public void setFree(boolean free) {
+		this.free = free;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public UUID getServiceGuid() {
+		return serviceGuid;
+	}
 
-    public Service getService() {
-        return service;
-    }
+	public void setServiceGuid(UUID serviceGuid) {
+		this.serviceGuid = serviceGuid;
+	}
 
-    public static ServicePlan fromCloudFoundryModel(Object response) {
-        Service service = null;
-        Object serviceResource = eval("entity.?service", response, Object.class);
-        if (serviceResource != null) {
-            service = Service.fromCloudFoundryModel(serviceResource);
-        }
-        return new ServicePlan(evalToString("metadata.guid", response),
-                evalToString("entity.name", response),
-                evalToString("entity.description", response), service);
-    }
+	public Object getExtra() {
+		return extra;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("name", name)
-                .append("description", description)
-                .append("service", service).toString();
-    }
+	public void setExtra(Object extra) {
+		this.extra = extra;
+	}
 
+	public String getUniqueId() {
+		return uniqueId;
+	}
 
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
+	}
+
+	public boolean isPub() {
+		return pub;
+	}
+
+	public void setPub(boolean pub) {
+		this.pub = pub;
+	}
+
+	public String getServiceUrl() {
+		return serviceUrl;
+	}
+
+	public void setServiceUrl(String serviceUrl) {
+		this.serviceUrl = serviceUrl;
+	}
+
+	public String getServiceInstanceUrl() {
+		return serviceInstanceUrl;
+	}
+
+	public void setServiceInstanceUrl(String serviceInstanceUrl) {
+		this.serviceInstanceUrl = serviceInstanceUrl;
+	}
+	
 }
