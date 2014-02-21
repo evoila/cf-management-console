@@ -1,8 +1,7 @@
 <div class="container-fluid">
 	<div ng-show="loading">
-		<div class="well loading-well">
-			<p class="text-center"><i class="fa fa-5x fa-spinner fa-spin"></i></p>
-			<h5 class="text-center">Hold on... We are loading your spaces!</h5>
+		<div class="well loading-well">			
+			<h5 class="text-center"><i class="fa fa-1x fa-spinner fa-spin"></i> Hold on... We are loading your spaces!</h5>
 		</div>
 	</div>
 	<div ng-hide="loading">
@@ -10,7 +9,7 @@
 			<div class="col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<span class="panel-title">System Domains for Organisation: {{organization.name}}</span>
+						<span class="panel-title">System Domains for Organisation: {{organization.entity.name}}</span>
 						<button ng-click="deleteOrganization()" type="button" class="btn btn-danger btn-sm pull-right" style="margin-top: -3px">
 							Delete Organisation <span class="glyphicon glyphicon-trash"></span>
 						</button>
@@ -23,8 +22,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="domain in organization.domains">
-									<td>{{domain}}</td>
+								<tr ng-repeat="domain in organization.entity.domains">
+									<td>{{domain.entity.name}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -39,15 +38,15 @@
 					<div class="panel-body">
 						<dl class="dl-horizontal">
 							<dt>Name</dt>
-							<dd>{{organization.quota.name}}</dd>
+							<dd>{{organization.entity.quota_definition.entity.name}}</dd>
 							<dt>Total Services</dt>
-							<dd>{{organization.quota.totalServices}}</dd>
+							<dd>{{organization.entity.quota_definition.entity.total_services}}</dd>
 							<dt>Memory Limit</dt>
-							<dd>{{organization.quota.memoryLimit}} MB</dd>
+							<dd>{{organization.entity.quota_definition.entity.memory_limit}} MB</dd>
 							<dt>None Basic Services</dt>
-							<dd>{{organization.quota.nonBasicServicesAllowed}}</dd>
+							<dd>{{organization.entity.quota_definition.entity.non_basic_services_allowed}}</dd>
 							<dt>Trial DB Allowed</dt>
-							<dd>{{organization.quota.trialDbAllowed}}</dd>
+							<dd>{{organization.entity.quota_definition.entity.trial_db_allowed}}</dd>
 						</dl>
 					</div>
 				</div>

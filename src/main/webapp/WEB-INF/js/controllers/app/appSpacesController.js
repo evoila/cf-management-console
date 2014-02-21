@@ -11,8 +11,8 @@ define(function () {
 		
 		Restangular.one('organizations', $scope.organizationId).all('spaces').getList().then(function(data) {
 			if (data[0] != undefined) {
-				$scope.space = {selected: data[0].name};
-				data[0].selected = true;    		
+				$scope.space = {selected: data[0].entity.name};
+				data[0].entity.selected = true;    		
 			}
 			$scope.spaces = data;
 			$scope.loading = false;

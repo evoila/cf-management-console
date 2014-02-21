@@ -19,7 +19,7 @@ define(function () {
 			return false;
 		};
 
-		Restangular.one('organizations', $state.params.organizationId).getList().then(function (organization) {
+		Restangular.one('organizations', $state.params.organizationId).get().then(function (organization) {
 			$scope.loggedInUser = clientCacheService.getUser();
 			var mayManipulate = false;
 

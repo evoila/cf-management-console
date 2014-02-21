@@ -14,16 +14,16 @@
 								<h4>SPACES:</h4>
 							</div>
 							<div class="col-md-10">
-								<span ng-repeat="s in spaces">
-									<span ng-show="space.selected == s.name">
+								<span ng-repeat="s in spaces">									
+									<span ng-show="space.selected == s.entity.name">
 										<div class="btn-group">
 											<a href="#/space-settings/{{organizationId}}/spaces/{{s.id}}" class="btn btn-primary">
-												{{s.name}} <i class="fa fa-wrench"></i>
+												{{s.entity.name}} <i class="fa fa-wrench"></i>
 											</a>
 										</div>
 									</span>
-									<span ng-show="space.selected != s.name">
-										<button class="btn btn-default" ng-click="selectSpace(s.name)">{{s.name}}</button>
+									<span ng-show="space.selected != s.entity.name">
+										<button class="btn btn-default" ng-click="selectSpace(s.name)">{{s.entity.name}}</button>
 									</span>
 								</span>
 							</div>
@@ -37,10 +37,10 @@
 		</div>
 		<div class="row">
 			<div ng-repeat="s in spaces">
-				<div class="col-md-8" ng-show="space.selected == s.name">
+				<div class="col-md-8" ng-show="space.selected == s.entity.name">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<span class="panel-title uppercase">Apps in {{s.name}} <span class="badge">{{s.applications.length}}</span></span>
+							<span class="panel-title uppercase">Apps in {{s.entity.name}} <span class="badge">{{s.entity.applications.length}}</span></span>
 						</div>
 						<div class="panel-body">
 							<table class="table table-condensed">
@@ -55,7 +55,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="app in s.applications">
+									<tr ng-repeat="app in s.entity.apps">
 										<td>
 											<h4 style="margin-top: -3px">
 												<span class="label label-success" ng-show="app.state == 'STARTED'">STARTED</span>
@@ -63,21 +63,21 @@
 											</h4>											
 										</td>
 										<td>
-											{{app.name}}
+											{{app.entity.name}}
 											<div ng-repeat="url in app.urls">
 												<a href="http://{{url}}">{{url}}</a>
 											</div>
 										</td>
-										<td>{{app.instances}}</td>
-										<td>{{app.memory}} MB</td>
+										<td>{{app.entity.instances}}</td>
+										<td>{{app.entity.memory}} MB</td>
 										<td>
-											<a class="btn btn-sm btn-info" href="#/app-settings/{{organizationId}}/applications/{{app.id}}">Details</a>
+											<a class="btn btn-sm btn-info" href="#/app-settings/{{organizationId}}/applications/{{app.metadata.guid}}">Details</a>
 										</td>
 										<td>
-											<button class="btn btn-sm btn-danger" ng-show="app.state == 'STARTED'" ng-click="stopApplication(app.id)">
+											<button class="btn btn-sm btn-danger" ng-show="app.state == 'STARTED'" ng-click="stopApplication(app.metadata.guid)">
 												<span class="glyphicon glyphicon-stop"></span> Stop Application
 											</button>
-											<button class="btn btn-sm btn-success" ng-hide="app.state == 'STARTED'" ng-click="startApplication(app.id)">
+											<button class="btn btn-sm btn-success" ng-hide="app.state == 'STARTED'" ng-click="startApplication(app.metadata.guid)">
 												<span class="glyphicon glyphicon-play"></span> Start Application	
 											</button>
 										</td>
@@ -88,7 +88,7 @@
 					</div>
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<span class="panel-title uppercase">Services in {{s.name}} <span class="badge">{{s.serviceInstances.length}}</span> 
+							<span class="panel-title uppercase">Services in {{s.entity.name}} <span class="badge">{{s.entity.serviceInstances.length}}</span> 
 							<button class="btn btn-sm btn-success pull-right">Add Service <i class="glyphicon glyphicon-plus"></i></button></span>
 						</div>
 						<div class="panel-body">
@@ -102,18 +102,18 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="service in s.serviceInstances">
-										<td>{{service.name}}</td>
-										<td>{{service.servicePlan.service.provider}} {{service.servicePlan.service.name}} {{service.servicePlan.service.version}}</td>
-										<td><a href="#" tooltip="{{service.servicePlan.description}}">{{service.servicePlan.name}}</a>
-										<td>{{service.boundApplications}}</td>
+									<tr ng-repeat="service in s.entity.serviceInstances">
+										<td>{{service.entity.name}}</td>
+										<td>{{service.entity.servicePlan.service.provider}} {{service.entity.servicePlan.service.name}} {{service.entity.servicePlan.service.version}}</td>
+										<td><a href="#" tooltip="{{service.servicePlan.description}}">{{service.entity.servicePlan.name}}</a>
+										<td>{{service.entity.boundApplications}}</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4" ng-show="space.selected == s.name">
+				<div class="col-md-4" ng-show="space.selected == s.entity.name">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<span class="panel-title uppercase">Users in {{s.name}}</span> <span class="badge">{{s.users.length}}</span>
@@ -122,8 +122,19 @@
 							</a>
 						</div>
 						<div class="panel-body">
+							<h5>Manager</h5>
 							<ul>
-								<li ng-repeat="user in s.users">{{user.username}}</li>
+								<li ng-repeat="user in s.entity.managers">{{user.username}}</li>
+							</ul>
+							<hr/>
+							<h5>Auditors</h5>
+							<ul>
+								<li ng-repeat="user in s.entity.auditors">{{user.username}}</li>
+							</ul>
+							<hr/>
+							<h5>Developers</h5>
+							<ul>
+								<li ng-repeat="user in s.entity.developers">{{user.username}}</li>
 							</ul>
 						</div>
 					</div>

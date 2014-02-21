@@ -40,9 +40,9 @@ public class OrganizationController {
     }
 	
 	@RequestMapping(value = "/organizations/{id}", method = RequestMethod.GET)
-    public @ResponseBody Organization getOrganization(@RequestHeader("Authorization") String token, @PathVariable("id") final String id) {
+    public @ResponseBody CloudFoundryResource<Organization> getOrganization(@RequestHeader("Authorization") String token, @PathVariable("id") final String id) {
 		CloudFoundryResource<Organization> organization = restRepository.one(token, V2_ORGANIZATIONS, id);
-		return organization.getEntity();
+		return organization;
     }
 
 	@RequestMapping(value = "/organizations", method = RequestMethod.POST)

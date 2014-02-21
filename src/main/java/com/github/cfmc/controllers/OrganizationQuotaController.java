@@ -34,9 +34,9 @@ public class OrganizationQuotaController {
 	private static final String V2_ORGANIZATIONS_QUOTAS = "v2/quota_definitions";
 
 	@RequestMapping(value = "/organizationQuotas/{id}", method = RequestMethod.GET)
-    public @ResponseBody OrganizationQuota getOrganization(@RequestHeader("Authorization") String token, @PathVariable("id") final String id) {
+    public @ResponseBody CloudFoundryResource<OrganizationQuota> getOrganization(@RequestHeader("Authorization") String token, @PathVariable("id") final String id) {
 		CloudFoundryResource<OrganizationQuota> organizationQuota = restRepository.one(token, V2_ORGANIZATIONS_QUOTAS, id);
-        return organizationQuota.getEntity();
+        return organizationQuota;
     }
 
     @RequestMapping(value = "/organizationQuotas", method = RequestMethod.GET)

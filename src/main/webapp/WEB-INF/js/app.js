@@ -34,7 +34,7 @@ define(['angular',
 				angular.forEach(response, function(item, index) {					
 					item.entity.id = item.metadata.guid;
 				});				
-			} else if (operation == "get") {
+			} else if (operation == "get") {				
 				response.entity.id = response.metadata.guid;
 			} else if (operation == "post") {
 				response.entity.id = response.metadata.guid;

@@ -46,7 +46,7 @@ define(function () {
 
 		Restangular.one('organizations', $state.params.organizationId).get().then(function (organization) {				
 			$scope.organization = organization;
-			$scope.users = organization.users;
+			$scope.users = organization.entity.users;
 			$scope.loading = false;
 		});
 			

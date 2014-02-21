@@ -37,12 +37,12 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="service in services">
-								<td><a href="" ng-click="showDetails(service)">{{service.name}}</a></td>
-								<td>{{service.description}}</td>
+								<td><a href="" ng-click="showDetails(service)">{{service.entity.name}}</a></td>
+								<td>{{service.entity.description}}</td>
 								<td>
 									<ul>
-										<li ng-repeat="plan in service.plans">
-											{{plan.name}} - {{plan.description}}
+										<li ng-repeat="plan in service.entity.service_plans">
+											{{plan.entity.name}}
 										</li>
 									</ul>
 								</td>	
@@ -57,7 +57,7 @@
 		<div ng-hide="loading" class="col-md-3">
 		</div>
 		<div class="col-md-9">
-			<h3>Plans for Service: {{service.name}}</h3>
+			<h3>Plans for Service: {{service.entity.name}}</h3>
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					&nbsp;
@@ -75,9 +75,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="plan in service.plans">
-								<td>{{plan.name}}</td>
-								<td>{{plan.description}}</td>								
+							<tr ng-repeat="plan in service.entity.service_plans">
+								<td>{{plan.entity.name}}</td>
+								<td>{{plan.entity.description}}</td>								
 							</tr>
 						</tbody>
 					</table>

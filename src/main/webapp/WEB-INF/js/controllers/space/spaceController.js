@@ -10,7 +10,7 @@ define(function () {
 
 		$scope.createSpace = function (spaceForm) {
 			var user = clientCacheService.getUser();
-			var spaceContent = {'organization_guid': $scope.organizationId, 'name': spaceForm.name, 'manager_guids': [user.id], 'developer_guids': [user.id]};
+			var spaceContent = {'organization_guid': $scope.organizationId, 'name': spaceForm.name};
 			Restangular.all('spaces').post(spaceContent).then(function(space) {
 				$location.path('/app-spaces/' + $scope.organizationId);
 				responseService.executeSuccess(space, null, null);

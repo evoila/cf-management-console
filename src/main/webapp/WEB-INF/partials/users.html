@@ -51,7 +51,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="user in organization.users" ng-show="showOrganizationUsers">
+							<tr ng-repeat="user in organization.entity.users" ng-show="showOrganizationUsers">
 								<td>{{user.username}}</td>
 								<td><input type="checkbox" ng-checked="user.manager" ng-model="user.manager"
 										   ng-disabled="blockInput" ng-click="setOrgManager(organization, user)"/></td>

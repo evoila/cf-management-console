@@ -74,7 +74,7 @@ public class RestRepository {
     	ResponseEntity<CloudFoundryResources<T>> responseEntity = exchange(token, apiBaseUri, HttpMethod.GET, path.concat("?inline-relations-depth=2"), null, 
     			new ParameterizedTypeReference<CloudFoundryResources<T>>() {});
     	if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-    		 throw new RepositoryException("Cannot perform uaa get for path [" + path + "]", responseEntity);
+    		 throw new RepositoryException("Cannot perform uaa get for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
     	}
     	return responseEntity.getBody();
     }
@@ -87,10 +87,11 @@ public class RestRepository {
      * @return
      */
     public <T> CloudFoundryResource<T> one(String token, String path, String id) {
-    	ResponseEntity<CloudFoundryResource<T>> responseEntity = exchange(token, apiBaseUri, HttpMethod.GET, path.concat("/").concat(id).concat("?inline-relations-depth=2"), null, 
+    	ResponseEntity<CloudFoundryResource<T>> responseEntity = exchange(token, apiBaseUri, HttpMethod.GET, 
+    			path.concat("/").concat(id).concat("?inline-relations-depth=2"), null, 
     			new ParameterizedTypeReference<CloudFoundryResource<T>>() {});
     	if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-    		 throw new RepositoryException("Cannot perform uaa get for path [" + path + "]", responseEntity);
+    		 throw new RepositoryException("Cannot perform uaa get for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
     	}
     	return responseEntity.getBody();
     }
@@ -106,7 +107,7 @@ public class RestRepository {
     	ResponseEntity<CloudFoundryResource<T>> responseEntity = exchangev2(token, apiBaseUri, HttpMethod.POST, path, resource.getEntity(), 
     			new ParameterizedTypeReference<CloudFoundryResource<T>>() {});
         if (!responseEntity.getStatusCode().equals(HttpStatus.CREATED)) {
-            throw new RepositoryException("Cannot perform api put for path [" + path + "]", responseEntity);
+            throw new RepositoryException("Cannot perform api put for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
         }
         return responseEntity.getBody();
     }
@@ -122,7 +123,7 @@ public class RestRepository {
         ResponseEntity<CloudFoundryResource<T>> responseEntity = exchangev2(token, apiBaseUri, HttpMethod.PUT, path, resource.getEntity(), 
         		new ParameterizedTypeReference<CloudFoundryResource<T>>() {});
         if (!responseEntity.getStatusCode().equals(HttpStatus.CREATED)) {
-            throw new RepositoryException("Cannot perform api put for path [" + path + "]", responseEntity);
+            throw new RepositoryException("Cannot perform api put for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
         }
         return responseEntity.getBody();
     }
@@ -137,7 +138,7 @@ public class RestRepository {
     public String delete(String token, String path, String id) {
         ResponseEntity<String> responseEntity = exchange(token, apiBaseUri, HttpMethod.DELETE, path.concat("/").concat(id), null, new ParameterizedTypeReference<String>() {});
         if (!responseEntity.getStatusCode().equals(HttpStatus.NO_CONTENT)) {
-            throw new RepositoryException("Cannot perform api delete for path [" + path + "]", responseEntity);
+            throw new RepositoryException("Cannot perform api delete for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
         }
         return responseEntity.getBody();
     }
@@ -159,7 +160,8 @@ public class RestRepository {
         try {
             return restTemplate.exchange(baseUri.concat(path), method, request, typeReference);
         } catch (HttpClientErrorException e) {
-            throw new RepositoryException("Unable to perform exchange for path [" + path + "]", new ResponseEntity(e.getResponseBodyAsString(), e.getStatusCode()));
+            throw new RepositoryException("Unable to perform exchange for path [" + path + "]", 
+            		new ResponseEntity(e.getResponseBodyAsString(), e.getStatusCode()), e.getStatusCode());
         }
     }
     
@@ -181,7 +183,8 @@ public class RestRepository {
         try {
             return restTemplate.exchange(baseUri.concat(path), method, request, parameterizedTypeReference);
         } catch (HttpClientErrorException e) {
-            throw new RepositoryException("Unable to perform exchange for path [" + path + "]", new ResponseEntity(e.getResponseBodyAsString(), e.getStatusCode()));
+            throw new RepositoryException("Unable to perform exchange for path [" + path + "]", 
+            		new ResponseEntity(e.getResponseBodyAsString(), e.getStatusCode()), e.getStatusCode());
         }
     }
 

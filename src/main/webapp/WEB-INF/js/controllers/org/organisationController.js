@@ -8,7 +8,7 @@ define(function () {
 	function OrganisationController($scope, $state, $location, $modal, Restangular, clientCacheService, responseService) {
 		$scope.DEBUG = true;
 
-		Restangular.one('organizations', $state.params.organizationId).getList().then(function (data, status, headers) {
+		Restangular.one('organizations', $state.params.organizationId).get().then(function (data, status, headers) {
 			$scope.organization = data;
 		});
 
