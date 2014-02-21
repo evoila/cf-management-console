@@ -29,7 +29,6 @@ public class GlobalExceptionHandler {
         LOGGER.debug("Handling exception of type {} with message {}", ex.getClass(), ex.getMessage());
 
         if (ex instanceof RepositoryException) {
-            LOGGER.debug("Found nested repository exception with response {}", ((RepositoryException) ex).getResponse().toString());
             return new ResponseEntity<>(new ExceptionContainer(((RepositoryException) ex).getResponse().toString()), 
             		((RepositoryException) ex).getHttpStatus());
         } if (ex instanceof HttpClientErrorException) {

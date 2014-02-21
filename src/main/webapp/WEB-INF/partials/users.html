@@ -9,7 +9,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<span class="panel-title">Users and Roles</span>
-					<button class="btn btn-success btn-sm pull-right" style="margin-top: -3px" ng-click="addNewUser(organization)" ng-hide="blockInput">
+					<button class="btn btn-success btn-sm pull-right" ng-click="addNewUser(organization.entity)">
 						Add User to Organisation <span class="glyphicon glyphicon-plus"></span>
 					</button>
 				</div>
@@ -25,12 +25,12 @@
 										<ul class="dropdown-menu">
 											<li role="presentation" class="dropdown-header">Organisation Roles</li>
 											<li>
-												<a ng-click="selectOrganizationUsers(organization.name)">{{organization.name}}</a>
+												<a ng-click="selectOrganizationUsers(organization.entity.name)">{{organization.entity.name}}</a>
 											</li>
 											<li class="divider"></li>
 											<li role="presentation" class="dropdown-header">Space Roles</li>
-											<li ng-repeat="space in organization.spaces track by $id($index)">
-												<a ng-click="selectSpaceUsers(space.name, organization)">{{space.name}}</a>
+											<li ng-repeat="space in organization.entity.spaces track by $id($index)">
+												<a ng-click="selectSpaceUsers(space.entity.name, organization.entity)">{{space.entity.name}}</a>
 											</li>
 										</ul>
 									</div>

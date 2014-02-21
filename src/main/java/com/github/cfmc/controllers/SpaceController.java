@@ -9,6 +9,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,14 +38,14 @@ public class SpaceController {
 	
 	private static final String V2_SPACES = "v2/spaces";
 
-    @RequestMapping(value = "/spaces/{id}", method = GET)
+    @RequestMapping(value = "/spaces/{id}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<Space> getSpaceById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
     	CloudFoundryResource<Space> space = restRepository.one(token, V2_SPACES, id);
     	
     	return space;
     }
 
-    @RequestMapping(value = "/organizations/{id}/spaces", method = GET)
+    @RequestMapping(value = "/organizations/{id}/spaces", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Space>> getSpacesByOrganizationId(@RequestHeader("Authorization") final String token, 
     		@PathVariable("id") final String id) {
     	CloudFoundryResources<Space> spaces =  restRepository.apiGetv2(token, "v2/organizations/".concat(id).concat("/spaces"));
@@ -62,9 +64,10 @@ public class SpaceController {
     	 return restRepository.update(token, V2_SPACES.concat(id).concat("?collection-method=add"), space);
     }
 
-    @RequestMapping(value = "/spaces/{id}", method = DELETE)
-    public void deleteSpaceById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
+    @RequestMapping(value = "/spaces/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteSpaceById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
     	restRepository.delete(token, V2_SPACES, id);
+    	return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

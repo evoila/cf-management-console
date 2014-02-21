@@ -17,13 +17,13 @@
 								<span ng-repeat="s in spaces">									
 									<span ng-show="space.selected == s.entity.name">
 										<div class="btn-group">
-											<a href="#/space-settings/{{organizationId}}/spaces/{{s.id}}" class="btn btn-primary">
+											<a href="#/space-settings/{{organizationId}}/spaces/{{s.entity.id}}" class="btn btn-primary">
 												{{s.entity.name}} <i class="fa fa-wrench"></i>
 											</a>
 										</div>
 									</span>
 									<span ng-show="space.selected != s.entity.name">
-										<button class="btn btn-default" ng-click="selectSpace(s.name)">{{s.entity.name}}</button>
+										<button class="btn btn-default" ng-click="selectSpace(s.entity.name)">{{s.entity.name}}</button>
 									</span>
 								</span>
 							</div>
@@ -124,17 +124,17 @@
 						<div class="panel-body">
 							<h5>Manager</h5>
 							<ul>
-								<li ng-repeat="user in s.entity.managers">{{user.username}}</li>
+								<li ng-repeat="user in s.entity.managers">{{user.metadata.guid}}</li>
 							</ul>
 							<hr/>
 							<h5>Auditors</h5>
 							<ul>
-								<li ng-repeat="user in s.entity.auditors">{{user.username}}</li>
+								<li ng-repeat="user in s.entity.auditors">{{user.metadata.guid}}</li>
 							</ul>
 							<hr/>
 							<h5>Developers</h5>
 							<ul>
-								<li ng-repeat="user in s.entity.developers">{{user.username}}</li>
+								<li ng-repeat="user in s.entity.developers">{{user.metadata.guid}}</li>
 							</ul>
 						</div>
 					</div>

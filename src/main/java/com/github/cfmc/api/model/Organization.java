@@ -3,8 +3,10 @@
  */
 package com.github.cfmc.api.model;
 
+import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.cfmc.api.model.base.CloudFoundryResource;
 import com.github.cfmc.api.model.base.CloudFoundryResources;
@@ -14,6 +16,7 @@ import com.github.cfmc.api.model.base.CloudFoundryResources;
  * @author Johannes Hiemer
  *
  */
+@JsonIgnoreProperties
 public class Organization {
 
 	@JsonProperty("name")
@@ -42,15 +45,27 @@ public class Organization {
     
 	@JsonProperty("users_url")
     private String usersUrl;
+	
+	@JsonProperty("user_guids")
+	private List<UUID> userGuids;
     
 	@JsonProperty("managers_url")
     private String managersUrl;
+	
+	@JsonProperty("manager_guids")
+	private List<UUID> managerGuids;
     
 	@JsonProperty("billing_managers_url")
     private String billingManagersUrl;
+	
+	@JsonProperty("billing_manager_guids")
+	private List<UUID> billingManagerGuids;
     
 	@JsonProperty("auditors_url")
     private String auditorsUrl;
+	
+	@JsonProperty("auditor_guids")
+	private List<UUID> auditorGuids;
     
 	@JsonProperty("app_events_url")
     private String appEventsUrl;
@@ -133,12 +148,28 @@ public class Organization {
 		this.usersUrl = usersUrl;
 	}
 
+	public List<UUID> getUserGuids() {
+		return userGuids;
+	}
+
+	public void setUserGuids(List<UUID> userGuids) {
+		this.userGuids = userGuids;
+	}
+
 	public String getManagersUrl() {
 		return managersUrl;
 	}
 
 	public void setManagersUrl(String managersUrl) {
 		this.managersUrl = managersUrl;
+	}
+
+	public List<UUID> getManagerGuids() {
+		return managerGuids;
+	}
+
+	public void setManagerGuids(List<UUID> managerGuids) {
+		this.managerGuids = managerGuids;
 	}
 
 	public String getBillingManagersUrl() {
@@ -149,12 +180,28 @@ public class Organization {
 		this.billingManagersUrl = billingManagersUrl;
 	}
 
+	public List<UUID> getBillingManagerGuids() {
+		return billingManagerGuids;
+	}
+
+	public void setBillingManagerGuids(List<UUID> billingManagerGuids) {
+		this.billingManagerGuids = billingManagerGuids;
+	}
+
 	public String getAuditorsUrl() {
 		return auditorsUrl;
 	}
 
 	public void setAuditorsUrl(String auditorsUrl) {
 		this.auditorsUrl = auditorsUrl;
+	}
+
+	public List<UUID> getAuditorGuids() {
+		return auditorGuids;
+	}
+
+	public void setAuditorGuids(List<UUID> auditorGuids) {
+		this.auditorGuids = auditorGuids;
 	}
 
 	public String getAppEventsUrl() {
@@ -180,5 +227,5 @@ public class Organization {
 	public void setSpaces(CloudFoundryResources<Space> spaces) {
 		this.spaces = spaces;
 	}
-	
+
 }

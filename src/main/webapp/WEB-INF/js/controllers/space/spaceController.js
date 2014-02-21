@@ -10,7 +10,7 @@ define(function () {
 
 		$scope.createSpace = function (spaceForm) {
 			var user = clientCacheService.getUser();
-			var spaceContent = {'organization_guid': $scope.organizationId, 'name': spaceForm.name};
+			var spaceContent = {'organization_guid': $scope.organizationId, 'name': spaceForm.name, 'manager_guids': [user.id], 'developer_guids': [user.id]};
 			Restangular.all('spaces').post(spaceContent).then(function(space) {
 				$location.path('/app-spaces/' + $scope.organizationId);
 				responseService.executeSuccess(space, null, null);
@@ -31,8 +31,8 @@ define(function () {
 
 			modalInstance.result.then(function (response) {
 
-				Restangular.one('spaces', $scope.space.id).remove().then(function (data, status, headers) {							
-					$location.path('/app-spaces/' + $stateParams.organizationId);
+				Restangular.one('spaces', $scope.space.entity.id).remove().then(function (data, status, headers) {							
+					$location.path('/app-spaces/' + $state.params.organizationId);
 					responseService.executeSuccess(data, null, null);
 				});
 			});			

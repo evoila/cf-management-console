@@ -3,8 +3,10 @@
  */
 package com.github.cfmc.api.model;
 
+import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.cfmc.api.model.base.CloudFoundryResources;
 
@@ -14,6 +16,7 @@ import com.github.cfmc.api.model.base.CloudFoundryResources;
  * @author Johannes Hiemer.
  *
  */
+@JsonIgnoreProperties
 public class Space {
 
 	@JsonProperty("name")
@@ -28,17 +31,32 @@ public class Space {
 	@JsonProperty("developers_url")
 	private String developersUrl;
 	
+	@JsonProperty("developer_guids")
+	private List<UUID> developersGuids;
+	
 	@JsonProperty("managers_url")
 	private String managersUrl;
+	
+	@JsonProperty("manager_guids")
+	private List<UUID> managerGuids;
 	
 	@JsonProperty("auditors_url")
 	private String auditorsUrl;
 	
+	@JsonProperty("auditor_guids")
+	private List<UUID> auditorGuids;
+	
 	@JsonProperty("apps_url")
 	private String appsUrl;
 	
+	@JsonProperty("app_guids")
+	private List<UUID> appGuids;
+	
 	@JsonProperty("domains_url")
 	private String domainsUrl;
+	
+	@JsonProperty("domain_guids")
+	private List<UUID> domainGuids;
 	
 	@JsonProperty("service_instances_url")
 	private String serviceInstancesUrl;

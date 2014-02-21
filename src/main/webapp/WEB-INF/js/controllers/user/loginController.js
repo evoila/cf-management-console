@@ -26,7 +26,7 @@ define(function () {
 					Restangular.all('organizations').getList().then(function(data) {						
 						if (data.length > 0) {
 							responseService.executeSuccess(data, headers, 'dashboard');
-							$location.path('/app-spaces/' + data[0].id);
+							$location.path('/app-spaces/' + data[0].entity.id);
 						} else {
 							data = 'You are not associated with any organization, please ask an organization manager to add you an organization.';
 							$scope.authenticating = false;
