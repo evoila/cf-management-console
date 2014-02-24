@@ -88,7 +88,7 @@
 					</div>
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<span class="panel-title uppercase">Services in {{s.entity.name}} <span class="badge">{{s.entity.serviceInstances.length}}</span> 
+							<span class="panel-title uppercase">Services in {{s.entity.name}} <span class="badge">{{s.entity.service_instances.length}}</span> 
 							<button class="btn btn-sm btn-success pull-right">Add Service <i class="glyphicon glyphicon-plus"></i></button></span>
 						</div>
 						<div class="panel-body">
@@ -99,14 +99,21 @@
 										<th>Service</th>
 										<th>Plan Level</th>
 										<th>Bound Apps</th>
+										<th>Free</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="service in s.entity.serviceInstances">
+									<tr ng-repeat="service in s.entity.service_instances">
 										<td>{{service.entity.name}}</td>
-										<td>{{service.entity.servicePlan.service.provider}} {{service.entity.servicePlan.service.name}} {{service.entity.servicePlan.service.version}}</td>
-										<td><a href="#" tooltip="{{service.servicePlan.description}}">{{service.entity.servicePlan.name}}</a>
-										<td>{{service.entity.boundApplications}}</td>
+										<td>{{service.entity.service_plan.service.provider}} {{service.entity.service_plan.service.name}} 
+											{{service.entity.service_plan.service.version}}</td>
+										<td><a href="#" tooltip="{{service.servicePlan.description}}">{{service.entity.service_plan.entity.name}}</a>
+										<td>
+											<span class="badge">{{service.entity.service_bindings.length}}</span>
+										</td>
+										<td>
+											{{service.entity.service_plan.entity.public}}
+										</td>
 									</tr>
 								</tbody>
 							</table>

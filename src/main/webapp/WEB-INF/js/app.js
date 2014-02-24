@@ -50,5 +50,5 @@ define(['angular',
 			return request;
 		});
 
-	}).constant('REST_API', 'http://localhost:8080/cfmc/api');
+	}).constant('REST_API', '/api');
 });

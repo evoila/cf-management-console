@@ -3,9 +3,6 @@
  */
 package com.github.cfmc.controllers;
 
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
