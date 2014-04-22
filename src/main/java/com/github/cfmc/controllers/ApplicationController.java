@@ -5,6 +5,10 @@ package com.github.cfmc.controllers;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.cfmc.api.model.Application;
+import com.github.cfmc.api.model.Instance;
 import com.github.cfmc.api.model.base.CloudFoundryResource;
 import com.github.cfmc.api.repositories.RestRepository;
 
@@ -29,20 +35,33 @@ public class ApplicationController {
 	
 	@Autowired
 	private RestRepository restRepository;
-
+	
 	private static final String V2_APPS = "v2/apps";
 
 	@RequestMapping(value = "/applications/{id}", method = GET)    
-    public @ResponseBody Application getApplicationById(@RequestHeader("Authorization") final String token, 
+    public @ResponseBody CloudFoundryResource<Application> getApplicationById(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id) {
 		CloudFoundryResource<Application> application = restRepository.one(token, V2_APPS, id);
-        return application.getEntity();
+        return application;
     }
 	
 	@RequestMapping(value = "/applications/{id}", method = RequestMethod.PUT)
     public Application updateApplication(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
 		return restRepository.update(token, V2_APPS.concat("/").concat(id), application).getEntity();
+    }
+	
+	@RequestMapping(value = "/applications/{id}/instances", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<Instance>> getApplicationInstances(@RequestHeader("Authorization") String token, 
+    		@PathVariable("id") String id) {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		Map<String, Object> values = restRepository.customList(token, V2_APPS.concat("/").concat(id).concat("/instances"));
+		List<CloudFoundryResource<Instance>> instances = new ArrayList<>(); 
+		for (Object value : values.values()) {
+			instances.add(new CloudFoundryResource<Instance>(objectMapper.convertValue(value, Instance.class)));
+		}
+		return instances;
     }
 	 
 	@RequestMapping(value = "/applications/{id}", method = RequestMethod.DELETE)

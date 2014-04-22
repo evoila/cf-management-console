@@ -49,7 +49,7 @@ public class UserRepository extends RestRepository {
 
     public List<CloudFoundryResource<SpaceUser>> getAllUsers(String token) {
         final String accessToken = getAccessToken(clientId, clientSecret);
-        CloudFoundryResources<SpaceUser> users = apiGetv2(accessToken, "v2/users");
+        CloudFoundryResources<SpaceUser> users = list(accessToken, "v2/users");
         
         return users.getResources();
     }

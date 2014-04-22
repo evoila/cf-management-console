@@ -41,7 +41,7 @@ public class OrganizationQuotaController {
 
     @RequestMapping(value = "/organizationQuotas", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<OrganizationQuota>> getOrganizations(@RequestHeader("Authorization") final String token) {
-        CloudFoundryResources<OrganizationQuota> organizationQuotas = restRepository.apiGetv2(token, V2_ORGANIZATIONS_QUOTAS);
+        CloudFoundryResources<OrganizationQuota> organizationQuotas = restRepository.list(token, V2_ORGANIZATIONS_QUOTAS);
         return organizationQuotas.getResources();
     }
     

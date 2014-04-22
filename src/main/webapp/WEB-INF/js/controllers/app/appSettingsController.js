@@ -11,10 +11,14 @@ define(function () {
 		$scope.applicationId = null;
 
 		Restangular.one('applications', $state.params.applicationId).get().then(function (application) {
-				$scope.application = application;
-				$scope.applicationId = $scope.application.id;
-				$scope.loading = false;				
+			$scope.application = application;
+			$scope.applicationId = $scope.application.id;
+			$scope.loading = false;
 		});
+
+		Restangular.one('applications', $state.params.applicationId).all('instances').getList().then(function (instances) {
+			$scope.instances = instances;
+		})
 
 		$scope.deleteApplication = function() {
 

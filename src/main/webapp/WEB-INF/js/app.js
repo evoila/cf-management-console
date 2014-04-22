@@ -31,8 +31,9 @@ define(['angular',
 		RestangularProvider.setBaseUrl(REST_API);		
 		RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
 			if (operation === "getList") {
-				angular.forEach(response, function(item, index) {					
-					item.entity.id = item.metadata.guid;
+				angular.forEach(response, function(item, index) {
+					if (item.metadata != null && item.metadata.guid)					
+						item.entity.id = item.metadata.guid;
 				});				
 			} else if (operation == "get") {				
 				response.entity.id = response.metadata.guid;
@@ -50,5 +51,5 @@ define(['angular',
 			return request;
 		});
 
-	}).constant('REST_API', '/api');
+	}).constant('REST_API', 'http://localhost:8080/cfmc/api');
 });

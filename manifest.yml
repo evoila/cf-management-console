@@ -1,0 +1,8 @@
+---
+# This is a minimal manifest
+applications:
+- name: cfmc
+  instances: 1
+  memory: 512M
+  path: target/cfmc.war
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git

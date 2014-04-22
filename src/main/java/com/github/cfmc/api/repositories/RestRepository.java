@@ -70,9 +70,24 @@ public class RestRepository {
      * @param path
      * @return
      */
-    public <T> CloudFoundryResources<T> apiGetv2(String token, String path) {
+    public <T> CloudFoundryResources<T> list(String token, String path) {
     	ResponseEntity<CloudFoundryResources<T>> responseEntity = exchange(token, apiBaseUri, HttpMethod.GET, path.concat("?inline-relations-depth=2"), null, 
     			new ParameterizedTypeReference<CloudFoundryResources<T>>() {});
+    	if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+    		 throw new RepositoryException("Cannot perform uaa get for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
+    	}
+    	return responseEntity.getBody();
+    }
+    
+    /**
+     * 
+     * @param token
+     * @param path
+     * @return
+     */
+    public <T> Map<String, T> customList(String token, String path) {
+    	ResponseEntity<Map<String, T>> responseEntity = exchange(token, apiBaseUri, HttpMethod.GET, path.concat("?inline-relations-depth=2"), null, 
+    			new ParameterizedTypeReference<Map<String, T>>() {});
     	if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
     		 throw new RepositoryException("Cannot perform uaa get for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
     	}

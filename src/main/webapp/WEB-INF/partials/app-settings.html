@@ -7,7 +7,7 @@
 	<div ng-hide="loading">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">{{application.name}}</h3>
+				<h3 class="panel-title">{{application.entity.name}}</h3>
 			</div>
 			<div class="panel-body">
 				<table class="table table-condensed">
@@ -23,13 +23,13 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td><span class="label label-success" ng-show="application.state == 'STARTED'">{{application.health}}%</span>
-								<span class="label label-danger" ng-hide="application.state == 'STARTED'">{{application.health}}%</span></td>
-							<td>{{application.instances}}</td>
-							<td>{{application.memory}} MB</td>
-							<td>{{application.buildpack}}</td>
-							<td>{{application.environment}}</td>
-							<td><div ng-repeat="url in application.urls">
+							<td><span class="label label-success" ng-show="application.entity.state == 'STARTED'">{{application.entity.health}}%</span>
+								<span class="label label-danger" ng-hide="application.entity.state == 'STARTED'">{{application.entity.health}}%</span></td>
+							<td>{{application.entity.instances}}</td>
+							<td>{{application.entity.memory}} MB</td>
+							<td>{{application.entity.buildpack}}</td>
+							<td>{{application.entity.environment}}</td>
+							<td><div ng-repeat="url in application.entity.urls">
 								<a href="http://{{url}}">{{url}}</a>
 							</div>
 							</td>
@@ -41,7 +41,7 @@
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">BOUND SERVICES <span class="badge">{{application.serviceInstances.length}}</span></h3>
+				<h3 class="panel-title">BOUND SERVICES <span class="badge">{{application.entity.serviceInstances.length}}</span></h3>
 			</div>
 			<div class="panel-body">
 				<table class="table table-condensed">
@@ -53,7 +53,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="service in application.serviceInstances">
+						<tr ng-repeat="service in application.entity.serviceInstances">
 							<td>{{service.name}}</td>
 							<td>{{service.servicePlan.service.provider}} {{service.servicePlan.service.name}} {{service.servicePlan.service.version}}</td>
 							<td><a href="#" tooltip="{{service.servicePlan.description}}">{{service.servicePlan.name}}</a>
@@ -64,7 +64,7 @@
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">INSTANCES <span class="badge">{{application.instances}}</span></h3>
+				<h3 class="panel-title">INSTANCES <span class="badge">{{application.entity.instances}}</span></h3>
 			</div>
 			<div class="panel-body">
 				<table class="table table-condensed">
@@ -78,13 +78,19 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="instance in application.applicationInstances">
+						<tr ng-repeat="instance in instances">
 							<td>{{$index}}</td>
-							<td>{{instance.state}}</td>
-							<td>{{instance.consoleIp}}</td>
-							<td>{{instance.consolePort}}</td>
-							<td><div><a href="#/app-log/{{organizationId}}/applications/{{application.id}}/instances/{{$index}}/stdout">stdout.log</a></div>
-								<div><a href="#/app-log/{{organizationId}}/applications/{{application.id}}/instances/{{$index}}/stderr">stderr.log</a></div></td>
+							<td>{{instance.entity.state}}</td>
+							<td>{{instance.entity.console_ip}}</td>
+							<td>{{instance.entity.console_port}}</td>
+							<td>
+								<div>
+									<a href="#/app-log/{{organizationId}}/applications/{{application.entity.id}}/instances/{{$index}}/stdout">stdout.log</a>
+								</div>
+								<div>
+									<a href="#/app-log/{{organizationId}}/applications/{{application.entity.id}}/instances/{{$index}}/stderr">stderr.log</a>
+								</div>
+							</td>
 						</tr>
 					</tbody>
 				</table>

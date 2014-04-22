@@ -35,7 +35,7 @@ public class OrganizationController {
 	
 	@RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Organization>> getOrganizations(@RequestHeader("Authorization") final String token) {
-		CloudFoundryResources<Organization> organizations = restRepository.apiGetv2(token, V2_ORGANIZATIONS);
+		CloudFoundryResources<Organization> organizations = restRepository.list(token, V2_ORGANIZATIONS);
 		return organizations.getResources();
     }
 	

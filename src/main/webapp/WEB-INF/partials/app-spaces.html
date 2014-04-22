@@ -18,7 +18,7 @@
 									<span ng-show="space.selected == s.entity.name">
 										<div class="btn-group">
 											<a href="#/space-settings/{{organizationId}}/spaces/{{s.entity.id}}" class="btn btn-primary">
-												{{s.entity.name}} <i class="fa fa-wrench"></i>
+												<i class="fa fa-wrench"></i> {{s.entity.name}}
 											</a>
 										</div>
 									</span>
@@ -28,7 +28,9 @@
 								</span>
 							</div>
 							<div class="col-md-1">
-								<a href="#/create-space/{{organizationId}}" class="btn btn-success pull-right">Add Space <i class="glyphicon glyphicon-plus"></i></a>
+								<a href="#/create-space/{{organizationId}}" class="btn btn-success pull-right">
+									<i class="glyphicon glyphicon-plus"></i> Add Space
+								</a>
 							</div>
 						</div>
 					</div>
@@ -57,9 +59,9 @@
 								<tbody>
 									<tr ng-repeat="app in s.entity.apps">
 										<td>
-											<h4 style="margin-top: -3px">
-												<span class="label label-success" ng-show="app.state == 'STARTED'">STARTED</span>
-												<span class="label label-danger" ng-hide="app.state == 'STARTED'">STOPPED</span>
+											<h4 style="margin-top: -3px">											
+												<span class="label label-success" ng-show="app.entity.state == 'STARTED'">STARTED</span>
+												<span class="label label-danger" ng-hide="app.entity.state == 'STARTED'">STOPPED</span>
 											</h4>											
 										</td>
 										<td>
@@ -74,10 +76,10 @@
 											<a class="btn btn-sm btn-info" href="#/app-settings/{{organizationId}}/applications/{{app.metadata.guid}}">Details</a>
 										</td>
 										<td>
-											<button class="btn btn-sm btn-danger" ng-show="app.state == 'STARTED'" ng-click="stopApplication(app.metadata.guid)">
+											<button class="btn btn-sm btn-danger" ng-show="app.entity.state == 'STARTED'" ng-click="stopApplication(app.metadata.guid)">
 												<span class="glyphicon glyphicon-stop"></span> Stop Application
 											</button>
-											<button class="btn btn-sm btn-success" ng-hide="app.state == 'STARTED'" ng-click="startApplication(app.metadata.guid)">
+											<button class="btn btn-sm btn-success" ng-hide="app.entity.state == 'STARTED'" ng-click="startApplication(app.metadata.guid)">
 												<span class="glyphicon glyphicon-play"></span> Start Application	
 											</button>
 										</td>
@@ -89,7 +91,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<span class="panel-title uppercase">Services in {{s.entity.name}} <span class="badge">{{s.entity.service_instances.length}}</span> 
-							<button class="btn btn-sm btn-success pull-right">Add Service <i class="glyphicon glyphicon-plus"></i></button></span>
+							<button class="btn btn-sm btn-success pull-right"><i class="glyphicon glyphicon-plus"></i> Add Service</button></span>
 						</div>
 						<div class="panel-body">
 							<table class="table table-condensed">
@@ -125,7 +127,7 @@
 						<div class="panel-heading">
 							<span class="panel-title uppercase">Users in {{s.name}}</span> <span class="badge">{{s.users.length}}</span>
 							<a href="#/users/{{organizationId}}" class="btn btn-success btn-sm pull-right" style="margin-top: -3px">
-								Edit <span class="glyphicon glyphicon-cog"></span>
+								<i class="glyphicon glyphicon-cog"></i> Edit
 							</a>
 						</div>
 						<div class="panel-body">
