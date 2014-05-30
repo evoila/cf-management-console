@@ -27,8 +27,8 @@ require({
 	'directives/directives', 
 	'providers/providers',
 	'filters/filters'], function (app) {
-		app.run(['$rootScope', '$state', '$stateParams', 'clientCacheService', '$http',
-			function ($rootScope, $state, $stateParams, clientCacheService, $http) {
+		app.run(['$rootScope', '$state', '$stateParams', 'clientCacheService', '$http', '$location',
+			function ($rootScope, $state, $stateParams, clientCacheService, $http, $location) {
 				console.log('main.js - called');
 				
 				$rootScope.forceLogin = function(status) {

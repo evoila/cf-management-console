@@ -92,7 +92,7 @@ define(['app'], function (app) {
 				}
 			}
 		})
-		.state('newUsers', {
+		.state('create-user', {
 			url: '/organization/:organizationId/users',
 			views: {
 				'navigation': navigation,

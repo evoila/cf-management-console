@@ -39,7 +39,7 @@ public class ServiceController {
 
     @RequestMapping(value = "/services", method = GET)
     public @ResponseBody List<CloudFoundryResource<Service>> getServices(@RequestHeader("Authorization") String token) {
-        CloudFoundryResources<Service> services = restRepository.list(token, V2_SERVICES);
+        CloudFoundryResources<Service> services = restRepository.list(token, V2_SERVICES, 1);
         return services.getResources();
     }
     

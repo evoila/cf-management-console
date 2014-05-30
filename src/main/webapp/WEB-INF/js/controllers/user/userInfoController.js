@@ -8,7 +8,7 @@ define(function () {
 	function UserInfoController($scope, $state, $location, Restangular) {
 		$scope.loading = true;
 		Restangular.all('userinfo').getList().then(function(userInfo) {
-			$scope.userInfo = data;
+			$scope.userInfo = userInfo;
 			$scope.loading = false;
 		});		
 	}

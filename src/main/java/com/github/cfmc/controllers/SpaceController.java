@@ -37,7 +37,7 @@ public class SpaceController {
 
     @RequestMapping(value = "/spaces/{id}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<Space> getSpaceById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
-    	CloudFoundryResource<Space> space = restRepository.one(token, V2_SPACES, id);
+    	CloudFoundryResource<Space> space = restRepository.one(token, V2_SPACES, id, 2);
     	
     	return space;
     }
@@ -45,7 +45,7 @@ public class SpaceController {
     @RequestMapping(value = "/organizations/{id}/spaces", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Space>> getSpacesByOrganizationId(@RequestHeader("Authorization") final String token, 
     		@PathVariable("id") final String id) {
-    	CloudFoundryResources<Space> spaces =  restRepository.list(token, "v2/organizations/".concat(id).concat("/spaces"));
+    	CloudFoundryResources<Space> spaces =  restRepository.list(token, "v2/organizations/".concat(id).concat("/spaces"), 2);
     	return spaces.getResources();
     }
 

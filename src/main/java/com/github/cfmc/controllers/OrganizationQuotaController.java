@@ -35,13 +35,13 @@ public class OrganizationQuotaController {
 
 	@RequestMapping(value = "/organizationQuotas/{id}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<OrganizationQuota> getOrganization(@RequestHeader("Authorization") String token, @PathVariable("id") final String id) {
-		CloudFoundryResource<OrganizationQuota> organizationQuota = restRepository.one(token, V2_ORGANIZATIONS_QUOTAS, id);
+		CloudFoundryResource<OrganizationQuota> organizationQuota = restRepository.one(token, V2_ORGANIZATIONS_QUOTAS, id, 1);
         return organizationQuota;
     }
 
     @RequestMapping(value = "/organizationQuotas", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<OrganizationQuota>> getOrganizations(@RequestHeader("Authorization") final String token) {
-        CloudFoundryResources<OrganizationQuota> organizationQuotas = restRepository.list(token, V2_ORGANIZATIONS_QUOTAS);
+        CloudFoundryResources<OrganizationQuota> organizationQuotas = restRepository.list(token, V2_ORGANIZATIONS_QUOTAS, 1);
         return organizationQuotas.getResources();
     }
     
@@ -61,9 +61,5 @@ public class OrganizationQuotaController {
     public void deleteOrganizationById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
     	restRepository.delete(token, V2_ORGANIZATIONS_QUOTAS, id);
     }
-
-    
-
-    
 
 }

@@ -32,11 +32,12 @@ define(['angular',
 		RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
 			if (operation === "getList") {
 				angular.forEach(response, function(item, index) {
-					if (item.metadata != null && item.metadata.guid)					
+					if (item.metadata != null && item.metadata.guid)
 						item.entity.id = item.metadata.guid;
 				});				
-			} else if (operation == "get") {				
-				response.entity.id = response.metadata.guid;
+			} else if (operation == "get") {
+				if (response.metadata != null && response.metadata.guid)
+					response.entity.id = response.metadata.guid;
 			} else if (operation == "post") {
 				response.entity.id = response.metadata.guid;
 			}

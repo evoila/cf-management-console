@@ -34,7 +34,7 @@ define(function () {
 			}
 		};
 
-		/**
+		
 		Restangular.all('users').getList().then(function (users) {
 			},
 			function (response) {
@@ -42,7 +42,7 @@ define(function () {
 				$scope.loading = false;
 				$scope.error = 'Failed to retrieve users. Reason: ' + JSON.stringify(response.reason);
 			}
-		); **/
+		);
 
 		Restangular.one('organizations', $state.params.organizationId).get().then(function (organization) {				
 			$scope.organization = organization;

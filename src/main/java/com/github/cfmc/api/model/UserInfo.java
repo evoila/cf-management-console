@@ -3,92 +3,105 @@
  */
 package com.github.cfmc.api.model;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.mvel2.MVEL.eval;
-import static org.mvel2.MVEL.evalToString;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * TODO: Add previous authors
+ * 
  * @author Johannes Hiemer
  *
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class UserInfo {
 
-    private final String id;
+	@JsonProperty("id")
+    private String id;
 
-    private final String userName;
+	@JsonProperty("meta")
+    private Meta meta;
+    
+	@JsonProperty("userName")
+    private String userName;
+    
+	@JsonProperty("emails")
+    private List<Email> emails;
+    
+	@JsonProperty("groups")
+    private List<Group> groups;
+    
+	@JsonProperty("approvals")
+    private List<Approval> approvals;
+    
+	@JsonProperty("active")
+    private boolean active;
+    
+	@JsonProperty("verified")
+    private boolean verified;
 
-    private final String firstName;
+	public String getId() {
+		return id;
+	}
 
-    private final String lastName;
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    private final List<String> emailAddresses;
+	public Meta getMeta() {
+		return meta;
+	}
 
-    private final List<String> organizations;
+	public void setMeta(Meta meta) {
+		this.meta = meta;
+	}
 
-    public UserInfo(String id, String userName, String firstName, String lastName, List<String> emailAddresses, List<String> organizations) {
-        this.id = id;
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailAddresses = emailAddresses;
-        this.organizations = organizations;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public List<Email> getEmails() {
+		return emails;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public void setEmails(List<Email> emails) {
+		this.emails = emails;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public List<Group> getGroups() {
+		return groups;
+	}
 
-    public List<String> getEmailAddresses() {
-        return emailAddresses;
-    }
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
+	}
 
-    public List<String> getOrganizations() {
-        return organizations;
-    }
+	public List<Approval> getApprovals() {
+		return approvals;
+	}
 
-    public static UserInfo fromCloudFoundryModel(Object uaaResponse, Object apiResponse) {
-        List<String> emailAddresses = new ArrayList<String>();
-        for (Object emailAddress : eval("emails", uaaResponse, List.class)) {
-            emailAddresses.add(evalToString("value", emailAddress));
-        }
+	public void setApprovals(List<Approval> approvals) {
+		this.approvals = approvals;
+	}
 
-        List<String> organizations = new ArrayList<String>();
-        for (Object organization : eval("entity.organizations", apiResponse, List.class)) {
-            organizations.add(evalToString("entity.name", organization));
-        }
+	public boolean isActive() {
+		return active;
+	}
 
-        return new UserInfo(evalToString("id", uaaResponse), evalToString("userName", uaaResponse),
-                evalToString("name.?givenName", uaaResponse), evalToString("name.?familyName", uaaResponse),
-                emailAddresses, organizations);
-    }
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("userName", userName)
-                .append("firstName", firstName)
-                .append("lastName", lastName)
-                .append("emailAddresses", emailAddresses)
-                .append("organizations", organizations).toString();
-    }
+	public boolean isVerified() {
+		return verified;
+	}
 
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
+	
 }

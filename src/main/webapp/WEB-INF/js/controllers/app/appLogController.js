@@ -13,7 +13,7 @@ define(function () {
 		var fileName = $state.params.fileName;
 
 		Restangular.one('applications', applicationId).one('instances', instanceId).one('logs', fileName).get()
-			.then(function (data, status, headers) {
+			.then(function (data) {
 			$scope.log = data;
 			$scope.loading = false;
 		});

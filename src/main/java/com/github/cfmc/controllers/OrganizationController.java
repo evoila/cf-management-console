@@ -35,13 +35,13 @@ public class OrganizationController {
 	
 	@RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Organization>> getOrganizations(@RequestHeader("Authorization") final String token) {
-		CloudFoundryResources<Organization> organizations = restRepository.list(token, V2_ORGANIZATIONS);
+		CloudFoundryResources<Organization> organizations = restRepository.list(token, V2_ORGANIZATIONS, 1);
 		return organizations.getResources();
     }
 	
 	@RequestMapping(value = "/organizations/{id}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<Organization> getOrganization(@RequestHeader("Authorization") String token, @PathVariable("id") final String id) {
-		CloudFoundryResource<Organization> organization = restRepository.one(token, V2_ORGANIZATIONS, id);
+		CloudFoundryResource<Organization> organization = restRepository.one(token, V2_ORGANIZATIONS, id, 1);
 		return organization;
     }
 

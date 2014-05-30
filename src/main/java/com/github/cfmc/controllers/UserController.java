@@ -36,8 +36,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
-    public  @ResponseBody UserInfo getUserInfo(@RequestHeader("Authorization") String token) {
-        return userRepository.getUserInfo(token);
+    public @ResponseBody UserInfo getUserInfo(@RequestHeader("Authorization") String token) {
+    	UserInfo userInfo = userRepository.getUserInfo(token);
+    	return userInfo;
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)

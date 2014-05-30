@@ -26,6 +26,7 @@ define(['angular'], function (angular) {
 
 		cache.storeUser = function(user) {
 			localStorageService.add("cfmc.user", user);
+			localStorageService.add("cfmc.lastLogin", new Date().getTime())
 		}
 
 		cache.getUser = function() {
@@ -42,6 +43,15 @@ define(['angular'], function (angular) {
 
 		cache.clear = function() {
 			localStorageService.clearAll();
+		}
+
+		cache.lastLogin = function() {
+			return localStorageService.get("cfmc.lastLogin");
+		}
+
+		cache.loginTimedout = function() {
+			var now = new Date().getTime();
+			return now - cache.lastLogin() > 1000 * 60 * 60 * 12;
 		}
 
 		cache.isAuthenticated = function() {

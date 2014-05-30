@@ -24,6 +24,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import com.github.cfmc.api.model.AccessToken;
 import com.github.cfmc.api.model.SpaceUser;
 import com.github.cfmc.api.model.UserInfo;
+import com.github.cfmc.api.model.UserSession;
 import com.github.cfmc.api.model.base.CloudFoundryResource;
 import com.github.cfmc.api.model.base.CloudFoundryResources;
 
@@ -49,19 +50,17 @@ public class UserRepository extends RestRepository {
 
     public List<CloudFoundryResource<SpaceUser>> getAllUsers(String token) {
         final String accessToken = getAccessToken(clientId, clientSecret);
-        CloudFoundryResources<SpaceUser> users = list(accessToken, "v2/users");
+        CloudFoundryResources<SpaceUser> users = list(accessToken, "v2/users", 1);
         
         return users.getResources();
     }
 
     public UserInfo getUserInfo(String token) {
-        Map<String, Object> userInfoResponse = uaaGet(token, "userinfo");
-        String userId = evalToString("user_id", userInfoResponse);
+    	UserSession userSession = customOneUaa(token, "userinfo", new ParameterizedTypeReference<UserSession>() {});
 
-        String accessToken = getAccessToken(clientId, clientSecret);
-        Map<String, Object> uaaUserResponse = uaaGet(accessToken, "Users/".concat(userId));
-        CloudFoundryResource<SpaceUser> user = one(accessToken, "v2/users", userId.concat("?inline-relations-depth=1"));
-        return UserInfo.fromCloudFoundryModel(uaaUserResponse, user.getEntity());
+        UserInfo userInfo = customOneUaa(token, "Users/".concat(userSession.getId()), new ParameterizedTypeReference<UserInfo>() {});
+        //CloudFoundryResource<SpaceUser> user = one(token, "v2/users", userSession.getId(), 1);
+        return userInfo;
     }
 
     public AccessToken login(String username, String password) {
@@ -80,9 +79,10 @@ public class UserRepository extends RestRepository {
         if (loginResponse.getStatusCode().equals(HttpStatus.OK)) {
             AccessToken accessToken = AccessToken.fromCloudFoundryModel(loginResponse.getBody());
 
-            Map<String, Object> userInfoResponse = uaaGet(accessToken.getTokenType() + " " + accessToken.getAccessToken(), "userinfo");
-            accessToken.setId(evalToString("user_id", userInfoResponse));
-            accessToken.setUsername(evalToString("user_name", userInfoResponse));
+            UserSession userInfo = customOneUaa(accessToken.getTokenType() + " " + accessToken.getAccessToken(), "userinfo", 
+            		new ParameterizedTypeReference<UserSession>() {});
+            accessToken.setId(userInfo.getId());
+            accessToken.setUsername(userInfo.getUserName());
             return accessToken;
         }
         throw new RepositoryException("Unable to login", loginResponse);

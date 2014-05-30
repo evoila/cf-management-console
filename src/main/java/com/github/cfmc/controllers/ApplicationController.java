@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +42,7 @@ public class ApplicationController {
 	@RequestMapping(value = "/applications/{id}", method = GET)    
     public @ResponseBody CloudFoundryResource<Application> getApplicationById(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id) {
-		CloudFoundryResource<Application> application = restRepository.one(token, V2_APPS, id);
+		CloudFoundryResource<Application> application = restRepository.one(token, V2_APPS, id, 1);
         return application;
     }
 	
@@ -56,7 +57,7 @@ public class ApplicationController {
     		@PathVariable("id") String id) {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
-		Map<String, Object> values = restRepository.customList(token, V2_APPS.concat("/").concat(id).concat("/instances"));
+		Map<String, Object> values = restRepository.customList(token, V2_APPS.concat("/").concat(id).concat("/instances"), 1);
 		List<CloudFoundryResource<Instance>> instances = new ArrayList<>(); 
 		for (Object value : values.values()) {
 			instances.add(new CloudFoundryResource<Instance>(objectMapper.convertValue(value, Instance.class)));
@@ -71,12 +72,12 @@ public class ApplicationController {
     }
 
     @RequestMapping(value = "/applications/{id}/instances/{instance}/logs/{logName}", method = GET)
-    public CloudFoundryResource<String> getApplicationInstanceLog(@RequestHeader("Authorization") final String token,
+    public @ResponseBody String getApplicationInstanceLog(@RequestHeader("Authorization") final String token,
     		@PathVariable("id") String id, @PathVariable("instance") String instance,
     		@PathVariable("logName") String logName) {
-    	String basePath = V2_APPS.concat(id).concat("/instances/").concat(instance);
-    	String logPath = "/files/logs/".concat(logName).concat(".log");
-    	CloudFoundryResource<String> log = restRepository.one(token, basePath, logPath);
+    	String path = V2_APPS.concat("/").concat(id).concat("/instances/").concat(instance)
+    			.concat("/files/logs/").concat(logName).concat(".log");
+    	String log = restRepository.customOne(token, path, new ParameterizedTypeReference<String>() {});
     	
     	return log;
     }
