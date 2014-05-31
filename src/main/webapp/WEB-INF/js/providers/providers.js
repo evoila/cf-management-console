@@ -8,4 +8,5 @@ define(['angular', 'providers/appUrlManipulationProvider'],
  		var providers = angular.module('providers', []);
 
  		providers.provider('appUrlManipulation', AppUrlManipulationProvider);
+ 		providers.factory('appUrlManipulation', AppUrlManipulationProvider);
  });

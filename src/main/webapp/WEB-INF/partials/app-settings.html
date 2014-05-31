@@ -16,6 +16,7 @@
 							<th>HEALTH</th>
 							<th>INSTANCES</th>
 							<th>MEMORY</th>
+							<th>DISK QUOTA</th>
 							<th>BUILDPACK</th>
 							<th>ENV</th>
 							<th>URLS</th>
@@ -27,6 +28,7 @@
 								<span class="label label-danger" ng-hide="application.entity.state == 'STARTED'">{{application.entity.health}}%</span></td>
 							<td>{{application.entity.instances}}</td>
 							<td>{{application.entity.memory}} MB</td>
+							<td>{{application.entity.disk_quota}} MB</td>
 							<td>{{application.entity.buildpack}}</td>
 							<td>{{application.entity.environment}}</td>
 							<td><div ng-repeat="url in application.entity.urls">
@@ -73,6 +75,7 @@
 							<th>INSTANCE</th>
 							<th>STATE</th>
 							<th>IP</th>
+							<th>RUNNING SINCE</th>
 							<th>PORT</th>
 							<th>LOGS</th>
 						</tr>
@@ -82,6 +85,7 @@
 							<td>{{$index}}</td>
 							<td>{{instance.entity.state}}</td>
 							<td>{{instance.entity.console_ip}}</td>
+							<td>{{instance.entity.since | date : 'dd.MM.yyyy'}}</td>
 							<td>{{instance.entity.console_port}}</td>
 							<td>
 								<div>

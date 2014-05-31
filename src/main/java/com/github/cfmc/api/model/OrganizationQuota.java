@@ -6,6 +6,11 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import static org.mvel2.MVEL.eval;
 import static org.mvel2.MVEL.evalToString;
 
+/**
+ * 
+ * @author Johannes Hiemer
+ *
+ */
 public class OrganizationQuota {
 
     private final String name;

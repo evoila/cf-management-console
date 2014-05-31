@@ -5,6 +5,7 @@ define(['angular',
 	'directives/directives',
 	'providers/providers',
 	'filters/filters',
+	'factories/factories',
 	'controllers/controllers',
 	'directives/tableDirective',
 	'angularui'],
@@ -19,12 +20,15 @@ define(['angular',
 		'directives',
 		'providers',
 		'filters',
+		'factories',
 		'controllers',
 		'directive.table',
 		'ui.bootstrap'
 	]).config(function(RestangularProvider, $httpProvider, appUrlManipulationProvider, REST_API) {
 		console.log('app.js called');
 		
+		$httpProvider.interceptors.push('responseInterceptor');
+
         RestangularProvider.setDefaultHeaders({ 
 			"Content-Type" : "application/json;charset=UTF-8",
 			"Accept" :"application/json;charset=UTF-8" });

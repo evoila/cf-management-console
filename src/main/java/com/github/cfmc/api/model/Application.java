@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 
- * @author johanneshiemer
+ * @author Johannes Hiemer.
  *
  */
 public class Application {
