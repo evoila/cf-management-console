@@ -22,3 +22,5 @@
 *.jar
 *.war
 *.ear
+
+src/main/webapp/WEB-INF/new/node_modules
