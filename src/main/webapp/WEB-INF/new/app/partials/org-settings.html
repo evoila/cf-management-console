@@ -1,0 +1,65 @@
+<!-- changed -->
+<div flex ng-show="loading" layout="center center" layout-align="space-around">
+	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-hide="loading" layout="column">
+	<md-subheader class="md-no-sticky">Organization Settings</md-subheader>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Domain</h3>
+		</div>
+		<div flex="50" ng-repeat="domain in organization.entity.domains">
+			<p class="Tab">{{domain.entity.name}}</p>
+		</div>
+	</div>
+	<div layout="column">
+		<div flex="50">
+			<h3 class="Tab">Organization quota</h3>
+		</div>
+		<div layout="row" layout-sm="column" flex="50" >
+			<div flex="25">
+				<p class="Tab">Name</p>
+			</div>
+			<div flex="25">
+				<p class="Tab">{{organization.entity.quota_definition.entity.name}}</p>
+			</div>
+		</div>
+		<div layout="row" layout-sm="column" flex="50">
+			<div flex="25">
+				<p class="Tab">Total Services</p>
+			</div>
+			<div flex="25">
+				<p class="Tab">{{organization.entity.quota_definition.entity.total_services}}</p>
+			</div>
+		</div>
+		<div layout="row" layout-sm="column" flex="50">
+			<div flex="25">
+				<p class="Tab">Memory Limit</p>
+			</div>
+			<div flex="25">
+				<p class="Tab">{{organization.entity.quota_definition.entity.memory_limit}} MB</p>
+			</div>
+		</div>
+		<div layout="row" layout-sm="column" flex="50">
+			<div flex="25">
+				<p class="Tab">None Basic Services</p>
+			</div>
+			<div flex="25">
+				<p class="Tab">{{organization.entity.quota_definition.entity.non_basic_services_allowed}}</p>
+			</div>
+		</div>
+		<div layout="row" layout-sm="column" flex="50">
+			<div flex="25">
+				<p class="Tab">Trial DB Allowed</p>
+			</div>
+			<div flex="25">
+				<p class="Tab">{{organization.entity.quota_definition.entity.trial_db_allowed}}</p>
+			</div>
+		</div>
+	</div>
+	<md-button class="md-fab md-fab-detail md-warn" aria-label="delete" ng-click="deleteOrganization(ev)">
+		<md-tooltip>
+			Delete
+		</md-tooltip>
+		<ng-md-icon icon="delete" size="40" style="fill:white"></ng-md-icon>
+	</md-button>

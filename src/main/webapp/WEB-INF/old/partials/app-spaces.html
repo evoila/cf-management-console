@@ -1,0 +1,155 @@
+<div class="container-fluid">
+	<div ng-show="loading">
+		<div class="well">
+			<h5 class="text-center"> <i class="fa fa-1x fa-spinner fa-spin"></i> Hold on... We are loading your spaces!</h5>
+		</div>
+	</div>
+	<div ng-hide="loading">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-1">
+								<h4>SPACES:</h4>
+							</div>
+							<div class="col-md-10">
+								<span ng-repeat="s in spaces">
+
+									<span ng-show="space.selected == s.entity.name">
+										<div class="btn-group">
+											<a href="#/space-settings/{{organizationId}}/spaces/{{s.entity.id}}" class="btn btn-primary">
+												<i class="fa fa-wrench"></i> {{s.entity.name}}
+											</a>
+										</div>
+									</span>
+									<span ng-show="space.selected != s.entity.name">
+										<button class="btn btn-default" ng-click="selectSpace(s.entity.name)">{{s.entity.name}}</button>
+									</span>
+								</span>
+							</div>
+							<div class="col-md-1">
+								<a href="#/create-space/{{organizationId}}" class="btn btn-success pull-right">
+									<i class="glyphicon glyphicon-plus"></i> Add Space
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div ng-repeat="s in spaces">
+				<div class="col-md-8" ng-show="space.selected == s.entity.name">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<span class="panel-title uppercase">Apps in {{s.entity.name}} <span class="badge">{{s.entity.applications.length}}</span></span>
+						</div>
+						<div class="panel-body">
+							<table class="table table-condensed">
+								<thead>
+									<tr>
+										<th>Status</th>
+										<th>App</th>
+										<th>Instances</th>
+										<th>Memory</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="app in s.entity.apps">
+										<td>
+											<h4 style="margin-top: -3px">
+												<span class="label label-success" ng-show="app.entity.state == 'STARTED'">STARTED</span>
+												<span class="label label-danger" ng-hide="app.entity.state == 'STARTED'">STOPPED</span>
+											</h4>
+										</td>
+										<td>
+											{{app.entity.name}}
+											<div ng-repeat="url in app.urls">
+												<a href="http://{{url}}">{{url}}</a>
+											</div>
+										</td>
+										<td>{{app.entity.instances}}</td>
+										<td>{{app.entity.memory}} MB</td>
+										<td>
+											<a class="btn btn-sm btn-info" href="#/app-settings/{{organizationId}}/applications/{{app.metadata.guid}}">Details</a>
+										</td>
+										<td>
+											<button class="btn btn-sm btn-danger" ng-show="app.entity.state == 'STARTED'" ng-click="stopApplication(app.metadata.guid)">
+												<span class="glyphicon glyphicon-stop"></span> Stop Application
+											</button>
+											<button class="btn btn-sm btn-success" ng-hide="app.entity.state == 'STARTED'" ng-click="startApplication(app.metadata.guid)">
+												<span class="glyphicon glyphicon-play"></span> Start Application
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<span class="panel-title uppercase">Services in {{s.entity.name}} <span class="badge">{{s.entity.service_instances.length}}</span>
+							<button class="btn btn-sm btn-success pull-right"><i class="glyphicon glyphicon-plus"></i> Add Service</button></span>
+						</div>
+						<div class="panel-body">
+							<table class="table table-condensed">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Service</th>
+										<th>Plan Level</th>
+										<th>Bound Apps</th>
+										<th>Free</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="service in s.entity.service_instances">
+										<td>{{service.entity.name}}</td>
+										<td>{{service.entity.service_plan.service.provider}} {{service.entity.service_plan.service.name}}
+											{{service.entity.service_plan.service.version}}</td>
+										<td><a href="#" tooltip="{{service.servicePlan.description}}">{{service.entity.service_plan.entity.name}}</a>
+										<td>
+											<span class="badge">{{service.entity.service_bindings.length}}</span>
+										</td>
+										<td>
+											{{service.entity.service_plan.entity.public}}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" ng-show="space.selected == s.entity.name">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<span class="panel-title uppercase">Users in {{s.name}}</span> <span class="badge">{{s.users.length}}</span>
+							<a href="#/users/{{organizationId}}" class="btn btn-success btn-sm pull-right" style="margin-top: -3px">
+								<i class="glyphicon glyphicon-cog"></i> Edit
+							</a>
+						</div>
+						<div class="panel-body">
+							<h5>Manager</h5>
+							<ul>
+								<li ng-repeat="user in s.entity.managers">{{user.metadata.guid}}</li>
+							</ul>
+							<hr/>
+							<h5>Auditors</h5>
+							<ul>
+								<li ng-repeat="user in s.entity.auditors">{{user.metadata.guid}}</li>
+							</ul>
+							<hr/>
+							<h5>Developers</h5>
+							<ul>
+								<li ng-repeat="user in s.entity.developers">{{user.metadata.guid}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,74 @@
+<!-- changed -->
+<div flex="50" layout="column">
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Username</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{userInfo.userName}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Email</h3>
+		</div>
+		<div flex=50 ng-repeat="email in userInfo.emails">
+			<p class="Tab">{{value.email}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Firstname</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{userInfo.firstName}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Lastname</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{userInfo.lastName}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Email</h3>
+		</div>
+		<div flex=50 ng-repeat="organization in userInfo.organizations">
+			<p class="Tab">{{organization}}</p>
+		</div>
+	</div>
+</div>
+
+<!--div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div ng-show="loading">
+				<div class="well loading-well">
+					<h5 class="text-center"> <i class="fa fa-1x fa-spinner fa-spin"></i> Hold on... We are loading your spaces!</h5>
+				</div>
+			</div>
+			<div ng-hide="loading" class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">User info</h3>
+				</div>
+				<div class="panel-body">
+					<dl class="dl-horizontal">
+						<dt>Username</dt>
+						<dd>{{userInfo.userName}}</dd>
+						<dt>Email</dt>
+						<dd><div ng-repeat="email in userInfo.emails">{{value.email}}</div></dd>
+						<dt>Firstname</dt>
+						<dd>{{userInfo.firstName}}</dd>
+						<dt>Lastname</dt>
+						<dd>{{userInfo.lastName}}</dd>
+						<dt>Organizations</dt>
+						<dd><div ng-repeat="organization in userInfo.organizations">{{organization}}</div></dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
+</div-->

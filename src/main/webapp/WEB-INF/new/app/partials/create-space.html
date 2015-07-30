@@ -1,0 +1,21 @@
+<div layout="column">
+   <md-subheader class="md-no-sticky">Create Space</md-subheader>
+  <md-input-container flex>
+    <label>Name</label>
+    <input ng-model="spaceForm.name">
+  </md-input-container>
+  <div layout="row" layout-align="end center">
+  <!--md-button class="md-fab md-warn md-fab-detail" aria-label="clear" ng-click="delete()">
+    <ng-md-icon icon="clear" size="40" style="fill:white"></ng-md-icon>
+    <md-tooltip>
+      Clear
+    </md-tooltip>
+  </md-button-->
+  <md-button class="md-fab md-primary md-fab-detail" aria-label="add" ng-click="createSpace(spaceForm)">
+    <md-tooltip>
+      Add
+    </md-tooltip>
+    <ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+  </md-button>
+</div>
+</div>

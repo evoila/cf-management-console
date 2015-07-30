@@ -1,0 +1,96 @@
+<!-- changed -->
+<div flex ng-show="loading" layout="center center" layout-align="space-around">
+	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-hide="loading" layout="column">
+	<md-subheader class="md-no-sticky">Users and Roles</md-subheader>
+
+	<div layout="row" layout-sm="column">
+		<div flex="30">
+			<md-select ng-model="Users" aria-label="selectedUser">
+				<md-optgroup label="Organization Roles">
+					<md-option ng-click="selectOrganizationUsers(organizationName)" ng-value="organization.entity.name">{{organization.entity.name}}</md-option>
+				</md-optgroup>
+				<md-optgroup label="Space Roles">
+					<md-option ng-click="selectSpaceUsers(spaceName, organization)" ng-value="space.entity.name" ng-repeat="space in organization.entity.spaces track by $id($index)">{{space.entity.name}}</md-option>
+				</md-optgroup>
+			</md-select>
+		</div>
+		<div>
+			<div ng-show="showOrganizationUsers" layout="column">
+				<!--	ng-repeat="user in organization.entity.users" -->
+				<div layout="row" layout-sm="column">
+					<h3 class="Tab">Org. Manager</h3>
+					<md-checkbox aria-label="checkbox" ng-checked="user.manager" ng-model="user.manager" ng-disabled="blockInput" ng-click="setOrgManager(organization, user)">
+					</md-checkbox>
+				</div>
+				<div layout="row" layout-sm="column">
+					<h3 class="Tab">Billing Manager</h3>
+					<md-checkbox aria-label="checkbox" ng-checked="user.billingManager" ng-model="user.billingManager" ng-disabled="blockInput" ng-click="setOrgBillingManager(organization, user)">
+					</md-checkbox>
+				</div>
+				<div layout="row" layout-sm="column">
+					<h3 class="Tab">Org. Auditor</h3>
+					<md-checkbox aria-label="checkbox" ng-checked="user.auditor" ng-model="user.auditor" ng-disabled="blockInput" ng-click="setOrgAuditor(organization, user)">
+					</md-checkbox>
+				</div>
+			</div>
+
+			<div ng-hide="showOrganizationUsers" layout="column">
+				<!--ng-repeat="user in selectedSpace.users"-->
+				<div layout="row" layout-sm="column">
+					<h3 class="Tab">Space Manager</h3>
+					<md-checkbox aria-label="checkbox" ng-checked="user.manager" ng-model="user.manager" ng-disabled="blockInput" ng-click="setSpaceManager(selectedSpace, user)">
+					</md-checkbox>
+				</div>
+				<div layout="row" layout-sm="column">
+					<h3 class="Tab">Developer</h3>
+					<md-checkbox aria-label="checkbox" ng-checked="user.developer" ng-model="user.developer" ng-disabled="blockInput" ng-click="setSpaceDeveloper(selectedSpace, user)">
+					</md-checkbox>
+				</div>
+				<div layout="row" layout-sm="column">
+					<h3 class="Tab">Space Auditor</h3>
+					<md-checkbox aria-label="checkbox" ng-checked="user.auditor" ng-model="user.auditor" ng-disabled="blockInput" ng-click="setSpaceAuditor(selectedSpace, user)">
+					</md-checkbox>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<md-card flex="50" class="md-whiteframe-z2">
+			<md-card-content>
+				<h3>Organization Roles</h3>
+				<md-divider></md-divider>
+				<h4>Organization Manager</h4>
+				<p>Can invite/manage users, select/change the plan, establish spending limits</p>
+				<md-divider></md-divider>
+				<h4>Billing Manager</h4>
+				<p>Can edit/change the billing account info, payment info</p>
+				<md-divider></md-divider>
+				<h4>Organization Auditor</h4>
+				<p>View only access to all org and space info, settings, reports</p>
+			</md-card-content>
+		</md-card>
+		<md-card flex="50" class="md-whiteframe-z2">
+			<md-card-content>
+				<h3>App Space Roles</h3>
+				<md-divider></md-divider>
+				<h4>Space Manager</h4>
+				<p>Can invite/manage users, enable features for a given space</p>
+				<md-divider></md-divider>
+				<h4>Space Developer</h4>
+				<p>Can create, delete, manage applications and services, full access to all usage reports and logs</p>
+				<md-divider></md-divider>
+				<h4>Space Auditor</h4>
+				<p>View only access to all space information, settings, reports, logs</p>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div flex offset="90">
+		<md-button class="md-fab md-primary md-fab-detail" aria-label="add" ng-click="addNewUser(organization.entity)">
+			<md-tooltip>
+				Add User
+			</md-tooltip>
+			<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+		</md-button>
+	</div>

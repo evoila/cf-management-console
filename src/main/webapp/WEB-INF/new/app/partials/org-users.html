@@ -1,0 +1,33 @@
+<!-- changed -->
+<div flex ng-show="loading" layout="center center" layout-align="space-around">
+	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-hide="loading" layout="column">
+	<md-subheader class="md-no-sticky">Add users to {{organization.entity.name}}</md-subheader>
+	<md-input-container flex>
+		<label>Find by username</label>
+		<input ng-model="selectedUser" typeahead="user as user.username for user in users | filter:$viewValue">
+	</md-input-container>
+	<md-button class="md-fab md-primary md-fab-detail" aria-label="add" ng-click="addUser(organization, selectedUser)">
+		<md-tooltip>
+			Add
+		</md-tooltip>
+		<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+	</md-button>
+	<md-divider></md-divider>
+	<h3>Results</h3>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Username</h3>
+		</div>
+		<div flex=50 ng-repeat="service in services">
+			<p class="Tab">{{user.username}}</p>
+		</div>
+	</div>
+	<md-button class="md-fab md-primary md-fab-detail" aria-label="add" ng-click="addUser(organization, user)">
+		<md-tooltip>
+			Add
+		</md-tooltip>
+		<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+	</md-button>
+</div>

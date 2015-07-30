@@ -1,0 +1,34 @@
+<!-- changed -->
+<div flex ng-show="authenticating" layout="center center" layout-align="space-around">
+  <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-hide="authenticating">
+  <md-content layout-padding>
+    <form ng-submit="login(userForm)" name="meetingForm">
+      <div layout="column" flex="50">
+        <md-input-container flex>
+          <label>Username(email)</label>
+          <input ng-model="userForm.email" ng-required="true">
+        </md-input-container>
+        <md-input-container flex>
+          <label>Password</label>
+          <input type="password" ng-model="userForm.password" ng-required="true">
+        </md-input-container>
+        <section layout="row" layout-sm="column" layout-align="end center">
+          <md-button class="md-fab md-primary md-fab-detail" aria-label="add" ng-click="state.go('register')">
+            <md-tooltip>
+              New Account
+            </md-tooltip>
+            <ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+          </md-button>
+          <md-button class="md-fab md-primary md-fab-detail" aria-label="login" type="submit">
+            <md-tooltip>
+              Login
+            </md-tooltip>
+            <ng-md-icon icon="login" size="40" style="fill:white"></ng-md-icon>
+          </md-button>
+        </section>
+      </div>
+    </form>
+  </md-content>
+</div>
