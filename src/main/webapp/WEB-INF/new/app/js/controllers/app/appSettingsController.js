@@ -9,11 +9,9 @@ angular.module('controllers')
 
       $scope.loading = true;
       $scope.organizationId = $state.params.organizationId;
-      $scope.applicationId = null;
 
       Restangular.one('applications', $state.params.applicationId).get().then(function(application) {
         $scope.application = application;
-        $scope.applicationId = $scope.application.id;
         $scope.loading = false;
       });
 
@@ -21,7 +19,8 @@ angular.module('controllers')
         $scope.instances = instances;
       });
 
-      $scope.deleteApplication = function(ev) {
+      $scope.deleteApplication = function(ev, application) {
+        $scope.application = application;
         var deleteDialog = {
           parent: angular.element(document.body),
           title: 'Delete',
@@ -48,6 +47,7 @@ function DeleteApplicationController($scope, $state, $mdDialog, Restangular) {
   };
 
   $scope.ok = function() {
+    console.log($scope.application)
     Restangular.one('applications', $scope.applicationId).remove().then(function(data, status, headers) {
       $location.path('/app-spaces/' + $scope.organizationId);
       $mdDialog.hide();

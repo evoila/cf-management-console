@@ -58,7 +58,7 @@
 				Stop
 			</md-tooltip>
 		</md-button>
-		<md-button class="md-fab detail md-warn md-fab-detail" aria-label="delete" ng-click="">
+		<md-button class="md-fab detail md-warn md-fab-detail" aria-label="delete" ng-click="deleteApplication(ev, application)">
 			<ng-md-icon icon="delete" size="40" style="fill:white"></ng-md-icon>
 			<md-tooltip>
 				Delete
@@ -97,52 +97,52 @@
 	<md-divider></md-divider>
 
 	<h2>Instances</h2>
-	<div ng-repeat="instance in instances">
-		<div layout="row" layout-sm="column">
+	<div layout="row" layout-sm="column">
+		<div flex="20" layout="column">
 			<div flex="50">
 				<h3 class="Tab">Instance</h3>
 			</div>
-			<div flex=50>
+			<div  ng-repeat="instance in instances">
 				<p class="Tab">{{$index}}</p>
 			</div>
 		</div>
-		<div layout="row" layout-sm="column">
+		<div flex="20" layout="column">
 			<div flex="50">
 				<h3 class="Tab">State</h3>
 			</div>
-			<div flex=50>
+			<div  ng-repeat="instance in instances">
 				<p class="Tab">{{instance.entity.state}}</p>
 			</div>
 		</div>
-		<div layout="row" layout-sm="column">
+		<div flex="20" layout="column">
 			<div flex="50">
 				<h3 class="Tab">IP</h3>
 			</div>
-			<div flex=50>
+			<div  ng-repeat="instance in instances">
 				<p class="Tab">{{instance.entity.console_ip}}</p>
 			</div>
 		</div>
-		<div layout="row" layout-sm="column">
+		<div flex="20" layout="column">
 			<div flex="50">
 				<h3 class="Tab">Running Since</h3>
 			</div>
-			<div flex=50>
+			<div  ng-repeat="instance in instances">
 				<p class="Tab">{{instance.entity.since | date : 'dd.MM.yyyy'}}</p>
 			</div>
 		</div>
-		<div layout="row" layout-sm="column">
+		<div flex="20" layout="column">
 			<div flex="50">
 				<h3 class="Tab">Port</h3>
 			</div>
-			<div flex=50>
+			<div  ng-repeat="instance in instances">
 				<p class="Tab">{{instance.entity.console_port}}</p>
 			</div>
 		</div>
-		<div layout="row" layout-sm="column">
+		<div flex="20" layout="column">
 			<div flex="50">
 				<h3 class="Tab">Logs</h3>
 			</div>
-			<div flex=50>
+			<div  ng-repeat="instance in instances">
 				<a href="#/app-log/{{organizationId}}/applications/{{application.entity.id}}/instances/{{$index}}/stdout">stdout.log</a>
 				<a href="#/app-log/{{organizationId}}/applications/{{application.entity.id}}/instances/{{$index}}/stderr">stderr.log</a>
 			</div>
