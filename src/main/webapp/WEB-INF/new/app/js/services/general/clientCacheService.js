@@ -2,7 +2,7 @@
  * ClientCacheService
  **/
 angular.module('services')
-  .factory('clientCacheService', function ClientCacheService(localStorageService) {
+  .factory('clientCacheService', function ClientCacheService($rootScope, localStorageService) {
     var cache = {};
 
     cache.storeOrganizations = function(organizations) {
@@ -61,8 +61,9 @@ angular.module('services')
     }
 
     cache.logout = function() {
+      $rootScope.isAuthenticated = false;
       cache.clear();
     }
 
     return cache;
-});
+  });

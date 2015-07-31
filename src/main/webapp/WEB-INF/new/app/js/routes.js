@@ -4,7 +4,6 @@
 angular.module('routes', ['ui.router']).config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
-	//wo wird das benutzt?
     .state('app-log', {
       url: '/app-log/:organizationId/applications/:applicationId/instances/:instanceId/:fileName',
       templateUrl: 'partials/app-log.html',

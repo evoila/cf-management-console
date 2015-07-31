@@ -87,7 +87,7 @@
 		</md-card>
 	</div>
 	<div flex offset="90">
-		<md-button class="md-fab md-primary md-fab-detail" aria-label="add" ng-click="addNewUser(organization.entity)">
+		<md-button class="md-fab md-primary md-fab-detail" aria-label="add" ng-click="state.go('create-user', {organizationId : organization.metadata.guid})">
 			<md-tooltip>
 				Add User
 			</md-tooltip>

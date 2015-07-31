@@ -2,19 +2,19 @@
  * AppLogController
  **/
 
-	angular.module('controllers')
-	  .controller('appLogController',
-	    function AppLogController($scope, $state, Restangular) {
+angular.module('controllers')
+  .controller('appLogController',
+    function AppLogController($scope, $state, Restangular) {
 
-		$scope.loading = true;
+      $scope.loading = true;
 
-		var applicationId = $state.params.applicationId;
-		var instanceId = $state.params.instanceId;
-		var fileName = $state.params.fileName;
+      var applicationId = $state.params.applicationId;
+      var instanceId = $state.params.instanceId;
+      var fileName = $state.params.fileName;
 
-		Restangular.one('applications', applicationId).one('instances', instanceId).one('logs', fileName).get()
-			.then(function (data) {
-			$scope.log = data;
-			$scope.loading = false;
-		});
-	});
+      Restangular.one('applications', applicationId).one('instances', instanceId).one('logs', fileName).get()
+        .then(function(data) {
+          $scope.log = data;
+          $scope.loading = false;
+        });
+    });

@@ -223,4 +223,4 @@ angular.module('services')
         clearAll: clearAllFromCookies
       }
     };
-});
+  });

@@ -5,8 +5,10 @@
 angular.module('controllers')
   .controller('homeController',
     function HomeController($scope, $state, Restangular, $location, $mdSidenav, $rootScope, clientCacheService, $mdSidenav) {
+      $scope.state = $state;
 
       $rootScope.isAuthenticated = clientCacheService.isAuthenticated();
+      console.debug($scope.isAuthenticated)
       if (!clientCacheService.isAuthenticated()) {
         if ($location.path() != '/login' && $location.path() != '/register') {
           $location.path('/login');
@@ -15,16 +17,19 @@ angular.module('controllers')
         Restangular.all('organizations').getList().then(function(data) {
           $scope.organizations = data;
           $scope.organization = data[0];
-          $location.path('/app-spaces/' + data[0].metadata.guid);
+          $state.go('app-spaces', {
+            organizationId: data[0].metadata.guid
+          })
         }, function(response) {
           clientCacheService.clear;
           $location.path('/login');
         }).then(function() {
           $scope.$watch('organization', function(organization) {
-            $state.go('app-spaces', {organizationId: organization.metadata.guid}, {
+            $state.go('app-spaces', {
+              organizationId: organization.metadata.guid
+            }, {
               reload: true
             });
-          //  $location.path('/app-spaces/' + organization.metadata.guid);
           })
         });
       }

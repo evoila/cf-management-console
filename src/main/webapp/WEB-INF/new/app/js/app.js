@@ -1,12 +1,22 @@
 angular.module('cf-management-console', ['ngMaterial', 'controllers', 'routes',
-  'ngMdIcons', 'ngClipboard', 'restangular'])
+    'ngMdIcons', 'ngClipboard', 'restangular'
+  ])
   .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, RestangularProvider, REST_API) {
     ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");
-  //  RestangularProvider.setBaseUrl('http://127.0.0.1:8080/bbb-admin-core/');
-    RestangularProvider.setDefaultHeaders({
-      "Content-Type" : "application/json;charset=UTF-8",
-      "Accept" :"application/json;charset=UTF-8" });
+
     RestangularProvider.setBaseUrl(REST_API);
+
+    /*  RestangularProvider.setErrorInterceptor(function(response, deferred, responseHandler) {
+      clientCacheProvider.forceLogin();
+		});*/
+
+    //    RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response, deferred) {
+    RestangularProvider.setDefaultHeaders({
+      "Content-Type": "application/json;charset=UTF-8",
+      "Accept": "application/json;charset=UTF-8",
+      //    "Authorization" : response.headers('Authorization')
+    });
+    //  });
 
 
     $mdThemingProvider.definePalette('amazingPaletteName', {
@@ -55,11 +65,12 @@ angular.module('cf-management-console', ['ngMaterial', 'controllers', 'routes',
       .icon("phone", "./..assets/svg/phone.svg", 512);
 
   }).constant('REST_API', 'http://localhost:8080/cfmc/api')
-  .run(function($rootScope, $http, clientCacheService) {
+  .run(function($rootScope, $state, $http, clientCacheService) {
+
     $rootScope.forceLogin = function(status) {
-      if(status === 401) {
+      if (status === 401) {
         clientCacheService.logout();
-        $state.go('/login');
+        $state.go('login');
       }
     };
 
@@ -67,6 +78,10 @@ angular.module('cf-management-console', ['ngMaterial', 'controllers', 'routes',
       var token = clientCacheService.getUser().accessToken;
 
       $http.defaults.headers.common['Authorization'] = 'bearer ' + token;
-    } else
+    } else {
+      console.debug("Force Login will be called, because you user cannot be found")
       $rootScope.forceLogin();
+    }
+
+
   });

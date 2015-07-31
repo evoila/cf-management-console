@@ -3,19 +3,19 @@
  **/
 
 
-  angular.module('controllers')
-  	.controller('marketPlaceController',
-  		function MarketPlaceController($scope, Restangular) {
+angular.module('controllers')
+  .controller('marketPlaceController',
+    function MarketPlaceController($scope, Restangular) {
 
-		$scope.service = null;
+      $scope.service = null;
 
-		Restangular.all('services').getList().then(function (services) {
-			$scope.services = services;
-		});
+      Restangular.all('services').getList().then(function(services) {
+        $scope.services = services;
+      });
 
-		$scope.showDetails = function(service) {
-			$scope.service = service;
-		};
+      $scope.showDetails = function(service) {
+        $scope.service = service;
+      };
 
-	return MarketPlaceController;
-});
+      return MarketPlaceController;
+    });

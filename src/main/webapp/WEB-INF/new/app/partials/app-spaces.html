@@ -1,15 +1,14 @@
-<!-- changed -->
 <div flex ng-show="loading" layout="center center" layout-align="space-around">
 	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
 </div>
 <div ng-hide="loading" layout="row" layout-sm="column">
 	<md-subheader class="md-no-sticky">App Spaces</md-subheader>
-		<md-button class="md-fab md-fab-detail md-primary" aria-label="add" ng-click="state.go('create-space', {organizationId : organization.metadata.guid})">
-			<md-tooltip>
-				Add Space
-			</md-tooltip>
-			<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
-		</md-button>
+	<md-button class="md-fab md-fab-detail md-primary" aria-label="add" ng-click="state.go('create-space', {organizationId : organization.metadata.guid})">
+		<md-tooltip>
+			Add Space
+		</md-tooltip>
+		<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+	</md-button>
 </div>
 <div ng-hide="loading" layout-wrap layout-align="space-around" layout="row" ng-show="space.selected == s.entity.name">
 	<div ng-repeat="s in spaces">

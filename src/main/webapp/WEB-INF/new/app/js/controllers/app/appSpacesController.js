@@ -25,13 +25,10 @@ angular.module('controllers')
 
         angular.forEach($scope.spaces, function(space) {
           space.count = 0;
-        //  console.log(space);
           angular.forEach(space.entity.apps, function(app) {
-        //    console.log(app);
             if (app.entity.state == "STARTED") {
               space.count++;
-        //    console.log($scope.count);
-          }
+            }
           });
         });
       });
@@ -86,20 +83,19 @@ angular.module('controllers')
         var appsDialog = {
           parent: angular.element(document.body),
           ariaLabel: 'Services',
-          template:
-            '<md-dialog aria-label="List dialog">' +
+          template: '<md-dialog aria-label="List dialog">' +
             ' <md-dialog-content>' +
             '   <h2>Services</h2>' +
-            '   <div flex="50" layout="row">' +
-            '     <div flex layout="column">' +
-            '       <div flex="50">' +
+            '   <div flex layout="row">' +
+            '     <div flex="35" layout="column">' +
+            '       <div flex>' +
             '         <h3 class="Tab">Name</h3>' +
             '       </div>' +
-            '       <div flex=50 ng-repeat="service in service_instances">' +
+            '       <div flex ng-repeat="service in service_instances">' +
             '         <p class="Tab">{{service.entity.name}}</p>' +
             '       </div>' +
             '     </div>' +
-            '     <div flex layout="column">' +
+            '     <div flex="35" layout="column">' +
             '       <div flex="50">' +
             '         <h3 class="Tab">Service</h3>' +
             '       </div>' +
@@ -107,7 +103,7 @@ angular.module('controllers')
             '         <p class="Tab">{{service.entity.service_plan.service.provider}} {{service.entity.service_plan.service.name}} {{service.entity.service_plan.service.version}}</p>' +
             '       </div>' +
             '     </div>' +
-            '     <div flex layout="column">' +
+            '     <div flex="35" layout="column">' +
             '       <div flex="50">' +
             '         <h3 class="Tab">Plan Level</h3>' +
             '       </div>' +
@@ -115,7 +111,7 @@ angular.module('controllers')
             '         <p class="Tab">{{service.entity.service_plan.entity.name}}</p>' +
             '       </div>' +
             '     </div>' +
-            '     <div flex layout="column">' +
+            '     <div flex="35" layout="column">' +
             '       <div flex="50">' +
             '         <h3 class="Tab">Bound Apps</h3>' +
             '       </div>' +
@@ -123,7 +119,7 @@ angular.module('controllers')
             '         <p class="Tab">{{service.entity.service_bindings.length}}</p>' +
             '       </div>' +
             '     </div>' +
-            '     <div flex layout="column">' +
+            '     <div flex="35" layout="column">' +
             '       <div flex="50">' +
             '         <h3 class="Tab">Free</h3>' +
             '       </div>' +
@@ -153,8 +149,7 @@ angular.module('controllers')
         var appsDialog = {
           parent: angular.element(document.body),
           ariaLabel: 'Apps',
-          template:
-            '<md-dialog aria-label="List dialog">' +
+          template: '<md-dialog aria-label="List dialog">' +
             ' <md-dialog-content>' +
             '   <p>Select App for details</p>' +
             '   <md-select layout-align="center center" ng-model="app" aria-label="selectedApp" placeholder="Select App">' +
@@ -177,8 +172,7 @@ angular.module('controllers')
         var appsDialog = {
           parent: angular.element(document.body),
           ariaLabel: 'Users',
-          template:
-            '<md-dialog aria-label="List dialog">' +
+          template: '<md-dialog aria-label="List dialog">' +
             ' <md-dialog-content>' +
             '   <div flex="50" layout="column" >' +
             '     <div layout="row" layout-sm="row">' +
@@ -230,8 +224,11 @@ function DialogController($scope, $state, $location, $mdDialog, Restangular, app
   $scope.hide = function() {
     $mdDialog.hide();
   };
-    $scope.goToAppSettings = function(app) {
-      $state.go('app-settings', {organizationId : appSpace.organization_guid, applicationId : app.metadata.guid});
-      $mdDialog.hide();
-    }
+  $scope.goToAppSettings = function(app) {
+    $state.go('app-settings', {
+      organizationId: appSpace.organization_guid,
+      applicationId: app.metadata.guid
+    });
+    $mdDialog.hide();
+  }
 }
