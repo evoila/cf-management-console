@@ -2,7 +2,10 @@
 # This is a minimal manifest
 applications:
 - name: cfmc
+  host: cfmc
   instances: 1
-  memory: 512M
+  memory: 1024M
   path: target/cfmc.war
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  env:
+    JAVA_OPTS: -Djava.security.egd=file:/dev/urandom
