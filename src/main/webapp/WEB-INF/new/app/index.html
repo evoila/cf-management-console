@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Cloud Foundry Management Console</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+  <!--link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'-->
+  <link rel="stylesheet" href="assets/fonts.css" />
+  <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css" />
+  <link rel="stylesheet" href="assets/app.css" />
+
+</head>
+
+<body ng-app="cf-management-console" ng-controller="homeController as ul" layout="row">
+
+  <md-sidenav ng-show="isAuthenticated" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <md-toolbar>
+      <h1>Menu</h1>
+    </md-toolbar>
+    <div layout="column">
+      <md-select layout-align="center center" ng-model="organization" aria-label="selectedOrganization" placeholder="Organization">
+        <md-select-label>{{ organization ? organization.entity.name : 'Select Organization' }}</md-select-label>
+        <md-option ng-repeat="organization in organizations" ng-value="organization">{{organization.entity.name}}</md-option>
+      </md-select>
+
+      <md-button ui-sref="create-org({organizationId : organization.metadata.guid})">New Organization</md-button>
+      <md-button ui-sref="app-spaces({organizationId : organization.metadata.guid})">App Spaces</md-button>
+      <md-button ui-sref="users({organizationId : organization.metadata.guid})">Users</md-button>
+      <md-button ui-sref="org-settings({organizationId : organization.metadata.guid})">Organization Settings</md-button>
+      <md-button ui-sref="marketplace({organizationId : organization.metadata.guid})">Marketplace</md-button>
+    </div>
+  </md-sidenav>
+
+  <div flex tabIndex="-1" role="main" class="md-whiteframe-z2">
+    <md-toolbar layout="row" class="md-whiteframe-z1">
+      <md-button ng-show="isAuthenticated" class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
+        <md-icon md-svg-icon="menu"></md-icon>
+      </md-button>
+      <h1>Cloud Foundry Management Console</h1>
+      <div ng-show="isAuthenticated" flex="15" layout="row">
+        <md-button class="md-fab md-primary md-fab-index-logout" aria-label="logout" ng-click="logout()">
+          <md-tooltip>
+            Logout
+          </md-tooltip>
+          <ng-md-icon icon="logout" size="40" style="fill:white"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-card ng-show="isAuthenticated">
+      <md-card-content layout="row">
+        <div layout="space-around">
+          <md-card class="md-whiteframe-z2">
+            <md-card-content>
+              Organization
+              <h1>{{organization.entity.name}}</h1>
+            </md-card-content>
+          </md-card>
+        </div>
+        <div layout="column">
+          <h3>Organization quota</h3>
+          <div layout="row" layout-sm="column">
+            <div layout="column" flex="35">
+              <div flex="50">
+                <p>Name</p>
+              </div>
+              <div flex="50">
+                <p>{{organization.entity.quota_definition.entity.name}}</p>
+              </div>
+            </div>
+            <div layout="column" flex="35">
+              <div flex="50">
+                <p>Total Services</p>
+              </div>
+              <div flex="50">
+                <p>{{organization.entity.quota_definition.entity.total_services}}</p>
+              </div>
+            </div>
+            <div layout="column" flex="35">
+              <div flex="50">
+                <p>Memory Limit</p>
+              </div>
+              <div flex="50">
+                <p>{{organization.entity.quota_definition.entity.memory_limit}} MB</p>
+              </div>
+            </div>
+            <div layout="column" flex="35">
+              <div flex="50">
+                <p>None Basic Services</p>
+              </div>
+              <div flex="50">
+                <p>{{organization.entity.quota_definition.entity.non_basic_services_allowed}}</p>
+              </div>
+            </div>
+            <div layout="column" flex="35">
+              <div flex="50">
+                <p>Trial DB Allowed</p>
+              </div>
+              <div flex="50">
+                <p>{{organization.entity.quota_definition.entity.trial_db_allowed}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+    <md-content ui-view flex id="content" style="overflow: scroll;">
+      <div class="container-fluid-fluid" ng-show="alerts.length > 0" ng-controller="alertController">
+        <div ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">
+          <h4 class="alert-heading" ng-cloak>{{alert.title}}</h4>
+          <p ng-cloak>{{alert.msg}}
+            <p>
+        </div>
+      </div>
+      <div ui-view="body" style="padding-top: 60px"></div>
+    </md-content>
+  </div>
+
+  <script src="./bower_components/angular/angular.js"></script>
+  <script src="./bower_components/angular-animate/angular-animate.js"></script>
+  <script src="./bower_components/angular-aria/angular-aria.js"></script>
+  <script src="./bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="./bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+  <script src="./bower_components/ng-clip/dest/ng-clip.min.js"></script>
+  <script src="./bower_components/zeroclipboard/dist/ZeroClipboard.min.js"></script>
+  <script src="./bower_components/restangular/dist/restangular.min.js"></script>
+  <script src="./bower_components/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
+
+  <!--script src="./js/providers/providers.js"></script>
+  <script src="./js/providers/general/clientCacheProvider.js"></script-->
+
+  <script src="./js/services/services.js"></script>
+  <script src="./js/services/general/clientCacheService.js"></script>
+  <script src="./js/services/general/localStorageService.js"></script>
+  <script src="./js/services/general/cookieService.js"></script>
+  <script src="./js/services/general/messageEmitter.js"></script>
+  <script src="./js/services/general/responseService.js"></script>
+  <script src="./js/services/general/userDetailsService.js"></script>
+
+  <script src="./js/controllers/controllers.js"></script>
+  <script src="./js/controllers/homeController.js"></script>
+
+  <script src="./js/controllers/app/appLogController.js"></script>
+  <script src="./js/controllers/app/appSettingsController.js"></script>
+  <script src="./js/controllers/app/appSpacesController.js"></script>
+
+  <script src="./js/controllers/general/marketPlaceController.js"></script>
+
+  <script src="./js/controllers/org/organizationController.js"></script>
+  <script src="./js/controllers/org/organizationUserController.js"></script>
+
+  <script src="./js/controllers/space/spaceController.js"></script>
+
+  <script src="./js/controllers/user/loginController.js"></script>
+  <script src="./js/controllers/user/registerController.js"></script>
+  <script src="./js/controllers/user/userInfoController.js"></script>
+  <script src="./js/controllers/user/usersController.js"></script>
+
+  <script src="./js/controllers/components/alertController.js"></script>
+
+  <script src="./js/routes.js"></script>
+  <script src="./js/app.js"></script>
+
+</body>
+
+</html>

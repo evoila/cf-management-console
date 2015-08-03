@@ -1,0 +1,39 @@
+<div layout="column">
+  <md-content layout-padding>
+    <form ng-submit="register(registerForm)" name="meetingForm">
+      <h2>Create a Cloud Foundry account</h2>
+      <div layout="column" flex="50">
+        <md-input-container flex>
+          <label>Email</label>
+          <input ng-model="registerForm.email" ng-required="true">
+        </md-input-container>
+        <md-input-container flex>
+          <label>Firstname</label>
+          <input ng-model="registerForm.firstname" ng-required="true">
+        </md-input-container>
+        <md-input-container flex>
+          <label>Lastname</label>
+          <input ng-model="registerForm.lastname" ng-required="true">
+        </md-input-container>
+        <md-input-container flex>
+          <label>Password</label>
+          <input ng-model="registerForm.password" ng-required="true">
+        </md-input-container>
+        <section layout="row" layout-sm="column" layout-align="end center">
+          <md-button class="md-fab detail md-warn md-fab-detail" aria-label="cancel" ng-click="state.go('login')">
+            <ng-md-icon icon="clear" size="40" style="fill:white"></ng-md-icon>
+            <md-tooltip>
+              Cancel
+            </md-tooltip>
+          </md-button>
+          <md-button class="md-fab detail md-primary md-fab-detail" aria-label="register" type="submit">
+            <ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+            <md-tooltip>
+              Register
+            </md-tooltip>
+          </md-button>
+        </section>
+      </div>
+    </form>
+  </md-content>
+</div>

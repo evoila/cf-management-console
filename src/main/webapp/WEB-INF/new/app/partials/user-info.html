@@ -1,0 +1,42 @@
+<div flex="50" layout="column">
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Username</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{userInfo.userName}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Email</h3>
+		</div>
+		<div flex=50 ng-repeat="email in userInfo.emails">
+			<p class="Tab">{{value.email}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Firstname</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{userInfo.firstName}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Lastname</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{userInfo.lastName}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Email</h3>
+		</div>
+		<div flex=50 ng-repeat="organization in userInfo.organizations">
+			<p class="Tab">{{organization}}</p>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<div flex ng-show="loading" layout="center center" layout-align="space-around">
+	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-hide="loading">
+	<h2>Services Marketplace</h2>
+	<md-subheader class="md-no-sticky">Currently available services</md-subheader>
+	<div layout="row" layout-sm="column" layout-wrap>
+		<md-card flex="33" ng-repeat="service in services" class="md-whiteframe-z2">
+			<md-card-content>
+				<div layout="row">
+					<img ng-src="assets/png/{{service.entity.label}}.png">
+					<div layout="column">
+						<h3 class="Tab">{{service.entity.label}}</h3>
+						<p class="Tab">{{service.entity.description}}</p>
+					</div>
+				</div>
+			</md-card-content>
+		</md-card>
+	</div>
+	<md-card class="md-whiteframe-z2" layout-wrap>
+		<md-card-content>
+			<h3>Services</h3>
+			<p>View only access to all org and space info, settings, reports</p>
+			<md-divider></md-divider>
+			<h3>Plans</h3>
+			<p>View only access to all space information, settings, reports, logs</p>
+		</md-card-content>
+	</md-card>

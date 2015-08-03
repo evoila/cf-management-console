@@ -1,0 +1,151 @@
+<div flex ng-show="loading" layout="center center" layout-align="space-around">
+	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-hide="loading" flex="50" layout="column">
+	<h2>{{application.entity.name}}</h2>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Instances</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{application.entity.instances}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Memory</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{application.entity.memory}} MB</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Disk Quota</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{application.entity.disk_quota}} MB</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Buildpack</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{application.entity.buildpack}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">Environment</h3>
+		</div>
+		<div flex=50>
+			<p class="Tab">{{application.entity.environment}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<div flex="50">
+			<h3 class="Tab">URLS</h3>
+		</div>
+		<div flex=50 ng-repeat="url in application.entity.urls">
+			<p class="Tab">{{url}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm="column">
+		<md-button class="md-fab detail md-warn md-fab-detail" aria-label="stop" ng-click="">
+			<ng-md-icon icon="stop" size="40" style="fill:white"></ng-md-icon>
+			<md-tooltip>
+				Stop
+			</md-tooltip>
+		</md-button>
+		<md-button class="md-fab detail md-warn md-fab-detail" aria-label="delete" ng-click="deleteApplication(ev, application)">
+			<ng-md-icon icon="delete" size="40" style="fill:white"></ng-md-icon>
+			<md-tooltip>
+				Delete
+			</md-tooltip>
+		</md-button>
+	</div>
+	<md-divider></md-divider>
+
+	<h2>Bound Services{{application.entity.serviceInstances.length}}</h2>
+	<div>
+		<div layout="row" layout-sm="column">
+			<div flex="50">
+				<h3 class="Tab">Name</h3>
+			</div>
+			<div flex=50 ng-repeat="service in application.entity.serviceInstances">
+				<p class="Tab">{{service.name}}</p>
+			</div>
+		</div>
+		<div layout="row" layout-sm="column">
+			<div flex="50">
+				<h3 class="Tab">Servics</h3>
+			</div>
+			<div flex=50 ng-repeat="service in application.entity.serviceInstances">
+				<p class="Tab">{{service.servicePlan.service.provider}} {{service.servicePlan.service.name}} {{service.servicePlan.service.version}}</p>
+			</div>
+		</div>
+		<div layout="row" layout-sm="column">
+			<div flex="50">
+				<h3 class="Tab">Plan Level</h3>
+			</div>
+			<div flex=50 ng-repeat="service in application.entity.serviceInstances">
+				<p class="Tab">{{service.servicePlan.name}}</p>
+			</div>
+		</div>
+	</div>
+	<md-divider></md-divider>
+
+	<h2>Instances</h2>
+	<div layout="row" layout-sm="column">
+		<div flex="20" layout="column">
+			<div flex="50">
+				<h3 class="Tab">Instance</h3>
+			</div>
+			<div  ng-repeat="instance in instances">
+				<p class="Tab">{{$index}}</p>
+			</div>
+		</div>
+		<div flex="20" layout="column">
+			<div flex="50">
+				<h3 class="Tab">State</h3>
+			</div>
+			<div  ng-repeat="instance in instances">
+				<p class="Tab">{{instance.entity.state}}</p>
+			</div>
+		</div>
+		<div flex="20" layout="column">
+			<div flex="50">
+				<h3 class="Tab">IP</h3>
+			</div>
+			<div  ng-repeat="instance in instances">
+				<p class="Tab">{{instance.entity.console_ip}}</p>
+			</div>
+		</div>
+		<div flex="20" layout="column">
+			<div flex="50">
+				<h3 class="Tab">Running Since</h3>
+			</div>
+			<div  ng-repeat="instance in instances">
+				<p class="Tab">{{instance.entity.since | date : 'dd.MM.yyyy'}}</p>
+			</div>
+		</div>
+		<div flex="20" layout="column">
+			<div flex="50">
+				<h3 class="Tab">Port</h3>
+			</div>
+			<div  ng-repeat="instance in instances">
+				<p class="Tab">{{instance.entity.console_port}}</p>
+			</div>
+		</div>
+		<div flex="20" layout="column">
+			<div flex="50">
+				<h3 class="Tab">Logs</h3>
+			</div>
+			<div  ng-repeat="instance in instances">
+				<a href="#/app-log/{{organizationId}}/applications/{{application.entity.id}}/instances/{{$index}}/stdout">stdout.log</a>
+				<a href="#/app-log/{{organizationId}}/applications/{{application.entity.id}}/instances/{{$index}}/stderr">stderr.log</a>
+			</div>
+		</div>
+	</div>
+</div>
