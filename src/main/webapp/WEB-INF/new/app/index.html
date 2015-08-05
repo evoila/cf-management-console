@@ -13,29 +13,48 @@
   <link rel="stylesheet" href="assets/fonts.css" />
   <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css" />
   <link rel="stylesheet" href="assets/app.css" />
+  <link rel="stylesheet" href="assets/menu.css" />
 
 </head>
 
-<body ng-app="cf-management-console" ng-controller="homeController as ul" layout="row">
+<body ng-app="cf-management-console" ng-controller="homeController as vm" layout="row">
+<div ng-show="isAuthenticated">
+  <div layout="row">
+       <md-sidenav class="md-sidenav-left md-whiteframe-z1" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+         <md-toolbar md-scroll-shrink>
+           <div class="md-toolbar-tools">
+             <h3>
+               <span>My App Title</span>
+             </h3>
+             {{isAuthenticated}}
+           </div>
+         </md-toolbar>
+         <md-content flex role="navigation" class="md-default-theme">
+           <ul class="side-menu">
+             <li class="parent-list-item" style="text-align:left;">
+               <md-select layout-align="right left" ng-model="organization" aria-label="selectedOrganization" placeholder="Organization">
+                 <md-select-label>{{ organization ? organization.entity.name : 'Select Organization' }}</md-select-label>
+                 <md-option ng-repeat="organization in organizations" ng-value="organization">{{organization.entity.name}}</md-option>
+               </md-select>
 
-  <md-sidenav ng-show="isAuthenticated" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-    <md-toolbar>
-      <h1>Menu</h1>
-    </md-toolbar>
-    <div layout="column">
-      <md-select layout-align="center center" ng-model="organization" aria-label="selectedOrganization" placeholder="Organization">
-        <md-select-label>{{ organization ? organization.entity.name : 'Select Organization' }}</md-select-label>
-        <md-option ng-repeat="organization in organizations" ng-value="organization">{{organization.entity.name}}</md-option>
-      </md-select>
+             </li>
+             <li ng-repeat="section in vm.menu.sections" class="parent-list-item"
+                 ng-class="{'parentActive' : vm.isSectionSelected(section)}">
+               <h2 class="menu-heading" ng-if="section.type === 'heading'"
+                   id="heading_{{ section.name | nospace }}">
+                 {{section}}
+               </h2>
+               <menu-link section="section" ng-if="section.type === 'link'"></menu-link>
+               <menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>
+             </li>
+           </ul>
 
-      <md-button ui-sref="create-org({organizationId : organization.metadata.guid})">New Organization</md-button>
-      <md-button ui-sref="app-spaces({organizationId : organization.metadata.guid})">App Spaces</md-button>
-      <md-button ui-sref="users({organizationId : organization.metadata.guid})">Users</md-button>
-      <md-button ui-sref="org-settings({organizationId : organization.metadata.guid})">Organization Settings</md-button>
-      <md-button ui-sref="marketplace({organizationId : organization.metadata.guid})">Marketplace</md-button>
-    </div>
-  </md-sidenav>
 
+         </md-content>
+       </md-sidenav>
+     </div>
+   </div>
+ </div>
   <div flex tabIndex="-1" role="main" class="md-whiteframe-z2">
     <md-toolbar layout="row" class="md-whiteframe-z1">
       <md-button ng-show="isAuthenticated" class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
@@ -43,16 +62,19 @@
       </md-button>
       <h1>Cloud Foundry Management Console</h1>
       <div ng-show="isAuthenticated" flex="15" layout="row">
-        <md-button class="md-fab md-primary md-fab-index-logout" aria-label="logout" ng-click="logout()">
+        <md-button class="md-raised md-warn" aria-label="logout" ng-click="logout()">
           <md-tooltip>
             Logout
           </md-tooltip>
-          <ng-md-icon icon="logout" size="40" style="fill:white"></ng-md-icon>
+          Logout
+          <!--ng-md-icon icon="logout" size="40" style="fill:white"></ng-md-icon-->
         </md-button>
       </div>
     </md-toolbar>
     <md-card ng-show="isAuthenticated">
       <md-card-content layout="row">
+         {{vm.menu.sections}}
+         <a href="#" ng-click="vm.menu.sections = []">here</a>
         <div layout="space-around">
           <md-card class="md-whiteframe-z2">
             <md-card-content>
@@ -141,6 +163,7 @@
   <script src="./js/services/general/messageEmitter.js"></script>
   <script src="./js/services/general/responseService.js"></script>
   <script src="./js/services/general/userDetailsService.js"></script>
+  <script src="./js/services/general/menuService.js"></script>
 
   <script src="./js/controllers/controllers.js"></script>
   <script src="./js/controllers/homeController.js"></script>
@@ -162,6 +185,10 @@
   <script src="./js/controllers/user/usersController.js"></script>
 
   <script src="./js/controllers/components/alertController.js"></script>
+
+  <script src="./js/directives/directives.js"></script>
+  <script src="./js/directives/menulinkDirective.js"></script>
+  <script src="./js/directives/menuToggleDirective.js"></script>
 
   <script src="./js/routes.js"></script>
   <script src="./js/app.js"></script>

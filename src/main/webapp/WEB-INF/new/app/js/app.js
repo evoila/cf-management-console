@@ -1,4 +1,4 @@
-angular.module('cf-management-console', ['ngMaterial', 'controllers', 'routes',
+angular.module('cf-management-console', ['ngMaterial', 'controllers', 'directives' ,'services', 'routes',
     'ngMdIcons', 'ngClipboard', 'restangular'
   ])
   .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, RestangularProvider, REST_API) {
