@@ -6,37 +6,24 @@ angular.module('services')
     '$rootScope',
     function($location) {
 
-      var sections = [{
+      var organization = {};
+
+      var organizations = {
         name: 'Organisations',
         type: 'toggle'
-      }];
+      };
 
-      sections.push({
+      var sections = [{
         name: 'App Spaces',
         type: 'toggle',
         state: 'app-spaces'
-      });
+      }];
 
       sections.push({
         name: 'Users',
         type: 'toggle',
         state: 'marketplace',
-        pages: [{
-          name: 'Cheetos',
-          type: 'link',
-          state: 'home.findwood',
-          icon: 'fa fa-group'
-        }, {
-          name: 'Banana Chips',
-          state: 'home.woodlist',
-          type: 'link',
-          icon: 'fa fa-map-marker'
-        }, {
-          name: 'Donuts',
-          state: 'home.woodlow',
-          type: 'link',
-          icon: 'fa fa-map-marker'
-        }]
+        icon: 'fa fa-group'
       });
 
       sections.push({
@@ -49,6 +36,8 @@ angular.module('services')
 
       return self = {
         sections: sections,
+        organization: organization,
+        organizations: organizations,
 
         toggleSelectSection: function(section) {
           self.openedSection = (self.openedSection === section ? null : section);

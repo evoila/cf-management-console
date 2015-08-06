@@ -2,7 +2,7 @@ angular.module('directives')
   .run(['$templateCache', function($templateCache) {
     $templateCache.put('partials/menu-link.tmpl.html',
       '<md-button ng-class="{\'{{section.icon}}\' : true}" ui-sref-active="active" \n' +
-      '  ui-sref="{{section.state}}({{section.params}})" ng-click="focusSection()">\n' +
+      '  ui-sref="{{section.state}}({{section.params}})" ng-click="update(section.orga)">\n' +
       '  {{section | humanizeDoc}}\n' +
       '  <span  class="md-visually-hidden "\n' +
       '    ng-if="isSelected()">\n' +
@@ -11,7 +11,7 @@ angular.module('directives')
       '</md-button>\n' +
       '');
   }])
-  .directive('menuLink', function() {
+  .directive('menuLink', ['menu', function(menu) {
     return {
       scope: {
         section: '='
@@ -20,11 +20,14 @@ angular.module('directives')
       link: function($scope, $element) {
         var controller = $element.parent().controller();
 
-        $scope.focusSection = function() {
+        $scope.update = function(orga) {
           // set flag to be used later when
           // $locationChangeSuccess calls openPage()
           controller.autoFocusContent = true;
+          if (orga) {
+            menu.organization = orga;
+          }
         };
       }
     };
-  })
+  }])

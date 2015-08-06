@@ -4,12 +4,14 @@
 
 angular.module('controllers')
   .controller('appSpacesController',
-    function AppSpacesController($scope, $state, $location, $mdDialog, Restangular, responseService) {
+    function AppSpacesController($scope, $state, $location, $mdDialog, Restangular, responseService, menu) {
 
       $scope.state = $state;
       $scope.loading = true;
       $scope.organizationId = $state.params.organizationId;
       $scope.appSpace = null;
+
+      var menu = menu;
 
       Restangular.one('organizations', $scope.organizationId).all('spaces').getList().then(function(data) {
         if (data[0] != undefined) {
@@ -19,8 +21,10 @@ angular.module('controllers')
           $scope.appSpace = data[0].entity;
           data[0].entity.selected = true;
         }
+        appSpacesToSections(data);
         $scope.spaces = data;
         $scope.loading = false;
+
 
 
         angular.forEach($scope.spaces, function(space) {
@@ -32,6 +36,19 @@ angular.module('controllers')
           });
         });
       });
+
+      function appSpacesToSections(appSpaces) {
+        menu.sections[0].pages = [];
+        angular.forEach (appSpaces, function(space, key) {
+            var page = {};
+            page.name = space.entity.name;
+            page.type = 'link';
+            page.state = 'app-spaces';
+            page.params = {spaceId: space.metadata.guid};
+            console.log(space.metadata);
+          menu.sections[0].pages.push(page);
+        });
+      }
 
       $scope.startApplication = function(applicationId) {
         Restangular.all('applications').customPUT(applicationId, null, null, {

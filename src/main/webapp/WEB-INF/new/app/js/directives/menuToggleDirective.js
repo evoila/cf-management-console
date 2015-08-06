@@ -25,7 +25,7 @@ angular.module('directives')
       templateUrl: 'partials/menu-toggle.tmpl.html',
       link: function(scope, element) {
         var controller = element.parent().controller();
-        console.log(controller);
+        //console.log(controller);
         scope.isOpen = function() {
           return controller.isOpen(scope.section);
         };

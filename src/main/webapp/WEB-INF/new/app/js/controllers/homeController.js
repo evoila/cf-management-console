@@ -9,6 +9,18 @@ angular.module('controllers')
 
       var vm = this;
 
+      vm.isOpen = isOpen;
+      vm.toggleOpen = toggleOpen;
+      vm.autoFocusContent = false;
+      vm.menu = menu;
+
+      //$scope.organization = vm.menu.organization;
+
+      vm.status = {
+        isFirstOpen: true,
+        isFirstDisabled: false
+      };
+
       $rootScope.isAuthenticated = clientCacheService.isAuthenticated();
       console.debug($scope.isAuthenticated)
       if (!clientCacheService.isAuthenticated()) {
@@ -18,8 +30,8 @@ angular.module('controllers')
       } else {
         Restangular.all('organizations').getList().then(function(data) {
           $scope.organizations = data;
-          //vm.menu.sections[0].pages = data;
-          $scope.organization = data[0];
+          vm.menu.organization = data[0];
+
           console.debug(data);
           orgsToSections(data);
           $state.go('app-spaces', {
@@ -30,27 +42,29 @@ angular.module('controllers')
           $location.path('/login');
           $rootScope.isAuthenticated = false;
         }).then(function() {
-          $scope.$watch('organization', function(organization) {
+          /*$scope.$watch('organization', function(organization) {
             $state.go('app-spaces', {
               organizationId: organization.metadata.guid
             }, {
               reload: true
             });
-          })
+          })*/
         });
       }
 
+      /*Adds all organisations to the menu*/
       function orgsToSections(organizations) {
+        console.log(organizations.length);
+        vm.menu.organizations.name = 'Organisations ('+organizations.length+')';
+        vm.menu.organizations.pages = [];
         angular.forEach (organizations, function(orga, key) {
-          if (vm.menu.sections[0].pages == undefined)
-            vm.menu.sections[0].pages = [];
             var page = {};
             page.name = orga.entity.name;
             page.type = 'link';
             page.state = 'app-spaces';
             page.params = {organizationId: orga.metadata.guid};
-          vm.menu.sections[0].pages.push(page);
-          console.log(orga.metadata.guid);
+            page.orga = orga;
+          vm.menu.organizations.pages.push(page);
         });
       }
 
@@ -66,16 +80,10 @@ angular.module('controllers')
         $mdSidenav('left').toggle();
       };
 
-      vm.isOpen = isOpen;
-      vm.toggleOpen = toggleOpen;
-      vm.autoFocusContent = false;
-      vm.menu = menu;
-
-      vm.status = {
-        isFirstOpen: true,
-        isFirstDisabled: false
-      };
-
+      $scope.updateTitle = function(name) {
+        console.debug('homeController: '+name);
+        $scope.appTitle = name;
+      }
 
       function isOpen(section) {
         return menu.isSectionSelected(section);
