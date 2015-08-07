@@ -23,5 +23,5 @@
 *.war
 *.ear
 
-src/main/webapp/WEB-INF/new/node_modules
-src/main/webapp/WEB-INF/new/app/bower_components
+src/main/webapp/WEB-INF/node_modules
+src/main/webapp/WEB-INF/app/bower_components
