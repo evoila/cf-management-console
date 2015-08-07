@@ -1,36 +1,52 @@
-<div flex ng-show="loading" layout="center center" layout-align="space-around">
+<md-fab-toolbar md-open="demo.isOpen" count="demo.count" ng-class="demo.selectedAlignment">
+	<md-fab-trigger>
+		<md-button aria-label="menu" class="md-fab md-primary">
+			test
+		</md-button>
+	</md-fab-trigger>
+	<md-toolbar>
+		<md-fab-actions class="md-toolbar-tools">
+			<md-button aria-label="comment" class="md-icon-button">
+				la
+			</md-button>
+			<md-button aria-label="label" class="md-icon-button">
+				le
+			</md-button>
+			<md-button aria-label="photo" class="md-icon-button">
+				lu
+			</md-button>
+		</md-fab-actions>
+	</md-toolbar>
+</md-fab-toolbar>
+<div flex ng-show="loading" layout="center center" layout-align="space-around" style="margin-top:50px">
 	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
 </div>
-<div ng-hide="loading" layout="row" layout-sm="column">
-	<md-subheader class="md-no-sticky">App Spaces</md-subheader>
-	<md-button class="md-fab md-fab-detail md-primary" aria-label="add" ng-click="state.go('create-space', {organizationId : organization.metadata.guid})">
-		<md-tooltip>
-			Add Space
-		</md-tooltip>
-		<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
-	</md-button>
-</div>
+<md-button class="md-fab md-fab-detail md-primary floating-add" aria-label="add" ng-click="state.go('create-space', {organizationId : organization.metadata.guid})">
+	<md-tooltip>
+		Add Space
+	</md-tooltip>
+	<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+</md-button>
 <div ng-hide="loading" layout-wrap layout-align="space-around" layout="row" ng-show="space.selected == s.entity.name">
-	<div ng-repeat="s in spaces">
-		<md-card class="md-whiteframe-z4" flex="33">
-			<md-card-content>
-				<div layout="row" layout-sm="column" layout-align="space-around">
-					<h2 class="md-title">{{s.entity.name}}</h2>
-					<md-button class="md-fab md-fab-detail md-primary" aria-label="edit" ng-click="state.go('space-settings', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
-						<md-tooltip>
-							Edit
-						</md-tooltip>
-						<ng-md-icon icon="create" size="40" style="fill:white"></ng-md-icon>
-					</md-button>
-				</div>
-				<div layout="row" layout-sm="column">
-					<md-card class="md-whiteframe-z2" flex ng-click="showAppsDialog(ev, s.entity)">
-						<md-card-content>
-							<h2 class="md-title">Apps</h2>
-							<p class="number">
+	<md-card ng-repeat="s in spaces" class="md-whiteframe-z4" flex="100">
+
+		<md-card-content>
+			<div layout="column" layout-align="space-around">
+				<h2 class="md-title">
+					<a ng-click="state.go('space-settings', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
+							{{s.entity.name}}
+						</a>
+				</h2>
+			</div>
+			<div layout="row" layout-sm="column">
+				<md-card class="md-whiteframe-z2" flex>
+					<md-card-content layout="column">
+						<div layout="row">
+							<h2 class="md-title" flex="50">Apps</h2>
+							<p class="md-title" flex="40">
 								{{s.entity.apps.length}}
 							</p>
-							<div layout="column">
+							<div layout="column" flex="10">
 								<div layout="row">
 									<ng-md-icon icon="info" size="20" style="fill:green"></ng-md-icon> {{ s.count }}
 								</div>
@@ -38,25 +54,43 @@
 									<ng-md-icon icon="info" size="20" style="fill:red"></ng-md-icon> {{s.entity.apps.length - s.count}}
 								</div>
 							</div>
-						</md-card-content>
-					</md-card>
-					<md-card class="md-whiteframe-z2" flex ng-click="showServicesDialog(ev, s.entity)">
-						<md-card-content>
-							<h2 class="md-title">Services</h2>
-							<p class="number">
-								{{s.entity.service_instances.length}}
-							</p>
-						</md-card-content>
-					</md-card>
-				</div>
-				<md-card class="md-whiteframe-z2" flex ng-click="showUsersDialog(ev, s.entity)">
-					<md-card-content>
-						<h2 class="md-title">Users</h2>
+						</div>
+						<md-divider ng-click="hideApps = !hideApps">
+							<span class=" pull-right fa fa-chevron-down md-toggle-icon md-button-toggle" ng-class="{'toggled' : hideApps}"></span>
+						</md-divider>
+						<md-list ng-hide="hideApps">
+							<md-list-item ng-repeat="app in s.entity.apps">
+								<p ng-click="goToAppSettings(app)"> {{ app.entity.name }} </p>
+							</md-list-item>
+						</md-list>
 					</md-card-content>
 				</md-card>
-			</md-card-content>
-		</md-card>
-	</div>
+				<md-card class="md-whiteframe-z2" flex>
+					<md-card-content layout="column">
+						<div layout="row">
+							<h2 class="md-title" flex="50">Services</h2>
+							<p class="md-title" flex="30">
+								{{s.entity.service_instances.length}}
+							</p>
+						</div>
+						<md-divider ng-click="hideApps = !hideApps">
+							<span class=" pull-right fa fa-chevron-down md-toggle-icon md-button-toggle" ng-class="{'toggled' : hideApps}"></span>
+						</md-divider>
+						<md-list ng-hide="hideApps">
+							<md-list-item ng-repeat="ser in s.entity.service_instances">
+								<p> {{ ser.entity.name }} </p>
+							</md-list-item>
+						</md-list>
+					</md-card-content>
+				</md-card>
+			</div>
+			<md-card class="md-whiteframe-z2" flex ng-click="showUsersDialog(ev, s.entity)">
+				<md-card-content>
+					<h2 class="md-title">Users</h2>
+				</md-card-content>
+			</md-card>
+		</md-card-content>
+	</md-card>
 	<!--md-card class="md-whiteframe-z4" flex="33">
 		<md-card-content>
 			<h2 class="md-title">Add Space</h2>

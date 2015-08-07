@@ -56,8 +56,7 @@
       </md-sidenav>
     </div>
   </div>
-  </div>
-  <div flex tabIndex="-1" role="main" class="md-whiteframe-z2">
+  <div flex tabIndex="-1" role="main">
     <md-toolbar layout="row" class="md-whiteframe-z1">
       <md-button ng-show="isAuthenticated" class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
         <md-icon md-svg-icon="menu"></md-icon>
@@ -73,6 +72,7 @@
         </md-button>
       </div>
     </md-toolbar>
+
     <md-card ng-show="isAuthenticated && !hideQuota">
       <md-card-content layout="row">
         <div layout="row" layout-sm="column" flex="100">
@@ -120,7 +120,7 @@
         </div>
       </md-card-content>
     </md-card>
-    <md-content ui-view flex id="content" style="overflow: scroll;">
+    <md-content ui-view flex id="content" style=" ">
       <div class="container-fluid-fluid" ng-show="alerts.length > 0" ng-controller="alertController">
         <div ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">
           <h4 class="alert-heading" ng-cloak>{{alert.title}}</h4>

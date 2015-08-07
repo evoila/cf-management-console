@@ -229,7 +229,15 @@ angular.module('controllers')
         };
         $mdDialog.show(appsDialog);
       };
+
+      $scope.goToAppSettings = function(app) {
+      $state.go('app-settings', {
+        organizationId: $scope.appSpace.organization_guid,
+        applicationId: app.metadata.guid
+      });}
     });
+
+
 
 function DialogController($scope, $state, $location, $mdDialog, Restangular, appSpace) {
   $scope.apps = appSpace.apps;
@@ -241,7 +249,7 @@ function DialogController($scope, $state, $location, $mdDialog, Restangular, app
   $scope.hide = function() {
     $mdDialog.hide();
   };
-  $scope.goToAppSettings = function(app) {
+    $scope.goToAppSettings = function(app) {
     $state.go('app-settings', {
       organizationId: appSpace.organization_guid,
       applicationId: app.metadata.guid

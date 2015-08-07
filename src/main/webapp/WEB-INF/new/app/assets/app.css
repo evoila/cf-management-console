@@ -203,3 +203,9 @@ span.name {
   font-size: 1.1em;
   padding-left: 5px;
 }
+
+.floating-add {
+  position: fixed;
+  bottom: 10%;
+  right: 10%;
+}
