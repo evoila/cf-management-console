@@ -9,6 +9,7 @@ angular.module('controllers')
       $scope.organizationId = $state.params.organizationId;
 
       $scope.createSpace = function(spaceForm) {
+        console.log(spaceForm)
         var user = clientCacheService.getUser();
         var spaceContent = {
           'organization_guid': $scope.organizationId,

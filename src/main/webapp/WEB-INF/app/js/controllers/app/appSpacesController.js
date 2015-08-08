@@ -13,6 +13,14 @@ angular.module('controllers')
 
       var menu = menu;
 
+      $scope.isOpen = false;
+      $scope.demo = {
+        isOpen: false,
+        count: 0,
+        selectedAlignment: 'md-left'
+      };
+
+
       Restangular.one('organizations', $scope.organizationId).all('spaces').getList().then(function(data) {
         if (data[0] != undefined) {
           $scope.space = {

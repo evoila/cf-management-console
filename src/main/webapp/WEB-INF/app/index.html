@@ -11,7 +11,7 @@
 
   <!--link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'-->
   <link rel="stylesheet" href="assets/fonts.css" />
-  <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css" />
+  <link rel="stylesheet" href="./lib/angular-material/angular-material.css" />
   <link rel="stylesheet" href="assets/app.css" />
   <link rel="stylesheet" href="assets/menu.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -25,7 +25,7 @@
         <md-toolbar>
           <div class="md-toolbar-tools">
             <h1>
-              <span>{{vm.menu.organization.entity.name}}</span>
+              <span>Organisation: <strong>{{vm.menu.organization.entity.name}}</strong></span>
             </h1>
           </div>
         </md-toolbar>
@@ -73,75 +73,69 @@
       </div>
     </md-toolbar>
 
-    <md-card ng-show="isAuthenticated && !hideQuota">
-      <md-card-content layout="row">
-        <div layout="row" layout-sm="column" flex="100">
-          <div layout="column" flex="20">
-            <div flex="50">
-              <p>Name</p>
+    <md-content flex id="content" style="padding-left: 30px; padding-right: 30px;">
+      <md-card ng-show="isAuthenticated && !hideQuota">
+        <md-card-content layout="row">
+          <div layout="row" layout-sm="column" flex="100">
+            <div layout="column" flex="20">
+              <div flex="50">
+                <p>Name</p>
+              </div>
+              <div flex="50">
+                <p>{{vm.menu.organization.entity.quota_definition.entity.name}}</p>
+              </div>
             </div>
-            <div flex="50">
-              <p>{{vm.menu.organization.entity.quota_definition.entity.name}}</p>
+            <div layout="column" flex="20">
+              <div flex="50">
+                <p>Total Services</p>
+              </div>
+              <div flex="50">
+                <p>{{vm.menu.organization.entity.quota_definition.entity.total_services}}</p>
+              </div>
+            </div>
+            <div layout="column" flex="20">
+              <div flex="50">
+                <p>Memory Limit</p>
+              </div>
+              <div flex="50">
+                <p>{{vm.menu.organization.entity.quota_definition.entity.memory_limit}} MB</p>
+              </div>
+            </div>
+            <div layout="column" flex="20">
+              <div flex="50">
+                <p>None Basic Services</p>
+              </div>
+              <div flex="50">
+                <p>{{organization.entity.quota_definition.entity.non_basic_services_allowed}}</p>
+              </div>
+            </div>
+            <div layout="column" flex="20">
+              <span class=" fa fa-close md-toggle-icon" style="margin-top:-14px; text-align:right" ng-click="hideQuota=true"></span>
+              <div flex="50">
+                <p>Trial DB Allowed</p>
+              </div>
+              <div flex="50">
+                <p>{{vm.menu.organization.entity.quota_definition.entity.trial_db_allowed}}</p>
+              </div>
             </div>
           </div>
-          <div layout="column" flex="20">
-            <div flex="50">
-              <p>Total Services</p>
-            </div>
-            <div flex="50">
-              <p>{{vm.menu.organization.entity.quota_definition.entity.total_services}}</p>
-            </div>
-          </div>
-          <div layout="column" flex="20">
-            <div flex="50">
-              <p>Memory Limit</p>
-            </div>
-            <div flex="50">
-              <p>{{vm.menu.organization.entity.quota_definition.entity.memory_limit}} MB</p>
-            </div>
-          </div>
-          <div layout="column" flex="20">
-            <div flex="50">
-              <p>None Basic Services</p>
-            </div>
-            <div flex="50">
-              <p>{{organization.entity.quota_definition.entity.non_basic_services_allowed}}</p>
-            </div>
-          </div>
-          <div layout="column" flex="20">
-            <span class=" fa fa-close md-toggle-icon" style="margin-top:-14px; text-align:right" ng-click="hideQuota=true"></span>
-            <div flex="50">
-              <p>Trial DB Allowed</p>
-            </div>
-            <div flex="50">
-              <p>{{vm.menu.organization.entity.quota_definition.entity.trial_db_allowed}}</p>
-            </div>
-          </div>
-        </div>
-      </md-card-content>
-    </md-card>
-    <md-content ui-view flex id="content" style=" ">
-      <div class="container-fluid-fluid" ng-show="alerts.length > 0" ng-controller="alertController">
-        <div ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">
-          <h4 class="alert-heading" ng-cloak>{{alert.title}}</h4>
-          <p ng-cloak>{{alert.msg}}
-            <p>
-        </div>
-      </div>
-      <div ui-view="body" style="padding-top: 60px"></div>
+        </md-card-content>
+      </md-card>
+    </md-content>
+    <md-content ui-view flex id="content" ng-controller="alertController">
     </md-content>
   </div>
 
-  <script src="./bower_components/angular/angular.js"></script>
-  <script src="./bower_components/angular-animate/angular-animate.js"></script>
-  <script src="./bower_components/angular-aria/angular-aria.js"></script>
-  <script src="./bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="./bower_components/angular-material-icons/angular-material-icons.min.js"></script>
-  <script src="./bower_components/ng-clip/dest/ng-clip.min.js"></script>
-  <script src="./bower_components/zeroclipboard/dist/ZeroClipboard.min.js"></script>
-  <script src="./bower_components/restangular/dist/restangular.min.js"></script>
-  <script src="./bower_components/underscore/underscore-min.js"></script>
-  <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
+  <script src="./lib/angular/angular.js"></script>
+  <script src="./lib/angular-animate/angular-animate.js"></script>
+  <script src="./lib/angular-aria/angular-aria.js"></script>
+  <script src="./lib/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="./lib/angular-material-icons/angular-material-icons.min.js"></script>
+  <script src="./lib/ng-clip/dest/ng-clip.min.js"></script>
+  <script src="./lib/zeroclipboard/dist/ZeroClipboard.min.js"></script>
+  <script src="./lib/restangular/dist/restangular.min.js"></script>
+  <script src="./lib/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="./lib/angular-material/angular-material.js"></script>
 
   <!--script src="./js/providers/providers.js"></script>
   <script src="./js/providers/general/clientCacheProvider.js"></script-->

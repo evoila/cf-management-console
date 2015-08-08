@@ -56,12 +56,10 @@ public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/");
-        registry.addResourceHandler("/fonts/**").addResourceLocations("/WEB-INF/fonts/");
-        registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/img/");
-        registry.addResourceHandler("/lib/**").addResourceLocations("/WEB-INF/lib/");
-        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
-        registry.addResourceHandler("/partials/**").addResourceLocations("/WEB-INF/partials/");
+        registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/app/assets/");
+        registry.addResourceHandler("/bower_components/**").addResourceLocations("/WEB-INF/app/bower_components/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/app/js/");
+        registry.addResourceHandler("/partials/**").addResourceLocations("/WEB-INF/app/partials/");
         registry.addResourceHandler("/index.html").addResourceLocations("/WEB-INF/index.html");
     }
 

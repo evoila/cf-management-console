@@ -24,4 +24,3 @@
 *.ear
 
 src/main/webapp/WEB-INF/node_modules
-src/main/webapp/WEB-INF/app/bower_components
