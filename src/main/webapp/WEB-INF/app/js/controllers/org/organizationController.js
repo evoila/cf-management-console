@@ -33,7 +33,7 @@ angular.module('controllers')
           };
           Restangular.all('spaces').post(spaceContent).then(function(space) {
 
-            $location.path('/app-spaces/' + organization.metadata.guid);
+            $location.path('/spaces/' + organization.metadata.guid);
             responseService.executeSuccess(space, null, null);
           });
         });
@@ -67,7 +67,7 @@ function DeleteOrganizationController($scope, $state, $mdDialog, Restangular) {
 
   $scope.ok = function() {
     Restangular.one('organizations', $state.params.organizationId).remove().then(function(data, status, headers) {
-      $location.path('/app-spaces/' + data[0].id);
+      $location.path('/spaces/' + data[0].id);
       $mdDialog.hide();
       responseService.executeSuccess(data, null, null);
     });

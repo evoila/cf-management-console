@@ -40,7 +40,7 @@ angular.module('controllers')
           Restangular.all('organizations').getList().then(function(data) {
             if (data.length > 0) {
               responseService.executeSuccess(data, headers, 'dashboard');
-              $state.go('app-spaces', {
+              $state.go('spaces', {
                   organizationId: data[0].metadata.guid
                 })
                 //$location.path('/app-spaces/' + data[0].metadata.guid);

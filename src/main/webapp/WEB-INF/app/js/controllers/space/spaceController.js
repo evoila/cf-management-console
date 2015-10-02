@@ -16,9 +16,9 @@ angular.module('controllers')
           'name': spaceForm.name,
           'manager_guids': [user.id],
           'developer_guids': [user.id]
-        };
+        }
         Restangular.all('spaces').post(spaceContent).then(function(space) {
-          $location.path('/app-spaces/' + $scope.organizationId);
+          $location.path('/spaces/' + $scope.organizationId);
           responseService.executeSuccess(space, null, null);
         });
       };
@@ -26,6 +26,7 @@ angular.module('controllers')
       $scope.init = function() {
         Restangular.one('spaces', $state.params.spaceId).get().then(function(data, status, headers) {
           $scope.space = data;
+          console.log($scope.space);
         });
       };
 
@@ -57,7 +58,7 @@ function DeleteSpaceController($scope, $state, $location, $mdDialog, Restangular
 
   $scope.ok = function() {
     Restangular.one('spaces', $state.params.spaceId).remove().then(function(data, status, headers) {
-      $location.path('/app-spaces/' + $state.params.organizationId);
+      $location.path('/spaces/' + $state.params.organizationId);
       $mdDialog.hide();
       responseService.executeSuccess(data, null, null);
     });

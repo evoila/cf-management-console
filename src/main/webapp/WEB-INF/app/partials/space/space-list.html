@@ -1,4 +1,4 @@
-<div flex>
+<div ng-init="init()">
 	<md-fab-toolbar md-open="demo.isOpen" count="demo.count" ng-class="demo.selectedAlignment">
 		<md-fab-trigger class="align-with-text">
 			<md-button aria-label="menu" class="md-fab md-primary">
@@ -13,7 +13,7 @@
 				<md-button aria-label="photo" class="md-icon-button">
 					<md-icon md-svg-src="assets/svg/share.svg"></md-icon>
 				</md-button>
-				<md-button aria-label="label" class="md-icon-button" ng-click="state.go('create-space', {organizationId : organizationId})">
+				<md-button aria-label="label" class="md-icon-button" ng-click="state.go('space-create', {organizationId : organizationId})">
 					<md-icon md-svg-src="assets/svg/create.svg"></md-icon>
 				</md-button>
 			</md-fab-actions>

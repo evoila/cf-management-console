@@ -4,8 +4,8 @@
 
 
 angular.module('controllers')
-  .controller('marketPlaceController',
-    function MarketPlaceController($scope, Restangular) {
+  .controller('marketplaceController',
+    function MarketplaceController($scope, Restangular) {
 
       $scope.service = null;
 
@@ -17,5 +17,5 @@ angular.module('controllers')
         $scope.service = service;
       };
 
-      return MarketPlaceController;
+      return MarketplaceController;
     });

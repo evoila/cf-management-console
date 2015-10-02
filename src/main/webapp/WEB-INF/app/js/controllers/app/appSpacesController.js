@@ -22,6 +22,7 @@ angular.module('controllers')
 
 
       Restangular.one('organizations', $scope.organizationId).all('spaces').getList().then(function(data) {
+        console.log("tada");
         if (data[0] != undefined) {
           $scope.space = {
             selected: data[0].entity.name
@@ -51,7 +52,7 @@ angular.module('controllers')
             var page = {};
             page.name = space.entity.name;
             page.type = 'link';
-            page.state = 'app-spaces';
+            page.state = 'spaces';
             page.params = {spaceId: space.metadata.guid};
             console.log(space.metadata);
           menu.sections[0].pages.push(page);

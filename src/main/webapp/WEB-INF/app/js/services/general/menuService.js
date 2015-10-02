@@ -14,9 +14,9 @@ angular.module('services')
       };
 
       var sections = [{
-        name: 'App Spaces',
+        name: 'Spaces',
         type: 'toggle',
-        state: 'app-spaces'
+        state: 'spaces'
       }];
 
       sections.push({

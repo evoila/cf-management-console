@@ -49,7 +49,7 @@ function DeleteApplicationController($scope, $state, $mdDialog, Restangular) {
   $scope.ok = function() {
     console.log($scope.application)
     Restangular.one('applications', $scope.applicationId).remove().then(function(data, status, headers) {
-      $location.path('/app-spaces/' + $scope.organizationId);
+      $location.path('/spaces/' + $scope.organizationId);
       $mdDialog.hide();
       responseService.executeSuccess(data, null, null);
     });

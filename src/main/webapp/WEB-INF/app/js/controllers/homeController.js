@@ -31,10 +31,12 @@ angular.module('controllers')
         Restangular.all('organizations').getList().then(function(data) {
           $scope.organizations = data;
           vm.menu.organization = data[0];
+          console.log(data[0].metadata.guid);
 
           console.debug(data);
           orgsToSections(data);
-          $state.go('app-spaces', {
+          console.log("before statechange");
+          $state.go('spaces', {
             organizationId: data[0].metadata.guid
           })
         }, function(response) {
@@ -61,7 +63,7 @@ angular.module('controllers')
             var page = {};
             page.name = orga.entity.name;
             page.type = 'link';
-            page.state = 'app-spaces';
+            page.state = 'spaces';
             page.params = {organizationId: orga.metadata.guid};
             page.orga = orga;
           vm.menu.organizations.pages.push(page);
