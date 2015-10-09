@@ -1,39 +1,45 @@
-<div ng-init="init()">
-	<md-fab-toolbar md-open="demo.isOpen" count="demo.count" ng-class="demo.selectedAlignment">
-		<md-fab-trigger class="align-with-text">
-			<md-button aria-label="menu" class="md-fab md-primary">
-				<md-icon md-svg-src="assets/svg/menu.svg"></md-icon>
-			</md-button>
-		</md-fab-trigger>
-		<md-toolbar>
-			<md-fab-actions class="md-toolbar-tools">
-				<md-button aria-label="comment" class="md-icon-button">
-					<md-icon md-svg-src="assets/svg/info.svg"></md-icon>
-				</md-button>
-				<md-button aria-label="photo" class="md-icon-button">
-					<md-icon md-svg-src="assets/svg/share.svg"></md-icon>
-				</md-button>
-				<md-button aria-label="label" class="md-icon-button" ng-click="state.go('space-create', {organizationId : organizationId})">
-					<md-icon md-svg-src="assets/svg/create.svg"></md-icon>
-				</md-button>
-			</md-fab-actions>
-		</md-toolbar>
-	</md-fab-toolbar>
-</div>
-<div flex ng-show="loading" layout="center center" layout-align="space-around" style="margin-top:50px">
+<div ng-init="init()" flex ng-show="loading" layout="center center" layout-align="space-around" style="margin-top:50px">
 	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
 </div>
 <div ng-hide="loading" layout-wrap layout-align="space-around" layout="row" ng-show="space.selected == s.entity.name">
 	<md-card ng-repeat="s in spaces" class="md-whiteframe-z4" flex="100">
-
-		<md-card-content>
-			<div layout="column" layout-align="space-around">
-				<h2 class="md-title">
-					<a ng-click="state.go('space-settings', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
-							{{s.entity.name}}
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings">
+          <md-icon md-svg-icon="assets/svg/menu.svg"></md-icon>
+        </md-button>
+        <h2>
+          <span>
+						<a ng-click="state.go('space-settings', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
+								{{s.entity.name}}
 						</a>
-				</h2>
-			</div>
+					</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Favorite">
+          <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+        </md-button>
+      </div>
+		</md-toolbar>
+		<md-toolbar class="md-warn">
+			<div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings">
+          <md-icon md-svg-icon="assets/svg/menu.svg"></md-icon>
+        </md-button>
+        <h2>
+          <span>
+						<a ng-click="state.go('space-settings', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
+								{{s.entity.name}}
+						</a>
+					</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Favorite">
+          <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+        </md-button>
+      </div>
+		</md-toolbar>
+		<md-card-content>
 			<div layout="row" layout-sm="column">
 				<md-card class="md-whiteframe-z2" flex>
 					<md-card-content layout="column">
