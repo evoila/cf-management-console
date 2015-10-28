@@ -5,41 +5,41 @@
 	<md-card ng-repeat="s in spaces" class="md-whiteframe-z4" flex="100">
 		<md-toolbar>
 			<div class="md-toolbar-tools">
-        <md-button class="md-icon-button" aria-label="Settings">
-          <md-icon md-svg-icon="assets/svg/menu.svg"></md-icon>
-        </md-button>
-        <h2>
-          <span>
+				<md-button class="md-icon-button" aria-label="Settings" ng-click="s.menu=!s.menu">
+					<md-icon md-svg-icon="assets/svg/menu.svg"></md-icon>
+				</md-button>
+				<h2>
+					<span>
 						<a ng-click="state.go('space-settings', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
 								{{s.entity.name}}
 						</a>
 					</span>
-        </h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Favorite">
-          <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
-        </md-button>
-      </div>
+				</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" aria-label="Favorite" ng-click="s.minimize=!s.minimize">
+					<md-icon md-svg-icon="assets/svg/info.svg" style="color: greenyellow;"></md-icon>
+				</md-button>
+			</div>
 		</md-toolbar>
-		<md-toolbar class="md-warn">
+		<md-toolbar class="md-accent" ng-show="s.menu">
 			<div class="md-toolbar-tools">
-        <md-button class="md-icon-button" aria-label="Settings">
-          <md-icon md-svg-icon="assets/svg/menu.svg"></md-icon>
-        </md-button>
-        <h2>
-          <span>
+				<md-button class="md-icon-button" aria-label="Settings">
+					<md-icon md-svg-icon="assets/svg/menu.svg"></md-icon>
+				</md-button>
+				<h2>
+					<span>
 						<a ng-click="state.go('space-settings', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
 								{{s.entity.name}}
 						</a>
 					</span>
-        </h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Favorite">
-          <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
-        </md-button>
-      </div>
+				</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" aria-label="Favorite">
+					<md-icon md-svg-icon="assets/svg/favorite.svg" style="color: greenyellow;"></md-icon>
+				</md-button>
+			</div>
 		</md-toolbar>
-		<md-card-content>
+		<md-card-content ng-hide="s.minimize">
 			<div layout="row" layout-sm="column">
 				<md-card class="md-whiteframe-z2" flex>
 					<md-card-content layout="column">
@@ -48,26 +48,54 @@
 							<p class="md-title" flex="40">
 								{{s.entity.apps.length}}
 							</p>
-							<div layout="column" flex="10">
-								<div layout="row">
-									<ng-md-icon icon="info" size="20" style="fill:green"></ng-md-icon> {{ s.count }}
-								</div>
-								<div layout="row">
-									<ng-md-icon icon="info" size="20" style="fill:red"></ng-md-icon> {{s.entity.apps.length - s.count}}
-								</div>
-							</div>
 						</div>
-						<md-divider ng-click="hideApps = !hideApps">
-							<span class=" pull-right fa fa-chevron-down md-toggle-icon md-button-toggle" ng-class="{'toggled' : hideApps}"></span>
+						<md-divider ng-click="hideApps = !hideApps" ng-class="">
+							<br>
+							<!--span class=" pull-right fa fa-chevron-down md-toggle-icon md-button-toggle" ng-class="{'toggled' : hideApps}"></span-->
 						</md-divider>
-						<md-list ng-hide="hideApps">
-							<md-list-item ng-repeat="app in s.entity.apps">
-								<p ng-click="goToAppSettings(app)"> {{ app.entity.name }} </p>
-							</md-list-item>
-						</md-list>
+						<div flex ng-cloak>
+							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
+								<md-grid-tile ng-repeat="app in s.entity.apps" md-rowspan="2" md-colspan="2" md-colspan-sm="1" style="background-color:#{{colorString(app.entity.name)}}">
+									<md-grid-tile-header layout="row">
+										<div layout="row" layout-align="space-around center" flex="100">
+										<h3><span style="vertical-align:middle"># {{app.entity.instances}}</h3>
+										<h3 stlye="align:right"><md-icon md-svg-src="assets/svg/hierarchical9.svg" style="color:white"></md-icon> {{app.entity.service_bindings.length}}</h3>
+									</div>
+									</md-grid-tile-header>
+
+									<md-grid-tile-footer>
+										<h3>{{app.entity.name}}</h3>
+									</md-grid-tile-footer>
+								</md-grid-tile>
+							</md-grid-list>
+						</div>
 					</md-card-content>
 				</md-card>
 				<md-card class="md-whiteframe-z2" flex>
+					<md-card-content layout="column">
+						<div layout="row">
+							<h2 class="md-title" flex="50">Services</h2>
+							<p class="md-title" flex="40">
+								{{s.entity.service_instances.length}}
+							</p>
+						</div>
+						<md-divider ng-click="hideApps = !hideApps" ng-class="">
+							<br>
+							<!--span class=" pull-right fa fa-chevron-down md-toggle-icon md-button-toggle" ng-class="{'toggled' : hideApps}"></span-->
+						</md-divider>
+						<div flex ng-cloak>
+							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
+								<md-grid-tile ng-repeat="ser in s.entity.service_instances" md-rowspan="2" md-colspan="2" md-colspan-sm="1" style="background-color:#{{colorString(ser.entity.name)}}">
+									<img style="width:60%" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}.png">
+									<md-grid-tile-footer>
+										<h3>{{ser.entity.name}}</h3>
+									</md-grid-tile-footer>
+								</md-grid-tile>
+							</md-grid-list>
+						</div>
+					</md-card-content>
+				</md-card>
+				<!--md-card class="md-whiteframe-z2" flex>
 					<md-card-content layout="column">
 						<div layout="row">
 							<h2 class="md-title" flex="50">Services</h2>
@@ -84,16 +112,17 @@
 							</md-list-item>
 						</md-list>
 					</md-card-content>
-				</md-card>
+				</md-card-->
 			</div>
 			<md-card class="md-whiteframe-z2" flex ng-click="showUsersDialog(ev, s.entity)">
 				<md-card-content>
 					<h2 class="md-title">Users</h2>
 				</md-card-content>
 			</md-card>
+			<!--pre>{{ s | json }}</pre-->
 		</md-card-content>
 	</md-card>
-	<!--md-card class="md-whiteframe-z4" flex="33">
+	<md-card class="md-whiteframe-z4" flex="33">
 		<md-card-content>
 			<h2 class="md-title">Add Space</h2>
 			<md-button class="md-fab md-fab-detail md-primary" aria-label="add" ng-click="state.go('create-space', {organizationId : organization.metadata.guid})">
@@ -103,5 +132,5 @@
 				<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
 			</md-button>
 		</md-card-content>
-	</md-card-->
+	</md-card>
 </div>

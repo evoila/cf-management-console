@@ -4,7 +4,7 @@
 
 angular.module('controllers')
   .controller('spaceController',
-    function SpaceController($scope, $state, $mdDialog, $location, Restangular, clientCacheService, responseService) {
+    function SpaceController($scope, $state, $mdDialog, $location, Restangular, clientCacheService, responseService, ColorService) {
 
       $scope.organizationId = $state.params.organizationId;
 
@@ -26,6 +26,7 @@ angular.module('controllers')
       $scope.init = function() {
         Restangular.one('spaces', $state.params.spaceId).get().then(function(data, status, headers) {
           $scope.space = data;
+
           console.log($scope.space);
         });
       };
@@ -50,6 +51,7 @@ angular.module('controllers')
         $mdDialog.show(deleteDialog);
       };
     });
+
 
 function DeleteSpaceController($scope, $state, $location, $mdDialog, Restangular, responseService) {
   $scope.cancel = function() {

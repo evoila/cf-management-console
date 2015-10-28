@@ -4,7 +4,7 @@
 
 angular.module('controllers')
   .controller('appSpacesController',
-    function AppSpacesController($scope, $state, $location, $mdDialog, Restangular, responseService, menu) {
+    function AppSpacesController($scope, $state, $location, $mdDialog, Restangular, responseService, menu, DesignService) {
 
       $scope.state = $state;
       $scope.loading = true;
@@ -58,6 +58,16 @@ angular.module('controllers')
           menu.sections[0].pages.push(page);
         });
       }
+
+      $scope.colorString = function(name) {
+        var myColor = DesignService.stringColor(name);
+        return myColor;
+      };
+
+      $scope.servicePng = function(name) {
+        var myService = DesignService.resolveServicePng(name);
+        return myService;
+      };
 
       $scope.startApplication = function(applicationId) {
         Restangular.all('applications').customPUT(applicationId, null, null, {

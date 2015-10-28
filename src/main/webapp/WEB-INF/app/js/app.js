@@ -64,7 +64,7 @@ angular.module('cf-management-console', ['ngMaterial', 'controllers', 'directive
       .icon("twitter", "./../assets/svg/twitter.svg", 512)
       .icon("phone", "./..assets/svg/phone.svg", 512);
 
-  }).constant('REST_API', 'http://localhost:8084/cfmc/api')
+  }).constant('REST_API', 'http://localhost:8080/cfmc/api')
   .run(function($rootScope, $state, $http, clientCacheService) {
 
     $rootScope.forceLogin = function(status) {
