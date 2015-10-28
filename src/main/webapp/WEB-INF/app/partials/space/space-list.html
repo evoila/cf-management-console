@@ -58,11 +58,22 @@
 								<md-grid-tile ng-repeat="app in s.entity.apps" md-rowspan="2" md-colspan="2" md-colspan-sm="1" style="background-color:#{{colorString(app.entity.name)}}">
 									<md-grid-tile-header layout="row">
 										<div layout="row" layout-align="space-around center" flex="100">
-										<h3><span style="vertical-align:middle"># {{app.entity.instances}}</h3>
-										<h3 stlye="align:right"><md-icon md-svg-src="assets/svg/hierarchical9.svg" style="color:white"></md-icon> {{app.entity.service_bindings.length}}</h3>
+										<h3>
+											<span style="vertical-align:middle"># {{app.entity.instances}}</span>
+											<md-tooltip>
+										    Number of running instances
+										  </md-tooltip>
+										</h3>
+										<h3 stlye="align:right">
+											<md-icon md-svg-src="assets/svg/hierarchical9.svg" style="color:white"></md-icon>
+											{{app.entity.service_bindings.length}}
+											<md-tooltip>
+										    Number of service bindings
+										  </md-tooltip>
+										</h3>
 									</div>
 									</md-grid-tile-header>
-
+									<img style="width:60%" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 									<md-grid-tile-footer>
 										<h3>{{app.entity.name}}</h3>
 									</md-grid-tile-footer>
@@ -86,7 +97,8 @@
 						<div flex ng-cloak>
 							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile ng-repeat="ser in s.entity.service_instances" md-rowspan="2" md-colspan="2" md-colspan-sm="1" style="background-color:#{{colorString(ser.entity.name)}}">
-									<img style="width:60%" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}.png">
+									<img style="width:60%" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
+									<!--img style="width:60%" ng-src="assets/png/mysql_w.png"-->
 									<md-grid-tile-footer>
 										<h3>{{ser.entity.name}}</h3>
 									</md-grid-tile-footer>
