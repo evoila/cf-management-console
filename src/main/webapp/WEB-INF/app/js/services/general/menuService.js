@@ -16,20 +16,22 @@ angular.module('services')
       var sections = [{
         name: 'Spaces',
         type: 'toggle',
-        state: 'spaces'
+        state: 'spaces',
+        icon: 'fa fa-cubes'
       }];
 
       sections.push({
         name: 'Users',
-        type: 'toggle',
-        state: 'marketplace',
+        type: 'link',
+        state: 'users',
         icon: 'fa fa-group'
       });
 
       sections.push({
         name: 'Marketplace',
         type: 'link',
-        state: 'marketplace'
+        state: 'marketplace',
+        icon: 'fa fa-shopping-cart'
       });
 
       var self;

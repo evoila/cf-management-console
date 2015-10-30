@@ -26,14 +26,16 @@ angular.module('services')
       },
       resolveServicePng: function(serviceName) {
         if (serviceName != undefined) {
-          if (serviceName.indexOf("postgresql") > -1)
+          if (serviceName.indexOf("postgre") > -1)
             return "postgresql";
-          if (serviceName.indexOf("mongodb") > -1)
+          if (serviceName.indexOf("mongo") > -1)
             return "mongodb";
-          if (serviceName.indexOf("rabbitmq") > -1)
+          if (serviceName.indexOf("rabbit") > -1)
             return "rabbitmq";
           if (serviceName.indexOf("redis") > -1)
             return "redis";
+          if (serviceName.indexOf("elasticse") > -1)
+            return "elasticsearch";
         } else {
           return "notfound";
         }

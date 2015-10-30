@@ -31,7 +31,12 @@ angular.module('routes', ['ui.router'])
       .state('spaces', {
         url: "/org/:organizationId/spaces",
         templateUrl: "partials/space/space-list.html",
-        controller: 'appSpacesController',
+        controller: 'spacesController',
+      })
+      .state('space', {
+        url: "/org/:organizationId/spaces/:spaceId",
+        templateUrl: "partials/space/space.html",
+        controller: 'spaceController',
       })
       .state('space-create', {
         url: '/org/:organizationId/spaces/create',
@@ -53,7 +58,7 @@ angular.module('routes', ['ui.router'])
         templateUrl: 'partials/user/users.html',
         controller: 'organizationUserController'
       })
-      .state('user', {
+      .state('users', {
         url: '/org/:organizationId/user',
         templateUrl: 'partials/user/user-list.html',
         controller: 'usersController'

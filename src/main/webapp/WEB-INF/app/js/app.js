@@ -1,5 +1,5 @@
 angular.module('cf-management-console', ['ngMaterial', 'controllers', 'directives' ,'services', 'routes',
-    'ngMdIcons', 'ngClipboard', 'restangular'
+    'ngMdIcons', 'ngClipboard', 'restangular','ngAnimate'
   ])
   .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, RestangularProvider, REST_API) {
     ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");

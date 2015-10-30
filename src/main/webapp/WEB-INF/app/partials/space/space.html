@@ -1,0 +1,49 @@
+<div ng-init="init()" flex ng-show="loading" layout="center center" layout-align="space-around" style="margin-top:50px">
+	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+</div>
+<span class="single-space-title">APPS</span>
+<div layout="row" layout-wrap>
+	<div ng-repeat="app in s.entity.apps" flex-gt-md="{{app.expand}}" flex="100" id="single-space" ng-init="app.expand='50'">
+		<md-card style="background-color:#{{colorString(app.entity.name)}}">
+				<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
+			<md-card-content style="background-color:#fff">
+				{{servicePng(app.entity.name)}}
+				<h1 class="md-title" style="font-size:30px;font-style:#444">{{app.entity.name}}</h1>
+			</md-card-content>
+			<div class="md-actions" layout="row" layout-align="end center">
+        <md-button ng-show="app.expand=='50'" ng-click="app.expand='100'">More</md-button>
+				<md-button ng-show="app.expand=='100'" ng-click="app.expand='50'">Less</md-button>
+      </div>
+		</md-card>
+	</div>
+</div>
+<!--md-card class="md-whiteframe-z2" flex>
+		<md-card-content layout="column">
+			<div layout="row">
+				<h2 class="md-title" flex="50">Services</h2>
+				<p class="md-title" flex="40">
+					{{s.entity.service_instances.length}}
+				</p>
+			</div>
+			<md-divider >
+				<br>
+			</md-divider>
+			<div flex ng-cloak>
+				<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
+					<md-grid-tile ng-repeat="ser in s.entity.service_instances" md-rowspan="2" md-colspan="2" md-colspan-sm="1" style="background-color:#{{colorString(ser.entity.name)}}">
+						<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
+						<md-grid-tile-footer>
+							<h3>
+								{{ser.entity.name}}
+								<md-tooltip>
+									{{ser.entity.name}}
+								</md-tooltip>
+							</h3>
+						</md-grid-tile-footer>
+					</md-grid-tile>
+				</md-grid-list>
+			</div>
+		</md-card-content>
+	</md-card-->
+
+<pre>{{ s | json }}</pre>

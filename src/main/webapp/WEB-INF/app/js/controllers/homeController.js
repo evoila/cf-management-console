@@ -34,7 +34,7 @@ angular.module('controllers')
           console.log(data[0].metadata.guid);
 
           console.debug(data);
-          orgsToSections(data);
+          orgsToMenu(data);
           console.log("before statechange");
           $state.go('spaces', {
             organizationId: data[0].metadata.guid
@@ -55,7 +55,7 @@ angular.module('controllers')
       }
 
       /*Adds all organisations to the menu*/
-      function orgsToSections(organizations) {
+      function orgsToMenu(organizations) {
         console.log(organizations.length);
         vm.menu.organizations.name = 'Organisations ('+organizations.length+')';
         vm.menu.organizations.pages = [];
@@ -69,6 +69,34 @@ angular.module('controllers')
           vm.menu.organizations.pages.push(page);
         });
       }
+
+      function spacesToMenu(orga,spaces) {
+        menu.sections[0].pages = [];
+        angular.forEach (spaces, function(space, key) {
+
+            var page = {};
+            page.name = space.entity.name;
+            page.type = 'link';
+            page.state = 'spaces';
+            page.params = {spaceId: space.metadata.guid};
+            console.log(space.metadata);
+          menu.sections[0].pages.push(page);
+        });
+      }
+
+      function usersToMenu(users) {
+        menu.sections[1].pages = [];
+        angular.forEach (users, function(space, key) {
+            var page = {};
+            page.name = space.entity.name;
+            page.type = 'link';
+            page.state = 'spaces';
+            page.params = {spaceId: space.metadata.guid};
+            console.log(space.metadata);
+          menu.sections[0].pages.push(page);
+        });
+      }
+
 
       $scope.logout = function() {
         $rootScope.isAuthenticated = false;

@@ -3,8 +3,8 @@
  **/
 
 angular.module('controllers')
-  .controller('appSpacesController',
-    function AppSpacesController($scope, $state, $location, $mdDialog, Restangular, responseService, menu, DesignService) {
+  .controller('spacesController',
+    function SpacesController($scope, $state, $location, $mdDialog, Restangular, responseService, menu, DesignService) {
 
       $scope.state = $state;
       $scope.loading = true;
@@ -22,7 +22,6 @@ angular.module('controllers')
 
 
       Restangular.one('organizations', $scope.organizationId).all('spaces').getList().then(function(data) {
-        console.log("tada");
         if (data[0] != undefined) {
           $scope.space = {
             selected: data[0].entity.name
@@ -30,7 +29,7 @@ angular.module('controllers')
           $scope.appSpace = data[0].entity;
           data[0].entity.selected = true;
         }
-        appSpacesToSections(data);
+        spacesToSections(data);
         $scope.spaces = data;
         $scope.loading = false;
 
@@ -46,7 +45,7 @@ angular.module('controllers')
         });
       });
 
-      function appSpacesToSections(appSpaces) {
+      function spacesToSections(appSpaces) {
         menu.sections[0].pages = [];
         angular.forEach (appSpaces, function(space, key) {
             var page = {};

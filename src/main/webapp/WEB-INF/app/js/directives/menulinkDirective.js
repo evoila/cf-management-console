@@ -1,8 +1,9 @@
 angular.module('directives')
   .run(['$templateCache', function($templateCache) {
     $templateCache.put('partials/menu-link.tmpl.html',
-      '<md-button ng-class="{\'{{section.icon}}\' : true}" ui-sref-active="active" \n' +
+      '<md-button ui-sref-active="active" \n' +
       '  ui-sref="{{section.state}}({{section.params}})" ng-click="update(section.orga)">\n' +
+      '<i ng-class="{\'{{section.icon}}\' : true}" style="width:20px;"></i>'+
       '  {{section | humanizeDoc}}\n' +
       '  <span  class="md-visually-hidden "\n' +
       '    ng-if="isSelected()">\n' +
