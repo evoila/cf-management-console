@@ -30,7 +30,7 @@ import com.github.cfmc.api.model.base.CloudFoundryResources;
 
 /**
  * 
- * @author johanneshiemer
+ * @author Johannes Hiemer.
  *
  */
 @Repository
