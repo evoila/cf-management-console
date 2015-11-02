@@ -59,6 +59,7 @@ public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/app/assets/");
         registry.addResourceHandler("/bower_components/**").addResourceLocations("/WEB-INF/app/bower_components/");
         registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/app/js/");
+        registry.addResourceHandler("/lib/**").addResourceLocations("/WEB-INF/app/lib/");
         registry.addResourceHandler("/partials/**").addResourceLocations("/WEB-INF/app/partials/");
         registry.addResourceHandler("/index.html").addResourceLocations("/WEB-INF/index.html");
     }
