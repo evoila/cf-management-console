@@ -34,6 +34,27 @@ angular.module('services')
         icon: 'fa fa-shopping-cart'
       });
 
+      sections.push({
+        name: 'Domains',
+        type: 'link',
+        state: 'users',
+        icon: 'fa fa-group'
+      });
+
+      sections.push({
+        name: 'Routes',
+        type: 'link',
+        state: 'users',
+        icon: 'fa fa-group'
+      });
+
+      sections.push({
+        name: 'Security Groups',
+        type: 'link',
+        state: 'users',
+        icon: 'fa fa-group'
+      });
+
       var self;
 
       return self = {
