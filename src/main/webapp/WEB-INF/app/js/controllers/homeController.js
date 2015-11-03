@@ -14,8 +14,6 @@ angular.module('controllers')
       vm.autoFocusContent = false;
       vm.menu = menu;
 
-      //$scope.organization = vm.menu.organization;
-
       vm.status = {
         isFirstOpen: true,
         isFirstDisabled: false
@@ -34,7 +32,11 @@ angular.module('controllers')
           console.log(data[0].metadata.guid);
 
           console.debug(data);
+
           orgsToMenu(data);
+
+          usersToMenu();
+
           console.log("before statechange");
           $state.go('spaces', {
             organizationId: data[0].metadata.guid
@@ -84,19 +86,19 @@ angular.module('controllers')
         });
       }
 
-      function usersToMenu(users) {
+      function usersToMenu() {
+        /*
         menu.sections[1].pages = [];
         angular.forEach (users, function(space, key) {
             var page = {};
             page.name = space.entity.name;
             page.type = 'link';
-            page.state = 'spaces';
-            page.params = {spaceId: space.metadata.guid};
-            console.log(space.metadata);
-          menu.sections[0].pages.push(page);
+            page.state = 'users';
+            page.params = {organizationId: organization.metadata.guid};
+          menu.sections[1].pages.push(page);
         });
+        */
       }
-
 
       $scope.logout = function() {
         $rootScope.isAuthenticated = false;

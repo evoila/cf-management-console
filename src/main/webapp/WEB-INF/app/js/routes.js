@@ -59,7 +59,7 @@ angular.module('routes', ['ui.router'])
         controller: 'organizationUserController'
       })
       .state('users', {
-        url: '/org/:organizationId/user',
+        url: '/org/:organizationId/users',
         templateUrl: 'partials/user/user-list.html',
         controller: 'usersController'
       })

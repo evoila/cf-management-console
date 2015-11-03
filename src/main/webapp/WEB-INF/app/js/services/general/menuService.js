@@ -24,6 +24,7 @@ angular.module('services')
         name: 'Users',
         type: 'link',
         state: 'users',
+        params: { organizationId:'537abdc9-3331-407a-802f-42880cda82e2' },
         icon: 'fa fa-group'
       });
 

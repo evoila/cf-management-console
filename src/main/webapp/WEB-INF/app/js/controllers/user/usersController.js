@@ -4,10 +4,11 @@
 
 angular.module('controllers')
   .controller('usersController',
-    function UsersController($scope, $state, Restangular, clientCacheService, responseService) {
+    function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService) {
 
       $scope.state = $state;
       $scope.loading = true;
+      $scope.organizationId = $state.params.organizationId;
       $scope.blockInput = true;
 
       var containsUser = function(spaceUsers, orgUser) {
@@ -20,30 +21,54 @@ angular.module('controllers')
         return false;
       };
 
+      $scope.loading = false;
+
+      Restangular.one('orgUsers', $state.params.organizationId).get().then(function(orgUsers) {
+        angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
+          console.log('orgUser: ' + orgUser.metadata.guid);
+        });
+      });
+
+      /*
       Restangular.one('organizations', $state.params.organizationId).get().then(function(organization) {
         $scope.loggedInUser = clientCacheService.getUser();
         var mayManipulate = false;
 
-        angular.forEach(organization.users, function(orgUser, orgUserIndex) {
-          if ($scope.loggedInUser.id === orgUser.id && orgUser.manager) {
+        //console.log('org: ' + JSON.stringify(organization));
+        console.log('org: ' + organization[0].entity.name);
+
+        var orgUsers = organization[0].entity.users;
+        console.log('orgUsers: ' + orgUsers.length);
+
+        console.log('logged in user id: ' + $scope.loggedInUser.id);
+
+        angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
+          if ($scope.loggedInUser.id === orgUser.metadata.guid && orgUser.manager) {
             mayManipulate = true;
+            console.log('mayManipulate = true');
           }
-          angular.forEach(organization.spaces, function(space, spaceIndex) {
-            if (!containsUser(space.users, orgUser)) {
+
+          var orgSpaces = organization[0].entity.spaces;
+          console.log('orgSpaces: ' + orgSpaces.length);
+
+          angular.forEach(orgSpaces, function(space, spaceIndex) {
+            //if (!containsUser(space.users, orgUser)) {
               space.users.push({
-                id: orgUser.id,
-                username: orgUser.username,
+                id: orgUser.metadata.guid,
+                username: orgUser.metadata.username,
                 developer: false,
                 manager: false,
                 auditor: false
               });
-            }
+            //}
           });
         });
+
         $scope.selectedGroup = organization.name;
         $scope.showOrganizationUsers = true;
         $scope.organization = organization;
         $scope.loading = false;
+
         if (mayManipulate === true) {
           $scope.blockInput = false;
         }
@@ -52,6 +77,7 @@ angular.module('controllers')
         $scope.loading = false;
         $scope.error = 'Failed to retrieve organization users. Reason: ' + JSON.stringify(response);
       });
+      */
 
       $scope.openConfirmation = function(user) {
         $scope.selectedUser = user;
