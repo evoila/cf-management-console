@@ -2,31 +2,55 @@
 	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
 </div>
 <div ng-hide="loading" layout="column">
-	<md-subheader class="md-no-sticky">Add users to {{organization.entity.name}}</md-subheader>
-	<md-input-container flex>
-		<label>Find by username</label>
-		<input ng-model="selectedUser" typeahead="user as user.username for user in users | filter:$viewValue">
-	</md-input-container>
-	<md-button class="md-fab md-primary md-fab-detail" aria-label="add" ng-click="addUser(organization, selectedUser)">
-		<md-tooltip>
-			Add
-		</md-tooltip>
-		<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
-	</md-button>
-	<md-divider></md-divider>
-	<h3>Results</h3>
-	<div layout="row" layout-sm="column">
-		<div flex="50">
-			<h3 class="Tab">Username</h3>
+	<!--
+	<md-subheader class="md-no-sticky">Users of {{vm.menu.organization.entity.name}}</md-subheader>
+
+		<div layout="row" class="content" style="margin-left:15px;">
+			<table>
+				<tr>
+					<th style="min-width:100px;text-align:left;">Name</th>
+					<th style="min-width:300px;text-align:left;">GUID</th>
+					<th style="min-width:200px;text-align:left;">Admin</th>
+					<th style="min-width:100px;text-align:left;">Spaces</th>
+				</tr>
+				<tr ng-repeat="user in orgUsers">
+					<td style="min-width:100px;">{{user.entity.username}}</td>
+					<td style="min-width:300px;">{{user.metadata.guid}}</td>
+					<td style="min-width:200px;">{{user.entity.admin}}</td>
+					<td style="min-width:100px;">{{user.entity.spaces.length}}</td>
+				</tr>
+			</table>
 		</div>
-		<div flex=50 ng-repeat="service in services">
-			<p class="Tab">{{user.username}}</p>
-		</div>
-	</div>
-	<md-button class="md-fab md-primary md-fab-detail" aria-label="add" ng-click="addUser(organization, user)">
-		<md-tooltip>
-			Add
-		</md-tooltip>
-		<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
-	</md-button>
+	-->
+
+	<md-data-table-toolbar>
+  	<h2 class="md-title">Users of {{vm.menu.organization.entity.name}}</h2>
+	</md-data-table-toolbar>
+
+	<md-data-table-container>
+	  <table md-data-table md-progress="deferred">
+	    <thead md-order="query.order" md-trigger="onOrderChange">
+	      <tr>
+	        <th name="Username"></th>
+					<th hide show-gt-md name="Admin"></th>
+					<th name="Spaces"></th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr ng-repeat="user in orgUsers" username="{{user.entity.username}}" guid="{{user.metadata.guid}}" ng-click="showTabDialog($event)">
+	        <td>{{user.entity.username}}</td>
+					<td hide show-gt-md>{{user.entity.admin}}</td>
+					<td>
+						<md-select ng-model="user.entity.spaces" placeholder="{{user.entity.spaces.length}}">
+    					<md-option ng-value="s.metadata.guid" ng-repeat="s in user.entity.spaces">{{s.entity.name}}</md-option>
+  					</md-select>
+					</td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</md-data-table-container>
+
+	<md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{desserts.total}}" md-trigger="onPaginationChange"></md-data-table-pagination>
+
+
 </div>

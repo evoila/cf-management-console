@@ -15,7 +15,8 @@
     "zeroclipboard": "~2.2.0",
     "ng-clip": "~0.2.6",
     "restangular": "~1.5.1",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "angular-material-data-table": "~0.8.14"
   },
   "devDependencies": {
     "angular-material": ">0.10.0"

@@ -22,7 +22,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 
 import com.github.cfmc.api.model.AccessToken;
-import com.github.cfmc.api.model.OrganizationUser;
 import com.github.cfmc.api.model.SpaceUser;
 import com.github.cfmc.api.model.UserInfo;
 import com.github.cfmc.api.model.UserSession;

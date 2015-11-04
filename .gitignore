@@ -24,3 +24,14 @@
 *.ear
 
 src/main/webapp/WEB-INF/node_modules
+src/main/webapp/WEB-INF/app/lib/angular
+src/main/webapp/WEB-INF/app/lib/angular-animate
+src/main/webapp/WEB-INF/app/lib/angular-aria
+src/main/webapp/WEB-INF/app/lib/angular-material
+src/main/webapp/WEB-INF/app/lib/angular-material-data-table
+src/main/webapp/WEB-INF/app/lib/angular-material-icons
+src/main/webapp/WEB-INF/app/lib/angular-ui-router
+src/main/webapp/WEB-INF/app/lib/ng-clip
+src/main/webapp/WEB-INF/app/lib/restangular
+src/main/webapp/WEB-INF/app/lib/underscore
+src/main/webapp/WEB-INF/app/lib/zeroclipboard

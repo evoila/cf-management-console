@@ -4,7 +4,7 @@
 
 angular.module('controllers')
   .controller('usersController',
-    function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService) {
+    function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog) {
 
       $scope.state = $state;
       $scope.loading = true;
@@ -21,13 +21,77 @@ angular.module('controllers')
         return false;
       };
 
-      $scope.loading = false;
 
       Restangular.one('orgUsers', $state.params.organizationId).get().then(function(orgUsers) {
-        angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
-          console.log('orgUser: ' + orgUser.metadata.guid);
-        });
+        $scope.orgUsers = orgUsers;
+        $scope.loading = false;
       });
+
+
+
+      /* TABLE */
+
+      $scope.selected = [];
+
+      $scope.query = {
+        filter: '',
+        order: 'name',
+        limit: 15,
+        page: 1
+      };
+
+      // in the future we may see a few built in alternate headers but in the mean time
+      // you can implement your own search header and do something like
+      /*
+      $scope.search = function (predicate) {
+        $scope.filter = predicate;
+        $scope.deferred = $nutrition.desserts.get($scope.query, success).$promise;
+      };
+
+      $scope.onOrderChange = function (order) {
+        return $nutrition.desserts.get($scope.query, success).$promise;
+      };
+
+      $scope.onPaginationChange = function (page, limit) {
+        return $nutrition.desserts.get($scope.query, success).$promise;
+      };
+      */
+
+
+      /* DIALOG */
+
+      $scope.showTabDialog = function(ev) {
+        $mdDialog.show({
+          controller: DialogController,
+          templateUrl: 'partials/user/user-detail-dialog.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          resolve: { username: function () { return ev.currentTarget.attributes.username.value; } },
+          clickOutsideToClose:true
+        })
+      };
+
+
+      function DialogController($scope, $mdDialog, username) {
+        $scope.username = username;
+
+        $scope.hide = function() {
+          $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+      };
+
+
+
+
+
+
+
+
+
 
       /*
       Restangular.one('organizations', $state.params.organizationId).get().then(function(organization) {
