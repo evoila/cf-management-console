@@ -2,35 +2,19 @@
 	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
 </div>
 <div ng-hide="loading" layout="column">
-	<!--
-	<md-subheader class="md-no-sticky">Users of {{vm.menu.organization.entity.name}}</md-subheader>
-
-		<div layout="row" class="content" style="margin-left:15px;">
-			<table>
-				<tr>
-					<th style="min-width:100px;text-align:left;">Name</th>
-					<th style="min-width:300px;text-align:left;">GUID</th>
-					<th style="min-width:200px;text-align:left;">Admin</th>
-					<th style="min-width:100px;text-align:left;">Spaces</th>
-				</tr>
-				<tr ng-repeat="user in orgUsers">
-					<td style="min-width:100px;">{{user.entity.username}}</td>
-					<td style="min-width:300px;">{{user.metadata.guid}}</td>
-					<td style="min-width:200px;">{{user.entity.admin}}</td>
-					<td style="min-width:100px;">{{user.entity.spaces.length}}</td>
-				</tr>
-			</table>
-		</div>
-	-->
 
 	<md-data-table-toolbar>
   	<h2 class="md-title">Users of {{vm.menu.organization.entity.name}}</h2>
+		<button class="md-icon-button md-button md-default-theme">
+			<i class="fa fa-plus fa-lg" style="color:green;"><md-tooltip>Create User</md-tooltip></i>
+		</button>
 	</md-data-table-toolbar>
 
 	<md-data-table-container>
 	  <table md-data-table md-progress="deferred">
 	    <thead md-order="query.order" md-trigger="onOrderChange">
 	      <tr>
+					<th ng-show="edit">Actions</th>
 	        <th name="Username"></th>
 					<th hide show-gt-md name="Admin"></th>
 					<th name="Spaces"></th>
@@ -38,6 +22,7 @@
 	    </thead>
 	    <tbody>
 	      <tr ng-repeat="user in orgUsers" username="{{user.entity.username}}" guid="{{user.metadata.guid}}" ng-click="showTabDialog($event)">
+					<td ng-show="edit">delete</td>
 	        <td>{{user.entity.username}}</td>
 					<td hide show-gt-md>{{user.entity.admin}}</td>
 					<td>
@@ -50,7 +35,7 @@
 	  </table>
 	</md-data-table-container>
 
-	<md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{desserts.total}}" md-trigger="onPaginationChange"></md-data-table-pagination>
+	<md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{orgUsers.length}}" md-trigger="onPaginationChange"></md-data-table-pagination>
 
 
 </div>

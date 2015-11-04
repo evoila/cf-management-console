@@ -33,6 +33,8 @@ angular.module('controllers')
 
       $scope.selected = [];
 
+      $scope.edit = false;
+
       $scope.query = {
         filter: '',
         order: 'name',
