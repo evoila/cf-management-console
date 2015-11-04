@@ -16,7 +16,8 @@
     "ng-clip": "~0.2.6",
     "restangular": "~1.5.1",
     "underscore": "~1.8.3",
-    "angular-material-data-table": "~0.8.14"
+    "angular-material-data-table": "~0.8.14",
+    "angular-environment": "~1.0.3"
   },
   "devDependencies": {
     "angular-material": ">0.10.0"

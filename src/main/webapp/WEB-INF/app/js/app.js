@@ -1,7 +1,27 @@
 angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'controllers', 'directives' ,'services', 'routes',
-    'ngMdIcons', 'ngClipboard', 'restangular','ngAnimate'
+    'ngMdIcons', 'ngClipboard', 'restangular','ngAnimate', 'environment'
   ])
-  .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, RestangularProvider, REST_API) {
+
+  .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, RestangularProvider, REST_API, envServiceProvider) {
+
+    envServiceProvider.config({
+        domains: {
+            development: ['localhost'],
+            production: ['cfmc.88.198.249.62.xip.io']
+        },
+        vars: {
+            development: {
+                restApiUrl: 'http://localhost:8080/cfmc/api/login'
+            },
+            production: {
+                restApiUrl: 'https://cfmc.88.198.249.62.xip.io/api'
+            }
+        }
+    });
+    // run the environment check, so the comprobation is made
+    // before controllers and services are built
+    envServiceProvider.check();
+
     ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");
 
     RestangularProvider.setBaseUrl(REST_API);
@@ -65,7 +85,8 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       .icon("phone", "./..assets/svg/phone.svg", 512);
 
   }).constant('REST_API', 'http://localhost:8080/cfmc/api')
-  .run(function($rootScope, $state, $http, clientCacheService) {
+  .run(function($rootScope, $state, $http, clientCacheService, envService) {
+    console.log('env is ' + envService.get());
 
     $rootScope.forceLogin = function(status) {
       if (status === 401) {
