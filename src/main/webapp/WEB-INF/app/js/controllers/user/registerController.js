@@ -5,8 +5,10 @@
 
 angular.module('controllers')
   .controller('registerController',
-    function RegisterController($scope, $state, $http, responseService, REST_API) {
+    function RegisterController($scope, $state, $http, responseService/*, REST_API*/, envService) {
       $scope.state = $state;
+
+      REST_API = envService.read('restApiUrl');
 
       $scope.register = function(userForm) {
         var head = {

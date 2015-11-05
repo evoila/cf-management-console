@@ -1,30 +1,27 @@
 angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'controllers', 'directives' ,'services', 'routes',
     'ngMdIcons', 'ngClipboard', 'restangular','ngAnimate', 'environment'
   ])
-
-  .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, RestangularProvider, REST_API, envServiceProvider) {
+  .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, RestangularProvider/*, REST_API*/, envServiceProvider) {
 
     envServiceProvider.config({
         domains: {
-            development: ['localhost'],
+            development: ['localhost', '127.0.0.1'],
             production: ['cfmc.88.198.249.62.xip.io']
         },
         vars: {
             development: {
-                restApiUrl: 'http://localhost:8080/cfmc/api/login'
+                restApiUrl: 'http://localhost:8080/cfmc/api'
             },
             production: {
                 restApiUrl: 'https://cfmc.88.198.249.62.xip.io/api'
             }
         }
     });
-    // run the environment check, so the comprobation is made
-    // before controllers and services are built
     envServiceProvider.check();
 
     ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");
 
-    RestangularProvider.setBaseUrl(REST_API);
+    //RestangularProvider.setBaseUrl(REST_API);
 
     /*  RestangularProvider.setErrorInterceptor(function(response, deferred, responseHandler) {
       clientCacheProvider.forceLogin();
@@ -84,9 +81,10 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       .icon("twitter", "./../assets/svg/twitter.svg", 512)
       .icon("phone", "./..assets/svg/phone.svg", 512);
 
-  }).constant('REST_API', 'http://localhost:8080/cfmc/api')
-  .run(function($rootScope, $state, $http, clientCacheService, envService) {
-    console.log('env is ' + envService.get());
+  })//.constant('REST_API', 'http://localhost:8080/cfmc/api')
+
+  .run(function($rootScope, $state, $http, clientCacheService, Restangular, envService) {
+    Restangular.setBaseUrl(envService.read('restApiUrl'));
 
     $rootScope.forceLogin = function(status) {
       if (status === 401) {
@@ -103,6 +101,5 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       console.debug("Force Login will be called, because you user cannot be found")
       $rootScope.forceLogin();
     }
-
 
   });

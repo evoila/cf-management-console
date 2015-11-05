@@ -5,9 +5,11 @@
 
 angular.module('controllers')
   .controller('loginController',
-    function LoginController($scope, $state, $rootScope, Restangular, clientCacheService, $location, $http, responseService, REST_API) {
+    function LoginController($scope, $state, $rootScope, Restangular, clientCacheService, $location, $http, responseService/*, REST_API*/, envService) {
       $scope.state = $state;
       $scope.authenticating = false;
+
+      REST_API = envService.read('restApiUrl');
 
       function transformRequest(obj) {
         var str = [];

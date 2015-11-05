@@ -35,3 +35,4 @@ src/main/webapp/WEB-INF/app/lib/ng-clip
 src/main/webapp/WEB-INF/app/lib/restangular
 src/main/webapp/WEB-INF/app/lib/underscore
 src/main/webapp/WEB-INF/app/lib/zeroclipboard
+src/main/webapp/WEB-INF/app/lib/angular-environment

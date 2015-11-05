@@ -29,7 +29,6 @@ angular.module('controllers')
         Restangular.all('organizations').getList().then(function(data) {
           $scope.organizations = data;
           vm.menu.organization = data[0];
-          console.log(data[0].metadata.guid);
 
           console.debug(data);
 

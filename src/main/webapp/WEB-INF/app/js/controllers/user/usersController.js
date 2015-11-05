@@ -5,7 +5,6 @@
 angular.module('controllers')
   .controller('usersController',
     function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog) {
-
       $scope.state = $state;
       $scope.loading = true;
       $scope.organizationId = $state.params.organizationId;

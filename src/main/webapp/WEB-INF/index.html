@@ -18,9 +18,15 @@
   <link rel="stylesheet" href="assets/ngAnimate.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
+  <style type="text/css">
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+      display: none !important;
+    }
+  </style>
+
 </head>
 
-<body ng-app="cf-management-console" ng-controller="homeController as vm" layout="row">
+<body ng-app="cf-management-console" ng-controller="homeController as vm" layout="row" ng-cloak>
   <div ng-show="isAuthenticated">
     <div layout="row">
       <md-sidenav class="md-sidenav-left md-whiteframe-z1" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
