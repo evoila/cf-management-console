@@ -136,6 +136,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<excludes>
+                    	<exclude>src/main/webapp/WEB-INF/node_modules</exclude>
+                	</excludes>
 					<source>${java-version}</source>
 					<target>${java-version}</target>
 				</configuration>
