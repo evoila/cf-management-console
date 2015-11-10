@@ -1,0 +1,77 @@
+<div flex ng-show="loading" layout="center center" layout-align="space-around">
+	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-hide="loading" layout="column">
+
+  <h3 class="md-title">Edit user {{state.params.user.entity.username}}</h3>
+
+  <div layout="row" layout-wrap>
+
+    <!-- MANAGED CONTENT -->
+    <md-card id="managedContent" flex="100" flex-gt-md="45">
+
+      <md-toolbar>
+        <div class="md-toolbar-tools">Managed Content</div>
+      </md-toolbar>
+
+      <md-content id="managedOrgs" class="md-padding autocomplete" layout="column">
+        <h4>Managed Organizations:</h4>
+        <md-chips ng-model="state.params.user.managedOrgs" md-orgs="queryManagedOrgs($query)" md-require-match="true" filter-selected="filterSelectedOrgs" placeholder="Add Managed Organization">
+          <md-chip-template>
+            <span>
+              <strong>{{$chip.entity.name}}</strong>
+            </span>
+          </md-chip-template>
+        </md-chips>
+      </md-content>
+
+      <md-content id="managedSpaces" class="md-padding autocomplete" layout="column">
+        <h4>Managed Spaces:</h4>
+        <md-chips ng-model="state.params.user.managedSpaces" md-orgs="queryManagedSpaces($query)" md-require-match="true" filter-selected="filterSelectedSpaces" placeholder="Add Managed Spaces">
+          <md-chip-template>
+            <span>
+              <strong>{{$chip.entity.name}}</strong>
+            </span>
+          </md-chip-template>
+        </md-chips>
+      </md-content>
+
+    </md-card>
+    <!-- MANAGED CONTENT / END -->
+
+    <!-- ASSOCIATED CONTENT -->
+    <md-card id="managedContent" flex="100" flex-gt-md="45">
+
+      <md-toolbar style="background-color:#D0711D !important;">
+        <div class="md-toolbar-tools">Associated Content</div>
+      </md-toolbar>
+
+      <md-content id="managedOrgs" class="md-padding autocomplete" layout="column">
+        <h4>Associated Organizations:</h4>
+        <md-chips ng-model="state.params.user.managedOrgs" md-orgs="queryManagedOrgs($query)" md-require-match="true" filter-selected="filterSelected" placeholder="Add Managed Organization">
+          <md-chip-template>
+            <span>
+              <strong>{{$chip.entity.name}}</strong>
+            </span>
+          </md-chip-template>
+        </md-chips>
+      </md-content>
+
+      <md-content id="managedSpaces" class="md-padding autocomplete" layout="column">
+        <h4>Associated Spaces:</h4>
+        <md-chips ng-model="state.params.user.managedSpaces" md-orgs="queryManagedSpaces($query)" md-require-match="true" filter-selected="filterSelected" placeholder="Add Managed Spaces">
+          <md-chip-template>
+            <span>
+              <strong>{{$chip.entity.name}}</strong>
+            </span>
+          </md-chip-template>
+        </md-chips>
+      </md-content>
+
+    </md-card>
+    <!-- ASSOCIATED CONTENT / END -->
+
+  </div>
+
+
+</div>

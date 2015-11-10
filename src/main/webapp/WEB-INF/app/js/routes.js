@@ -53,18 +53,21 @@ angular.module('routes', ['ui.router'])
         templateUrl: 'partials/marketplace/marketplace.html',
         controller: 'marketplaceController'
       })
-      .state('user-create', {
-        url: '/org/:organizationId/user/:userId',
-        templateUrl: 'partials/user/users.html',
-        controller: 'organizationUserController'
-      })
       .state('users', {
         url: '/org/:organizationId/users',
         templateUrl: 'partials/user/user-list.html',
         controller: 'usersController'
       })
+      .state('edit-user', {
+        url: '/org/:organizationId/users/:userId/edit',
+        templateUrl: 'partials/user/edit-user.html',
+        params: {
+          user: null
+        },
+        controller: 'usersController'
+      })
       .state('user-info', {
-        url: '/org/:organizationId/user/:userId/info',
+        url: '/org/:organizationId/users/:userId/info',
         templateUrl: 'partials/user/user-info.html',
         controller: 'userInfoController'
       })

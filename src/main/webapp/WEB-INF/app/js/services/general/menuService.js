@@ -4,8 +4,8 @@ angular.module('services')
   .factory('menu', [
     '$location',
     '$rootScope',
-    function($location) {
-
+    function($location, $scope) {
+      console.log('menu service');
       var organization = {};
 
       var organizations = {
@@ -24,7 +24,7 @@ angular.module('services')
         name: 'Users',
         type: 'link',
         state: 'users',
-        params: { organizationId:'537abdc9-3331-407a-802f-42880cda82e2' },
+        params: {  },
         icon: 'fa fa-group'
       });
 

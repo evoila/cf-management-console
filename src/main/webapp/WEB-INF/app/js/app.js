@@ -2,7 +2,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
     'ngMdIcons', 'ngClipboard', 'restangular','ngAnimate', 'environment'
   ])
   .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, RestangularProvider/*, REST_API*/, envServiceProvider) {
-
+    console.log('config');
     envServiceProvider.config({
         domains: {
             development: ['localhost', '127.0.0.1'],
@@ -84,6 +84,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
   })//.constant('REST_API', 'http://localhost:8080/cfmc/api')
 
   .run(function($rootScope, $state, $http, clientCacheService, Restangular, envService) {
+    console.log('run');
     Restangular.setBaseUrl(envService.read('restApiUrl'));
 
     $rootScope.forceLogin = function(status) {

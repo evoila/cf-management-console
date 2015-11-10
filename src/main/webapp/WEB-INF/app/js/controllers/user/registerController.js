@@ -5,7 +5,7 @@
 
 angular.module('controllers')
   .controller('registerController',
-    function RegisterController($scope, $state, $http, responseService/*, REST_API*/, envService) {
+    function RegisterController($scope, $state, $http, responseService, envService) {
       $scope.state = $state;
 
       REST_API = envService.read('restApiUrl');

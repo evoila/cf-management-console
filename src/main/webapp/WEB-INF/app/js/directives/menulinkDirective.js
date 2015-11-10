@@ -13,6 +13,7 @@ angular.module('directives')
       '');
   }])
   .directive('menuLink', ['menu', function(menu) {
+    console.log('menu link directive');
     return {
       scope: {
         section: '='

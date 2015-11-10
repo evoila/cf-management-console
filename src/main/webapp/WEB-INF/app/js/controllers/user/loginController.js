@@ -5,7 +5,7 @@
 
 angular.module('controllers')
   .controller('loginController',
-    function LoginController($scope, $state, $rootScope, Restangular, clientCacheService, $location, $http, responseService/*, REST_API*/, envService) {
+    function LoginController($scope, $state, $rootScope, Restangular, clientCacheService, $location, $http, responseService, envService) {
       $scope.state = $state;
       $scope.authenticating = false;
 

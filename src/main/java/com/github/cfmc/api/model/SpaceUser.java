@@ -1,7 +1,6 @@
 package com.github.cfmc.api.model;
 
 import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**

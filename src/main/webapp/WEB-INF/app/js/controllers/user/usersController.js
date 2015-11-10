@@ -4,11 +4,12 @@
 
 angular.module('controllers')
   .controller('usersController',
-    function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog) {
+    function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
+      console.log('user controller');
       $scope.state = $state;
       $scope.loading = true;
-      $scope.organizationId = $state.params.organizationId;
       $scope.blockInput = true;
+      $scope.readonly = true;
 
       var containsUser = function(spaceUsers, orgUser) {
         for (var i = 0; i < spaceUsers.length; i++) {
@@ -20,76 +21,87 @@ angular.module('controllers')
         return false;
       };
 
+      $scope.orgId = menu.organization.metadata.guid;
 
-      Restangular.one('orgUsers', $state.params.organizationId).get().then(function(orgUsers) {
+
+      Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
+        angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
+          var managedOrgsUrl = orgUser.entity.managed_organizations_url.replace('/v2', '');
+          var managedSpacesUrl = orgUser.entity.managed_spaces_url.replace('/v2', '');
+
+          $scope.getManagedOrgsForUser(orgUser, managedOrgsUrl);
+          $scope.getManagedSpacesForUser(orgUser, managedSpacesUrl);
+        });
         $scope.orgUsers = orgUsers;
         $scope.loading = false;
       });
 
+      $scope.getManagedOrgsForUser = function(orgUser, managedOrgsUrl) {
+        Restangular.one(managedOrgsUrl).get().then(function(managedOrgs) {
+          orgUser.managedOrgs = managedOrgs;
+        })
+      }
+      $scope.getManagedSpacesForUser = function(orgUser, managedSpacesUrl) {
+        Restangular.one(managedSpacesUrl).get().then(function(managedSpaces) {
+          orgUser.managedSpaces = managedSpaces;
+        })
+      }
 
 
-      /* TABLE */
-
-      $scope.selected = [];
-
-      $scope.edit = false;
-
-      $scope.query = {
-        filter: '',
-        order: 'name',
-        limit: 15,
-        page: 1
-      };
-
-      // in the future we may see a few built in alternate headers but in the mean time
-      // you can implement your own search header and do something like
-      /*
-      $scope.search = function (predicate) {
-        $scope.filter = predicate;
-        $scope.deferred = $nutrition.desserts.get($scope.query, success).$promise;
-      };
-
-      $scope.onOrderChange = function (order) {
-        return $nutrition.desserts.get($scope.query, success).$promise;
-      };
-
-      $scope.onPaginationChange = function (page, limit) {
-        return $nutrition.desserts.get($scope.query, success).$promise;
-      };
-      */
 
 
-      /* DIALOG */
 
-      $scope.showTabDialog = function(ev) {
+
+      $scope.showCreateUserDialog = function(ev) {
         $mdDialog.show({
-          controller: DialogController,
-          templateUrl: 'partials/user/user-detail-dialog.html',
+          controller: UsersController,
+          templateUrl: 'partials/user/create-user-dialog.html',
           parent: angular.element(document.body),
           targetEvent: ev,
-          resolve: { username: function () { return ev.currentTarget.attributes.username.value; } },
-          clickOutsideToClose:true
+          //resolve: { username: function () { return ev.currentTarget.attributes.username.value; } },
+          clickOutsideToClose:false
         })
       };
 
+      $scope.test = function() {
+        alert('test');
+      }
 
-      function DialogController($scope, $mdDialog, username) {
-        $scope.username = username;
+      $scope.submitCreateUserForm = function(form) {
+        console.log('Submitting: ' + form.username + ', ' + form.firstname + ', ' + form.lastname + ', ' + form.password);
+          $scope.processingSubmit = true;
 
-        $scope.hide = function() {
+            // rest: Create User
+          Restangular.one('users').customPOST(undefined, undefined,({  username: form.username, firstName: form.firstname, lastName: form.lastname, password: form.password}),undefined).then(function(response) {
+            var createdUserId = response.metadata.guid;
+
+            // add new user to orga
+            Restangular.one('users', createdUserId).one('organizations', $state.params.organizationId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response){
+
+            }, function(response) {
+              console.log('error add to org');
+              console.log(response);
+            })
+            //$state.go($state.current, {}, {reload: true});
+
+          }, function(response) {
+              console.log('error create user');
+              console.log(response);
+          });
+
+          $scope.processingSubmit = false;
           $mdDialog.hide();
-        };
-
-        $scope.cancel = function() {
-          $mdDialog.cancel();
-        };
       };
 
 
 
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
 
-
-
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
 
 
 

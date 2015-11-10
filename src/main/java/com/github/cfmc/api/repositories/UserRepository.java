@@ -100,10 +100,10 @@ public class UserRepository extends RestRepository {
         return (String) infoResponse.getBody().get("authorization_endpoint");
     }
 
-    public void registerUser(String username, String firstName, String lastName, String password) {
+    public Map<String, Object> registerUser(String token, String username, String firstName, String lastName, String password) {    	
         String accessToken = getAccessToken(clientId, clientSecret);
         String userId = uaaCreateUser(accessToken, username, firstName, lastName, password);
-        apiCreateUser(accessToken, userId);
+        return apiCreateUser(token, userId).getBody();
     }
 
     private String getAccessToken(String clientId, String clientSecret) {
@@ -115,6 +115,8 @@ public class UserRepository extends RestRepository {
         MultiValueMap<String, String> model = new LinkedMultiValueMap();
         model.add("grant_type", "client_credentials");
         model.add("response_type", "token");
+        model.add("client_id", "admin");
+
 
         try {            
 			ResponseEntity<Map<String, Object>> tokenResponse = restTemplate.exchange(uaaBaseUri.concat("oauth/token"), HttpMethod.POST, 
@@ -132,6 +134,8 @@ public class UserRepository extends RestRepository {
     }
 
     private String uaaCreateUser(String accessToken, String username, String firstName, String lastName, String password) {
+    	String userId = null;
+    	
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json;charset=utf-8");
         httpHeaders.add("Accept", "application/json;charset=utf-8");
@@ -156,13 +160,14 @@ public class UserRepository extends RestRepository {
             if (!createUserResponse.getStatusCode().equals(HttpStatus.CREATED)) {
                 throw new RepositoryException("Unable to create user in uaa", createUserResponse);
             }
-            return evalToString("id", createUserResponse.getBody());
+            userId = evalToString("id", createUserResponse.getBody());
+            return userId;
         } catch (HttpClientErrorException e) {
             throw new RepositoryException("Unable to create user in uaa", new ResponseEntity(e.getResponseBodyAsString(), e.getStatusCode()));
         }
     }
 
-    private void apiCreateUser(String accessToken, String userId) {
+    private ResponseEntity<Map<String, Object>> apiCreateUser(String accessToken, String userId) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json;charset=utf-8");
         httpHeaders.add("Accept", "application/json;charset=utf-8");
@@ -176,6 +181,8 @@ public class UserRepository extends RestRepository {
             if (!createUserResponse.getStatusCode().equals(HttpStatus.CREATED)) {
                 throw new RepositoryException("Unable to create user using api", createUserResponse);
             }
+            return createUserResponse;
+            
         } catch (HttpClientErrorException e) {
             throw new RepositoryException("Unable to create user using api", new ResponseEntity(e.getResponseBodyAsString(), e.getStatusCode()));
         }

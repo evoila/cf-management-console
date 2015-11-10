@@ -5,6 +5,7 @@
 angular.module('controllers')
   .controller('homeController',
     function HomeController($scope, $state, Restangular, $location, $mdSidenav, $rootScope, clientCacheService, $mdSidenav, menu) {
+      console.log('home controller');
       $scope.state = $state;
 
       var vm = this;
