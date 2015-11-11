@@ -4,8 +4,7 @@
 
 angular.module('controllers')
   .controller('homeController',
-    function HomeController($scope, $state, Restangular, $location, $mdSidenav, $rootScope, clientCacheService, $mdSidenav, menu) {
-      console.log('home controller');
+    function HomeController($scope, $state, Restangular, $location, $mdSidenav, $rootScope, clientCacheService, $mdSidenav, menu) {      
       $scope.state = $state;
 
       var vm = this;
@@ -21,7 +20,6 @@ angular.module('controllers')
       };
 
       $rootScope.isAuthenticated = clientCacheService.isAuthenticated();
-      console.debug($scope.isAuthenticated)
       if (!clientCacheService.isAuthenticated()) {
         if ($location.path() != '/login' && $location.path() != '/register') {
           $location.path('/login');
@@ -31,13 +29,10 @@ angular.module('controllers')
           $scope.organizations = data;
           vm.menu.organization = data[0];
 
-          console.debug(data);
-
           orgsToMenu(data);
 
           usersToMenu();
 
-          console.log("before statechange");
           $state.go('spaces', {
             organizationId: data[0].metadata.guid
           })
@@ -58,7 +53,6 @@ angular.module('controllers')
 
       /*Adds all organisations to the menu*/
       function orgsToMenu(organizations) {
-        console.log(organizations.length);
         vm.menu.organizations.name = 'Organisations ('+organizations.length+')';
         vm.menu.organizations.pages = [];
         angular.forEach (organizations, function(orga, key) {
@@ -73,6 +67,7 @@ angular.module('controllers')
       }
 
       function spacesToMenu(orga,spaces) {
+        console.log("josifjfiojsdfiojdifoj")
         menu.sections[0].pages = [];
         angular.forEach (spaces, function(space, key) {
 

@@ -4,7 +4,8 @@ angular.module('services')
   .factory('menu', [
     '$location',
     '$rootScope',
-    function($location, $scope) {
+    '$state',
+    function($location, $scope, $state) {
       console.log('menu service');
       var organization = {};
 
@@ -24,7 +25,7 @@ angular.module('services')
         name: 'Users',
         type: 'link',
         state: 'users',
-        params: {  },
+        params: {},
         icon: 'fa fa-group'
       });
 
@@ -42,6 +43,7 @@ angular.module('services')
         icon: 'fa fa-group'
       });
 
+      /**
       sections.push({
         name: 'Routes',
         type: 'link',
@@ -55,7 +57,8 @@ angular.module('services')
         state: 'users',
         icon: 'fa fa-group'
       });
-
+      **/
+      
       var self;
 
       return self = {

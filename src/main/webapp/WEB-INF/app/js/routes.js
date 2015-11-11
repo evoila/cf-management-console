@@ -29,37 +29,37 @@ angular.module('routes', ['ui.router'])
         controller: 'organizationController'
       })
       .state('spaces', {
-        url: "/org/:organizationId/spaces",
+        url: "/orgs/:organizationId/spaces",
         templateUrl: "partials/space/space-list.html",
         controller: 'spacesController',
       })
       .state('space', {
-        url: "/org/:organizationId/spaces/:spaceId",
+        url: "/orgs/:organizationId/spaces/:spaceId",
         templateUrl: "partials/space/space.html",
         controller: 'spaceController',
       })
       .state('space-create', {
-        url: '/org/:organizationId/spaces/create',
+        url: '/orgs/:organizationId/spaces/create',
         templateUrl: 'partials/space/space-create.html',
         controller: 'spaceController'
       })
       .state('space-settings', {
-        url: '/org/:organizationId/spaces/:spaceId/settings',
+        url: '/orgs/:organizationId/spaces/:spaceId/settings',
         templateUrl: 'partials/space/space-settings.html',
         controller: 'spaceController'
       })
       .state('marketplace', {
-        url: '/org/:organizationId/marketplace',
+        url: '/orgs/:organizationId/marketplace',
         templateUrl: 'partials/marketplace/marketplace.html',
         controller: 'marketplaceController'
       })
       .state('users', {
-        url: '/org/:organizationId/users',
+        url: '/orgs/:organizationId/users',
         templateUrl: 'partials/user/user-list.html',
         controller: 'usersController'
       })
       .state('edit-user', {
-        url: '/org/:organizationId/users/:userId/edit',
+        url: '/orgs/:organizationId/users/:userId/edit',
         templateUrl: 'partials/user/edit-user.html',
         params: {
           user: null
@@ -67,7 +67,7 @@ angular.module('routes', ['ui.router'])
         controller: 'usersController'
       })
       .state('user-info', {
-        url: '/org/:organizationId/users/:userId/info',
+        url: '/orgs/:organizationId/users/:userId/info',
         templateUrl: 'partials/user/user-info.html',
         controller: 'userInfoController'
       })
