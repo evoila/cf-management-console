@@ -9,7 +9,13 @@ angular.module('controllers')
       $scope.state = $state;
       $scope.loading = true;
       $scope.blockInput = true;
-      $scope.readonly = true;
+
+      this.filterManOrgs = true;
+      this.filterManSpaces = true;
+      this.filterAssocOrgs = true;
+      this.filterAssocSpaces = true;
+
+
 
       var containsUser = function(spaceUsers, orgUser) {
         for (var i = 0; i < spaceUsers.length; i++) {
@@ -21,16 +27,19 @@ angular.module('controllers')
         return false;
       };
 
+
       $scope.orgId = menu.organization.metadata.guid;
 
-
       Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
+        $scope.loading = true;
         angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
           var managedOrgsUrl = orgUser.entity.managed_organizations_url.replace('/v2', '');
           var managedSpacesUrl = orgUser.entity.managed_spaces_url.replace('/v2', '');
+          var spacesUrl = orgUser.entity.spaces_url.replace('/v2', '');
 
           $scope.getManagedOrgsForUser(orgUser, managedOrgsUrl);
           $scope.getManagedSpacesForUser(orgUser, managedSpacesUrl);
+          $scope.getSpacesForUser(orgUser, spacesUrl);
         });
         $scope.orgUsers = orgUsers;
         $scope.loading = false;
@@ -41,9 +50,23 @@ angular.module('controllers')
           orgUser.managedOrgs = managedOrgs;
         })
       }
+      // only show spaces of current organization
       $scope.getManagedSpacesForUser = function(orgUser, managedSpacesUrl) {
         Restangular.one(managedSpacesUrl).get().then(function(managedSpaces) {
-          orgUser.managedSpaces = managedSpaces;
+          orgUser.managedSpaces = [];
+          managedSpaces.forEach(function(space) {
+            if(space.entity.organization_guid == $scope.orgId)
+              orgUser.managedSpaces.push(space);
+          })
+        })
+      }
+      $scope.getSpacesForUser = function(orgUser, spacesUrl) {
+        Restangular.one(spacesUrl).get().then(function(spaces) {
+          orgUser.spaces = [];
+          spaces.forEach(function(space) {
+            if(space.entity.organization_guid == $scope.orgId)
+              orgUser.spaces.push(space);
+          })
         })
       }
 
@@ -52,6 +75,45 @@ angular.module('controllers')
 
 
 
+
+
+
+      $scope.switchToEditUser = function(user) {
+        $scope.loading = true;
+
+        Restangular.one('organizations', $scope.orgId).all('spaces').getList().then(function(data) {
+          $state.go('edit-user', {organizationId : $scope.orgId, userId : user.metadata.guid, user : user, spaces : data});
+        });
+      }
+
+
+
+      $scope.queryManagedOrgs = function(query) {
+        var results = query ?
+          $scope.contacts.filter(createFilterFor(query)) : [];
+        return results;
+      }
+
+      var createFilterFor = function(query) {
+        var lowercaseQuery = angular.lowercase(query);
+
+        return function filterFn(contact) {
+          return (contact._lowername.indexOf(lowercaseQuery) != -1);;
+        };
+      }
+
+
+
+
+
+
+
+      /*
+       *  Dialog for
+       *
+       *  Create new user
+       *
+       */
       $scope.showCreateUserDialog = function(ev) {
         $mdDialog.show({
           controller: UsersController,
@@ -62,10 +124,6 @@ angular.module('controllers')
           clickOutsideToClose:false
         })
       };
-
-      $scope.test = function() {
-        alert('test');
-      }
 
       $scope.submitCreateUserForm = function(form) {
         console.log('Submitting: ' + form.username + ', ' + form.firstname + ', ' + form.lastname + ', ' + form.password);
@@ -93,8 +151,6 @@ angular.module('controllers')
           $mdDialog.hide();
       };
 
-
-
       $scope.hide = function() {
         $mdDialog.hide();
       };
@@ -102,6 +158,13 @@ angular.module('controllers')
       $scope.cancel = function() {
         $mdDialog.cancel();
       };
+
+
+
+
+
+
+
 
 
 

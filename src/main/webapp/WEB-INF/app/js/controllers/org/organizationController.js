@@ -18,12 +18,12 @@ angular.module('controllers')
           console.log("createOrganization was clicked");
 
         var user = clientCacheService.getUser();
-        var orgnisationContent = {
+        var organisationContent = {
           'name': organizationForm.name,
           'user_guids': [user.id],
           'manager_guids': [user.id]
         };
-        Restangular.all('organizations').post(orgnisationContent).then(function(organization) {
+        Restangular.all('organizations').post(organisationContent).then(function(organization) {
 
           var spaceContent = {
             'organization_guid': organization.metadata.guid,

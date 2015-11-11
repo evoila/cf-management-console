@@ -81,6 +81,19 @@ public class UserController {
     	return managedSpaces.getResources();
     }
     
+    @RequestMapping(value = "/users/{userId}/spaces", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<Space>> getSpacesForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId) {
+    	CloudFoundryResources<Space> managedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/spaces"), 2);
+    	return managedSpaces.getResources();
+    }
+    
+    @RequestMapping(value = "/users/{userId}/spaces/{spaceId}", method = RequestMethod.PUT)
+    public @ResponseBody CloudFoundryResource<OrganizationUser> addUserToSpace(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+    	return restRepository.update(token, V2_USERS.concat(userId).concat("/spaces/").concat(spaceId), orgUserDummy);
+    }
+    
     
     
     

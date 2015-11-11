@@ -1,13 +1,115 @@
 <div flex ng-show="loading" layout="center center" layout-align="space-around">
 	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
 </div>
-<div ng-hide="loading" layout="column">
+<div ng-hide="loading" layout="column" ng-controller="editUserController as ctrl">
 
-  <h3 class="md-title">Edit user {{state.params.user.entity.username}}</h3>
+	<div>
+  <span class="md-title">Edit user {{state.params.user.entity.username}}</span>
+	<div ng-show="ctrl.edited" style="display:inline-block;">
+		<button class="md-button md-default-theme" style="margin-left:10px;text-transform:none;">
+			<i class="no-focus fa fa-check fa-lg" style="color:green;"></i><span style="margin-left:5px;">Apply changes</span>
+		</button>
+		<button class="md-button md-default-theme" style="margin-left:10px;text-transform:none;" ng-click="">
+			<i class="no-focus fa fa-close fa-lg" style="color:red;"></i><span style="margin-left:5px;">Discard changes</span>
+		</button>
+	</div>
 
   <div layout="row" layout-wrap>
 
-    <!-- MANAGED CONTENT -->
+
+		<!-- ASSOCIATED CONTENT -->
+    <md-card id="associatedContent" flex="100" flex-gt-md="45">
+
+      <md-toolbar style="background-color:#D0711D !important;">
+        <div class="md-toolbar-tools">Associated Content</div>
+      </md-toolbar>
+
+	  	<md-content class="md-padding autocomplete" layout="column">
+				<h4>Associated Spaces:</h4>
+
+				<md-chips ng-model="ctrl.selectedSpaces" md-autocomplete-snap="" md-require-match="ctrl.spacesRequireMatch">
+		      <md-autocomplete md-autoselect="true" md-selected-item="ctrl.selectedSpace" md-search-text="ctrl.searchSpaceText" md-items="item in ctrl.querySpaceSearch(ctrl.searchSpaceText)" md-item-text="item.name" placeholder="Add/Remove spaces">
+		        <span md-highlight-text="ctrl.searchSpaceText">{{item.name}}</span>
+		      </md-autocomplete>
+		      <md-chip-template>
+		        <span>
+		          <strong>{{$chip.name}}</strong>
+		        </span>
+		      </md-chip-template>
+		    </md-chips>
+
+	  	</md-content>
+
+			<md-content class="md-padding autocomplete" layout="column">
+				<h4>Associated Organizations:</h4>
+
+				<md-chips ng-model="ctrl.selectedSpaces" md-autocomplete-snap="" md-require-match="ctrl.spacesRequireMatch">
+		      <md-autocomplete md-autoselect="true" md-selected-item="ctrl.selectedSpace" md-search-text="ctrl.searchSpaceText" md-items="item in ctrl.querySpaceSearch(ctrl.searchSpaceText)" md-item-text="item.name" placeholder="Add/Remove spaces">
+		        <span md-highlight-text="ctrl.searchSpaceText">{{item.name}}</span>
+		      </md-autocomplete>
+		      <md-chip-template>
+		        <span>
+		          <strong>{{$chip.name}}</strong>
+		        </span>
+		      </md-chip-template>
+		    </md-chips>
+
+	  	</md-content>
+
+		</md-card>
+		<!-- ASSOCIATED CONTENT / END -->
+
+
+
+		<!-- Managed CONTENT -->
+    <md-card id="associatedContent" flex="100" flex-gt-md="45">
+
+      <md-toolbar>
+        <div class="md-toolbar-tools">Managed Content</div>
+      </md-toolbar>
+
+	  	<md-content class="md-padding autocomplete" layout="column">
+				<h4>Managed Spaces:</h4>
+
+				<md-chips ng-model="ctrl.selectedSpaces" md-autocomplete-snap="" md-require-match="ctrl.spacesRequireMatch">
+		      <md-autocomplete md-autoselect="true" md-selected-item="ctrl.selectedSpace" md-search-text="ctrl.searchSpaceText" md-items="item in ctrl.querySpaceSearch(ctrl.searchSpaceText)" md-item-text="item.name" placeholder="Add/Remove spaces">
+		        <span md-highlight-text="ctrl.searchSpaceText">{{item.name}}</span>
+		      </md-autocomplete>
+		      <md-chip-template>
+		        <span>
+		          <strong>{{$chip.name}}</strong>
+		        </span>
+		      </md-chip-template>
+		    </md-chips>
+
+	  	</md-content>
+
+			<md-content class="md-padding autocomplete" layout="column">
+				<h4>Managed Organizations:</h4>
+
+				<md-chips ng-model="ctrl.selectedSpaces" md-autocomplete-snap="" md-require-match="ctrl.spacesRequireMatch">
+		      <md-autocomplete md-autoselect="true" md-selected-item="ctrl.selectedSpace" md-search-text="ctrl.searchSpaceText" md-items="item in ctrl.querySpaceSearch(ctrl.searchSpaceText)" md-item-text="item.name" placeholder="Add/Remove spaces">
+		        <span md-highlight-text="ctrl.searchSpaceText">{{item.name}}</span>
+		      </md-autocomplete>
+		      <md-chip-template>
+		        <span>
+		          <strong>{{$chip.name}}</strong>
+		        </span>
+		      </md-chip-template>
+		    </md-chips>
+
+	  	</md-content>
+
+		</md-card>
+		<!-- Managed CONTENT / END -->
+
+
+
+
+
+
+
+    <!-- MANAGED CONTENT
     <md-card id="managedContent" flex="100" flex-gt-md="45">
 
       <md-toolbar>
@@ -16,18 +118,28 @@
 
       <md-content id="managedOrgs" class="md-padding autocomplete" layout="column">
         <h4>Managed Organizations:</h4>
-        <md-chips ng-model="state.params.user.managedOrgs" md-orgs="queryManagedOrgs($query)" md-require-match="true" filter-selected="filterSelectedOrgs" placeholder="Add Managed Organization">
+        <md-chips ng-model="state.params.user.managedOrgs" md-state-params-user-managedOrgs="queryManagedOrgs($query)" md-require-match="true" filter-selected="filterManOrgs" placeholder="Add Managed Organization">
           <md-chip-template>
             <span>
               <strong>{{$chip.entity.name}}</strong>
             </span>
           </md-chip-template>
+
+					<div>
+						<span ng-repeat="org in organizations"><span>{{org.entity.name}} </span></span>
+					</div>
+
         </md-chips>
+
+				<div>
+					<span ng-repeat="org in organizations"><span>{{org.entity.name}} </span></span>
+				</div>
+
       </md-content>
 
       <md-content id="managedSpaces" class="md-padding autocomplete" layout="column">
         <h4>Managed Spaces:</h4>
-        <md-chips ng-model="state.params.user.managedSpaces" md-orgs="queryManagedSpaces($query)" md-require-match="true" filter-selected="filterSelectedSpaces" placeholder="Add Managed Spaces">
+        <md-chips ng-model="state.params.user.managedSpaces" md-orgs="queryManagedSpaces($query)" md-require-match="true" filter-selected="filterManSpaces" placeholder="Add Managed Spaces">
           <md-chip-template>
             <span>
               <strong>{{$chip.entity.name}}</strong>
@@ -37,10 +149,11 @@
       </md-content>
 
     </md-card>
-    <!-- MANAGED CONTENT / END -->
+    MANAGED CONTENT / END -->
 
-    <!-- ASSOCIATED CONTENT -->
-    <md-card id="managedContent" flex="100" flex-gt-md="45">
+
+    <!-- ASSOCIATED CONTENT
+    <md-card id="associatedContent" flex="100" flex-gt-md="45">
 
       <md-toolbar style="background-color:#D0711D !important;">
         <div class="md-toolbar-tools">Associated Content</div>
@@ -48,7 +161,7 @@
 
       <md-content id="managedOrgs" class="md-padding autocomplete" layout="column">
         <h4>Associated Organizations:</h4>
-        <md-chips ng-model="state.params.user.managedOrgs" md-orgs="queryManagedOrgs($query)" md-require-match="true" filter-selected="filterSelected" placeholder="Add Managed Organization">
+        <md-chips ng-model="state.params.user.managedOrgs" md-orgs="queryAssocOrgs($query)" md-require-match="true" filter-selected="filterAssocOrgs" placeholder="Add Managed Organization">
           <md-chip-template>
             <span>
               <strong>{{$chip.entity.name}}</strong>
@@ -59,7 +172,7 @@
 
       <md-content id="managedSpaces" class="md-padding autocomplete" layout="column">
         <h4>Associated Spaces:</h4>
-        <md-chips ng-model="state.params.user.managedSpaces" md-orgs="queryManagedSpaces($query)" md-require-match="true" filter-selected="filterSelected" placeholder="Add Managed Spaces">
+        <md-chips ng-model="state.params.user.managedSpaces" md-orgs="queryManagedSpaces($query)" md-require-match="true" filter-selected="filterAssocSpaces" placeholder="Add Managed Spaces">
           <md-chip-template>
             <span>
               <strong>{{$chip.entity.name}}</strong>
@@ -69,7 +182,8 @@
       </md-content>
 
     </md-card>
-    <!-- ASSOCIATED CONTENT / END -->
+    ASSOCIATED CONTENT / END -->
+
 
   </div>
 

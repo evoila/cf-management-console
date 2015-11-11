@@ -2,41 +2,6 @@
 	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
 </div>
 <div ng-hide="loading" layout="column">
-	<!--
-	<md-data-table-toolbar>
-  	<h2 class="md-title">Users of {{vm.menu.organization.entity.name}}</h2>
-		<button class="md-icon-button md-button md-default-theme">
-			<i class="fa fa-plus fa-lg" style="color:green;"><md-tooltip>Create User</md-tooltip></i>
-		</button>
-	</md-data-table-toolbar>
-
-	<md-data-table-container>
-	  <table md-data-table md-progress="deferred">
-	    <thead md-order="query.order" md-trigger="onOrderChange">
-	      <tr>
-					<th ng-show="edit">Actions</th>
-	        <th name="Username"></th>
-					<th hide show-gt-md name="Admin"></th>
-					<th name="Spaces"></th>
-	      </tr>
-	    </thead>
-	    <tbody>
-	      <tr ng-repeat="user in orgUsers" username="{{user.entity.username}}" guid="{{user.metadata.guid}}" ng-click="showTabDialog($event)">
-					<td ng-show="edit">delete</td>
-	        <td>{{user.entity.username}}</td>
-					<td hide show-gt-md>{{user.entity.admin}}</td>
-					<td>
-						<md-select ng-model="user.entity.spaces" placeholder="{{user.entity.spaces.length}}">
-    					<md-option ng-value="s.metadata.guid" ng-repeat="s in user.entity.spaces">{{s.entity.name}}</md-option>
-  					</md-select>
-					</td>
-	      </tr>
-	    </tbody>
-	  </table>
-	</md-data-table-container>
-
-	<md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{orgUsers.length}}" md-trigger="onPaginationChange"></md-data-table-pagination>
-	-->
 
 	<md-list id="orgUserList">
     <span class="md-title">Users of {{vm.menu.organization.entity.name}}</span>
@@ -59,7 +24,8 @@
 							<h4>Details:</h4>
 							<p>Managed Organizations: {{user.managedOrgs.length}}</p>
 							<p>Managed Spaces: {{user.managedSpaces.length}}</p>
-							<button class="md-icon-button md-button md-default-theme" style="margin-left:0;width:auto;" ng-click="state.go('edit-user', {organizationId : orgId, userId : user.metadata.guid, user : user})">
+							<p>Spaces: {{user.spaces.length}}</p>
+							<button class="md-icon-button md-button md-default-theme" style="margin-left:0;width:auto;" ng-click="switchToEditUser(user)">
 								<i class="fa fa-pencil" style="padding-right:6px;"></i> Edit
 							</button>
 
@@ -70,8 +36,5 @@
 		<md-divider></md-divider>
     </md-list-item>
 	</md-list>
-
-
-
 
 </div>
