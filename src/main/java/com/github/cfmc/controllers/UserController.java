@@ -139,7 +139,26 @@ public class UserController {
     	CloudFoundryResources<Space> managedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/managed_spaces"), 2);
     	return managedSpaces.getResources();
     }
+    @RequestMapping(value = "/users/{userId}/managed_spaces/{spaceId}", method = RequestMethod.PUT)
+	public @ResponseBody CloudFoundryResource<OrganizationUser> setManagedSpaceForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+		return restRepository.update(token, V2_USERS.concat(userId).concat("/managed_spaces/").concat(spaceId), orgUserDummy);
+    }
+    @RequestMapping(value = "/users/{userId}/managed_spaces/{spaceId}", method = RequestMethod.DELETE)
+	public void removeManagedSpaceForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId) {
+		restRepository.delete(token, V2_USERS.concat(userId).concat("/managed_spaces"), spaceId);
+    }
     
+    /*
+     * 	Audited Spaces
+     */
+    @RequestMapping(value = "/users/{userId}/audited_spaces", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<Space>> getAuditedSpacesForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId) {
+    	CloudFoundryResources<Space> auditedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/audited_spaces"), 2);
+    	return auditedSpaces.getResources();
+    }
     
     
     /*

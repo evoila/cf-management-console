@@ -10,59 +10,30 @@ angular.module('controllers')
       $scope.loading = true;
       $scope.blockInput = true;
 
-      this.filterManOrgs = true;
-      this.filterManSpaces = true;
-      this.filterAssocOrgs = true;
-      this.filterAssocSpaces = true;
-
-
-
-      var containsUser = function(spaceUsers, orgUser) {
-        for (var i = 0; i < spaceUsers.length; i++) {
-          var spaceUser = spaceUsers[i];
-          if (orgUser.id === spaceUser.id) {
-            return true;
-          }
-        }
-        return false;
-      };
-
-
       $scope.orgId = menu.organization.metadata.guid;
 
       Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
         angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
-          var managedOrgsUrl = orgUser.entity.managed_organizations_url.replace('/v2', '');
-          var managedSpacesUrl = orgUser.entity.managed_spaces_url.replace('/v2', '');
+
           var spacesUrl = orgUser.entity.spaces_url.replace('/v2', '');
-          var billingManagedOrgsUrl = orgUser.entity.billing_managed_organizations_url.replace('/v2', '');
-          var auditedOrgsUrl = orgUser.entity.audited_organizations_url.replace('/v2', '');
-
-          $scope.getManagedOrgsForUser(orgUser, managedOrgsUrl);
-          $scope.getManagedSpacesForUser(orgUser, managedSpacesUrl);
           $scope.getSpacesForUser(orgUser, spacesUrl);
-          $scope.getBillingManagedOrgsForUser(orgUser, billingManagedOrgsUrl);
-          $scope.getAuditedOrgsForUser(orgUser, auditedOrgsUrl);
 
+          orgUser.isOrgManager = false;
+          orgUser.entity.managed_organizations.forEach(function(org) {
+            if(org.metadata.guid == $scope.orgId)
+              orgUser.isOrgManager = true;
+          })
+
+          orgUser.billingManagedOrgs = orgUser.entity.billing_managed_organizations;
+          orgUser.auditedOrgs = orgUser.entity.audited_organizations;
+
+          orgUser.managedSpaces = orgUser.entity.managed_spaces;
+          orgUser.auditedSpaces = orgUser.entity.audited_spaces;
         });
         $scope.orgUsers = orgUsers;
         $scope.loading = false;
       });
 
-      $scope.getManagedOrgsForUser = function(orgUser, managedOrgsUrl) {
-        Restangular.one(managedOrgsUrl).get().then(function(managedOrgs) {
-          orgUser.managedOrgs = managedOrgs;
-        })
-      }
-      $scope.getManagedSpacesForUser = function(orgUser, managedSpacesUrl) {
-        Restangular.one(managedSpacesUrl).get().then(function(managedSpaces) {
-          orgUser.managedSpaces = [];
-          managedSpaces.forEach(function(space) {
-            if(space.entity.organization_guid == $scope.orgId)
-              orgUser.managedSpaces.push(space);
-          })
-        })
-      }
       $scope.getSpacesForUser = function(orgUser, spacesUrl) {
         Restangular.one(spacesUrl).get().then(function(spaces) {
           orgUser.spaces = [];
@@ -72,52 +43,14 @@ angular.module('controllers')
           })
         })
       }
-      $scope.getBillingManagedOrgsForUser = function(orgUser, billingManagedOrgsUrl) {
-        Restangular.one(billingManagedOrgsUrl).get().then(function(billingManagedOrgs) {
-          orgUser.billingManagedOrgs = billingManagedOrgs;
-        })
-      }
-      $scope.getAuditedOrgsForUser = function(orgUser, auditedOrgsUrl) {
-        Restangular.one(auditedOrgsUrl).get().then(function(auditedOrgs) {
-          orgUser.auditedOrgs = auditedOrgs;
-        })
-      }
-
-
-
-
-
-
-
 
       $scope.switchToEditUser = function(user) {
         $scope.loading = true;
 
         Restangular.one('organizations', $scope.orgId).all('spaces').getList().then(function(data) {
-          $state.go('edit-user', {organizationId : $scope.orgId, userId : user.metadata.guid, user : user, spaces : data});
+          $state.go('edit-user', {organizationId : $scope.orgId, userId : user.metadata.guid, user : user});
         });
       }
-
-
-
-      $scope.queryManagedOrgs = function(query) {
-        var results = query ?
-          $scope.contacts.filter(createFilterFor(query)) : [];
-        return results;
-      }
-
-      var createFilterFor = function(query) {
-        var lowercaseQuery = angular.lowercase(query);
-
-        return function filterFn(contact) {
-          return (contact._lowername.indexOf(lowercaseQuery) != -1);;
-        };
-      }
-
-
-
-
-
 
 
       /*

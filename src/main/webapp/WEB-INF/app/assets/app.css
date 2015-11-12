@@ -54,6 +54,26 @@ hr.style-six {
     outline: none;
 }
 
+.orange-bg {
+  background-color: #D0711D !important;
+}
+md-switch.orange.md-checked .md-bar {
+  background-color: #ed8a34 !important;
+}
+md-switch.orange.md-checked .md-thumb {
+  background-color: #D0711D !important;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

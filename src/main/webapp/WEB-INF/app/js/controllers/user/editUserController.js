@@ -8,7 +8,6 @@ angular.module('controllers')
 
     var self = this;
     self.user = $state.params.user;
-    self.user.isOrgManager = checkIfOrgManager();
     self.user.isOrgBillingManager = checkIfOrgBillingManager();
     self.user.isOrgAuditor = checkIfOrgAuditor();
     checkIfSpaceManager();
@@ -102,7 +101,13 @@ angular.module('controllers')
     }
 
     // switch space roles
-
+    $scope.switchSpaceManager = function(space) {
+      var managedSpacesUrl = self.user.entity.managed_spaces_url.replace('/v2', '') + '/';
+      if(space.userIsManager)
+        Restangular.one(managedSpacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
+      else
+          Restangular.one(managedSpacesUrl + space.metadata.guid).remove();
+    }
 
 
 

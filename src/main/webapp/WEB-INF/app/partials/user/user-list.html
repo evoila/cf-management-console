@@ -22,9 +22,7 @@
         		<p><span>GUID: </span>{{ user.metadata.guid }}</p>
 						<div class="hiddenUserInfo" style="margin-top:15px;" ng-show="showDetails">
 							<h4>Details:</h4>
-							<p>Managed Organizations: {{user.managedOrgs.length}}</p>
-							<p>Managed Spaces: {{user.managedSpaces.length}}</p>
-							<p>Spaces: {{user.spaces.length}}</p>
+							<p>Is OrgManager: {{user.isOrgManager}}</p>
 							<button class="md-icon-button md-button md-default-theme" style="margin-left:0;width:auto;" ng-click="switchToEditUser(user)">
 								<i class="fa fa-pencil" style="padding-right:6px;"></i> Edit
 							</button>
