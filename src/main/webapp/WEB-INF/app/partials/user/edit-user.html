@@ -4,12 +4,12 @@
 <div ng-hide="loading" layout="column" ng-controller="editUserController as ctrl">
 
 	<div>
-  <span class="md-title">Edit user {{ctrl.user.entity.username}}</span>
+  <span class="md-title">Edit user {{ctrl.user.entity.username}} in {{orgName}}</span>
 
   <div layout="row" layout-wrap>
 
 		<!-- ORGANIZATION ROLES -->
-    <md-card id="usersOrgRoles" flex="100" flex-gt-md="20">
+    <md-card id="usersOrgRoles" flex="100" flex-gt-md="45" flex-gt-lg="25">
 
       <md-toolbar style="background-color:#D0711D !important;">
         <div class="md-toolbar-tools">Organization Roles</div>
@@ -17,15 +17,15 @@
 
 	  	<md-content class="md-padding" layout="column">
 
-				<md-switch class="md-primary md-block" aria-label="Switch OrgManager" ng-model="ctrl.user.isOrgManager" ng-change="switchOrgManager()">
+				<md-switch class="md-primary md-block" aria-label="Switch Org Manager" ng-model="ctrl.user.isOrgManager" ng-change="switchOrgManager()">
 					Manager
 				</md-switch>
 
-				<md-switch class="md-primary md-block" aria-label="Switch Billing Manager" ng-model="ctrl.user.isOrgBillingManager" ng-change="switchOrgBillingManager()">
+				<md-switch class="md-primary md-block" aria-label="Switch Org Billing Manager" ng-model="ctrl.user.isOrgBillingManager" ng-change="switchOrgBillingManager()">
 					Billing Manager
 				</md-switch>
 
-				<md-switch class="md-primary md-block" aria-label="Switch Auditor" ng-model="ctrl.user.isOrgAuditor" ng-change="switchOrgAuditor()">
+				<md-switch class="md-primary md-block" aria-label="Switch Org Auditor" ng-model="ctrl.user.isOrgAuditor" ng-change="switchOrgAuditor()">
 					Auditor
 				</md-switch>
 
@@ -37,35 +37,38 @@
 
 
 		<!-- SPACES ROLES -->
-    <md-card id="usersSpaceRoles" flex="100" flex-gt-md="75">
+    <md-card id="usersSpaceRoles" flex="100" flex-gt-md="45" flex-gt-lg="70">
 
       <md-toolbar>
         <div class="md-toolbar-tools">Spaces Roles</div>
       </md-toolbar>
 
 	  	<md-content class="md-padding" layout="column">
-				<!--
-				<div flex="100" layout="row">
-					<div flex="30">
-						<md-switch class="md-primary md-block" aria-label="Switch OrgManager" ng-model="isOrgManager">
-    					Manager
-  					</md-switch>
-					</div>
 
-					<div flex="30">
-						<md-switch class="md-primary md-block" aria-label="Switch Billing Manager" ng-model="isBillingManager">
-    					Billing Manager
-  					</md-switch>
-					</div>
+				<md-grid-list md-cols-gt-sm="1" md-cols-gt-lg="3" md-row-height="170px" md-gutter="" md-gutter-gt-sm="">
 
-					<div flex="30">
-						<md-switch class="md-primary md-block" aria-label="Switch Auditor" ng-model="isAuditor">
-    					Auditor
-  					</md-switch>
-					</div>
+					<md-grid-tile ng-repeat="space in ctrl.user.spaces" md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-class="">
 
-				</div>
-			-->
+						<md-content style="width:100%;height:100%;">
+							<span class="md-title">{{space.entity.name}}</span>
+
+							<md-switch class="md-primary md-block" aria-label="Switch Space Manager" ng-model="space.userIsManager" ng-change="">
+								Manager
+							</md-switch>
+
+							<md-switch class="md-primary md-block" aria-label="Switch Space Developer" ng-model="space.userIsDeveloper" ng-change="">
+								Developer
+							</md-switch>
+
+							<md-switch class="md-primary md-block" aria-label="Switch Space Auditor" ng-model="space.userIsAuditor" ng-change="">
+								Auditor
+							</md-switch>
+						</md-content>
+
+    			</md-grid-tile>
+
+				</md-grid-list>
+
 	  	</md-content>
 
 		</md-card>

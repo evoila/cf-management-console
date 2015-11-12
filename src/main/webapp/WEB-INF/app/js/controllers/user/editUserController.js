@@ -3,6 +3,7 @@ angular.module('controllers')
     function EditUserController($scope, $state, menu, Restangular) {
 
     $scope.orgId = menu.organization.metadata.guid;
+    $scope.orgName = menu.organization.entity.name;
     $scope.loading = true;
 
     var self = this;
@@ -10,6 +11,9 @@ angular.module('controllers')
     self.user.isOrgManager = checkIfOrgManager();
     self.user.isOrgBillingManager = checkIfOrgBillingManager();
     self.user.isOrgAuditor = checkIfOrgAuditor();
+    checkIfSpaceManager();
+    checkIfSpaceDeveloper();
+    checkIfSpaceAuditor();
 
 
     // check org roles
@@ -41,6 +45,37 @@ angular.module('controllers')
     }
 
 
+    // check spaces roles
+    function checkIfSpaceManager() {
+      self.user.spaces.forEach(function(space) {
+        space.entity.managers.forEach(function(manager) {
+          space.userIsManager = false;
+          if(manager.metadata.guid == self.user.metadata.guid)
+            space.userIsManager = true;
+        })
+      })
+    }
+
+    function checkIfSpaceDeveloper() {
+      self.user.spaces.forEach(function(space) {
+        space.entity.developers.forEach(function(dev) {
+          space.userIsDeveloper = false;
+          if(dev.metadata.guid == self.user.metadata.guid)
+            space.userIsDeveloper = true;
+        })
+      })
+    }
+
+    function checkIfSpaceAuditor() {
+      self.user.spaces.forEach(function(space) {
+        space.entity.auditors.forEach(function(auditor) {
+          space.userIsAuditor = false;
+          if(auditor.metadata.guid == self.user.metadata.guid)
+            space.userIsAuditor = true;
+        })
+      })
+    }
+
     // switch org roles
     $scope.switchOrgManager = function() {
       var managedOrgsUrl = self.user.entity.managed_organizations_url.replace('/v2', '') + '/';
@@ -66,12 +101,16 @@ angular.module('controllers')
       }
     }
 
+    // switch space roles
 
 
 
-    // check spaces roles
 
-    // apply to switches
+
+
+
+
+
 
 
 

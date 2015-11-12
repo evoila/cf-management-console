@@ -130,10 +130,6 @@ public class UserController {
     }
 	
 	
-	
-	
-	
-	
 	/*
      * 	Managed Spaces
      */
@@ -152,10 +148,10 @@ public class UserController {
     @RequestMapping(value = "/users/{userId}/spaces", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Space>> getSpacesForUser(@RequestHeader("Authorization") final String token, 
     		@PathVariable("userId") final String userId) {
-    	CloudFoundryResources<Space> managedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/spaces"), 2);
-    	return managedSpaces.getResources();
+    	CloudFoundryResources<Space> spaces = restRepository.list(token, V2_USERS.concat(userId).concat("/spaces"), 2);
+    	return spaces.getResources();
     }
-    
+    // entspr. Associate Space with the User -> user wird dann als developer aufgelistet???
     @RequestMapping(value = "/users/{userId}/spaces/{spaceId}", method = RequestMethod.PUT)
     public @ResponseBody CloudFoundryResource<OrganizationUser> addUserToSpace(@RequestHeader("Authorization") final String token, 
     		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {

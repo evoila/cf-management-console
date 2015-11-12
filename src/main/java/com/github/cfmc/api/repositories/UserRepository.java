@@ -103,7 +103,9 @@ public class UserRepository extends RestRepository {
     public Map<String, Object> registerUser(String token, String username, String firstName, String lastName, String password) {    	
         String accessToken = getAccessToken(clientId, clientSecret);
         String userId = uaaCreateUser(accessToken, username, firstName, lastName, password);
-        return apiCreateUser(token, userId).getBody();
+        // TODO: 
+        //return apiCreateUser(token, userId).getBody();
+        return apiCreateUser(accessToken, userId).getBody();
     }
 
     private String getAccessToken(String clientId, String clientSecret) {
