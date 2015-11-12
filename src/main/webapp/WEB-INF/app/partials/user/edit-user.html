@@ -4,104 +4,72 @@
 <div ng-hide="loading" layout="column" ng-controller="editUserController as ctrl">
 
 	<div>
-  <span class="md-title">Edit user {{state.params.user.entity.username}}</span>
-	<div ng-show="ctrl.edited" style="display:inline-block;">
-		<button class="md-button md-default-theme" style="margin-left:10px;text-transform:none;">
-			<i class="no-focus fa fa-check fa-lg" style="color:green;"></i><span style="margin-left:5px;">Apply changes</span>
-		</button>
-		<button class="md-button md-default-theme" style="margin-left:10px;text-transform:none;" ng-click="">
-			<i class="no-focus fa fa-close fa-lg" style="color:red;"></i><span style="margin-left:5px;">Discard changes</span>
-		</button>
-	</div>
+  <span class="md-title">Edit user {{ctrl.user.entity.username}}</span>
 
   <div layout="row" layout-wrap>
 
-
-		<!-- ASSOCIATED CONTENT -->
-    <md-card id="associatedContent" flex="100" flex-gt-md="45">
+		<!-- ORGANIZATION ROLES -->
+    <md-card id="usersOrgRoles" flex="100" flex-gt-md="20">
 
       <md-toolbar style="background-color:#D0711D !important;">
-        <div class="md-toolbar-tools">Associated Content</div>
+        <div class="md-toolbar-tools">Organization Roles</div>
       </md-toolbar>
 
-	  	<md-content class="md-padding autocomplete" layout="column">
-				<h4>Associated Spaces:</h4>
+	  	<md-content class="md-padding" layout="column">
 
-				<md-chips ng-model="ctrl.selectedSpaces" md-autocomplete-snap="" md-require-match="ctrl.spacesRequireMatch">
-		      <md-autocomplete md-autoselect="true" md-selected-item="ctrl.selectedSpace" md-search-text="ctrl.searchSpaceText" md-items="item in ctrl.querySpaceSearch(ctrl.searchSpaceText)" md-item-text="item.name" placeholder="Add/Remove spaces">
-		        <span md-highlight-text="ctrl.searchSpaceText">{{item.name}}</span>
-		      </md-autocomplete>
-		      <md-chip-template>
-		        <span>
-		          <strong>{{$chip.name}}</strong>
-		        </span>
-		      </md-chip-template>
-		    </md-chips>
+				<md-switch class="md-primary md-block" aria-label="Switch OrgManager" ng-model="ctrl.user.isOrgManager" ng-change="switchOrgManager()">
+					Manager
+				</md-switch>
 
-	  	</md-content>
+				<md-switch class="md-primary md-block" aria-label="Switch Billing Manager" ng-model="ctrl.user.isOrgBillingManager" ng-change="switchOrgBillingManager()">
+					Billing Manager
+				</md-switch>
 
-			<md-content class="md-padding autocomplete" layout="column">
-				<h4>Associated Organizations:</h4>
-
-				<md-chips ng-model="ctrl.selectedSpaces" md-autocomplete-snap="" md-require-match="ctrl.spacesRequireMatch">
-		      <md-autocomplete md-autoselect="true" md-selected-item="ctrl.selectedSpace" md-search-text="ctrl.searchSpaceText" md-items="item in ctrl.querySpaceSearch(ctrl.searchSpaceText)" md-item-text="item.name" placeholder="Add/Remove spaces">
-		        <span md-highlight-text="ctrl.searchSpaceText">{{item.name}}</span>
-		      </md-autocomplete>
-		      <md-chip-template>
-		        <span>
-		          <strong>{{$chip.name}}</strong>
-		        </span>
-		      </md-chip-template>
-		    </md-chips>
+				<md-switch class="md-primary md-block" aria-label="Switch Auditor" ng-model="ctrl.user.isOrgAuditor" ng-change="switchOrgAuditor()">
+					Auditor
+				</md-switch>
 
 	  	</md-content>
 
 		</md-card>
-		<!-- ASSOCIATED CONTENT / END -->
+		<!-- ORGANIZATION ROLES / END -->
 
 
 
-		<!-- Managed CONTENT -->
-    <md-card id="associatedContent" flex="100" flex-gt-md="45">
+		<!-- SPACES ROLES -->
+    <md-card id="usersSpaceRoles" flex="100" flex-gt-md="75">
 
       <md-toolbar>
-        <div class="md-toolbar-tools">Managed Content</div>
+        <div class="md-toolbar-tools">Spaces Roles</div>
       </md-toolbar>
 
-	  	<md-content class="md-padding autocomplete" layout="column">
-				<h4>Managed Spaces:</h4>
+	  	<md-content class="md-padding" layout="column">
+				<!--
+				<div flex="100" layout="row">
+					<div flex="30">
+						<md-switch class="md-primary md-block" aria-label="Switch OrgManager" ng-model="isOrgManager">
+    					Manager
+  					</md-switch>
+					</div>
 
-				<md-chips ng-model="ctrl.selectedSpaces" md-autocomplete-snap="" md-require-match="ctrl.spacesRequireMatch">
-		      <md-autocomplete md-autoselect="true" md-selected-item="ctrl.selectedSpace" md-search-text="ctrl.searchSpaceText" md-items="item in ctrl.querySpaceSearch(ctrl.searchSpaceText)" md-item-text="item.name" placeholder="Add/Remove spaces">
-		        <span md-highlight-text="ctrl.searchSpaceText">{{item.name}}</span>
-		      </md-autocomplete>
-		      <md-chip-template>
-		        <span>
-		          <strong>{{$chip.name}}</strong>
-		        </span>
-		      </md-chip-template>
-		    </md-chips>
+					<div flex="30">
+						<md-switch class="md-primary md-block" aria-label="Switch Billing Manager" ng-model="isBillingManager">
+    					Billing Manager
+  					</md-switch>
+					</div>
 
-	  	</md-content>
+					<div flex="30">
+						<md-switch class="md-primary md-block" aria-label="Switch Auditor" ng-model="isAuditor">
+    					Auditor
+  					</md-switch>
+					</div>
 
-			<md-content class="md-padding autocomplete" layout="column">
-				<h4>Managed Organizations:</h4>
-
-				<md-chips ng-model="ctrl.selectedSpaces" md-autocomplete-snap="" md-require-match="ctrl.spacesRequireMatch">
-		      <md-autocomplete md-autoselect="true" md-selected-item="ctrl.selectedSpace" md-search-text="ctrl.searchSpaceText" md-items="item in ctrl.querySpaceSearch(ctrl.searchSpaceText)" md-item-text="item.name" placeholder="Add/Remove spaces">
-		        <span md-highlight-text="ctrl.searchSpaceText">{{item.name}}</span>
-		      </md-autocomplete>
-		      <md-chip-template>
-		        <span>
-		          <strong>{{$chip.name}}</strong>
-		        </span>
-		      </md-chip-template>
-		    </md-chips>
-
+				</div>
+			-->
 	  	</md-content>
 
 		</md-card>
-		<!-- Managed CONTENT / END -->
+		<!-- SPACES ROLES / END -->
 
 
 

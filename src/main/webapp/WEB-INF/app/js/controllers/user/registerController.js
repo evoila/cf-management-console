@@ -7,8 +7,31 @@ angular.module('controllers')
   .controller('registerController',
     function RegisterController($scope, $state, $http, responseService, envService) {
       $scope.state = $state;
+      $scope.organizationValid = true;
 
       REST_API = envService.read('restApiUrl');
+
+      $scope.checkOrgName = function(orgName) {
+        console.log(orgName);
+        var head = {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+            'Accept': 'application/json;charset=utf-8'
+          }
+        };
+        $http.get(REST_API + '/test', null, head).success(function(data) {
+          $scope.organizationValid = true;
+          console.log(JSON.stringify(data));
+        });
+
+      };
+
+
+
+
+
+
+
 
       $scope.register = function(userForm) {
         var head = {

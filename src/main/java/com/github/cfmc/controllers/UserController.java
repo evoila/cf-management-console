@@ -67,13 +67,76 @@ public class UserController {
     	return restRepository.update(token, V2_USERS.concat(userId).concat("/organizations/").concat(orgId), orgUserDummy);
     }
     
+    /*
+     * 	Managed Organizations
+     */
 	@RequestMapping(value = "/users/{userId}/managed_organizations", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Organization>> getManagedOrgsForUser(@RequestHeader("Authorization") final String token, 
     		@PathVariable("userId") final String userId) {
 		CloudFoundryResources<Organization> managedOrgas = restRepository.list(token, V2_USERS.concat(userId).concat("/managed_organizations"), 2);
     	return managedOrgas.getResources();
     }
-    
+	@RequestMapping(value = "/users/{userId}/managed_organizations/{orgId}", method = RequestMethod.PUT)
+	public @ResponseBody CloudFoundryResource<OrganizationUser> setManagedOrganizationForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+		return restRepository.update(token, V2_USERS.concat(userId).concat("/managed_organizations/").concat(orgId), orgUserDummy);
+    }
+	// no return for delete?
+	// evoila nicht funktioniert, playground schon
+	@RequestMapping(value = "/users/{userId}/managed_organizations/{orgId}", method = RequestMethod.DELETE)
+	public void removeManagedOrganizationForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId) {
+		restRepository.delete(token, V2_USERS.concat(userId).concat("/managed_organizations"), orgId);
+    }
+		
+	/*
+     * 	Billing Managed Organizations
+     */
+	@RequestMapping(value = "/users/{userId}/billing_managed_organizations", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<Space>> getBillingManagedOrgsForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId) {
+    	CloudFoundryResources<Space> billingManagedOrgs = restRepository.list(token, V2_USERS.concat(userId).concat("/billing_managed_organizations"), 2);
+    	return billingManagedOrgs.getResources();
+    }
+	@RequestMapping(value = "/users/{userId}/billing_managed_organizations/{orgId}", method = RequestMethod.PUT)
+	public @ResponseBody CloudFoundryResource<OrganizationUser> setBillingManagedOrganizationForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+		return restRepository.update(token, V2_USERS.concat(userId).concat("/billing_managed_organizations/").concat(orgId), orgUserDummy);
+    }
+	@RequestMapping(value = "/users/{userId}/billing_managed_organizations/{orgId}", method = RequestMethod.DELETE)
+	public void removeBillingManagedOrganizationForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId) {
+		restRepository.delete(token, V2_USERS.concat(userId).concat("/billing_managed_organizations"), orgId);
+    }	
+	
+	/*
+     * 	Audited Organizations
+     */
+	@RequestMapping(value = "/users/{userId}/audited_organizations", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<Space>> getAuditedOrgsForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId) {
+    	CloudFoundryResources<Space> auditedOrgs = restRepository.list(token, V2_USERS.concat(userId).concat("/audited_organizations"), 2);
+    	return auditedOrgs.getResources();
+    }
+	@RequestMapping(value = "/users/{userId}/audited_organizations/{orgId}", method = RequestMethod.PUT)
+	public @ResponseBody CloudFoundryResource<OrganizationUser> setAuditedOrganizationForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+		return restRepository.update(token, V2_USERS.concat(userId).concat("/audited_organizations/").concat(orgId), orgUserDummy);
+    }
+	@RequestMapping(value = "/users/{userId}/audited_organizations/{orgId}", method = RequestMethod.DELETE)
+	public void removeAuditedOrganizationForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId) {
+		restRepository.delete(token, V2_USERS.concat(userId).concat("/audited_organizations"), orgId);
+    }
+	
+	
+	
+	
+	
+	
+	/*
+     * 	Managed Spaces
+     */
     @RequestMapping(value = "/users/{userId}/managed_spaces", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Space>> getManagedSpacesForUser(@RequestHeader("Authorization") final String token, 
     		@PathVariable("userId") final String userId) {
@@ -81,6 +144,11 @@ public class UserController {
     	return managedSpaces.getResources();
     }
     
+    
+    
+    /*
+     * 	Spaces
+     */
     @RequestMapping(value = "/users/{userId}/spaces", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Space>> getSpacesForUser(@RequestHeader("Authorization") final String token, 
     		@PathVariable("userId") final String userId) {
@@ -93,6 +161,10 @@ public class UserController {
     		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
     	return restRepository.update(token, V2_USERS.concat(userId).concat("/spaces/").concat(spaceId), orgUserDummy);
     }
+    
+    
+    
+    
     
     
     

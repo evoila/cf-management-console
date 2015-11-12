@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.cfmc.api.model.Organization;
 import com.github.cfmc.api.model.base.CloudFoundryResource;
 import com.github.cfmc.api.model.base.CloudFoundryResources;
 import com.github.cfmc.api.repositories.RestRepository;
+import com.github.cfmc.api.repositories.UserRepository;
 
 /**
  * 
@@ -33,12 +35,22 @@ public class OrganizationController {
 	
 	private static final String V2_ORGANIZATIONS = "v2/organizations";
 	
+
+	
 	@RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Organization>> getOrganizations(@RequestHeader("Authorization") final String token) {
 		CloudFoundryResources<Organization> organizations = restRepository.list(token, V2_ORGANIZATIONS, 1);
 		return organizations.getResources();
     }
 	
+	/*
+	@RequestMapping(value = "/organizations", method = RequestMethod.GET)
+	public @ResponseBody CloudFoundryResource<Organization> getOrganizationByName(@RequestParam("query") String query) {
+		String accessToken = getAccessToken(clientId, clientSecret);
+		CloudFoundryResources<Organization> org = restRepository.list(token, V2_ORGANIZATIONS.concat("/"), 1);
+	}
+	*/
+		
 	@RequestMapping(value = "/organizations/{id}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<Organization> getOrganization(@RequestHeader("Authorization") String token, @PathVariable("id") final String id) {
 		CloudFoundryResource<Organization> organization = restRepository.one(token, V2_ORGANIZATIONS, id, 1);

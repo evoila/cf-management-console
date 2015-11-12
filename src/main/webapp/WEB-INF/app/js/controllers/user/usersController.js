@@ -31,15 +31,19 @@ angular.module('controllers')
       $scope.orgId = menu.organization.metadata.guid;
 
       Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
-        $scope.loading = true;
         angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
           var managedOrgsUrl = orgUser.entity.managed_organizations_url.replace('/v2', '');
           var managedSpacesUrl = orgUser.entity.managed_spaces_url.replace('/v2', '');
           var spacesUrl = orgUser.entity.spaces_url.replace('/v2', '');
+          var billingManagedOrgsUrl = orgUser.entity.billing_managed_organizations_url.replace('/v2', '');
+          var auditedOrgsUrl = orgUser.entity.audited_organizations_url.replace('/v2', '');
 
           $scope.getManagedOrgsForUser(orgUser, managedOrgsUrl);
           $scope.getManagedSpacesForUser(orgUser, managedSpacesUrl);
           $scope.getSpacesForUser(orgUser, spacesUrl);
+          $scope.getBillingManagedOrgsForUser(orgUser, billingManagedOrgsUrl);
+          $scope.getAuditedOrgsForUser(orgUser, auditedOrgsUrl);
+
         });
         $scope.orgUsers = orgUsers;
         $scope.loading = false;
@@ -50,7 +54,6 @@ angular.module('controllers')
           orgUser.managedOrgs = managedOrgs;
         })
       }
-      // only show spaces of current organization
       $scope.getManagedSpacesForUser = function(orgUser, managedSpacesUrl) {
         Restangular.one(managedSpacesUrl).get().then(function(managedSpaces) {
           orgUser.managedSpaces = [];
@@ -69,7 +72,16 @@ angular.module('controllers')
           })
         })
       }
-
+      $scope.getBillingManagedOrgsForUser = function(orgUser, billingManagedOrgsUrl) {
+        Restangular.one(billingManagedOrgsUrl).get().then(function(billingManagedOrgs) {
+          orgUser.billingManagedOrgs = billingManagedOrgs;
+        })
+      }
+      $scope.getAuditedOrgsForUser = function(orgUser, auditedOrgsUrl) {
+        Restangular.one(auditedOrgsUrl).get().then(function(auditedOrgs) {
+          orgUser.auditedOrgs = auditedOrgs;
+        })
+      }
 
 
 
