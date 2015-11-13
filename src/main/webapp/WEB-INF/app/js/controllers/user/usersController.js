@@ -11,12 +11,14 @@ angular.module('controllers')
       $scope.blockInput = true;
 
       $scope.orgId = menu.organization.metadata.guid;
+      var org = menu.organization;
 
       Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
+
         angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
 
-          var spacesUrl = orgUser.entity.spaces_url.replace('/v2', '');
-          $scope.getSpacesForUser(orgUser, spacesUrl);
+          var spacesUrl = org.entity.spaces_url.replace('/v2', '');
+          $scope.getSpacesOfOrganization(orgUser, spacesUrl);
 
           orgUser.isOrgManager = false;
           orgUser.entity.managed_organizations.forEach(function(org) {
@@ -34,12 +36,11 @@ angular.module('controllers')
         $scope.loading = false;
       });
 
-      $scope.getSpacesForUser = function(orgUser, spacesUrl) {
+      $scope.getSpacesOfOrganization = function(orgUser, spacesUrl) {
         Restangular.one(spacesUrl).get().then(function(spaces) {
           orgUser.spaces = [];
           spaces.forEach(function(space) {
-            if(space.entity.organization_guid == $scope.orgId)
-              orgUser.spaces.push(space);
+            orgUser.spaces.push(space);
           })
         })
       }
@@ -60,40 +61,40 @@ angular.module('controllers')
        *
        */
       $scope.showCreateUserDialog = function(ev) {
+        console.log($scope.processingSubmit);
         $mdDialog.show({
           controller: UsersController,
-          templateUrl: 'partials/user/create-user-dialog.html',
+          templateUrl: 'partials/user/user-create-dialog.html',
           parent: angular.element(document.body),
           targetEvent: ev,
-          //resolve: { username: function () { return ev.currentTarget.attributes.username.value; } },
           clickOutsideToClose:false
         })
       };
 
+
+
+
       $scope.submitCreateUserForm = function(form) {
         console.log('Submitting: ' + form.username + ', ' + form.firstname + ', ' + form.lastname + ', ' + form.password);
-          $scope.processingSubmit = true;
 
-            // rest: Create User
-          Restangular.one('users').customPOST(undefined, undefined,({  username: form.username, firstName: form.firstname, lastName: form.lastname, password: form.password}),undefined).then(function(response) {
-            var createdUserId = response.metadata.guid;
+        // rest: Create User
+        Restangular.one('users').customPOST(undefined, undefined,({  username: form.username, firstName: form.firstname, lastName: form.lastname, password: form.password}),undefined).then(function(user) {
+          var createdUserId = user.metadata.guid;
 
-            // add new user to orga
-            Restangular.one('users', createdUserId).one('organizations', $state.params.organizationId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response){
-
-            }, function(response) {
+          // add new user to orga
+          Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(user){
+            responseService.executeSuccess(user, null, 'orgs/537abdc9-3331-407a-802f-42880cda82e2/users');
+          }, function(response) {
               console.log('error add to org');
               console.log(response);
-            })
-            //$state.go($state.current, {}, {reload: true});
+          })
+          //$state.go($state.current, {}, {reload: true});
 
-          }, function(response) {
-              console.log('error create user');
-              console.log(response);
-          });
-
-          $scope.processingSubmit = false;
-          $mdDialog.hide();
+        }, function(response) {
+            console.log('error create user');
+            console.log(response);
+        });
+        $mdDialog.hide();
       };
 
       $scope.hide = function() {

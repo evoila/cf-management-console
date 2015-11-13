@@ -4,7 +4,7 @@
 
 angular.module('controllers')
   .controller('homeController',
-    function HomeController($scope, $state, Restangular, $location, $mdSidenav, $rootScope, clientCacheService, $mdSidenav, menu) {      
+    function HomeController($scope, $state, Restangular, $location, $mdSidenav, $rootScope, clientCacheService, $mdSidenav, menu) {
       $scope.state = $state;
 
       var vm = this;
@@ -53,7 +53,7 @@ angular.module('controllers')
 
       /*Adds all organisations to the menu*/
       function orgsToMenu(organizations) {
-        vm.menu.organizations.name = 'Organisations ('+organizations.length+')';
+        vm.menu.organizations.name = 'Organizations ('+organizations.length+')';
         vm.menu.organizations.pages = [];
         angular.forEach (organizations, function(orga, key) {
             var page = {};
@@ -67,7 +67,6 @@ angular.module('controllers')
       }
 
       function spacesToMenu(orga,spaces) {
-        console.log("josifjfiojsdfiojdifoj")
         menu.sections[0].pages = [];
         angular.forEach (spaces, function(space, key) {
 

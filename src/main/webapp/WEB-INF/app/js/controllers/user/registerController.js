@@ -5,14 +5,15 @@
 
 angular.module('controllers')
   .controller('registerController',
-    function RegisterController($scope, $state, $http, responseService, envService) {
+    function RegisterController($scope, $state, $http, responseService, envService, Restangular) {
       $scope.state = $state;
       $scope.organizationValid = true;
 
       REST_API = envService.read('restApiUrl');
 
+
       $scope.checkOrgName = function(orgName) {
-        console.log(orgName);
+        /*
         var head = {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
@@ -23,6 +24,10 @@ angular.module('controllers')
           $scope.organizationValid = true;
           console.log(JSON.stringify(data));
         });
+        */
+        Restangular.one('test').get().then(function(resp) {
+          console.log(resp);
+        })
 
       };
 

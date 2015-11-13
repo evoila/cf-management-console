@@ -1,22 +1,19 @@
-<md-dialog aria-label="Details">
-
+<md-dialog aria-label="Create new user">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Create new user</h2>
-        <span flex></span>
       </div>
     </md-toolbar>
 
-
-    <md-dialog-content style="width:300px;min-width:200px;min-height:300px;max-width:800px;max-height:810px;">
+    <md-dialog-content style="width:300px;min-width:300px;min-height:300px;max-width:800px;max-height:810px;">
 
       <div flex ng-show="processingSubmit" layout="center center" layout-align="space-around">
         <md-progress-circular style="margin-top:30%" class="md-accent" md-mode="indeterminate"></md-progress-circular>
       </div>
 
 
-      <form  ng-hide="processingSubmit" name="createUserForm" ng-submit="submitCreateUserForm(createUserForm)">
+      <form name="createUserForm" ng-submit="submitCreateUserForm(createUserForm)">
         <!-- USERNAME -->
         <div class="form-group">
           <md-input-container>

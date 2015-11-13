@@ -60,7 +60,7 @@ public class UserController {
     	CloudFoundryResources<OrganizationUser> orgUsers = restRepository.list(token, V2_ORGANIZATIONS.concat(id).concat("/users"), 2);
     	return orgUsers.getResources();
     }
-    // @TODO: update method only with CloudFoundryResource in @RequestBody
+    // TODO: update method only with CloudFoundryResource in @RequestBody
     @RequestMapping(value = "/users/{userId}/organizations/{orgId}", method = RequestMethod.PUT)
     public @ResponseBody CloudFoundryResource<OrganizationUser> addUserToOrganization(@RequestHeader("Authorization") final String token, 
     		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
@@ -124,7 +124,7 @@ public class UserController {
 		return restRepository.update(token, V2_USERS.concat(userId).concat("/audited_organizations/").concat(orgId), orgUserDummy);
     }
 	@RequestMapping(value = "/users/{userId}/audited_organizations/{orgId}", method = RequestMethod.DELETE)
-	public void removeAuditedOrganizationForUser(@RequestHeader("Authorization") final String token, 
+	public void removeAuditedOrganizationFromUser(@RequestHeader("Authorization") final String token, 
     		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId) {
 		restRepository.delete(token, V2_USERS.concat(userId).concat("/audited_organizations"), orgId);
     }
@@ -145,9 +145,30 @@ public class UserController {
 		return restRepository.update(token, V2_USERS.concat(userId).concat("/managed_spaces/").concat(spaceId), orgUserDummy);
     }
     @RequestMapping(value = "/users/{userId}/managed_spaces/{spaceId}", method = RequestMethod.DELETE)
-	public void removeManagedSpaceForUser(@RequestHeader("Authorization") final String token, 
+	public void removeManagedSpaceFromUser(@RequestHeader("Authorization") final String token, 
     		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId) {
 		restRepository.delete(token, V2_USERS.concat(userId).concat("/managed_spaces"), spaceId);
+    }
+    
+    /*
+     * 	Spaces (Space Developer)
+     */
+    @RequestMapping(value = "/users/{userId}/spaces", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<Space>> getSpacesForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId) {
+    	CloudFoundryResources<Space> spaces = restRepository.list(token, V2_USERS.concat(userId).concat("/spaces"), 2);
+    	return spaces.getResources();
+    }
+    // entspr. Associate Space with the User -> user wird dann als developer aufgelistet
+    @RequestMapping(value = "/users/{userId}/spaces/{spaceId}", method = RequestMethod.PUT)
+    public @ResponseBody CloudFoundryResource<OrganizationUser> setSpaceForUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+    	return restRepository.update(token, V2_USERS.concat(userId).concat("/spaces/").concat(spaceId), orgUserDummy);
+    }
+    @RequestMapping(value = "/users/{userId}/spaces/{spaceId}", method = RequestMethod.DELETE)
+	public void removeSpaceFromUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId) {
+		restRepository.delete(token, V2_USERS.concat(userId).concat("/spaces"), spaceId);
     }
     
     /*
@@ -160,22 +181,18 @@ public class UserController {
     	return auditedSpaces.getResources();
     }
     
-    
-    /*
-     * 	Spaces
-     */
-    @RequestMapping(value = "/users/{userId}/spaces", method = RequestMethod.GET)
-    public @ResponseBody List<CloudFoundryResource<Space>> getSpacesForUser(@RequestHeader("Authorization") final String token, 
-    		@PathVariable("userId") final String userId) {
-    	CloudFoundryResources<Space> spaces = restRepository.list(token, V2_USERS.concat(userId).concat("/spaces"), 2);
-    	return spaces.getResources();
-    }
-    // entspr. Associate Space with the User -> user wird dann als developer aufgelistet???
-    @RequestMapping(value = "/users/{userId}/spaces/{spaceId}", method = RequestMethod.PUT)
-    public @ResponseBody CloudFoundryResource<OrganizationUser> addUserToSpace(@RequestHeader("Authorization") final String token, 
+    @RequestMapping(value = "/users/{userId}/audited_spaces/{spaceId}", method = RequestMethod.PUT)
+    public @ResponseBody CloudFoundryResource<OrganizationUser> setAuditedSpaceForUser(@RequestHeader("Authorization") final String token, 
     		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
-    	return restRepository.update(token, V2_USERS.concat(userId).concat("/spaces/").concat(spaceId), orgUserDummy);
+    	return restRepository.update(token, V2_USERS.concat(userId).concat("/audited_spaces/").concat(spaceId), orgUserDummy);
     }
+    
+    @RequestMapping(value = "/users/{userId}/audited_spaces/{spaceId}", method = RequestMethod.DELETE)
+    public void removeAuditedSpaceFromUser(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId) {
+    	restRepository.delete(token, V2_USERS.concat(userId).concat("/audited_spaces"), spaceId);
+    }
+    
     
     
     

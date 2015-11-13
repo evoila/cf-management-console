@@ -1,7 +1,7 @@
 <div flex ng-show="loading" layout="center center" layout-align="space-around">
 	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
 </div>
-<div ng-hide="loading" layout="column">
+<div ng-hide="loading" layout="column" ng-cloak>
 
 	<md-list id="orgUserList">
     <span class="md-title">Users of {{vm.menu.organization.entity.name}}</span>
@@ -12,26 +12,32 @@
     <md-list-item id="item-{{$index}}" class="md-3-line" ng-repeat="user in orgUsers">
       <div class="md-list-item-text" layout="column">
 				<div layout="row">
+
 					<div flex style="max-width:50px;">
 						<button class="md-icon-button md-button md-default-theme" ng-click="showDetails = !showDetails">
 							<i ng-class="showDetails ? 'fa fa-lg fa-chevron-up' : 'fa fa-lg fa-chevron-down'" style="position:absolute;top:10px;cursor:pointer;"></i>
 						</button>
 					</div>
-					<div flex>
+
+					<div flex style="max-width:380px;">
         		<h3>{{ user.entity.username }}</h3>
         		<p><span>GUID: </span>{{ user.metadata.guid }}</p>
+						<p><span>Spaces: </span>{{ user.entity.spaces.length }}</p>
 						<div class="hiddenUserInfo" style="margin-top:15px;" ng-show="showDetails">
-							<h4>Details:</h4>
-							<p>Is OrgManager: {{user.isOrgManager}}</p>
 							<button class="md-icon-button md-button md-default-theme" style="margin-left:0;width:auto;" ng-click="switchToEditUser(user)">
 								<i class="fa fa-pencil" style="padding-right:6px;"></i> Edit
 							</button>
-
 						</div>
 					</div>
+
+					<div flex style="max-width:150px;">
+						<p ng-show="user.isOrgManager">Manager</p>
+					</div>
+
 				</div>
       </div>
 		<md-divider></md-divider>
+
     </md-list-item>
 	</md-list>
 

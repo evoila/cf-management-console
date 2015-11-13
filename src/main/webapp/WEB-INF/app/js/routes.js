@@ -60,7 +60,7 @@ angular.module('routes', ['ui.router'])
       })
       .state('edit-user', {
         url: '/orgs/:organizationId/users/:userId/edit',
-        templateUrl: 'partials/user/edit-user.html',
+        templateUrl: 'partials/user/user-edit.html',
         params: {
           user: null
         }
