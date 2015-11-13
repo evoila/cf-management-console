@@ -7,28 +7,13 @@ angular.module('controllers')
   .controller('registerController',
     function RegisterController($scope, $state, $http, responseService, envService, Restangular) {
       $scope.state = $state;
-      $scope.organizationValid = true;
+      $scope.organizationValid = false;
 
       REST_API = envService.read('restApiUrl');
 
 
       $scope.checkOrgName = function(orgName) {
-        /*
-        var head = {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-            'Accept': 'application/json;charset=utf-8'
-          }
-        };
-        $http.get(REST_API + '/test', null, head).success(function(data) {
-          $scope.organizationValid = true;
-          console.log(JSON.stringify(data));
-        });
-        */
-        Restangular.one('test').get().then(function(resp) {
-          console.log(resp);
-        })
-
+        Restangular.one('register').customPOST(undefined, undefined,({ username: 'evoila2@evoila.de', firstName: 'test', lastName: 'user', password: 'password' }),undefined);
       };
 
 

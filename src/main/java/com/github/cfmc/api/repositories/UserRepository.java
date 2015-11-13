@@ -4,10 +4,8 @@
 package com.github.cfmc.api.repositories;
 
 import static org.mvel2.MVEL.evalToString;
-
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,13 +18,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
-
 import com.github.cfmc.api.model.AccessToken;
 import com.github.cfmc.api.model.SpaceUser;
 import com.github.cfmc.api.model.UserInfo;
 import com.github.cfmc.api.model.UserSession;
 import com.github.cfmc.api.model.base.CloudFoundryResource;
 import com.github.cfmc.api.model.base.CloudFoundryResources;
+
 
 /**
  * 
@@ -47,6 +45,7 @@ public class UserRepository extends RestRepository {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
     }
+    
 
     public List<CloudFoundryResource<SpaceUser>> getAllUsers(String token) {
         final String accessToken = getAccessToken(clientId, clientSecret);
@@ -62,7 +61,12 @@ public class UserRepository extends RestRepository {
         //CloudFoundryResource<SpaceUser> user = one(token, "v2/users", userSession.getId(), 1);
         return userInfo;
     }
-
+    
+    // needed to prevent 403 error for operations usually limited to admin
+    public String login() {
+    	return "bearer " + this.login(clientId, clientSecret).getAccessToken();
+    }
+    
     public AccessToken login(String username, String password) {
         String authorizationEndpoint = getAuthorizationEndpoint();
 
@@ -103,11 +107,9 @@ public class UserRepository extends RestRepository {
     public Map<String, Object> registerUser(String token, String username, String firstName, String lastName, String password) {    	
         String accessToken = getAccessToken(clientId, clientSecret);
         String userId = uaaCreateUser(accessToken, username, firstName, lastName, password);
-        // TODO: 108 geht nicht
         return apiCreateUser(token, userId).getBody();
-        //return apiCreateUser(accessToken, userId).getBody();
     }
-
+    
     private String getAccessToken(String clientId, String clientSecret) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");

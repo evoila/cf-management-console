@@ -31,8 +31,6 @@ angular.module('controllers')
 
           orgsToMenu(data);
 
-          usersToMenu();
-
           $state.go('spaces', {
             organizationId: data[0].metadata.guid
           })
@@ -78,20 +76,6 @@ angular.module('controllers')
             console.log(space.metadata);
           menu.sections[0].pages.push(page);
         });
-      }
-
-      function usersToMenu() {
-        /*
-        menu.sections[1].pages = [];
-        angular.forEach (users, function(space, key) {
-            var page = {};
-            page.name = space.entity.name;
-            page.type = 'link';
-            page.state = 'users';
-            page.params = {organizationId: organization.metadata.guid};
-          menu.sections[1].pages.push(page);
-        });
-        */
       }
 
       $scope.logout = function() {

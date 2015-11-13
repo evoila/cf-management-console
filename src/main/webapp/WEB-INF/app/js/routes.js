@@ -58,7 +58,7 @@ angular.module('routes', ['ui.router'])
         templateUrl: 'partials/user/user-list.html',
         controller: 'usersController'
       })
-      .state('edit-user', {
+      .state('user-edit', {
         url: '/orgs/:organizationId/users/:userId/edit',
         templateUrl: 'partials/user/user-edit.html',
         params: {

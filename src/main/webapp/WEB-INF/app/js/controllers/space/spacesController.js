@@ -46,7 +46,6 @@ angular.module('controllers')
       });
 
       function spacesToSections(appSpaces) {
-        console.log("93428ur2839ru24389u")
         menu.sections[0].pages = [];
         angular.forEach (appSpaces, function(space, key) {
             var page = {};

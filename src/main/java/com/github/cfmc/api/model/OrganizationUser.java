@@ -12,8 +12,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Johannes Hiemer
  *
  */
-public class OrganizationUser /*extends User*/ {
-	/*
+// TODO: Create User und get Org user funktionert, egal ob extends User oder nicht oder ob alternativ der unten auskommentierte code verwendet wird
+public class OrganizationUser extends User {
+	
     private final boolean billingManager;
     
     public OrganizationUser(final String id, final String username, final boolean manager, final boolean auditor, final boolean billingManager) {
@@ -66,8 +67,9 @@ public class OrganizationUser /*extends User*/ {
         }
 
     }
-	*/
 	
+	
+    /*
 	@JsonProperty("guid")
 	private String guid;
 
@@ -198,5 +200,5 @@ public class OrganizationUser /*extends User*/ {
 	public void setAuditedSpacesUrl(String auditedSpacesUrl) {
 		this.auditedSpacesUrl = auditedSpacesUrl;
 	}
-    
+    */
 }
