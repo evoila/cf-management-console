@@ -83,7 +83,7 @@ angular.module('controllers')
 
           // add new user to orga
           Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(user){
-            responseService.executeSuccess(user, null, 'orgs/537abdc9-3331-407a-802f-42880cda82e2/users');
+            responseService.executeSuccess(user, null, 'orgs/' + $scope.orgId +'/users');
           }, function(response) {
               console.log('error add to org');
               console.log(response);
