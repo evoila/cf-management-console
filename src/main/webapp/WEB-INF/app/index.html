@@ -26,30 +26,30 @@
 
 </head>
 
-<body ng-app="cf-management-console" ng-controller="homeController as vm" layout="row" ng-cloak>
+<body ng-app="cf-management-console" ng-controller="homeController" layout="row" ng-cloak>
   <div ng-show="isAuthenticated">
     <div layout="row">
       <md-sidenav class="md-sidenav-left md-whiteframe-z1" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
         <md-toolbar>
           <div class="md-toolbar-tools">
             <h1>
-              <span>Organization: <strong>{{vm.menu.organization.entity.name}}</strong></span>
+              <span>Organization: <strong>{{menu.organization.entity.name}}</strong></span>
             </h1>
           </div>
         </md-toolbar>
         <md-content flex role="navigation" class="md-default-theme">
           <ul class="side-menu">
-            <li class="parent-list-item" ng-class="{'parentActive' : vm.isSectionSelected(vm.menu.organizations)}">
-              <h2 class="menu-heading" ng-if="vm.menu.organizations.type === 'heading'" id="heading_{{ vm.menu.organizations.name | nospace }}">
-                {{vm.menu.organizations}}
+            <li class="parent-list-item" ng-class="{'parentActive' : isSectionSelected(menu.organizations)}">
+              <h2 class="menu-heading" ng-if="menu.organizations.type === 'heading'" id="heading_{{ menu.organizations.name | nospace }}">
+                {{menu.organizations}}
               </h2>
-              <menu-link section="vm.menu.organizations" ng-if="vm.menu.organizations.type === 'link'"></menu-link>
-              <menu-toggle section="vm.menu.organizations" ng-if="vm.menu.organizations.type === 'toggle'"></menu-toggle>
+              <menu-link section="menu.organizations" ng-if="menu.organizations.type === 'link'"></menu-link>
+              <menu-toggle section="menu.organizations" ng-if="menu.organizations.type === 'toggle'"></menu-toggle>
               </li>
               <md-card ng-show="isAuthenticated">
                 <md-card-content layout="row">
                   <ul flex="100">
-                    <li ng-repeat="section in vm.menu.sections" class="parent-list-item" ng-class="{'parentActive' : vm.isSectionSelected(section)}">
+                    <li ng-repeat="section in menu.sections" class="parent-list-item" ng-class="{'parentActive' : isSectionSelected(section)}">
                       <h2 class="menu-heading" ng-if="section.type === 'heading'" id="heading_{{ section.name | nospace }}">
                         {{section}}
                       </h2>
@@ -93,7 +93,7 @@
                 <p>Name</p>
               </div>
               <div flex="50">
-                <p>{{vm.menu.organization.entity.name}}</p>
+                <p>{{menu.organization.entity.name}}</p>
               </div>
             </div>
             <div layout="column" flex="20">
@@ -101,7 +101,7 @@
                 <p>Total Services</p>
               </div>
               <div flex="50">
-                <p>{{vm.menu.organization.entity.quota_definition.entity.total_services}}</p>
+                <p>{{menu.organization.entity.quota_definition.entity.total_services}}</p>
               </div>
             </div>
             <div layout="column" flex="20">
@@ -109,7 +109,7 @@
                 <p>Memory Limit</p>
               </div>
               <div flex="50">
-                <p>{{vm.menu.organization.entity.quota_definition.entity.memory_limit}} MB</p>
+                <p>{{menu.organization.entity.quota_definition.entity.memory_limit}} MB</p>
               </div>
             </div>
             <div layout="column" flex="20">
@@ -117,7 +117,7 @@
                 <p>None Basic Services</p>
               </div>
               <div flex="50">
-                <p>{{vm.menu.organization.entity.quota_definition.entity.non_basic_services_allowed}}</p>
+                <p>{{menu.organization.entity.quota_definition.entity.non_basic_services_allowed}}</p>
               </div>
             </div>
             <div layout="column" flex="20">
@@ -126,7 +126,7 @@
                 <p>Trial DB Allowed</p>
               </div>
               <div flex="50">
-                <p>{{vm.menu.organization.entity.quota_definition.entity.trial_db_allowed}}</p>
+                <p>{{menu.organization.entity.quota_definition.entity.trial_db_allowed}}</p>
               </div>
             </div>
           </div>

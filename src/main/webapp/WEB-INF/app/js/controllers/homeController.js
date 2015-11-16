@@ -12,12 +12,13 @@ angular.module('controllers')
       vm.isOpen = isOpen;
       vm.toggleOpen = toggleOpen;
       vm.autoFocusContent = false;
-      vm.menu = menu;
 
       vm.status = {
         isFirstOpen: true,
         isFirstDisabled: false
       };
+
+
 
       $rootScope.isAuthenticated = clientCacheService.isAuthenticated();
       if (!clientCacheService.isAuthenticated()) {
@@ -27,10 +28,9 @@ angular.module('controllers')
       } else {
         Restangular.all('organizations').getList().then(function(data) {
           $scope.organizations = data;
-          vm.menu.organization = data[0];
-
-          orgsToMenu(data);
-
+          menu.organization = data[0];
+          menu.orgsToMenu(data);
+          $scope.menu = menu;
           $state.go('spaces', {
             organizationId: data[0].metadata.guid
           })
@@ -49,34 +49,7 @@ angular.module('controllers')
         });
       }
 
-      /*Adds all organisations to the menu*/
-      function orgsToMenu(organizations) {
-        vm.menu.organizations.name = 'Organizations ('+organizations.length+')';
-        vm.menu.organizations.pages = [];
-        angular.forEach (organizations, function(orga, key) {
-            var page = {};
-            page.name = orga.entity.name;
-            page.type = 'link';
-            page.state = 'spaces';
-            page.params = {organizationId: orga.metadata.guid};
-            page.orga = orga;
-          vm.menu.organizations.pages.push(page);
-        });
-      }
 
-      function spacesToMenu(orga,spaces) {
-        menu.sections[0].pages = [];
-        angular.forEach (spaces, function(space, key) {
-
-            var page = {};
-            page.name = space.entity.name;
-            page.type = 'link';
-            page.state = 'spaces';
-            page.params = {spaceId: space.metadata.guid};
-            console.log(space.metadata);
-          menu.sections[0].pages.push(page);
-        });
-      }
 
       $scope.logout = function() {
         $rootScope.isAuthenticated = false;
