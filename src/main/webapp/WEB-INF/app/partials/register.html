@@ -14,30 +14,33 @@
             <div flex="45">
               <md-input-container>
                 <label>Organization</label>
-
-                  <input ng-model="registerForm.orgName" ng-required="true" ng-change="checkOrgName(registerForm.orgName)" ng-minlength="3">
+                <input ng-model="registerForm.orgName" ng-required="true" ng-change="checkOrgName(registerForm.orgName)" minlength="3">
               </md-input-container>
-              <p ng-show="!organizationValid && (registerForm.orgName.length)">Name not available</p>
-              <p ng-show="!registerForm.orgName.length">Name too short</p>
+              <p ng-show="!organizationValid && (registerForm.orgName.length)">Name already exists</p>
             </div>
           </div>
 
           <div ng-show="organizationValid && registerForm.orgName.length">
             <md-input-container flex>
               <label>Email</label>
-              <input ng-model="registerForm.email" ng-required="true">
+              <input ng-model="registerForm.email" ng-required="true" type="email">
             </md-input-container>
+            <p ng-show="usernameExists" style="margin-top:-15px;color:red;">Username already exists</p>
+
             <md-input-container flex>
               <label>Firstname</label>
-              <input ng-model="registerForm.firstname" ng-required="true">
+              <input ng-model="registerForm.firstname" ng-required="true" type="text" minlength="3">
             </md-input-container>
+
+
             <md-input-container flex>
               <label>Lastname</label>
-              <input ng-model="registerForm.lastname" ng-required="true">
+              <input ng-model="registerForm.lastname" ng-required="true" minlength="3">
             </md-input-container>
+
             <md-input-container flex>
               <label>Password</label>
-              <input ng-model="registerForm.password" ng-required="true">
+              <input ng-model="registerForm.password" ng-required="true" minlength="6" type="password">
             </md-input-container>
           </div>
 
