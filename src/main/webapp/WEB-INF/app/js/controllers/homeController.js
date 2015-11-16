@@ -30,7 +30,6 @@ angular.module('controllers')
           $scope.organizations = data;
           menu.organization = data[0];
           menu.orgsToMenu(data);
-          $scope.menu = menu;
           $state.go('spaces', {
             organizationId: data[0].metadata.guid
           })
@@ -39,16 +38,15 @@ angular.module('controllers')
           $location.path('/login');
           $rootScope.isAuthenticated = false;
         }).then(function() {
-          /*$scope.$watch('organization', function(organization) {
-            $state.go('app-spaces', {
-              organizationId: organization.metadata.guid
-            }, {
-              reload: true
-            });
-          })*/
+          $scope.menu = menu;
         });
+
       }
 
+      $scope.$watch('menu', function() {
+        console.log("watch!!!");
+        $scope.menu = menu;
+      });
 
 
       $scope.logout = function() {
