@@ -56,7 +56,7 @@ public class UserController {
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<OrganizationUser>> getUsersByOrganizationId(@RequestHeader("Authorization") final String token, 
     		@PathVariable("id") final String id) {
-    	CloudFoundryResources<OrganizationUser> orgUsers = restRepository.list(token, V2_ORGANIZATIONS.concat(id).concat("/users"), 2);
+    	CloudFoundryResources<OrganizationUser> orgUsers = restRepository.list(token, V2_ORGANIZATIONS.concat(id).concat("/users"), 2, true);
     	return orgUsers.getResources();
     }
     // TODO: update method only with CloudFoundryResource in @RequestBody
@@ -75,7 +75,7 @@ public class UserController {
 	@RequestMapping(value = "/users/{userId}/managed_organizations", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Organization>> getManagedOrgsForUser(@PathVariable("userId") final String userId) {
 		String token = userRepository.login();
-		CloudFoundryResources<Organization> managedOrgas = restRepository.list(token, V2_USERS.concat(userId).concat("/managed_organizations"), 2);
+		CloudFoundryResources<Organization> managedOrgas = restRepository.list(token, V2_USERS.concat(userId).concat("/managed_organizations"), 2, true);
     	return managedOrgas.getResources();
     }
 	@RequestMapping(value = "/users/{userId}/managed_organizations/{orgId}", method = RequestMethod.PUT)
@@ -98,7 +98,7 @@ public class UserController {
 	@RequestMapping(value = "/users/{userId}/billing_managed_organizations", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Space>> getBillingManagedOrgsForUser(@PathVariable("userId") final String userId) {
 		String token = userRepository.login();
-    	CloudFoundryResources<Space> billingManagedOrgs = restRepository.list(token, V2_USERS.concat(userId).concat("/billing_managed_organizations"), 2);
+    	CloudFoundryResources<Space> billingManagedOrgs = restRepository.list(token, V2_USERS.concat(userId).concat("/billing_managed_organizations"), 2, true);
     	return billingManagedOrgs.getResources();
     }
 	@RequestMapping(value = "/users/{userId}/billing_managed_organizations/{orgId}", method = RequestMethod.PUT)
@@ -119,7 +119,7 @@ public class UserController {
 	@RequestMapping(value = "/users/{userId}/audited_organizations", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Space>> getAuditedOrgsForUser(@PathVariable("userId") final String userId) {
 		String token = userRepository.login();
-    	CloudFoundryResources<Space> auditedOrgs = restRepository.list(token, V2_USERS.concat(userId).concat("/audited_organizations"), 2);
+    	CloudFoundryResources<Space> auditedOrgs = restRepository.list(token, V2_USERS.concat(userId).concat("/audited_organizations"), 2, true);
     	return auditedOrgs.getResources();
     }
 	@RequestMapping(value = "/users/{userId}/audited_organizations/{orgId}", method = RequestMethod.PUT)
@@ -141,7 +141,7 @@ public class UserController {
     @RequestMapping(value = "/users/{userId}/managed_spaces", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Space>> getManagedSpacesForUser(@PathVariable("userId") final String userId) {
     	String token = userRepository.login();
-    	CloudFoundryResources<Space> managedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/managed_spaces"), 2);
+    	CloudFoundryResources<Space> managedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/managed_spaces"), 2, true);
     	return managedSpaces.getResources();
     }
     @RequestMapping(value = "/users/{userId}/managed_spaces/{spaceId}", method = RequestMethod.PUT)
@@ -162,7 +162,7 @@ public class UserController {
     @RequestMapping(value = "/users/{userId}/spaces", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Space>> getSpacesForUser(@PathVariable("userId") final String userId) {
     	String token = userRepository.login();
-    	CloudFoundryResources<Space> spaces = restRepository.list(token, V2_USERS.concat(userId).concat("/spaces"), 2);
+    	CloudFoundryResources<Space> spaces = restRepository.list(token, V2_USERS.concat(userId).concat("/spaces"), 2, true);
     	return spaces.getResources();
     }
     // entspr. Associate Space with the User -> user wird dann als developer aufgelistet
@@ -184,7 +184,7 @@ public class UserController {
     @RequestMapping(value = "/users/{userId}/audited_spaces", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Space>> getAuditedSpacesForUser(@PathVariable("userId") final String userId) {
     	String token = userRepository.login();
-    	CloudFoundryResources<Space> auditedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/audited_spaces"), 2);
+    	CloudFoundryResources<Space> auditedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/audited_spaces"), 2, true);
     	return auditedSpaces.getResources();
     }
     
@@ -204,7 +204,7 @@ public class UserController {
     
     @RequestMapping(value = "/organizations/{orgName}", method = RequestMethod.GET)
 	public @ResponseBody CloudFoundryResource<Organization> getOrganizationByName(@RequestHeader("Authorization") String token, @PathVariable("orgName") String orgName) {
-		CloudFoundryResources<Organization> organizations = restRepository.list(token, V2_ORGANIZATIONS, 1);
+		CloudFoundryResources<Organization> organizations = restRepository.list(token, V2_ORGANIZATIONS, 1, true);
 		CloudFoundryResource<Organization> retOrg = new CloudFoundryResource<Organization>();
 		for(CloudFoundryResource<Organization> org : organizations.getResources()) {
 		    if(org.getEntity().getName().equals(orgName))
