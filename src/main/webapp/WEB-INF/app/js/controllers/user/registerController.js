@@ -8,6 +8,7 @@ angular.module('controllers')
     function RegisterController($scope, $state, $http, responseService, envService, Restangular) {
       $scope.state = $state;
       $scope.organizationValid = false;
+      $scope.usernameExists = false;
 
       REST_API = envService.read('restApiUrl');
 
@@ -22,32 +23,37 @@ angular.module('controllers')
       };
 
       $scope.register = function(registerForm) {
-        $scope.loading = true;
+        if(!$scope.organizationValid)
+          alert('Todo: nice errors, warnings');
 
-        Restangular.one('users').customPOST(undefined, undefined,({  username: registerForm.email, firstName: registerForm.firstname, lastName: registerForm.lastname, password: registerForm.password}),undefined).then(function(user) {
-          var createdUserId = user.metadata.guid;
+        else {
+          $scope.loading = true;
 
-          var organisationContent = {
-            'name': registerForm.orgName,
-            'user_guids': [createdUserId],
-            'manager_guids': [createdUserId]
-          };
+          Restangular.one('users').customPOST(undefined, undefined,({  username: registerForm.email, firstName: registerForm.firstname, lastName: registerForm.lastname, password: registerForm.password}),undefined).then(function(user) {
+            var createdUserId = user.metadata.guid;
 
-          Restangular.all('organizations').post(organisationContent).then(function(organization) {
-            responseService.executeSuccess(user, null, 'login');
+            var organisationContent = {
+              'name': registerForm.orgName,
+              'user_guids': [createdUserId],
+              'manager_guids': [createdUserId]
+            };
+
+            Restangular.all('organizations').post(organisationContent).then(function(organization) {
+              responseService.executeSuccess(user, null, 'login');
+
+            }, function(response) {
+                $scope.loading = false;
+                responseService.executeError(response, null, null, $scope, 'organization');
+            });
 
           }, function(response) {
               $scope.loading = false;
-              responseService.executeError(response, null, null, $scope, 'organization');
+              if(response.data.message.indexOf('409 Conflict') > -1)
+                  $scope.usernameExists = true;
+              else
+                responseService.executeError(response, null, null, $scope, 'user');
           });
-
-        }, function(response) {
-            $scope.loading = false;
-            if(response.data.message.indexOf('409 Conflict') > -1)
-              alert('Username already exists')
-            else
-              responseService.executeError(response, null, null, $scope, 'user');
-        });
+        }
       };
 
 
