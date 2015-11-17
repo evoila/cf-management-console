@@ -17,7 +17,6 @@ angular.module('routes', ['ui.router'])
         templateUrl: 'partials/app/app-settings.html',
         controller: 'appSettingsController'
       })
-
       .state('org-create', {
         url: '/org/:organizationId',
         templateUrl: 'partials/create-org.html',
@@ -52,6 +51,13 @@ angular.module('routes', ['ui.router'])
         url: '/orgs/:organizationId/marketplace',
         templateUrl: 'partials/marketplace/marketplace.html',
         controller: 'marketplaceController'
+      })
+      .state('service-details', {
+        url: '/orgs/:organizationId/services/:serviceId/details',
+        templateUrl: 'partials/marketplace/service-details.html',
+        params: {
+          service: null
+        }
       })
       .state('users', {
         url: '/orgs/:organizationId/users',

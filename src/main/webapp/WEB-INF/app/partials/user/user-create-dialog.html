@@ -22,15 +22,15 @@
           </md-input-container>
           <md-input-container>
             <label>First Name</label>
-            <input ng-model="createUserForm.firstname" ng-required="true">
+            <input ng-model="createUserForm.firstname" ng-required="true" minlength="3">
           </md-input-container>
           <md-input-container>
             <label>Last Name</label>
-            <input ng-model="createUserForm.lastname" ng-required="true">
+            <input ng-model="createUserForm.lastname" ng-required="true" minlength="3">
           </md-input-container>
           <md-input-container>
             <label>Password</label>
-            <input ng-model="createUserForm.password" ng-required="true">
+            <input ng-model="createUserForm.password" ng-required="true" type="password" minlength="6">
           </md-input-container>
           </div>
 

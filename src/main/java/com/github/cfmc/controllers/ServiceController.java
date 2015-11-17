@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.cfmc.api.model.Service;
+import com.github.cfmc.api.model.ServiceInstance;
+import com.github.cfmc.api.model.ServicePlan;
 import com.github.cfmc.api.model.base.CloudFoundryResource;
 import com.github.cfmc.api.model.base.CloudFoundryResources;
 import com.github.cfmc.api.repositories.RestRepository;
+import com.github.cfmc.api.repositories.UserRepository;
 
 /**
  * 
@@ -35,7 +38,12 @@ public class ServiceController {
 	@Autowired
     private RestRepository restRepository;
 	
+	@Autowired
+    private UserRepository userRepository;
+	
 	private static String V2_SERVICES = "v2/services";
+	private static String V2_SERVICE_PLANS = "v2/service_plans/";
+	
 
     @RequestMapping(value = "/services", method = GET)
     public @ResponseBody List<CloudFoundryResource<Service>> getServices(@RequestHeader("Authorization") String token) {
@@ -54,5 +62,19 @@ public class ServiceController {
     	restRepository.delete(token, V2_SERVICES, id);
     	return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    
+    
+    @RequestMapping(value = "/services/{id}/service_plans", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<ServicePlan>> getServicePlansForService(@PathVariable("id") final String id) {
+    	String token = userRepository.login();
+    	CloudFoundryResources<ServicePlan> servicePlans = restRepository.list(token, V2_SERVICES.concat("/").concat(id).concat("/service_plans"), 1, true);
+    	return servicePlans.getResources();
+    }
+    
+    @RequestMapping(value = "/service_plans/{id}/service_instances", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<ServiceInstance>> getServiceInstancesForServicePlan(@PathVariable("id") final String id) {
+    	String token = userRepository.login();
+    	CloudFoundryResources<ServiceInstance> serviceInstances = restRepository.list(token, V2_SERVICE_PLANS.concat(id).concat("/service_instances"), 1, true);
+    	return serviceInstances.getResources();
+    }
 }

@@ -6,7 +6,6 @@ angular.module('controllers')
   .controller('usersController',
     function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
       console.log('user controller');
-      $scope.state = $state;
       $scope.loading = true;
       $scope.blockInput = true;
 
