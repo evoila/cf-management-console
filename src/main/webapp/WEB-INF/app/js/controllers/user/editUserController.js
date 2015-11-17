@@ -108,8 +108,20 @@ angular.module('controllers')
       else
           Restangular.one(managedSpacesUrl + space.metadata.guid).remove();
     }
-
-
+    $scope.switchSpaceDeveloper = function(space) {
+      var spacesUrl = self.user.entity.spaces_url.replace('/v2', '') + '/';
+      if(space.userIsDeveloper)
+        Restangular.one(spacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
+      else
+          Restangular.one(spacesUrl + space.metadata.guid).remove();
+    }
+    $scope.switchSpaceAuditor = function(space) {
+      var auditedSpacesUrl = self.user.entity.audited_spaces_url.replace('/v2', '') + '/';
+      if(space.userIsAuditor)
+        Restangular.one(auditedSpacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
+      else
+          Restangular.one(auditedSpacesUrl + space.metadata.guid).remove();
+    }
 
 
 

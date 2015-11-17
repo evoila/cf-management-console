@@ -52,10 +52,17 @@ public class RestRepository {
      * @param path
      * @return
      */
-    public <T> CloudFoundryResources<T> list(String token, String path, int depth) {
-    	ResponseEntity<CloudFoundryResources<T>> responseEntity = exchange(token, apiBaseUri, 
+    public <T> CloudFoundryResources<T> list(String token, String path, int depth, boolean useDepth) {
+    	ResponseEntity<CloudFoundryResources<T>> responseEntity;
+    	if(useDepth)
+    		responseEntity = exchange(token, apiBaseUri, 
     			HttpMethod.GET, path.concat("?inline-relations-depth=" + depth), null, 
     			new ParameterizedTypeReference<CloudFoundryResources<T>>() {});
+    	else
+    		responseEntity = exchange(token, apiBaseUri, 
+        			HttpMethod.GET, path, null, 
+        			new ParameterizedTypeReference<CloudFoundryResources<T>>() {});
+    	
     	if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
     		 throw new RepositoryException("Cannot perform uaa get for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
     	}
@@ -193,6 +200,7 @@ public class RestRepository {
         }
 
         try {
+        	System.out.println("URL: " + baseUri.concat(path));
             return restTemplate.exchange(baseUri.concat(path), method, request, parameterizedTypeReference);
         } catch (HttpClientErrorException e) {
             throw new RepositoryException("Unable to perform exchange for path [" + path + "]", 

@@ -6,7 +6,7 @@
 	<md-subheader class="md-no-sticky">Currently available services</md-subheader>
 	<div layout="row" layout-sm="column" layout-wrap>
 		<md-card flex="33" ng-repeat="service in services" class="md-whiteframe-z2">
-			<md-card-content>
+			<md-card-content ng-click="showDetails(service, scope)" class="no-focus" style="cursor:pointer;">
 				<div layout="row">
 					<img ng-src="assets/png/{{service.entity.label}}.png">
 					<div layout="column">

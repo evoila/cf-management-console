@@ -10,9 +10,6 @@ angular.module('controllers')
       $scope.loading = true;
       $scope.organizationId = $state.params.organizationId;
       $scope.appSpace = null;
-
-      var menu = menu;
-
       $scope.isOpen = false;
       $scope.demo = {
         isOpen: false,
@@ -29,7 +26,7 @@ angular.module('controllers')
           $scope.appSpace = data[0].entity;
           data[0].entity.selected = true;
         }
-        spacesToSections(data);
+        menu.spacesToMenu($scope.organizationId, data);
         $scope.spaces = data;
         $scope.loading = false;
 
@@ -45,20 +42,7 @@ angular.module('controllers')
         });
       });
 
-      function spacesToSections(appSpaces) {
-        console.log("93428ur2839ru24389u")
-        menu.sections[0].pages = [];
-        angular.forEach (appSpaces, function(space, key) {
-            var page = {};
-            page.name = space.entity.name;
-            page.type = 'link';
-            page.state = 'space';
-            page.params = {
-              organizationId : $state.params.organizationId,
-              spaceId: space.metadata.guid };
-          menu.sections[0].pages.push(page);
-        });
-      }
+
 
       $scope.colorString = function(name) {
         var myColor = DesignService.stringColor(name);

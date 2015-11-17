@@ -5,55 +5,56 @@
 
 angular.module('controllers')
   .controller('registerController',
-    function RegisterController($scope, $state, $http, responseService, envService) {
+    function RegisterController($scope, $state, $http, responseService, envService, Restangular) {
       $scope.state = $state;
-      $scope.organizationValid = true;
+      $scope.organizationValid = false;
+      $scope.usernameExists = false;
 
       REST_API = envService.read('restApiUrl');
 
+
       $scope.checkOrgName = function(orgName) {
-        console.log(orgName);
-        var head = {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-            'Accept': 'application/json;charset=utf-8'
-          }
-        };
-        $http.get(REST_API + '/test', null, head).success(function(data) {
-          $scope.organizationValid = true;
-          console.log(JSON.stringify(data));
-        });
+        Restangular.one('organization/' + orgName).get().then(function(data) {
+          if(!data == true)
+            $scope.organizationValid = true;
+          else
+            $scope.organizationValid = false;
+        })
+      };
 
+      $scope.register = function(registerForm) {
+        if(!$scope.organizationValid)
+          alert('Todo: nice errors, warnings');
+
+        else {
+          $scope.loading = true;
+
+          Restangular.one('users').customPOST(undefined, undefined,({  username: registerForm.email, firstName: registerForm.firstname, lastName: registerForm.lastname, password: registerForm.password}),undefined).then(function(user) {
+            var createdUserId = user.metadata.guid;
+
+            var organisationContent = {
+              'name': registerForm.orgName,
+              'user_guids': [createdUserId],
+              'manager_guids': [createdUserId]
+            };
+
+            Restangular.all('organizations').post(organisationContent).then(function(organization) {
+              responseService.executeSuccess(user, null, 'login');
+
+            }, function(response) {
+                $scope.loading = false;
+                responseService.executeError(response, null, null, $scope, 'organization');
+            });
+
+          }, function(response) {
+              $scope.loading = false;
+              if(response.data.message.indexOf('409 Conflict') > -1)
+                  $scope.usernameExists = true;
+              else
+                responseService.executeError(response, null, null, $scope, 'user');
+          });
+        }
       };
 
 
-
-
-
-
-
-
-      $scope.register = function(userForm) {
-        var head = {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-            'Accept': 'application/json;charset=utf-8'
-          }
-        };
-        var data = $.param({
-          'username': userForm.email,
-          'firstName': userForm.firstName,
-          'lastName': userForm.lastName,
-          'password': userForm.password
-        });
-
-
-        $http.post(REST_API + '/users', data, head).success(function(data, status, headers, config) {
-          responseService.executeSuccess(data, headers, 'dashboard');
-        }).error(function(data, status, headers, config) {
-          responseService.executeError(data, status, headers, $scope, 'user');
-        });
-      };
-
-      return RegisterController;
     });

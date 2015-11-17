@@ -1,22 +1,19 @@
-<md-dialog aria-label="Details">
-
+<md-dialog aria-label="Create new user">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Create new user</h2>
-        <span flex></span>
       </div>
     </md-toolbar>
 
-
-    <md-dialog-content style="width:300px;min-width:200px;min-height:300px;max-width:800px;max-height:810px;">
+    <md-dialog-content style="width:300px;min-width:300px;min-height:300px;max-width:800px;max-height:810px;">
 
       <div flex ng-show="processingSubmit" layout="center center" layout-align="space-around">
         <md-progress-circular style="margin-top:30%" class="md-accent" md-mode="indeterminate"></md-progress-circular>
       </div>
 
 
-      <form  ng-hide="processingSubmit" name="createUserForm" ng-submit="submitCreateUserForm(createUserForm)">
+      <form name="createUserForm" ng-submit="submitCreateUserForm(createUserForm)">
         <!-- USERNAME -->
         <div class="form-group">
           <md-input-container>
@@ -25,15 +22,15 @@
           </md-input-container>
           <md-input-container>
             <label>First Name</label>
-            <input ng-model="createUserForm.firstname" ng-required="true">
+            <input ng-model="createUserForm.firstname" ng-required="true" minlength="3">
           </md-input-container>
           <md-input-container>
             <label>Last Name</label>
-            <input ng-model="createUserForm.lastname" ng-required="true">
+            <input ng-model="createUserForm.lastname" ng-required="true" minlength="3">
           </md-input-container>
           <md-input-container>
             <label>Password</label>
-            <input ng-model="createUserForm.password" ng-required="true">
+            <input ng-model="createUserForm.password" ng-required="true" type="password" minlength="6">
           </md-input-container>
           </div>
 

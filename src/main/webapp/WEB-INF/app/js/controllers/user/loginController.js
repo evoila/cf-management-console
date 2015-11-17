@@ -5,7 +5,7 @@
 
 angular.module('controllers')
   .controller('loginController',
-    function LoginController($scope, $state, $rootScope, Restangular, clientCacheService, $location, $http, responseService, envService) {
+    function LoginController($scope, $state, $rootScope, Restangular, clientCacheService, $location, $http, responseService, envService, menu) {
       $scope.state = $state;
       $scope.authenticating = false;
 
@@ -42,6 +42,7 @@ angular.module('controllers')
           Restangular.all('organizations').getList().then(function(data) {
             if (data.length > 0) {
               responseService.executeSuccess(data, headers, 'dashboard');
+              menu.orgsToMenu(data);
               $state.go('spaces', {
                   organizationId: data[0].metadata.guid
                 })

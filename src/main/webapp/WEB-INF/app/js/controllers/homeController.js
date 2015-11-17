@@ -4,7 +4,7 @@
 
 angular.module('controllers')
   .controller('homeController',
-    function HomeController($scope, $state, Restangular, $location, $mdSidenav, $rootScope, clientCacheService, $mdSidenav, menu) {      
+    function HomeController($scope, $state, Restangular, $location, $mdSidenav, $rootScope, clientCacheService, $mdSidenav, menu) {
       $scope.state = $state;
 
       var vm = this;
@@ -12,12 +12,13 @@ angular.module('controllers')
       vm.isOpen = isOpen;
       vm.toggleOpen = toggleOpen;
       vm.autoFocusContent = false;
-      vm.menu = menu;
 
       vm.status = {
         isFirstOpen: true,
         isFirstDisabled: false
       };
+
+
 
       $rootScope.isAuthenticated = clientCacheService.isAuthenticated();
       if (!clientCacheService.isAuthenticated()) {
@@ -27,12 +28,8 @@ angular.module('controllers')
       } else {
         Restangular.all('organizations').getList().then(function(data) {
           $scope.organizations = data;
-          vm.menu.organization = data[0];
-
-          orgsToMenu(data);
-
-          usersToMenu();
-
+          menu.organization = data[0];
+          menu.orgsToMenu(data);
           $state.go('spaces', {
             organizationId: data[0].metadata.guid
           })
@@ -41,59 +38,11 @@ angular.module('controllers')
           $location.path('/login');
           $rootScope.isAuthenticated = false;
         }).then(function() {
-          /*$scope.$watch('organization', function(organization) {
-            $state.go('app-spaces', {
-              organizationId: organization.metadata.guid
-            }, {
-              reload: true
-            });
-          })*/
+          $scope.menu = menu;
         });
+
       }
 
-      /*Adds all organisations to the menu*/
-      function orgsToMenu(organizations) {
-        vm.menu.organizations.name = 'Organisations ('+organizations.length+')';
-        vm.menu.organizations.pages = [];
-        angular.forEach (organizations, function(orga, key) {
-            var page = {};
-            page.name = orga.entity.name;
-            page.type = 'link';
-            page.state = 'spaces';
-            page.params = {organizationId: orga.metadata.guid};
-            page.orga = orga;
-          vm.menu.organizations.pages.push(page);
-        });
-      }
-
-      function spacesToMenu(orga,spaces) {
-        console.log("josifjfiojsdfiojdifoj")
-        menu.sections[0].pages = [];
-        angular.forEach (spaces, function(space, key) {
-
-            var page = {};
-            page.name = space.entity.name;
-            page.type = 'link';
-            page.state = 'spaces';
-            page.params = {spaceId: space.metadata.guid};
-            console.log(space.metadata);
-          menu.sections[0].pages.push(page);
-        });
-      }
-
-      function usersToMenu() {
-        /*
-        menu.sections[1].pages = [];
-        angular.forEach (users, function(space, key) {
-            var page = {};
-            page.name = space.entity.name;
-            page.type = 'link';
-            page.state = 'users';
-            page.params = {organizationId: organization.metadata.guid};
-          menu.sections[1].pages.push(page);
-        });
-        */
-      }
 
       $scope.logout = function() {
         $rootScope.isAuthenticated = false;

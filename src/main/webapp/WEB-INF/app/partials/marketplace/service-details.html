@@ -1,0 +1,56 @@
+<div flex ng-show="loading" layout="center center" layout-align="space-around">
+	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-hide="loading" ng-controller="servicesController as ctrl">
+	<h2>{{ctrl.service.entity.label}}</h2>
+
+  <div layout="row" layout-wrap>
+
+    <md-card flex="100" flex-gt-lg="60">
+
+      <md-toolbar>
+        <div class="md-toolbar-tools">Service Plans</div>
+      </md-toolbar>
+
+	  	<md-content class="md-padding" layout="column">
+
+        <md-grid-list md-cols-sm="1" md-cols-gt-sm="2" md-cols-lg="3" md-cols-gt-lg="4" md-row-height="130px" md-gutter="4px">
+
+					<md-grid-tile ng-repeat="plan in ctrl.service.entity.service_plans" md-rowspan="1" md-colspan="1" md-colspan-sm="1">
+
+						<md-content class="md-whiteframe-1dp" style="width:100%;height:100%;position:relative;">
+							<p class="md-title" style="text-align:center;">{{ plan.entity.name }}</p>
+              <p style="text-align:center;">{{ plan.entity.free == 'true' ? 'Not free' : 'Free' }}</p>
+              <div layout="row" flex="100" style="position:absolute;bottom:0px;height:40px;width:100%;">
+                <div flex="50" style="text-align:center;">
+                  <md-button class="md-icon-button md-primary" aria-label="Show Details" style="max-height:40px;" hide-sm>
+                    <i class="fa fa-info-circle"></i>
+                    <md-tooltip md-direction="top" style="margin-top:20px;">Show Details</md-tooltip>
+                  </md-button>
+                  <md-button class="md-icon-button md-primary" aria-label="Show Details" style="width:100%;max-height:40px;margin:0;" show-sm hide-gt-sm>Details</md-button>
+                </div>
+                <div flex="50" style="text-align:center;">
+                  <md-button class="md-icon-button md-primary" aria-label="Show Instances" style="max-height:40px;" hide-sm>
+                    <i class="fa fa-server"></i>
+                    <md-tooltip md-direction="top" style="margin-top:20px;">Show Instances</md-tooltip>
+                  </md-button>
+                  <md-button class="md-icon-button md-primary" aria-label="Show Instances" style="width:100%;100%;max-height:40px;margin:0;" show-sm hide-gt-sm>Instances</md-button>
+                </div>
+              </div>
+						</md-content>
+
+    			</md-grid-tile>
+
+				</md-grid-list>
+
+
+	  	</md-content>
+
+		</md-card>
+
+
+
+
+</div>
+
+<pre>{{ctrl.service | json}}</pre>
