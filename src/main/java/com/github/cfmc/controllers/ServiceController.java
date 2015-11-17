@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.cfmc.api.model.Organization;
 import com.github.cfmc.api.model.Service;
 import com.github.cfmc.api.model.ServiceInstance;
 import com.github.cfmc.api.model.ServicePlan;
@@ -43,6 +44,7 @@ public class ServiceController {
 	
 	private static String V2_SERVICES = "v2/services";
 	private static String V2_SERVICE_PLANS = "v2/service_plans/";
+	private static String V2_SERVICE_INSTANCES = "v2/service_instances";
 	
 
     @RequestMapping(value = "/services", method = GET)
@@ -71,10 +73,17 @@ public class ServiceController {
     	return servicePlans.getResources();
     }
     
-    @RequestMapping(value = "/service_plans/{id}/service_instances", method = RequestMethod.GET)
+    @RequestMapping(value = "/service_instances/{id}/service_instances", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<ServiceInstance>> getServiceInstancesForServicePlan(@PathVariable("id") final String id) {
     	String token = userRepository.login();
     	CloudFoundryResources<ServiceInstance> serviceInstances = restRepository.list(token, V2_SERVICE_PLANS.concat(id).concat("/service_instances"), 1, true);
     	return serviceInstances.getResources();
     }
+    
+    @RequestMapping(value = "/service_instances", method = RequestMethod.POST)
+    public @ResponseBody CloudFoundryResource<ServiceInstance> createServiceInstanceFromServicePlan(@RequestBody ServiceInstance instance) {
+    	String token = userRepository.login();
+		return restRepository.save(token, V2_SERVICE_INSTANCES.concat("?accepts_incomplete=true"), new CloudFoundryResource<ServiceInstance>(instance));
+    }
+    
 }

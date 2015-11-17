@@ -5,7 +5,8 @@
 angular.module('controllers')
   .controller('spacesController',
     function SpacesController($scope, $state, $location, $mdDialog, Restangular, responseService, menu, DesignService) {
-
+      console.log('SpacesController');
+      
       $scope.state = $state;
       $scope.loading = true;
       $scope.organizationId = $state.params.organizationId;
