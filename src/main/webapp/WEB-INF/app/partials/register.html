@@ -1,63 +1,62 @@
-<div layout="column">
-  <md-content layout-padding>
-    <form ng-submit="register(registerForm)" name="meetingForm">
-      <h2>Create a Cloud Foundry account</h2>
-      <div layout="column" flex="50">
+<div flex layout="center center" layout-align="space-around" style="padding-top: 100px">
+  <div class="flex-sm-100 flex-md-70 flex-lg-70 flex-70">
+        <md-card>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                  <h2>
+                    <span>Register a new Account</span>
+                  </h2>
+                </div>
+            </md-toolbar>
+            <div layout="row" flex class="md-padding"  ng-init="organizationValid = false">
+              <div flex="60">
+                <md-input-container>
+                  <label>Organization</label>
+                  <input ng-model="registerForm.orgName" ng-required="true">
+                </md-input-container>
+              </div>
+              <div flex="40">
+                <button type="button" class="md-button md-default-theme" style="text-transform:none;" ng-click="checkOrgName(registerForm.orgName)">
+                  <i class="no-focus fa fa-search fa-lg" style=""></i><span style="margin-left:10px;">Check name</span>
+                </button>
+              </div>
+            </div>
+            <md-content class="md-padding">
+                <form name="userForm" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" ng-submit="register(registerForm)" ng-show="organizationValid">
+                    <md-input-container flex>
+                      <label>Email</label>
+                      <input ng-model="registerForm.email" ng-required="true">
+                    </md-input-container>
+                    <md-input-container flex>
+                      <label>Firstname</label>
+                      <input ng-model="registerForm.firstname" ng-required="true">
+                    </md-input-container>
+                    <md-input-container flex>
+                      <label>Lastname</label>
+                      <input ng-model="registerForm.lastname" ng-required="true">
+                    </md-input-container>
+                    <md-input-container flex>
+                      <label>Password</label>
+                      <input ng-model="registerForm.password" ng-required="true">
+                    </md-input-container>
 
-        <div layout="row" flex>
-          <div flex="45">
-            <md-input-container>
-              <label>Organization</label>
+                    <div class="layout-align-space-between-center layout-row">
+                        <md-input-container>
+                            <a class="md-primary md-button md-ink-ripple flex" ui-sref="forgot">Forgot password?</a>
+                        </md-input-container>
+                    </div>
 
-                <input ng-model="registerForm.orgName" ng-required="true">
-
-            </md-input-container>
-          </div>
-
-          <div flex="45">
-            <button type="button" class="md-button md-default-theme" style="text-transform:none;" ng-click="checkOrgName(registerForm.orgName)">
-              <i class="no-focus fa fa-search fa-lg" style=""></i><span style="margin-left:10px;">Check name</span>
-            </button>
-          </div>
-        </div>
-
-        <div ng-show="organizationValid">
-          <md-input-container flex>
-            <label>Email</label>
-            <input ng-model="registerForm.email" ng-required="true">
-          </md-input-container>
-          <md-input-container flex>
-            <label>Firstname</label>
-            <input ng-model="registerForm.firstname" ng-required="true">
-          </md-input-container>
-          <md-input-container flex>
-            <label>Lastname</label>
-            <input ng-model="registerForm.lastname" ng-required="true">
-          </md-input-container>
-          <md-input-container flex>
-            <label>Password</label>
-            <input ng-model="registerForm.password" ng-required="true">
-          </md-input-container>
-        </div>
-
-        <section layout="row" layout-sm="column" layout-align="end center">
-          <md-button class="md-fab detail md-warn md-fab-detail" aria-label="cancel" ng-click="state.go('login')">
-            <ng-md-icon icon="clear" size="40" style="fill:white"></ng-md-icon>
-            <md-tooltip>
-              Cancel
-            </md-tooltip>
-          </md-button>
-          <md-button class="md-fab detail md-primary md-fab-detail" aria-label="register" type="submit">
-            <ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
-            <md-tooltip>
-              Register
-            </md-tooltip>
-          </md-button>
-        </section>
-
-
-
-      </div>
-    </form>
-  </md-content>
+                    <div layout="row" layout-align="space-between center">
+                      <md-button ui-sref="login" class="md-primary" ng-click="state.go('login')">Already have an Account? Login!</md-button>
+                      <md-button class="md-fab detail md-primary md-fab-detail" aria-label="register" type="submit">
+                        <ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+                        <md-tooltip>
+                          Register
+                        </md-tooltip>
+                      </md-button>
+                    </div>
+                </form>
+            </md-content>
+        </md-card>
+    </div>
 </div>

@@ -67,24 +67,39 @@
       </md-sidenav>
     </div>
   </div>
-  <div flex tabIndex="-1" role="main">
-    <md-toolbar layout="row" class="md-whiteframe-z1">
-      <md-button ng-show="isAuthenticated" class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
-        <md-icon md-svg-icon="menu"></md-icon>
-      </md-button>
-      <h1>Cloud Foundry Management Console</h1>
-      <div ng-show="isAuthenticated" flex="15" layout="row">
-        <md-button class="md-raised md-warn" aria-label="logout" ng-click="logout()">
-          <md-tooltip>
-            Logout
-          </md-tooltip>
-          Logout
-          <!--ng-md-icon icon="logout" size="40" style="fill:white"></ng-md-icon-->
+  <div class="layout-column" flex>
+    <md-toolbar layout="row" layout-align="end end">
+      <div class="md-toolbar-tools md-whiteframe-z1" layout="row" layout-align="end end">
+        <md-button class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
+         Menu
         </md-button>
+          <md-menu md-offset="0 80" ng-show="isAuthenticated">
+            <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+              Profile
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button ui-sref="forgot"><span md-menu-align-target>Change Password</span></md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button ui-sref="email"><span md-menu-align-target>Change Email</span></md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button ui-sref="profile"><span md-menu-align-target>Profile</span></md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button ng-click="logout()"><span md-menu-align-target>Logout</span></md-button>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button><span md-menu-align-target>Help</span></md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
       </div>
     </md-toolbar>
 
-    <md-content flex id="content" style="padding-left: 30px; padding-right: 30px;">
+    <md-content class="layout-column flex">
       <md-card ng-show="isAuthenticated && !hideQuota">
         <md-card-content layout="row">
           <div layout="row" layout-sm="column" flex="100">
@@ -133,7 +148,7 @@
         </md-card-content>
       </md-card>
     </md-content>
-    <md-content ui-view flex id="content" ng-controller="alertController">
+    <md-content ui-view flex ng-controller="alertController">
     </md-content>
   </div>
 

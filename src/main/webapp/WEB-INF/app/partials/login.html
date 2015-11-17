@@ -1,33 +1,39 @@
-<div flex ng-show="authenticating" layout="center center" layout-align="space-around">
+<div ng-show="authenticating" flex layout="center center" layout-align="space-around">
   <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
 </div>
-<div ng-hide="authenticating">
-  <md-content layout-padding>
-    <form ng-submit="login(userForm)" name="meetingForm">
-      <div layout="column" flex="50">
-        <md-input-container>
-          <label>Username(email)</label>
-          <input ng-model="userForm.email" ng-required="true">
-        </md-input-container>
-        <md-input-container>
-          <label>Password</label>
-          <input type="password" ng-model="userForm.password" ng-required="true">
-        </md-input-container>
-        <section layout="row" layout-sm="column" layout-align="end center">
-          <md-button type="button" class="md-fab md-primary md-fab-detail" aria-label="add" ng-click="state.go('register')">
-            <md-tooltip>
-              New Account
-            </md-tooltip>
-            <ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
-          </md-button>
-          <md-button type="submit" class="md-fab md-primary md-fab-detail" aria-label="login">
-            <md-tooltip>
-              Login
-            </md-tooltip>
-            <ng-md-icon icon="login" size="40" style="fill:white"></ng-md-icon>
-          </md-button>
-        </section>
-      </div>
-    </form>
-  </md-content>
+<div ng-hide="authenticating" flex layout="center center" layout-align="space-around" style="padding-top: 100px">
+  <div class="flex-sm-100 flex-md-70 flex-lg-50 flex-40">
+        <md-card>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                  <h2>
+                    <span>Login</span>
+                  </h2>
+                </div>
+            </md-toolbar>
+            <md-content class="md-padding">
+                <form name="userForm" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" ng-submit="login(userForm)">
+                    <md-input-container class="md-input-invalid">
+                        <label>Username(email)</label>
+                        <input type="text" ng-model="userForm.email" required="true">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>password</label>
+                        <input type="password" ng-model="userForm.password" required="true">
+                    </md-input-container>
+
+                    <div class="layout-align-space-between-center layout-row">
+                        <md-input-container>
+                            <a class="md-primary md-button md-ink-ripple flex" ui-sref="forgot">Forgot password?</a>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row" layout-align="space-between center">
+                      <md-button ui-sref="register" class="md-primary" ng-click="state.go('register')">Don't have an account? Create one now</md-button>
+                      <md-button class="md-raised md-primary" ng-disabled="login.$invalid" type="submit">Log in</md-button>
+                    </div>
+                </form>
+            </md-content>
+        </md-card>
+    </div>
 </div>
