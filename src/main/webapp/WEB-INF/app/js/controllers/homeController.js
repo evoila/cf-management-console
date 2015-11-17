@@ -43,11 +43,6 @@ angular.module('controllers')
 
       }
 
-      $scope.$watch('menu', function() {
-        console.log("watch!!!");
-        $scope.menu = menu;
-      });
-
 
       $scope.logout = function() {
         $rootScope.isAuthenticated = false;

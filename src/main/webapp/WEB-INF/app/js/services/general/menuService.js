@@ -21,27 +21,7 @@ angular.module('services')
         icon: 'fa fa-cubes'
       }];
 
-      sections.push({
-        name: 'Users',
-        type: 'link',
-        state: 'users',
-        params: {},
-        icon: 'fa fa-group'
-      });
 
-      sections.push({
-        name: 'Marketplace',
-        type: 'link',
-        state: 'marketplace',
-        icon: 'fa fa-shopping-cart'
-      });
-
-      sections.push({
-        name: 'Domains',
-        type: 'link',
-        state: 'users',
-        icon: 'fa fa-group'
-      });
 
       var self;
 
@@ -91,8 +71,30 @@ angular.module('services')
                 spaceId: space.metadata.guid
               };
               sections[0].pages.push(page);
-              console.log("drinsdf");
           });
+          sections[1] = {
+            name: 'Users',
+            type: 'link',
+            state: 'users',
+            params: {"organizationId":orgaId},
+            icon: 'fa fa-group'
+          };
+
+          sections[2] = {
+            name: 'Marketplace',
+            type: 'link',
+            state: 'marketplace',
+            params: {"organizationId":orgaId},
+            icon: 'fa fa-shopping-cart'
+          };
+
+          sections[3] = {
+            name: 'Domains',
+            type: 'link',
+            state: 'users',
+            params: {"organizationId":orgaId},
+            icon: 'fa fa-group'
+          };
         }
       };
 
