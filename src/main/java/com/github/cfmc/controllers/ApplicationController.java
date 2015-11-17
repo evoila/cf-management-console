@@ -38,6 +38,8 @@ public class ApplicationController {
 	private RestRepository restRepository;
 	
 	private static final String V2_APPS = "v2/apps";
+	
+	private static final String V2_SERVICE_INSTANCES = "v2/service_instances";
 
 	@RequestMapping(value = "/applications/{id}", method = GET)    
     public @ResponseBody CloudFoundryResource<Application> getApplicationById(@RequestHeader("Authorization") String token, 
@@ -58,6 +60,19 @@ public class ApplicationController {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		Map<String, Object> values = restRepository.customList(token, V2_APPS.concat("/").concat(id).concat("/instances"), 1);
+		List<CloudFoundryResource<Instance>> instances = new ArrayList<>(); 
+		for (Object value : values.values()) {
+			instances.add(new CloudFoundryResource<Instance>(objectMapper.convertValue(value, Instance.class)));
+		}
+		return instances;
+    }
+	
+	@RequestMapping(value = "/applications/{id}/bindings/{bindingId}", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<Instance>> getApplicationInstances(@RequestHeader("Authorization") String token, 
+    		@PathVariable("id") String id, @PathVariable("bindingId") String bindingId) {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		Map<String, Object> values = restRepository.customList(token, V2_SERVICE_INSTANCES.concat("/").concat(bindingId), 1);
 		List<CloudFoundryResource<Instance>> instances = new ArrayList<>(); 
 		for (Object value : values.values()) {
 			instances.add(new CloudFoundryResource<Instance>(objectMapper.convertValue(value, Instance.class)));

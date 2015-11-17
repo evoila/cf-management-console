@@ -8,14 +8,14 @@ angular.module('routes', ['ui.router'])
 
     $stateProvider
       .state('app-log', {
-        url: '/orgs/:organizationId/apps/:applicationId/instances/:instanceId/files/:fileName/log',
+        url: '/orgs/:organizationId/space/:spaceId/apps/:applicationId/instances/:instanceId/files/:fileName/log',
         templateUrl: 'partials/app/app-log.html',
         controller: 'appLogController'
       })
-      .state('app-settings', {
-        url: '/orgs/:organizationId/apps/:applicationId/app-settings/',
-        templateUrl: 'partials/app/app-settings.html',
-        controller: 'appSettingsController'
+      .state('app', {
+        url: '/orgs/:organizationId/space/:spaceId/apps/:applicationId/',
+        templateUrl: 'partials/app/app.html',
+        controller: 'appController'
       })
       .state('org-create', {
         url: '/org/:organizationId',

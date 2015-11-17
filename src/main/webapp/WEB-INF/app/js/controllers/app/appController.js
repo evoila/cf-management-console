@@ -4,8 +4,8 @@
 
 
 angular.module('controllers')
-  .controller('appSettingsController',
-    function AppSettingsController($scope, $state, $mdDialog, $location, Restangular, responseService) {
+  .controller('appController',
+    function AppController($scope, $state, $mdDialog, $location, Restangular, responseService) {
 
       $scope.loading = true;
       $scope.organizationId = $state.params.organizationId;
@@ -13,6 +13,14 @@ angular.module('controllers')
       Restangular.one('applications', $state.params.applicationId).get().then(function(application) {
         $scope.application = application;
         $scope.loading = false;
+        console.log("Hello from the app controller: ",application);
+        angular.forEach(application.entity.service_bindings, function(binding) {
+            Restangular.one('applications', $state.params.applicationId).one('bindings', binding.entity.service_instance_guid).get().then(function(serviceBinding) {
+              console.log("Service Binding - write to var: "+serviceBinding);
+            });
+        })
+
+
       });
 
       Restangular.one('applications', $state.params.applicationId).all('instances').getList().then(function(instances) {

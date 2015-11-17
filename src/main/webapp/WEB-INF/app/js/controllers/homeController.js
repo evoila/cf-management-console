@@ -29,7 +29,10 @@ angular.module('controllers')
         Restangular.all('organizations').getList().then(function(data) {
           $scope.organizations = data;
           menu.organization = data[0];
-          menu.orgsToMenu(data);
+          menu.orgsToMenu(data, function() {
+              $scope.menu = menu;
+          });
+
           $state.go('spaces', {
             organizationId: data[0].metadata.guid
           })
@@ -37,8 +40,6 @@ angular.module('controllers')
           clientCacheService.clear;
           $location.path('/login');
           $rootScope.isAuthenticated = false;
-        }).then(function() {
-          $scope.menu = menu;
         });
 
       }

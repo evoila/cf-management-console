@@ -3,6 +3,8 @@
  */
 package com.github.cfmc.api.model;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -26,7 +28,13 @@ public class Instance {
     
     @JsonProperty("console_port")
     private int consolePort;
+    
+    @JsonProperty("guid")
+    private UUID guid;
 
+    @JsonProperty("url")
+    private String url;
+    
 	public String getState() {
 		return state;
 	}
@@ -73,6 +81,22 @@ public class Instance {
 
 	public void setConsolePort(int consolePort) {
 		this.consolePort = consolePort;
+	}
+
+	public UUID getGuid() {
+		return guid;
+	}
+
+	public void setGuid(UUID guid) {
+		this.guid = guid;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
     
 }

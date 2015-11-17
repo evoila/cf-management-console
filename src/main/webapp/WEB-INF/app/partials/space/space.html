@@ -3,17 +3,59 @@
 </div>
 <span class="single-space-title">APPS</span>
 <div layout="row" layout-wrap>
-	<div ng-repeat="app in s.entity.apps" flex-gt-md="{{app.expand}}" flex="100" id="single-space" ng-init="app.expand='50'">
+	<div ng-repeat="app in s.entity.apps" flex-sm="{{app.expand*4}}" flex-md="{{app.expand*2}}" flex-lg="{{app.expand*2}}" flex-gt-lg="{{app.expand}}" id="single-space" ng-init="app.expand='25'">
 		<md-card style="background-color:#{{colorString(app.entity.name)}}">
-				<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
+			<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
 			<md-card-content style="background-color:#fff">
-				{{servicePng(app.entity.name)}}
-				<h1 class="md-title" style="font-size:30px;font-style:#444">{{app.entity.name}}</h1>
-				<pre>{{app.entity | json}}</pre>
-			</md-card-content>
+						<h1 class="md-title" style="font-size:30px;font-style:#444">{{app.entity.name}}</h1>
+				    <md-list>
+				      <md-subheader class="md-no-sticky">Details</md-subheader>
+				      <md-list-item class="md-3-line">
+				        <div class="md-list-item-text" layout="column">
+									<div layout="row" layout-align="space-between center">
+										<p>Memory</p>
+										<p>{{app.entity.memory}}</p>
+									</div>
+									<div layout="row" layout-align="space-between center">
+										<p>Instances</p>
+										<p>{{app.entity.instances}}</p>
+									</div>
+									<div layout="row" layout-align="space-between center">
+										<p>Disk Quota</p>
+										<p>{{app.entity.disk_quota}}</p>
+									</div>
+									<div layout="row" layout-align="space-between center">
+										<p>State</p>
+										<p>{{app.entity.state}}</p>
+									</div>
+									<div layout="row" layout-align="space-between center">
+										<p>version</p>
+										<p>{{app.entity.version}}</p>
+									</div>
+									<div layout="row" layout-align="space-between center">
+										<p>Package State</p>
+										<p>{{app.entity.package_state}}</p>
+									</div>
+				        </div>
+				      </md-list-item>
+				      <md-divider ng-show="app.expand=='50'"></md-divider>
+				      <md-subheader ng-show="app.expand=='50'" class="md-no-sticky">Routes ({{app.entity.routes.length}})</md-subheader>
+							<md-list-item class="md-3-line" ng-show="app.expand=='50'">
+								<div class="md-list-item-text" layout="column">
+									<div layout="row" layout-align="space-between center" ng-repeat="route in app.entity.routes">
+										<p>Host</p>
+										<p>{{route.entity.host}}</p>
+									</div>
+								</div>
+							</md-list-item>
+				      <md-divider ng-show="app.expand=='50'" ></md-divider>
+				      <md-subheader ng-show="app.expand=='50'" class="md-no-sticky">Service Bindings ({{app.entity.service_bindings.length}})</md-subheader>
+				    </md-list>
+					</md-card-content>
 			<div class="md-actions" layout="row" layout-align="end center">
-        <md-button ng-show="app.expand=='50'" ng-click="app.expand='100'">More</md-button>
-				<md-button ng-show="app.expand=='100'" ng-click="app.expand='50'">Less</md-button>
+        <md-button ng-show="app.expand=='25'" ng-click="app.expand='50'">More</md-button>
+				<md-button ng-show="app.expand=='50'" ng-click="app.expand='25'">Less</md-button>
+				<md-button ui-sref="app({'applicationId':'{{app.metadata.guid}}','organizationId':'{{s.entity.organization.metadata.guid}}','spaceId':'{{s.metadata.guid}}'})">Rein</md-button>
       </div>
 		</md-card>
 	</div>

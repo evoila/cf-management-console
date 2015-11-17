@@ -6,7 +6,7 @@ angular.module('services')
     '$rootScope',
     '$state',
     function($location, $scope, $state) {
-      var organization = {};
+      var organizationInt = {};
 
       var organizations = {
         name: 'Organisations',
@@ -24,7 +24,7 @@ angular.module('services')
 
       return self = {
         sections: sections,
-        organization: organization,
+        organization: organizationInt,
         organizations: organizations,
 
         toggleSelectSection: function(section) {
@@ -41,7 +41,9 @@ angular.module('services')
         },
 
         /*Adds all organisations to the menu*/
-        orgsToMenu: function(orgas) {
+        orgsToMenu: function(orgas, callback) {
+          organizationInt = orgas[0];
+          console.log("myOrga: "+organizationInt.entity.name);
           organizations.name = 'Organizations ('+orgas.length+')';
           organizations.pages = [];
           angular.forEach (orgas, function(orga, key) {
@@ -53,6 +55,8 @@ angular.module('services')
               page.orga = orga;
               organizations.pages.push(page);
           });
+          if (typeof(callback) == "function")
+            callback();
         },
 
         spacesToMenu: function(orgaId, spaces) {
