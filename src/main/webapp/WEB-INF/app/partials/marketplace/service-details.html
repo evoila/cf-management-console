@@ -14,29 +14,35 @@
 
 	  	<md-content class="md-padding" layout="column">
 
-        <md-grid-list md-cols-sm="1" md-cols-gt-sm="2" md-cols-lg="3" md-cols-gt-lg="4" md-row-height="130px" md-gutter="4px">
+        <md-grid-list md-cols-sm="1" md-cols-gt-sm="1" md-cols-lg="2" md-cols-gt-lg="2" md-row-height="160px" md-gutter="4px">
 
 					<md-grid-tile ng-repeat="plan in ctrl.service.entity.service_plans" md-rowspan="1" md-colspan="1" md-colspan-sm="1">
 
-						<md-content class="md-whiteframe-1dp" style="width:100%;height:100%;position:relative;">
+						<md-content class="md-whiteframe-1dp" style="width:100%;height:100%;position:relative;" ng-mouseover="btClass='bt-active'" ng-mouseleave="btClass='bt-inactive'">
 							<p class="md-title" style="text-align:center;">{{ plan.entity.name }}</p>
               <p style="text-align:center;">{{ plan.entity.free == 'true' ? 'Not free' : 'Free' }}</p>
-              <div layout="row" flex="100" style="position:absolute;bottom:0px;height:40px;width:100%;">
-                <div flex="50" style="text-align:center;">
-                  <md-button class="md-icon-button md-primary" aria-label="Show Details" style="max-height:40px;" hide-sm>
-                    <i class="fa fa-info-circle"></i>
+
+              <div ng-class="btClass" layout="row" flex="100" style="position:absolute;bottom:10px;height:40px;width:100%;">
+                <div flex="33" style="text-align:center;">
+                  <md-button class="md-icon-button md-primary" aria-label="Show Details" style="max-height:40px;" ng-click="showServicePlanDetails(plan)">
+                    <i class="fa fa-info-circle fa-2x"></i>
                     <md-tooltip md-direction="top" style="margin-top:20px;">Show Details</md-tooltip>
                   </md-button>
-                  <md-button class="md-icon-button md-primary" aria-label="Show Details" style="width:100%;max-height:40px;margin:0;" show-sm hide-gt-sm>Details</md-button>
                 </div>
-                <div flex="50" style="text-align:center;">
-                  <md-button class="md-icon-button md-primary" aria-label="Show Instances" style="max-height:40px;" hide-sm>
-                    <i class="fa fa-server"></i>
+                <div flex="33" style="text-align:center;">
+                  <md-button class="md-icon-button md-primary" aria-label="Create Instances" style="max-height:40px;" ng-click="showCreateInstanceDialog(plan)">
+                    <i class="fa fa-plus fa-2x"></i>
+                    <md-tooltip md-direction="top" style="margin-top:20px;">Create Instance</md-tooltip>
+                  </md-button>
+                </div>
+								<div flex="33" style="text-align:center;">
+                  <md-button class="md-icon-button md-primary" aria-label="Show Instances" style="max-height:40px;">
+                    <i class="fa fa-server fa-2x"></i>
                     <md-tooltip md-direction="top" style="margin-top:20px;">Show Instances</md-tooltip>
                   </md-button>
-                  <md-button class="md-icon-button md-primary" aria-label="Show Instances" style="width:100%;100%;max-height:40px;margin:0;" show-sm hide-gt-sm>Instances</md-button>
                 </div>
               </div>
+
 						</md-content>
 
     			</md-grid-tile>

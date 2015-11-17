@@ -64,9 +64,13 @@ md-switch.orange.md-checked .md-thumb {
   background-color: #D0711D !important;
 }
 
-
-
-
+.bt-inactive i {
+  color: #000 !important;
+  opacity: 0.3;
+}
+.bt-active i {
+  opacity: 1;
+}
 
 
 
