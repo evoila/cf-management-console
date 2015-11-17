@@ -32,7 +32,7 @@ angular.module('directives')
         };
         scope.toggle = function(section) {
           if (section.state != null)
-            $state.go(section.state);
+            $state.go(section.state, section.params);
           controller.toggleOpen(scope.section);
         };
 

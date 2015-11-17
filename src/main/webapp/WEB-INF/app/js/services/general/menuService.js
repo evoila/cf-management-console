@@ -6,7 +6,6 @@ angular.module('services')
     '$rootScope',
     '$state',
     function($location, $scope, $state) {
-      console.log('menu service');
       var organization = {};
 
       var organizations = {
@@ -20,8 +19,6 @@ angular.module('services')
         state: 'spaces',
         icon: 'fa fa-cubes'
       }];
-
-
 
       var self;
 
@@ -60,6 +57,7 @@ angular.module('services')
 
         spacesToMenu: function(orgaId, spaces) {
           sections[0].pages = [];
+          sections[0].params = {"organizationId":orgaId};
 
           angular.forEach (spaces, function(space, key) {
               var page = {};
