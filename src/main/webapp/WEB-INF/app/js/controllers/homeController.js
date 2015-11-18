@@ -6,16 +6,10 @@ angular.module('controllers')
   .controller('homeController',
     function HomeController($scope, $state, Restangular, $location, $mdSidenav, $rootScope, clientCacheService, $mdSidenav, menu) {
       $scope.state = $state;
-
       var vm = this;
       vm.isOpen = isOpen;
       vm.toggleOpen = toggleOpen;
-      vm.autoFocusContent = false;
-
-      vm.status = {
-        isFirstOpen: true,
-        isFirstDisabled: false
-      };
+      $scope.menu = menu;
 
       $rootScope.isAuthenticated = clientCacheService.isAuthenticated();
       if (!clientCacheService.isAuthenticated()) {
@@ -23,18 +17,14 @@ angular.module('controllers')
           $state.go('login');
         }
       } else {
-        Restangular.all('organizations').getList().then(function(data) {
-          $scope.organizations = data;
-          menu.organization = data[0];
-          menu.orgsToMenu(data, function() {
-              $scope.menu = menu;
-          });
-        }, function(response) {
-          clientCacheService.clear;
-          $state.go('login');
-          $rootScope.isAuthenticated = false;
-        });
+        menu.initMenu(function(organization) {
+            if ($state.current.name == 'login')
+                $state.go('spaces', { organizationId : organization.metadata.guid });
+            else
+              $state.go($state.current.name, $state.params);          
 
+            $scope.menu = menu;
+        });
       }
 
       $scope.logout = function() {
@@ -48,10 +38,6 @@ angular.module('controllers')
       $scope.openMenu = function() {
         $mdSidenav('left').toggle();
       };
-
-      $scope.updateTitle = function(name) {
-        $scope.appTitle = name;
-      }
 
       function isOpen(section) {
         return menu.isSectionSelected(section);

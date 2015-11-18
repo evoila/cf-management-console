@@ -1,5 +1,5 @@
 <div flex layout="center center" layout-align="space-around" style="padding-top: 100px">
-  <div class="flex-sm-100 flex-md-70 flex-lg-70 flex-70">
+  <div flex-sm="100" flex-md="70" flex-lg="60" flex="30">
         <md-card>
             <md-toolbar>
                 <div class="md-toolbar-tools">
@@ -8,12 +8,16 @@
                   </h2>
                 </div>
             </md-toolbar>
-            <div layout="row" flex class="md-padding"  ng-init="organizationValid = false">
-              <md-input-container>
-                <label>Organization</label>
-                <input ng-model="registerForm.orgName" ng-required="true" ng-change="checkOrgName(registerForm.orgName)" minlength="3">
-              </md-input-container>
-              <p ng-show="!organizationValid && (registerForm.orgName.length)">Name already exists</p>
+            <div layout="row" flex class="md-padding" ng-init="organizationValid = false">
+              <form>
+                <md-input-container>
+                  <label>Organization</label>
+                  <input ng-model="registerForm.orgName" ng-required="true" ng-change="checkOrgName(registerForm.orgName)" minlength="3">
+                </md-input-container>
+                <md-input-container>
+                  <label ng-show="!organizationValid && (registerForm.orgName.length)" style="color: red">Name already exists</label>
+                </md-input-container>
+              </form>
             </div>
             <md-content class="md-padding">
                 <form name="userForm" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" ng-submit="register(registerForm)" ng-show="organizationValid">

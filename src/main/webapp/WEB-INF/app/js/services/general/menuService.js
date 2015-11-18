@@ -5,7 +5,8 @@ angular.module('services')
     '$location',
     '$rootScope',
     '$state',
-    function($location, $scope, $state) {
+    'Restangular',
+    function($location, $scope, $state, Restangular) {
       var organizationInt = {};
 
       var organizations = {
@@ -40,7 +41,19 @@ angular.module('services')
           self.currentPage = page;
         },
 
-        /*Adds all organisations to the menu*/
+        initMenu: function(callback) {
+          Restangular.all('organizations').getList().then(function(data) {            
+            self.organization = data[0];
+            self.orgsToMenu(data, function() {
+              Restangular.one('organizations', self.organization.metadata.guid).all('spaces').getList().then(function(spaces) {
+                self.spacesToMenu(self.organization.metadata.guid, spaces);
+              });
+              if (typeof(callback) == "function")
+                callback(self.organization);
+            });
+          });
+        },
+
         orgsToMenu: function(orgas, callback) {
           organizationInt = orgas[0];
           console.log("myOrga: "+organizationInt.entity.name);
@@ -55,13 +68,14 @@ angular.module('services')
               page.orga = orga;
               organizations.pages.push(page);
           });
+
           if (typeof(callback) == "function")
             callback();
         },
 
         spacesToMenu: function(orgaId, spaces) {
           sections[0].pages = [];
-          sections[0].params = {"organizationId":orgaId};
+          sections[0].params = { "organizationId" : orgaId };
 
           angular.forEach (spaces, function(space, key) {
               var page = {};
@@ -99,13 +113,6 @@ angular.module('services')
           };
         }
       };
-
-
-
-      function sortByHumanName(a, b) {
-        return (a.humanName < b.humanName) ? -1 :
-          (a.humanName > b.humanName) ? 1 : 0;
-      }
 
     }
   ])

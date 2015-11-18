@@ -18,8 +18,6 @@ angular.module('controllers')
       }
 
       $scope.login = function(userForm) {
-        $scope.authenticating = true;
-
         var data = transformRequest({
           'grant_type': 'password',
           'username': userForm.email,
@@ -34,21 +32,10 @@ angular.module('controllers')
 
         $http.post(REST_API + '/login', data, head).success(function(data, status, headers, config) {
           clientCacheService.authenticate(data);
-
-          Restangular.all('organizations').getList().then(function(data) {
-            if (data.length > 0) {
-              responseService.success(data, "Successfully logged in!", 'spaces');
-              menu.orgsToMenu(data);
-              $state.go('spaces', {
-                  organizationId: data[0].metadata.guid
-              })
-            } else {
-              $scope.authenticating = false;
-              responseService.error(data, "You are not associated with any organization, please ask an organization manager to add you an organization.");
-            }
+          menu.initMenu(function(organization) {      
+              $state.go('spaces', { organizationId : organization.metadata.guid });
           });
         }).error(function(data, status, headers) {
-          $scope.authenticating = false;
           responseService.error(data, "Invalid user credentials - or endpoint not reachable");
         });
       };
