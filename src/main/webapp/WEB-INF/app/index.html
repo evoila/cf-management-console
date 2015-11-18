@@ -75,8 +75,8 @@
         <md-button class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
          Menu
         </md-button>
-          <md-menu md-offset="0 80" ng-show="isAuthenticated">
-            <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+          <md-menu md-offset="0 80" ng-show="isAuthenticated" style="min-width:80px;">
+            <md-button aria-label="Open profile menu" class="md-primary" ng-click="$mdOpenMenu($event)">
               Profile
             </md-button>
             <md-menu-content width="4">
