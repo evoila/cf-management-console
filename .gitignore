@@ -36,3 +36,4 @@ src/main/webapp/WEB-INF/app/lib/restangular
 src/main/webapp/WEB-INF/app/lib/underscore
 src/main/webapp/WEB-INF/app/lib/zeroclipboard
 src/main/webapp/WEB-INF/app/lib/angular-environment
+src/main/webapp/WEB-INF/app/lib/angular-loading-bar

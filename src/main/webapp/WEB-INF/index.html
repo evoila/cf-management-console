@@ -13,9 +13,11 @@
   <link rel="stylesheet" href="assets/fonts.css" />
   <link rel="stylesheet" href="./lib/angular-material/angular-material.css" />
   <link rel="stylesheet" href="lib/angular-material-data-table/dist/md-data-table.min.css" />
+  <link rel="stylesheet" href="lib/angular-loading-bar/build/loading-bar.css" />
   <link rel="stylesheet" href="assets/app.css" />
   <link rel="stylesheet" href="assets/menu.css" />
   <link rel="stylesheet" href="assets/ngAnimate.css" />
+  <link rel="stylesheet" href="assets/custom-loading-bar.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
   <style type="text/css">
@@ -67,25 +69,40 @@
       </md-sidenav>
     </div>
   </div>
-  <div flex="" tabIndex="-1" role="main">
-    <md-toolbar layout="row" class="md-whiteframe-z1">
-      <md-button ng-show="isAuthenticated" class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
-        <md-icon md-svg-icon="menu"></md-icon>
-      </md-button>
-      <h1>Cloud Foundry Management Console</h1>
-      <div ng-show="isAuthenticated" flex="15" layout="row">
-        <md-button class="md-raised md-warn" aria-label="logout" ng-click="logout()">
-          <md-tooltip>
-            Logout
-          </md-tooltip>
-          Logout
-          <!--ng-md-icon icon="logout" size="40" style="fill:white"></ng-md-icon-->
+  <div class="layout-column" flex="">
+    <md-toolbar layout="row" layout-align="end end">
+      <div class="md-toolbar-tools md-whiteframe-z1" layout="row" layout-align="end end">
+        <md-button class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
+         Menu
         </md-button>
+          <md-menu md-offset="0 80" ng-show="isAuthenticated">
+            <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+              Profile
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button ui-sref="forgot"><span md-menu-align-target>Change Password</span></md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button ui-sref="email"><span md-menu-align-target>Change Email</span></md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button ui-sref="profile"><span md-menu-align-target>Profile</span></md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button ng-click="logout()"><span md-menu-align-target>Logout</span></md-button>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button><span md-menu-align-target>Help</span></md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
       </div>
     </md-toolbar>
 
-    <div flex="" id="content" style="padding-left: 30px; padding-right: 30px;">
-      <md-card ng-show="isAuthenticated && !hideQuota">
+    <div class="layout-column md-padding">
+      <md-card ng-show="isAuthenticated && !hideQuota" style="margin: 15px">
         <md-card-content layout="row">
           <div layout="row" layout-sm="column" flex="100">
             <div layout="column" flex="20">
@@ -132,7 +149,7 @@
           </div>
         </md-card-content>
       </md-card>
-    <div class="md-padding" ui-view flex="" id="content" ng-controller="alertController"></div>
+    <div class="md-padding" ui-view flex ng-controller="alertController"></div>
   </div>
 
   <script src="./lib/angular/angular.js"></script>
@@ -144,12 +161,11 @@
   <script src="./lib/zeroclipboard/dist/ZeroClipboard.min.js"></script>
   <script src="./lib/restangular/dist/restangular.min.js"></script>
   <script src="./lib/underscore/underscore-min.js"></script>
-  <script type="text/javascript" src="./lib/angular-material/angular-material.js"></script>
-  <script type="text/javascript" src="lib/angular-material-data-table/dist/md-data-table.min.js"></script>
-  <script type="text/javascript" src="lib/angular-environment/src/angular-environment.js"></script>
+  <script src="./lib/angular-material/angular-material.js"></script>
+  <script src="./lib/angular-material-data-table/dist/md-data-table.min.js"></script>
+  <script src="./lib/angular-environment/src/angular-environment.js"></script>
+  <script src="./lib/angular-loading-bar/build/loading-bar.min.js"></script>
 
-  <!--script src="./js/providers/providers.js"></script>
-  <script src="./js/providers/general/clientCacheProvider.js"></script-->
 
   <script src="./js/services/services.js"></script>
   <script src="./js/services/general/clientCacheService.js"></script>
@@ -161,17 +177,20 @@
   <script src="./js/services/general/menuService.js"></script>
   <script src="./js/services/general/designService.js"></script>
 
+  <script src="./js/directives/directives.js"></script>
+  <script src="./js/directives/menuSingleItemDirective.js"></script>
+  <script src="./js/directives/menulinkDirective.js"></script>
+  <script src="./js/directives/menuToggleDirective.js"></script>
+
   <script src="./js/controllers/controllers.js"></script>
   <script src="./js/controllers/homeController.js"></script>
 
-  <script src="./js/controllers/app/appLogController.js"></script>
-  <script src="./js/controllers/app/appSettingsController.js"></script>
+  <script src="./js/controllers/application/applicationController.js"></script>
 
-  <script src="./js/controllers/general/marketPlaceController.js"></script>
+  <script src="./js/controllers/general/marketplaceController.js"></script>
   <script src="./js/controllers/service/servicesController.js"></script>
 
-  <script src="./js/controllers/org/organizationController.js"></script>
-  <script src="./js/controllers/org/organizationUserController.js"></script>
+  <script src="./js/controllers/organization/organizationController.js"></script>
 
   <script src="./js/controllers/space/spaceController.js"></script>
   <script src="./js/controllers/space/spacesController.js"></script>
@@ -183,11 +202,6 @@
   <script src="./js/controllers/user/editUserController.js"></script>
 
   <script src="./js/controllers/components/alertController.js"></script>
-
-  <script src="./js/directives/directives.js"></script>
-  <script src="./js/directives/menuSingleItemDirective.js"></script>
-  <script src="./js/directives/menulinkDirective.js"></script>
-  <script src="./js/directives/menuToggleDirective.js"></script>
 
   <script src="./js/routes.js"></script>
   <script src="./js/app.js"></script>
