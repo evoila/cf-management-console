@@ -72,13 +72,9 @@ angular.module('controllers')
       };
 
       $scope.submitCreateUserForm = function(form) {
-        console.log('Submitting: ' + form.username + ', ' + form.firstname + ', ' + form.lastname + ', ' + form.password);
-
-        // rest: Create User
         Restangular.one('users').customPOST(undefined, undefined,({  username: form.username, firstName: form.firstname, lastName: form.lastname, password: form.password}),undefined).then(function(user) {
           var createdUserId = user.metadata.guid;
 
-          // rest: add new user to orga
           Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(user){
             responseService.executeSuccess(user, null, 'orgs/' + $scope.orgId +'/users');
           }, function(response) {
@@ -99,8 +95,4 @@ angular.module('controllers')
         $mdDialog.cancel();
       };
 
-
-
-
-
-    });
+});

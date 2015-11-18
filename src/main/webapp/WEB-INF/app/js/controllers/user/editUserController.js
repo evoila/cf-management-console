@@ -123,13 +123,5 @@ angular.module('controllers')
           Restangular.one(auditedSpacesUrl + space.metadata.guid).remove();
     }
 
-
-
-
-
-
-
-
-
     $scope.loading = false;
 });

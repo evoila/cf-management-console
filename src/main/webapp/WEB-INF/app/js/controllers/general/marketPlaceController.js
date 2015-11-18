@@ -18,15 +18,4 @@ angular.module('controllers')
         $state.go('service-details', {organizationId : $scope.orgId, serviceId : service.metadata.guid, service : service});
       };
 
-
-
-
-
-
-
-
-
-
-
-
-    });
+});

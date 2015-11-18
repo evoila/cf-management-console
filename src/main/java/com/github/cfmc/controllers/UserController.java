@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.cfmc.api.model.Organization;
 import com.github.cfmc.api.model.OrganizationUser;
-import com.github.cfmc.api.model.Summary;
+import com.github.cfmc.api.model.Space;
 import com.github.cfmc.api.model.UserInfo;
 import com.github.cfmc.api.model.base.CloudFoundryResource;
 import com.github.cfmc.api.model.base.CloudFoundryResources;
@@ -78,9 +78,9 @@ public class UserController {
     }
 		
 	@RequestMapping(value = "/users/{userId}/billing_managed_organizations", method = RequestMethod.GET)
-    public @ResponseBody List<CloudFoundryResource<Summary>> getBillingManagedOrgsForUser(@PathVariable("userId") final String userId) {
+    public @ResponseBody List<CloudFoundryResource<Space>> getBillingManagedOrgsForUser(@PathVariable("userId") final String userId) {
 		String token = userRepository.login();
-    	CloudFoundryResources<Summary> billingManagedOrgs = restRepository.list(token, V2_USERS.concat(userId).concat("/billing_managed_organizations"), 2, true);
+    	CloudFoundryResources<Space> billingManagedOrgs = restRepository.list(token, V2_USERS.concat(userId).concat("/billing_managed_organizations"), 2, true);
     	return billingManagedOrgs.getResources();
     }
 	
@@ -98,9 +98,9 @@ public class UserController {
     }	
 	
 	@RequestMapping(value = "/users/{userId}/audited_organizations", method = RequestMethod.GET)
-    public @ResponseBody List<CloudFoundryResource<Summary>> getAuditedOrgsForUser(@PathVariable("userId") final String userId) {
+    public @ResponseBody List<CloudFoundryResource<Space>> getAuditedOrgsForUser(@PathVariable("userId") final String userId) {
 		String token = userRepository.login();
-    	CloudFoundryResources<Summary> auditedOrgs = restRepository.list(token, V2_USERS.concat(userId).concat("/audited_organizations"), 2, true);
+    	CloudFoundryResources<Space> auditedOrgs = restRepository.list(token, V2_USERS.concat(userId).concat("/audited_organizations"), 2, true);
     	return auditedOrgs.getResources();
     }
 	
@@ -118,9 +118,9 @@ public class UserController {
     }
 	
     @RequestMapping(value = "/users/{userId}/managed_spaces", method = RequestMethod.GET)
-    public @ResponseBody List<CloudFoundryResource<Summary>> getManagedSpacesForUser(@PathVariable("userId") final String userId) {
+    public @ResponseBody List<CloudFoundryResource<Space>> getManagedSpacesForUser(@PathVariable("userId") final String userId) {
     	String token = userRepository.login();
-    	CloudFoundryResources<Summary> managedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/managed_spaces"), 2, true);
+    	CloudFoundryResources<Space> managedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/managed_spaces"), 2, true);
     	return managedSpaces.getResources();
     }
   
@@ -138,9 +138,9 @@ public class UserController {
     }
     
     @RequestMapping(value = "/users/{userId}/spaces", method = RequestMethod.GET)
-    public @ResponseBody List<CloudFoundryResource<Summary>> getSpacesForUser(@PathVariable("userId") final String userId) {
+    public @ResponseBody List<CloudFoundryResource<Space>> getSpacesForUser(@PathVariable("userId") final String userId) {
     	String token = userRepository.login();
-    	CloudFoundryResources<Summary> spaces = restRepository.list(token, V2_USERS.concat(userId).concat("/spaces"), 2, true);
+    	CloudFoundryResources<Space> spaces = restRepository.list(token, V2_USERS.concat(userId).concat("/spaces"), 2, true);
     	return spaces.getResources();
     }
 
@@ -158,9 +158,9 @@ public class UserController {
     }
     
     @RequestMapping(value = "/users/{userId}/audited_spaces", method = RequestMethod.GET)
-    public @ResponseBody List<CloudFoundryResource<Summary>> getAuditedSpacesForUser(@PathVariable("userId") final String userId) {
+    public @ResponseBody List<CloudFoundryResource<Space>> getAuditedSpacesForUser(@PathVariable("userId") final String userId) {
     	String token = userRepository.login();
-    	CloudFoundryResources<Summary> auditedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/audited_spaces"), 2, true);
+    	CloudFoundryResources<Space> auditedSpaces = restRepository.list(token, V2_USERS.concat(userId).concat("/audited_spaces"), 2, true);
     	return auditedSpaces.getResources();
     }
     

@@ -7,14 +7,9 @@ angular.module('routes', ['ui.router'])
     $urlRouterProvider.otherwise("/spaces");
 
     $stateProvider
-      .state('app-log', {
-        url: '/orgs/:organizationId/space/:spaceId/apps/:applicationId/instances/:instanceId/files/:fileName/log',
-        templateUrl: 'partials/app/app-log.html',
-        controller: 'appLogController'
-      })
       .state('app', {
         url: '/orgs/:organizationId/space/:spaceId/apps/:applicationId/',
-        templateUrl: 'partials/app/app.html',
+        templateUrl: 'partials/application/app.html',
         controller: 'appController'
       })
       .state('org-create', {

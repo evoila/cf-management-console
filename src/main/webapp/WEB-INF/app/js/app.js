@@ -2,7 +2,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
     'ngMdIcons', 'ngClipboard', 'restangular','ngAnimate', 'environment'
   ])
   .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, RestangularProvider/*, REST_API*/, envServiceProvider) {
-    console.log('config');
+    
     envServiceProvider.config({
         domains: {
             development: ['localhost', '127.0.0.1'],
@@ -18,45 +18,28 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
         }
     });
     envServiceProvider.check();
-
     ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");
-
-    //RestangularProvider.setBaseUrl(REST_API);
-
-    /*  RestangularProvider.setErrorInterceptor(function(response, deferred, responseHandler) {
-      clientCacheProvider.forceLogin();
-		});*/
-
-    //    RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response, deferred) {
-    RestangularProvider.setDefaultHeaders({
-      "Content-Type": "application/json;charset=UTF-8",
-      "Accept": "application/json;charset=UTF-8",
-      //    "Authorization" : response.headers('Authorization')
-    });
-    //  });
-
 
     $mdThemingProvider.definePalette('amazingPaletteName', {
       '50': 'ae2225',
       '100': 'ffcdd2',
       '200': 'ef9a9a',
       '300': 'e57373',
-      '400': '467fd3', //lightblue
-      '500': '2b5086', //blue
-      '600': 'ae2225', //red
-      '700': 'ae2225', //red when buttons are klicked
+      '400': '467fd3',
+      '500': '2b5086',
+      '600': 'ae2225',
+      '700': 'ae2225',
       '800': 'c62828',
       '900': 'b71c1c',
       'A100': 'ff8a80',
       'A200': 'ff5252',
       'A400': 'ff1744',
-      'A700': '78a3e1', // lighter blue
-      'contrastDefaultColor': 'light', // whether, by default, text (contrast)
-      // on this palette should be dark or light
-      'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+      'A700': '78a3e1',
+      'contrastDefaultColor': 'light',
+      'contrastDarkColors': ['50', '100',
         '200', '300', '400', 'A100'
       ],
-      'contrastLightColors': undefined // could also specify this if default was 'dark'
+      'contrastLightColors': undefined
     });
 
     $mdThemingProvider.theme('default')
@@ -81,26 +64,27 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       .icon("twitter", "./../assets/svg/twitter.svg", 512)
       .icon("phone", "./..assets/svg/phone.svg", 512);
 
-  })//.constant('REST_API', 'http://localhost:8080/cfmc/api')
-
+  })
   .run(function($rootScope, $state, $http, clientCacheService, Restangular, envService) {
     console.log('run');
-    Restangular.setBaseUrl(envService.read('restApiUrl'));
-
-    $rootScope.forceLogin = function(status) {
-      if (status === 401) {
-        clientCacheService.logout();
-        $state.go('login');
+    Restangular.setBaseUrl(envService.read('restApiUrl'))
+    .setDefaultHeaders({
+      "Content-Type": "application/json;charset=UTF-8",
+      "Accept": "application/json;charset=UTF-8",
+    })
+    .setErrorInterceptor(function(response, deferred, responseHandler) {
+      if([401,403].indexOf(response.status) != -1) {
+        return false;
       }
-    };
+      return true;
+    })
 
     if (clientCacheService.getUser() != null) {
       var token = clientCacheService.getUser().accessToken;
-
       $http.defaults.headers.common['Authorization'] = 'bearer ' + token;
     } else {
-      console.debug("Force Login will be called, because you user cannot be found")
-      $rootScope.forceLogin();
+      clientCacheService.logout();
+      $state.go('login');
     }
 
   });

@@ -74,7 +74,7 @@ public class Organization {
 	private CloudFoundryResource<OrganizationQuota> quota;
 	
 	@JsonProperty("spaces")
-	private CloudFoundryResources<Summary> spaces;
+	private CloudFoundryResources<Space> spaces;
 
 	public String getName() {
 		return name;
@@ -220,11 +220,11 @@ public class Organization {
 		this.quota = quota;
 	}
 
-	public CloudFoundryResources<Summary> getSpaces() {
+	public CloudFoundryResources<Space> getSpaces() {
 		return spaces;
 	}
 
-	public void setSpaces(CloudFoundryResources<Summary> spaces) {
+	public void setSpaces(CloudFoundryResources<Space> spaces) {
 		this.spaces = spaces;
 	}
 
