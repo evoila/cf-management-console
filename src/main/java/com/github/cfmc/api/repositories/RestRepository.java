@@ -25,6 +25,7 @@ import com.github.cfmc.api.model.base.CloudFoundryResources;
  *
  */
 @Service
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class RestRepository {
 
     @Autowired
@@ -89,6 +90,22 @@ public class RestRepository {
      * 
      * @param token
      * @param path
+     * @return
+     */
+    public <T> Map<String, T> customOne(String token, String path, String id, int depth) {
+    	ResponseEntity<Map<String, T>> responseEntity = exchange(token, apiBaseUri, HttpMethod.GET, 
+    			path.concat("?inline-relations-depth=" + depth), null, 
+    			new ParameterizedTypeReference<Map<String, T>>() {});
+    	if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+    		 throw new RepositoryException("Cannot perform uaa get for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
+    	}
+    	return responseEntity.getBody();
+    }
+    
+    /**
+     * 
+     * @param token
+     * @param path
      * @param id
      * @return
      */
@@ -133,9 +150,7 @@ public class RestRepository {
         }
         return responseEntity.getBody();
     }
-    
-   
-    
+     
     /**
      * 
      * @param token
@@ -184,7 +199,6 @@ public class RestRepository {
         return responseEntity.getBody();
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     private <T> ResponseEntity<T> exchange(String token, String baseUri, HttpMethod method, String path, 
     		T resource, ParameterizedTypeReference<T> parameterizedTypeReference) {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -208,7 +222,6 @@ public class RestRepository {
         }
     }
     
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     private <T> ResponseEntity<CloudFoundryResource<T>> exchangev2(String token, String baseUri, HttpMethod method, String path, T resource,
     		ParameterizedTypeReference<CloudFoundryResource<T>> parameterizedTypeReference) {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -231,34 +244,4 @@ public class RestRepository {
         }
     }
     
-    /**
-    protected Map<String, String> getUserNames(String token, Set<String> userIds) {
-        Map<String, String> userNames = new HashMap<String, String>();
-        try {
-            Map<String, Object> userDetailsResponse = uaaGet(token, getUserDetailsPath(userIds));
-            for (Object resource : eval("resources", userDetailsResponse, List.class)) {
-                userNames.put(evalToString("id", resource), evalToString("userName", resource));
-            }
-        } catch (RepositoryException re) {
-            LOGGER.info("Problem retrieving user names from UAA");
-        }
-        return userNames;
-    }
-   
-
-    private String getUserDetailsPath(Set<String> userIds) {
-        String path = "Users?q=";
-
-        int i = 0;
-        for (String userId : userIds) {
-            path = path.concat("id:").concat(userId);
-            if (i < userIds.size() - 1) {
-                path = path.concat(" or ");
-            }
-            i++;
-        }
-        return path;
-    }
-     **/
-
 }

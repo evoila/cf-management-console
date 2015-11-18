@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.cfmc.api.model.Organization;
 import com.github.cfmc.api.model.Service;
 import com.github.cfmc.api.model.ServiceInstance;
 import com.github.cfmc.api.model.ServicePlan;
@@ -46,7 +45,6 @@ public class ServiceController {
 	private static String V2_SERVICE_PLANS = "v2/service_plans/";
 	private static String V2_SERVICE_INSTANCES = "v2/service_instances";
 	
-
     @RequestMapping(value = "/services", method = GET)
     public @ResponseBody List<CloudFoundryResource<Service>> getServices(@RequestHeader("Authorization") String token) {
         CloudFoundryResources<Service> services = restRepository.list(token, V2_SERVICES, 1, true);
@@ -64,7 +62,6 @@ public class ServiceController {
     	restRepository.delete(token, V2_SERVICES, id);
     	return new ResponseEntity<>(HttpStatus.OK);
     }
-    
     
     @RequestMapping(value = "/services/{id}/service_plans", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<ServicePlan>> getServicePlansForService(@PathVariable("id") final String id) {

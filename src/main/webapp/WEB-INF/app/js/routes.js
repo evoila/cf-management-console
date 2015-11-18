@@ -52,6 +52,11 @@ angular.module('routes', ['ui.router'])
         templateUrl: 'partials/marketplace/marketplace.html',
         controller: 'marketplaceController'
       })
+      .state('service', {
+        url: '/orgs/:organizationId/spaces/:spaceId/services',
+        templateUrl: 'partials/service/service.html',
+        controller: 'servicesController'
+      })
       .state('service-details', {
         url: '/orgs/:organizationId/services/:serviceId/details',
         templateUrl: 'partials/marketplace/service-details.html',

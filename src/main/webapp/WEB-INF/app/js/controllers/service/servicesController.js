@@ -3,7 +3,7 @@ angular.module('controllers')
     function ServicesController($scope, $state, menu, $mdDialog, Restangular) {
 
     $scope.org = menu.organization;
-    $scope.orgId = $scope.org.metadata.guid;
+    $scope.orgId = $state.params.organizationId;
 
     $scope.loading = true;
 
@@ -13,13 +13,13 @@ angular.module('controllers')
     $scope.spaces = null;
     $scope.btClass = 'bt-inactive'
 
+    $scope.init = function() {
+      Restangular.one('spaces', $state.params.spaceId).all('summary').getList().then(function(data) {
+        $scope.space = data;
+      }, function(response) {
 
-
-
-
-
-
-
+      });
+    };
 
     /*
      *  Dialog for
@@ -78,9 +78,6 @@ angular.module('controllers')
         clickOutsideToClose: false
       })
     };
-
-
-
 
     /*
      *  Dialog for

@@ -1,7 +1,7 @@
 <div ng-init="init()" flex ng-show="loading" layout="center center" layout-align="space-around" style="margin-top:50px">
 	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
 </div>
-<div ng-hide="loading" layout-wrap layout-align="space-around" layout="row" ng-show="space.selected == s.entity.name">
+<div ng-hide="loading" layout-wrap layout-align="space-around" layout="row" ng-show="space.selected == s.entity.name" class="md-padding">
 	<md-card ng-repeat="s in spaces" class="md-whiteframe-z4" flex="100">
 		<md-toolbar>
 			<div class="md-toolbar-tools">
@@ -35,31 +35,13 @@
 								{{s.entity.apps.length}}
 							</p>
 						</div>
-						<md-divider ng-class="">
+						<md-divider>
 							<br>
-							<!--span class=" pull-right fa fa-chevron-down md-toggle-icon md-button-toggle" ng-class="{'toggled' : hideApps}"></span-->
 						</md-divider>
-						<div flex ng-cloak>
+						<div flex>
 							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile ng-repeat="app in s.entity.apps" md-rowspan="2" md-colspan="2"
 									md-colspan-sm="1" style="background-color:#{{colorString(app.entity.name)}}" ng-click="state.go('space', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
-									<!--md-grid-tile-header layout="row">
-										<div layout="row" layout-align="space-around center" flex="100">
-										<h3>
-											<span style="vertical-align:middle"># {{app.entity.instances}}</span>
-											<md-tooltip>
-										    Number of running instances
-										  </md-tooltip>
-										</h3>
-										<h3 stlye="align:right">
-											<md-icon md-svg-src="assets/svg/hierarchical9.svg" style="color:white"></md-icon>
-											{{app.entity.service_bindings.length}}
-											<md-tooltip>
-										    Number of service bindings
-										  </md-tooltip>
-										</h3>
-									</div>
-								</md-grid-tile-header-->
 									<img style="height:50%; padding-bottom: 45px;" ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
 									<md-grid-tile-footer>
 										<h3>
@@ -68,7 +50,6 @@
 												{{app.entity.name}}
 											</md-tooltip>
 										</h3>
-										<!--pre>{{ app | json }}</pre-->
 									</md-grid-tile-footer>
 								</md-grid-tile>
 							</md-grid-list>
@@ -89,7 +70,8 @@
 						</md-divider>
 						<div flex ng-cloak>
 							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
-								<md-grid-tile ng-repeat="ser in s.entity.service_instances" md-rowspan="2" md-colspan="2" md-colspan-sm="1" style="background-color:#{{colorString(ser.entity.name)}}">
+								<md-grid-tile ng-repeat="ser in s.entity.service_instances" md-rowspan="2" md-colspan="2" md-colspan-sm="1" style="background-color:#{{colorString(ser.entity.name)}}"
+									ng-click="state.go('service', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
 									<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 									<!--img style="width:60%" ng-src="assets/png/mysql_w.png"-->
 									<md-grid-tile-footer>
@@ -114,15 +96,12 @@
 			<!--pre>{{ s | json }}</pre-->
 		</md-card-content>
 	</md-card>
-	<md-card class="md-whiteframe-z4" flex="33">
-		<md-card-content>
-			<h2 class="md-title">Add Space</h2>
-			<md-button class="md-fab md-fab-detail md-primary" aria-label="add" ng-click="state.go('create-space', {organizationId : organization.metadata.guid})">
-				<md-tooltip>
-					Add Space
-				</md-tooltip>
-				<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
-			</md-button>
-		</md-card-content>
-	</md-card>
+	<div flex layout="row" layout-align="end center">
+		<md-button class="md-fab md-fab-detail md-primary" aria-label="add" ng-click="state.go('create-space', {organizationId : organization.metadata.guid})">
+			<md-tooltip>
+				Add Space
+			</md-tooltip>
+			<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+		</md-button>
+	</div>
 </div>

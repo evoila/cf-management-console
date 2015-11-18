@@ -3,16 +3,11 @@
  */
 package com.github.cfmc.api.model;
 
-import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * 
  * @author Johannes Hiemer
  *
  */
-// TODO: Create User und get Org user funktionert, egal ob extends User oder nicht oder ob alternativ der unten auskommentierte code verwendet wird
 public class OrganizationUser extends User {
 	
     private final boolean billingManager;

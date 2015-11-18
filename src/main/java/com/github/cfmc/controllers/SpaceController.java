@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.cfmc.api.model.Space;
+import com.github.cfmc.api.model.Summary;
 import com.github.cfmc.api.model.base.CloudFoundryResource;
 import com.github.cfmc.api.model.base.CloudFoundryResources;
 import com.github.cfmc.api.repositories.RestRepository;
@@ -38,7 +39,6 @@ public class SpaceController {
     @RequestMapping(value = "/spaces/{id}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<Space> getSpaceById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
     	CloudFoundryResource<Space> space = restRepository.one(token, V2_SPACES, id, 2);
-    	
     	return space;
     }
 
@@ -58,7 +58,13 @@ public class SpaceController {
     @RequestMapping(value = "/spaces/{id}", method = RequestMethod.PUT)
     public @ResponseBody CloudFoundryResource<Space> updateSpace(@RequestHeader("Authorization") String token, @PathVariable("id") String id, 
     		@RequestBody CloudFoundryResource<Space> space) {
-    	 return restRepository.update(token, V2_SPACES.concat(id).concat("?collection-method=add"), space);
+    	 return restRepository.update(token, V2_SPACES.concat("/").concat(id).concat("?collection-method=add"), space);
+    }
+    
+    @RequestMapping(value = "/spaces/{id}/summary", method = RequestMethod.GET)
+    public @ResponseBody CloudFoundryResource<Summary> summary(@RequestHeader("Authorization") String token, @PathVariable("id") String id) {
+    	CloudFoundryResource<Summary> summary =  restRepository.one(token, V2_SPACES.concat("/").concat(id), "summary", 1);
+    	return summary;
     }
 
     @RequestMapping(value = "/spaces/{id}", method = RequestMethod.DELETE)
