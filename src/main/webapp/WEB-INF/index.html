@@ -84,7 +84,7 @@
       </div>
     </md-toolbar>
 
-    <md-content flex="" id="content" style="padding-left: 30px; padding-right: 30px;">
+    <div flex="" id="content" style="padding-left: 30px; padding-right: 30px;">
       <md-card ng-show="isAuthenticated && !hideQuota">
         <md-card-content layout="row">
           <div layout="row" layout-sm="column" flex="100">
@@ -132,9 +132,7 @@
           </div>
         </md-card-content>
       </md-card>
-    </md-content>
-    <md-content ui-view flex="" id="content" ng-controller="alertController">
-    </md-content>
+    <div class="md-padding" ui-view flex="" id="content" ng-controller="alertController"></div>
   </div>
 
   <script src="./lib/angular/angular.js"></script>
