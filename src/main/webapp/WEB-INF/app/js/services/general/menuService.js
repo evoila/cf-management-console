@@ -76,11 +76,11 @@ angular.module('services')
             callback();
         },
 
-        spacesToMenu: function(orgaId) {          
+        spacesToMenu: function(orgaId) {
           sections[0].pages = [];
           sections[0].params = { "organizationId" : orgaId };
 
-          angular.forEach (self.spaces, function(space, key) {
+          angular.forEach (self.spacesInt, function(space, key) {
               var page = {};
               page.name = space.entity.name;
               page.type = 'link';
