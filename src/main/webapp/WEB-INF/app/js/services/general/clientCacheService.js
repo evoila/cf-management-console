@@ -2,7 +2,7 @@
  * ClientCacheService
  **/
 angular.module('services')
-  .factory('clientCacheService', function ClientCacheService($rootScope, localStorageService) {
+  .factory('clientCacheService', function ClientCacheService($rootScope, $http, localStorageService) {
     var cache = {};
 
     cache.storeOrganizations = function(organizations) {
@@ -22,8 +22,10 @@ angular.module('services')
     }
 
     cache.storeUser = function(user) {
+      $rootScope.isAuthenticated = true;
+      $http.defaults.headers.common['Authorization'] = 'bearer ' + user.accessToken;
       localStorageService.add("cfmc.user", user);
-      localStorageService.add("cfmc.lastLogin", new Date().getTime())
+      localStorageService.add("cfmc.lastLogin", new Date().getTime());
     }
 
     cache.getUser = function() {

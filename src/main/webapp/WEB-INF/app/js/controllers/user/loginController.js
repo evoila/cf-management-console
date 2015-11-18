@@ -5,10 +5,9 @@
 
 angular.module('controllers')
   .controller('loginController',
-    function LoginController($scope, $state, $rootScope, Restangular, clientCacheService, $location, $http, responseService, envService, menu) {
+    function LoginController($scope, $state, $rootScope, Restangular, clientCacheService, $http, responseService, envService, menu) {
       $scope.state = $state;
       $scope.authenticating = false;
-
       REST_API = envService.read('restApiUrl');
 
       function transformRequest(obj) {
@@ -35,28 +34,22 @@ angular.module('controllers')
 
         $http.post(REST_API + '/login', data, head).success(function(data, status, headers, config) {
           clientCacheService.authenticate(data);
-          $rootScope.isAuthenticated = true;
-
-          $http.defaults.headers.common['Authorization'] = 'bearer ' + clientCacheService.getUser().accessToken;
 
           Restangular.all('organizations').getList().then(function(data) {
             if (data.length > 0) {
-              responseService.executeSuccess(data, headers, 'dashboard');
+              responseService.success(data, "Successfully logged in!", 'spaces');
               menu.orgsToMenu(data);
               $state.go('spaces', {
                   organizationId: data[0].metadata.guid
-                })
-                //$location.path('/app-spaces/' + data[0].metadata.guid);
+              })
             } else {
-              data = 'You are not associated with any organization, please ask an organization manager to add you an organization.';
               $scope.authenticating = false;
-              responseService.executeError(data, status, headers, $scope, 'user');
+              responseService.error(data, "You are not associated with any organization, please ask an organization manager to add you an organization.");
             }
           });
         }).error(function(data, status, headers) {
-          data = 'Invalid user credentials';
           $scope.authenticating = false;
-          responseService.executeError(data, status, headers, $scope, 'user');
+          responseService.error(data, "Invalid user credentials");
         });
       };
 

@@ -1,8 +1,8 @@
 angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'controllers', 'directives' ,'services', 'routes',
-    'ngMdIcons', 'ngClipboard', 'restangular','ngAnimate', 'environment'
+    'ngMdIcons', 'ngClipboard', 'restangular','ngAnimate', 'environment','angular-loading-bar'
   ])
-  .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, RestangularProvider/*, REST_API*/, envServiceProvider) {
-    
+  .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, envServiceProvider) {
+
     envServiceProvider.config({
         domains: {
             development: ['localhost', '127.0.0.1'],
@@ -74,6 +74,8 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
     })
     .setErrorInterceptor(function(response, deferred, responseHandler) {
       if([401,403].indexOf(response.status) != -1) {
+        logout();
+
         return false;
       }
       return true;
@@ -83,6 +85,10 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       var token = clientCacheService.getUser().accessToken;
       $http.defaults.headers.common['Authorization'] = 'bearer ' + token;
     } else {
+      logout();
+    }
+
+    function logout() {
       clientCacheService.logout();
       $state.go('login');
     }

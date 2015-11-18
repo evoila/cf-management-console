@@ -1,11 +1,8 @@
-<div ng-init="init()" flex ng-show="loading" layout="center center" layout-align="space-around" style="margin-top:50px">
-	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
-</div>
-<div ng-hide="loading" layout-wrap layout-align="space-around" layout="row" ng-show="space.selected == s.entity.name" class="md-padding">
+<div ng-hide="loading" layout-wrap layout-align="space-around" layout="row" ng-show="space.selected == s.entity.name" ng-init="init()">
 	<md-card ng-repeat="s in spaces" class="md-whiteframe-z4" flex="100">
 		<md-toolbar>
 			<div class="md-toolbar-tools">
-				<md-button class="md-icon-button" aria-label="Settings" ng-click="s.menu=!s.menu">
+				<md-button class="md-icon-button" aria-label="Settings">
 					<md-icon md-svg-icon="assets/svg/menu.svg"></md-icon>
 				</md-button>
 				<h2>
@@ -21,9 +18,6 @@
 					<md-icon ng-show="s.minimize" md-svg-icon="assets/svg/arrow_down.svg" style="color: white;"></md-icon>
 				</md-button>
 			</div>
-		</md-toolbar>
-		<md-toolbar class="md-accent" ng-show="s.menu">
-			todo
 		</md-toolbar>
 		<md-card-content class="animate-hide" ng-hide="s.minimize">
 			<div layout="row" layout-sm="column" >

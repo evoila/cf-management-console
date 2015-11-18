@@ -1,6 +1,3 @@
-<div flex ng-show="loading" layout="center center" layout-align="space-around">
-  <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
-</div>
 <div ng-hide="loading" ng-init="init()" layout="column">
   <h3 class="Tab">Space Name: {{space.entity.name}}</h3>
   <md-button class="md-fab md-warn md-fab-detail" aria-label="delete" ng-click="deleteSpace()">

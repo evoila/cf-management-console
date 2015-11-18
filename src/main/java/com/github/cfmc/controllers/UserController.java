@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.cfmc.api.model.Organization;
 import com.github.cfmc.api.model.OrganizationUser;
+import com.github.cfmc.api.model.RegisterUser;
 import com.github.cfmc.api.model.Space;
 import com.github.cfmc.api.model.UserInfo;
 import com.github.cfmc.api.model.base.CloudFoundryResource;
@@ -195,10 +195,10 @@ public class UserController {
     }
     
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public @ResponseBody Map<String,Object> registerUser(@RequestParam("username") String username, @RequestParam("firstName") String firstName, 
-    		@RequestParam("lastName") String lastName, @RequestParam("password") String password) {
+    public @ResponseBody Map<String,Object> registerUser(@RequestBody RegisterUser user) {
     	String token = userRepository.login();
-        return userRepository.registerUser(token, username, firstName, lastName, password);
+        return userRepository.registerUser(token, user.getUsername(), user.getFirstname(), 
+        		user.getLastname(), user.getPassword());
     }
 	
 }

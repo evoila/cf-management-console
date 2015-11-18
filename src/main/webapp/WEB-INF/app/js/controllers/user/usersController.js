@@ -9,7 +9,7 @@ angular.module('controllers')
       $scope.loading = true;
       $scope.blockInput = true;
 
-      $scope.orgId = menu.organization.metadata.guid;
+      $scope.orgId = $state.params.organizationId;
       var org = menu.organization;
 
       Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
@@ -75,14 +75,16 @@ angular.module('controllers')
         Restangular.one('users').customPOST(undefined, undefined,({  username: form.username, firstName: form.firstname, lastName: form.lastname, password: form.password}),undefined).then(function(user) {
           var createdUserId = user.metadata.guid;
 
-          Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(user){
-            responseService.executeSuccess(user, null, 'orgs/' + $scope.orgId +'/users');
+          Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId)
+            .customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(user){
+
+            responseService.success(user, "User was created successfully", "users", { organizationId : $scope.orgId });
           }, function(response) {
-              responseService.executeError(response, null, null, $scope, 'user');
+              responseService.wrror(response);
           })
 
         }, function(response) {
-            responseService.executeError(response, null, null, $scope, 'user');
+            responseService.error(response);
         });
         $mdDialog.hide();
       };

@@ -13,9 +13,11 @@
   <link rel="stylesheet" href="assets/fonts.css" />
   <link rel="stylesheet" href="./lib/angular-material/angular-material.css" />
   <link rel="stylesheet" href="lib/angular-material-data-table/dist/md-data-table.min.css" />
+  <link rel="stylesheet" href="lib/angular-loading-bar/build/loading-bar.css" />
   <link rel="stylesheet" href="assets/app.css" />
   <link rel="stylesheet" href="assets/menu.css" />
   <link rel="stylesheet" href="assets/ngAnimate.css" />
+  <link rel="stylesheet" href="assets/custom-loading-bar.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
   <style type="text/css">
@@ -100,7 +102,7 @@
     </md-toolbar>
 
     <div class="layout-column md-padding">
-      <md-card ng-show="isAuthenticated && !hideQuota" style="margin: 0px">
+      <md-card ng-show="isAuthenticated && !hideQuota" style="margin: 15px">
         <md-card-content layout="row">
           <div layout="row" layout-sm="column" flex="100">
             <div layout="column" flex="20">
@@ -159,12 +161,11 @@
   <script src="./lib/zeroclipboard/dist/ZeroClipboard.min.js"></script>
   <script src="./lib/restangular/dist/restangular.min.js"></script>
   <script src="./lib/underscore/underscore-min.js"></script>
-  <script type="text/javascript" src="./lib/angular-material/angular-material.js"></script>
-  <script type="text/javascript" src="lib/angular-material-data-table/dist/md-data-table.min.js"></script>
-  <script type="text/javascript" src="lib/angular-environment/src/angular-environment.js"></script>
+  <script src="./lib/angular-material/angular-material.js"></script>
+  <script src="./lib/angular-material-data-table/dist/md-data-table.min.js"></script>
+  <script src="./lib/angular-environment/src/angular-environment.js"></script>
+  <script src="./lib/angular-loading-bar/build/loading-bar.min.js"></script>
 
-  <!--script src="./js/providers/providers.js"></script>
-  <script src="./js/providers/general/clientCacheProvider.js"></script-->
 
   <script src="./js/services/services.js"></script>
   <script src="./js/services/general/clientCacheService.js"></script>
@@ -176,17 +177,20 @@
   <script src="./js/services/general/menuService.js"></script>
   <script src="./js/services/general/designService.js"></script>
 
+  <script src="./js/directives/directives.js"></script>
+  <script src="./js/directives/menuSingleItemDirective.js"></script>
+  <script src="./js/directives/menulinkDirective.js"></script>
+  <script src="./js/directives/menuToggleDirective.js"></script>
+
   <script src="./js/controllers/controllers.js"></script>
   <script src="./js/controllers/homeController.js"></script>
 
-  <script src="./js/controllers/app/appLogController.js"></script>
-  <script src="./js/controllers/app/appController.js"></script>
+  <script src="./js/controllers/application/applicationController.js"></script>
 
-  <script src="./js/controllers/general/marketPlaceController.js"></script>
+  <script src="./js/controllers/general/marketplaceController.js"></script>
   <script src="./js/controllers/service/servicesController.js"></script>
 
-  <script src="./js/controllers/org/organizationController.js"></script>
-  <script src="./js/controllers/org/organizationUserController.js"></script>
+  <script src="./js/controllers/organization/organizationController.js"></script>
 
   <script src="./js/controllers/space/spaceController.js"></script>
   <script src="./js/controllers/space/spacesController.js"></script>
@@ -198,11 +202,6 @@
   <script src="./js/controllers/user/editUserController.js"></script>
 
   <script src="./js/controllers/components/alertController.js"></script>
-
-  <script src="./js/directives/directives.js"></script>
-  <script src="./js/directives/menuSingleItemDirective.js"></script>
-  <script src="./js/directives/menulinkDirective.js"></script>
-  <script src="./js/directives/menuToggleDirective.js"></script>
 
   <script src="./js/routes.js"></script>
   <script src="./js/app.js"></script>

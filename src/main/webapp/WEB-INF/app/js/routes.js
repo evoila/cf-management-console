@@ -8,71 +8,71 @@ angular.module('routes', ['ui.router'])
 
     $stateProvider
       .state('app', {
-        url: '/orgs/:organizationId/space/:spaceId/apps/:applicationId/',
+        url: '/organizations/:organizationId/space/:spaceId/applications/:applicationId/',
         templateUrl: 'partials/application/app.html',
         controller: 'appController'
       })
       .state('org-create', {
-        url: '/org/:organizationId',
-        templateUrl: 'partials/create-org.html',
+        url: '/organizations',
+        templateUrl: 'partials/organization/organization-create.html',
         controller: 'organizationController'
       })
       .state('org-settings', {
-        url: '/org/:organizationId/settings',
+        url: '/organizations/:organizationId/settings',
         templateUrl: 'partials/org/org-settings.html',
         controller: 'organizationController'
       })
       .state('spaces', {
-        url: "/orgs/:organizationId/spaces",
+        url: "/organizations/:organizationId/spaces",
         templateUrl: "partials/space/space-list.html",
         controller: 'spacesController',
       })
       .state('space', {
-        url: "/orgs/:organizationId/spaces/:spaceId",
+        url: "/organizations/:organizationId/spaces/:spaceId",
         templateUrl: "partials/space/space.html",
         controller: 'spaceController',
       })
       .state('space-create', {
-        url: '/orgs/:organizationId/spaces/create',
+        url: '/organizations/:organizationId/spaces/create',
         templateUrl: 'partials/space/space-create.html',
         controller: 'spaceController'
       })
       .state('space-settings', {
-        url: '/orgs/:organizationId/spaces/:spaceId/settings',
+        url: '/organizations/:organizationId/spaces/:spaceId/settings',
         templateUrl: 'partials/space/space-settings.html',
         controller: 'spaceController'
       })
       .state('marketplace', {
-        url: '/orgs/:organizationId/marketplace',
+        url: '/organizations/:organizationId/marketplace',
         templateUrl: 'partials/marketplace/marketplace.html',
         controller: 'marketplaceController'
       })
       .state('service', {
-        url: '/orgs/:organizationId/spaces/:spaceId/services',
+        url: '/organizations/:organizationId/spaces/:spaceId/services',
         templateUrl: 'partials/service/service.html',
         controller: 'servicesController'
       })
       .state('service-details', {
-        url: '/orgs/:organizationId/services/:serviceId/details',
+        url: '/organizations/:organizationId/services/:serviceId/details',
         templateUrl: 'partials/marketplace/service-details.html',
         params: {
           service: null
         }
       })
       .state('users', {
-        url: '/orgs/:organizationId/users',
+        url: '/organizations/:organizationId/users',
         templateUrl: 'partials/user/user-list.html',
         controller: 'usersController'
       })
       .state('user-edit', {
-        url: '/orgs/:organizationId/users/:userId/edit',
+        url: '/organizations/:organizationId/users/:userId/edit',
         templateUrl: 'partials/user/user-edit.html',
         params: {
           user: null
         }
       })
       .state('user-info', {
-        url: '/orgs/:organizationId/users/:userId/info',
+        url: '/organizations/:organizationId/users/:userId/info',
         templateUrl: 'partials/user/user-info.html',
         controller: 'userInfoController'
       })
@@ -92,7 +92,6 @@ angular.module('routes', ['ui.router'])
       return (!value) ? '' : value.replace(/ /g, '');
     };
   })
-  //replace uppercase to regular case
   .filter('humanizeDoc', function() {
     return function(doc) {
       if (!doc) return;

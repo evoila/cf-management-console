@@ -18,7 +18,6 @@ angular.module('controllers')
         selectedAlignment: 'md-left'
       };
 
-
       Restangular.one('organizations', $scope.organizationId).all('spaces').getList().then(function(data) {
         if (data[0] != undefined) {
           $scope.space = {
@@ -51,48 +50,6 @@ angular.module('controllers')
       $scope.servicePng = function(name) {
         var myService = DesignService.resolveServicePng(name);
         return myService;
-      };
-
-      $scope.startApplication = function(applicationId) {
-        Restangular.all('applications').customPUT(applicationId, null, null, {
-          'state': 'STARTED'
-        }).then(function(data) {
-          responseService.executeSuccess(data, data.headers, null);
-          angular.forEach($scope.spaces, function(space, spaceIndex) {
-            if (space.selected) {
-              var index = -1;
-              angular.forEach(space.applications, function(app, appIndex) {
-                if (app.id == applicationId) {
-                  index = appIndex;
-                }
-              });
-              if (index > -1) {
-                space.applications[index] = data;
-              }
-            }
-          });
-        });
-      };
-
-      $scope.stopApplication = function(applicationId) {
-        Restangular.all('applications').customPUT(applicationId, null, null, {
-          'state': 'STOPPED'
-        }).then(function(data) {
-          responseService.executeSuccess(data, data.headers, null);
-          angular.forEach($scope.spaces, function(space, spaceIndex) {
-            if (space.selected) {
-              var index = -1;
-              angular.forEach(space.applications, function(app, appIndex) {
-                if (app.id == applicationId) {
-                  index = appIndex;
-                }
-              });
-              if (index > -1) {
-                space.applications[index] = data;
-              }
-            }
-          });
-        });
       };
 
       $scope.selectSpace = function(spaceName) {

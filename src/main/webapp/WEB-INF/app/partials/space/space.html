@@ -1,10 +1,7 @@
-<div ng-init="init()" flex ng-show="loading" layout="center center" layout-align="space-around" style="margin-top:50px">
-	<md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
-</div>
-<div class="layout-row md-padding" style="padding-left: 30px">
+<div class="layout-row md-padding" ng-init="init()">
 	<span class="single-space-title">APPS</span>
 </div>
-<div layout="row" style="padding: 10px" layout-wrap>
+<div layout="row" layout-wrap>
 	<div ng-repeat="app in s.entity.apps" flex-sm="{{app.expand*4}}" flex-md="{{app.expand*2}}" flex-lg="{{app.expand*2}}" flex-gt-lg="{{app.expand}}" id="single-space" ng-init="app.expand='25'">
 		<md-card style="background-color:#{{colorString(app.entity.name)}}">
 			<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">

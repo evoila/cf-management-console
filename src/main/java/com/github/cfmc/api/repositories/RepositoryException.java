@@ -21,23 +21,21 @@ public class RepositoryException extends RuntimeException {
 
     public RepositoryException(String message) {
         super(message);
-        response = null;
-        httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        this.response = null;
+        this.httpStatus = response.getStatusCode();
     }
 
     public RepositoryException(String message, Throwable cause) {
         super(message, cause);
-        response = null;
-        httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        this.response = null;
+        this.httpStatus = response.getStatusCode();
     }
 
     public RepositoryException(String message, ResponseEntity<?> response) {
         super(message);
-        this.response = response;
-        httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+    	this.response = response;
+    	this.httpStatus = response.getStatusCode();
     }
-    
-    
 
     public RepositoryException(String message, ResponseEntity<?> response, HttpStatus httpStatus) {
 		super();

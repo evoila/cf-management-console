@@ -27,9 +27,7 @@ angular.module('controllers')
           alert('Todo: nice errors, warnings');
 
         else {
-          $scope.loading = true;
-
-          Restangular.one('users').customPOST(undefined, undefined,({  username: registerForm.email, firstName: registerForm.firstname, lastName: registerForm.lastname, password: registerForm.password}),undefined).then(function(user) {
+          Restangular.all('users').post(registerForm).then(function(user) {
             var createdUserId = user.metadata.guid;
 
             var organisationContent = {
@@ -39,19 +37,12 @@ angular.module('controllers')
             };
 
             Restangular.all('organizations').post(organisationContent).then(function(organization) {
-              responseService.executeSuccess(user, null, 'login');
-
+              responseService.success(organization, 'login');
             }, function(response) {
-                $scope.loading = false;
-                responseService.executeError(response, null, null, $scope, 'organization');
+                responseService.error(response);
             });
-
           }, function(response) {
-              $scope.loading = false;
-              if(response.data.message.indexOf('409 Conflict') > -1)
-                  $scope.usernameExists = true;
-              else
-                responseService.executeError(response, null, null, $scope, 'user');
+              responseService.error(response);
           });
         }
       };

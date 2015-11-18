@@ -4,7 +4,7 @@
 
 angular.module('controllers')
   .controller('alertController',
-    function AlertController($scope, $rootScope, $mdToast, messageEmitter) {
+    function AlertController($scope, $rootScope, $mdToast) {
 
       var timeout = 3500;
       var alertChannel = "alertChannel";
@@ -14,6 +14,7 @@ angular.module('controllers')
         left: false,
         right: true
       };
+
       $scope.getToastPosition = function() {
         return Object.keys($scope.toastPosition)
           .filter(function(pos) {
@@ -21,6 +22,7 @@ angular.module('controllers')
           })
           .join(' ');
       };
+
       $rootScope.$on(alertChannel, function(event, data) {
         $mdToast.show(
           $mdToast.simple()

@@ -4,16 +4,13 @@
 
 angular.module('services')
   .factory('messageEmitter', function MessageEmitter($rootScope) {
-
     var alertChannel = 'alertChannel';
 
     var message = {};
     var messageEmitter = {
-      message: function(title, msg, type) {
+      message: function(msg) {
         message = {
-          title: title,
-          msg: msg,
-          type: type
+          msg: msg
         }
         $rootScope.$broadcast(alertChannel, message);
       }

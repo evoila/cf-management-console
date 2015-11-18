@@ -4,7 +4,6 @@ angular.module('controllers')
 
     $scope.org = menu.organization;
     $scope.orgId = $state.params.organizationId;
-
     $scope.loading = true;
 
     var self = this;
@@ -108,10 +107,6 @@ angular.module('controllers')
     $scope.createServiceInstanceFromPlan = function(plan) {
       console.log(plan.entity.name);
     };
-
-
-
-
 
     $scope.loading = false;
   });

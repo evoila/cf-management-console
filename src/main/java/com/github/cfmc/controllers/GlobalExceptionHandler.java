@@ -29,13 +29,22 @@ public class GlobalExceptionHandler {
         LOGGER.debug("Handling exception of type {} with message {}", ex.getClass(), ex.getMessage());
 
         if (ex instanceof RepositoryException) {
-            return new ResponseEntity<>(new ExceptionContainer(((RepositoryException) ex).getResponse().toString()), 
-            		((RepositoryException) ex).getHttpStatus());
+            return new ResponseEntity<>(
+				new ExceptionContainer(((RepositoryException) ex)
+						.getResponse().getBody().toString()), 
+				((RepositoryException) ex).getHttpStatus()
+            );
         } if (ex instanceof HttpClientErrorException) {
-        	return new ResponseEntity<>(new ExceptionContainer(((HttpClientErrorException) ex).getResponseBodyAsString()), 
-            		(((HttpClientErrorException) ex).getStatusCode()));
+        	return new ResponseEntity<>(
+    			new ExceptionContainer(((HttpClientErrorException) ex)
+    					.getResponseBodyAsString()), 
+    			(((HttpClientErrorException) ex).getStatusCode())
+        	);
     	} else {
-        	return new ResponseEntity(new ExceptionContainer(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        	return new ResponseEntity(
+    			new ExceptionContainer(ex.getMessage()), 
+    			HttpStatus.INTERNAL_SERVER_ERROR
+        	);
         }
     }
 
