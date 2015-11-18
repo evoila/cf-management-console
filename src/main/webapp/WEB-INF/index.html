@@ -37,7 +37,7 @@
             </h1>
           </div>
         </md-toolbar>
-        <md-content flex role="navigation" class="md-default-theme">
+        <md-content flex="" role="navigation" class="md-default-theme">
           <ul class="side-menu">
             <li class="parent-list-item" ng-class="{'parentActive' : isSectionSelected(menu.organizations)}">
               <h2 class="menu-heading" ng-if="menu.organizations.type === 'heading'" id="heading_{{ menu.organizations.name | nospace }}">
@@ -67,7 +67,7 @@
       </md-sidenav>
     </div>
   </div>
-  <div flex tabIndex="-1" role="main">
+  <div flex="" tabIndex="-1" role="main">
     <md-toolbar layout="row" class="md-whiteframe-z1">
       <md-button ng-show="isAuthenticated" class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
         <md-icon md-svg-icon="menu"></md-icon>
@@ -84,7 +84,7 @@
       </div>
     </md-toolbar>
 
-    <md-content flex id="content" style="padding-left: 30px; padding-right: 30px;">
+    <md-content flex="" id="content" style="padding-left: 30px; padding-right: 30px;">
       <md-card ng-show="isAuthenticated && !hideQuota">
         <md-card-content layout="row">
           <div layout="row" layout-sm="column" flex="100">
@@ -133,7 +133,7 @@
         </md-card-content>
       </md-card>
     </md-content>
-    <md-content ui-view flex id="content" ng-controller="alertController">
+    <md-content ui-view flex="" id="content" ng-controller="alertController">
     </md-content>
   </div>
 

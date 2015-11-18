@@ -37,7 +37,7 @@
             </h1>
           </div>
         </md-toolbar>
-        <md-content flex role="navigation" class="md-default-theme">
+        <md-content flex="" role="navigation" class="md-default-theme">
           <ul class="side-menu">
             <li class="parent-list-item" ng-class="{'parentActive' : isSectionSelected(menu.organizations)}">
               <h2 class="menu-heading" ng-if="menu.organizations.type === 'heading'" id="heading_{{ menu.organizations.name | nospace }}">
@@ -67,7 +67,7 @@
       </md-sidenav>
     </div>
   </div>
-  <div class="layout-column" flex>
+  <div class="layout-column" flex="">
     <md-toolbar layout="row" layout-align="end end">
       <div class="md-toolbar-tools md-whiteframe-z1" layout="row" layout-align="end end">
         <md-button class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
@@ -99,7 +99,7 @@
       </div>
     </md-toolbar>
 
-    <md-content class="layout-column flex md-padding">
+    <div class="layout-column md-padding">
       <md-card ng-show="isAuthenticated && !hideQuota" style="margin: 0px">
         <md-card-content layout="row">
           <div layout="row" layout-sm="column" flex="100">
