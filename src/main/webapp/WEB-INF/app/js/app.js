@@ -92,5 +92,4 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       clientCacheService.logout();
       $state.go('login');
     }
-
   });

@@ -1,6 +1,6 @@
 angular.module('controllers')
   .controller('servicesController',
-    function ServicesController($scope, $state, menu, $mdDialog, Restangular) {
+    function ServicesController($scope, $state, menu, $mdDialog, Restangular, DesignService) {
 
     $scope.org = menu.organization;
     $scope.orgId = $state.params.organizationId;
@@ -12,9 +12,19 @@ angular.module('controllers')
     $scope.spaces = null;
     $scope.btClass = 'bt-inactive'
 
+    $scope.colorString = function(name) {
+      var myColor = DesignService.stringColor(name);
+      return myColor;
+    };
+
+    $scope.servicePng = function(name) {
+      var myService = DesignService.resolveServicePng(name);
+      return myService;
+    };
+
     $scope.init = function() {
-      Restangular.one('spaces', $state.params.spaceId).all('summary').getList().then(function(data) {
-        $scope.space = data;
+      Restangular.one('spaces', $state.params.spaceId).all('service_instances').getList().then(function(data) {
+        $scope.services = data;
       }, function(response) {
 
       });

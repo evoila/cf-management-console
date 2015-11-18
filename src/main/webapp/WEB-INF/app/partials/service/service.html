@@ -2,60 +2,59 @@
 	<span class="single-space-title">SERVICES</span>
 </div>
 <div layout="row" style="padding: 10px" layout-wrap>
-	<div ng-repeat="app in s.entity.apps" flex-sm="{{app.expand*4}}" flex-md="{{app.expand*2}}" flex-lg="{{app.expand*2}}" flex-gt-lg="{{app.expand}}" id="single-space" ng-init="app.expand='25'">
-		<md-card style="background-color:#{{colorString(app.entity.name)}}">
-			<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
+	<div ng-repeat="service in services" flex-sm="{{service.expand*4}}" flex-md="{{service.expand*2}}" flex-lg="{{service.expand*2}}" flex-gt-lg="{{service.expand}}" id="single-space" ng-init="service.expand='30'">
+		<md-card style="background-color:#{{colorString(service.entity.name)}}">
+			<img style="height:50%; padding-bottom: 45px;" ng-src="assets/png/{{servicePng(service.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 			<md-card-content style="background-color:#fff">
-						<h1 class="md-title" style="font-size:30px;font-style:#444">{{app.entity.name}}</h1>
+						<h1 class="md-title" style="font-size:30px;font-style:#444">{{service.entity.name}}</h1>
 				    <md-list>
 				      <md-subheader class="md-no-sticky">Details</md-subheader>
 				      <md-list-item class="md-3-line">
 				        <div class="md-list-item-text" layout="column">
 									<div layout="row" layout-align="space-between center">
-										<p>Memory</p>
-										<p>{{app.entity.memory}}</p>
+										<p>Dashboard</p>
+										<p>{{service.entity.dashboard_url}}</p>
 									</div>
 									<div layout="row" layout-align="space-between center">
-										<p>Instances</p>
-										<p>{{app.entity.instances}}</p>
+										<p>Type</p>
+										<p>{{service.entity.type}}</p>
 									</div>
 									<div layout="row" layout-align="space-between center">
 										<p>Disk Quota</p>
-										<p>{{app.entity.disk_quota}}</p>
+										<p>{{service.entity.disk_quota}}</p>
+									</div>
+									<div layout="row" layout-align="space-between center">
+										<p>Tags</p>
+										<p>{{service.entity.tags}}</p>
+									</div>
+									<div layout="row" layout-align="space-between center">
+										<p>Last Operation</p>
+										<p>{{service.entity.last_operation.type}}</p>
 									</div>
 									<div layout="row" layout-align="space-between center">
 										<p>State</p>
-										<p>{{app.entity.state}}</p>
+										<p>{{service.entity.last_operation.state}}</p>
 									</div>
 									<div layout="row" layout-align="space-between center">
-										<p>version</p>
-										<p>{{app.entity.version}}</p>
+										<p>Created</p>
+										<p>{{service.entity.last_operation.created_at | date: 'dd.mm.yyyy'}}</p>
 									</div>
 									<div layout="row" layout-align="space-between center">
-										<p>Package State</p>
-										<p>{{app.entity.package_state}}</p>
+										<p>Updated</p>
+										<p>{{service.entity.last_operation.updated_at | date: 'dd.mm.yyyy'}}</p>
 									</div>
 				        </div>
 				      </md-list-item>
-				      <md-divider ng-show="app.expand=='50'"></md-divider>
-				      <md-subheader ng-show="app.expand=='50'" class="md-no-sticky">Routes ({{app.entity.routes.length}})</md-subheader>
-							<md-list-item class="md-3-line" ng-show="app.expand=='50'">
-								<div class="md-list-item-text" layout="column">
-									<div layout="row" layout-align="space-between center" ng-repeat="route in app.entity.routes">
-										<p>Host</p>
-										<p>{{route.entity.host}}</p>
-									</div>
-								</div>
-							</md-list-item>
-				      <md-divider ng-show="app.expand=='50'" ></md-divider>
-				      <md-subheader ng-show="app.expand=='50'" class="md-no-sticky">Service Bindings ({{app.entity.service_bindings.length}})</md-subheader>
+				      <md-divider ng-show="service.expand=='50'"></md-divider>
+				      <md-subheader ng-show="service.expand=='50'" class="md-no-sticky">Service Plan ({{service.entity.service_plan.entity.name}})</md-subheader>
+				      <md-divider ng-show="service.expand=='50'" ></md-divider>
+				      <md-subheader ng-show="service.expand=='50'" class="md-no-sticky">Service Bindings ({{service.entity.service_bindings.length}})</md-subheader>
 				    </md-list>
 					</md-card-content>
-			<div class="md-actions" layout="row" layout-align="end center">
-        <md-button ng-show="app.expand=='25'" ng-click="app.expand='50'">More</md-button>
-				<md-button ng-show="app.expand=='50'" ng-click="app.expand='25'">Less</md-button>
-				<md-button ui-sref="app({'applicationId':'{{app.metadata.guid}}','organizationId':'{{s.entity.organization.metadata.guid}}','spaceId':'{{s.metadata.guid}}'})">Rein</md-button>
-      </div>
+					<div class="md-actions" layout="row" layout-align="end center">
+		        <md-button ng-show="service.expand=='30'" ng-click="service.expand='50'">More</md-button>
+						<md-button ng-show="service.expand=='50'" ng-click="service.expand='30'">Less</md-button>						
+		      </div>
 		</md-card>
 	</div>
 </div>

@@ -49,7 +49,7 @@ angular.module('controllers')
           });
         }).error(function(data, status, headers) {
           $scope.authenticating = false;
-          responseService.error(data, "Invalid user credentials");
+          responseService.error(data, "Invalid user credentials - or endpoint not reachable");
         });
       };
 

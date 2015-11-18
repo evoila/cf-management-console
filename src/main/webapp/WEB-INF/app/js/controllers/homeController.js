@@ -8,7 +8,6 @@ angular.module('controllers')
       $scope.state = $state;
 
       var vm = this;
-
       vm.isOpen = isOpen;
       vm.toggleOpen = toggleOpen;
       vm.autoFocusContent = false;
@@ -18,12 +17,10 @@ angular.module('controllers')
         isFirstDisabled: false
       };
 
-
-
       $rootScope.isAuthenticated = clientCacheService.isAuthenticated();
       if (!clientCacheService.isAuthenticated()) {
         if ($location.path() != '/login' && $location.path() != '/register') {
-          $location.path('/login');
+          $state.go('login');
         }
       } else {
         Restangular.all('organizations').getList().then(function(data) {
@@ -32,18 +29,13 @@ angular.module('controllers')
           menu.orgsToMenu(data, function() {
               $scope.menu = menu;
           });
-
-          $state.go('spaces', {
-            organizationId: data[0].metadata.guid
-          })
         }, function(response) {
           clientCacheService.clear;
-          $location.path('/login');
+          $state.go('login');
           $rootScope.isAuthenticated = false;
         });
 
       }
-
 
       $scope.logout = function() {
         $rootScope.isAuthenticated = false;

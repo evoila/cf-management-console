@@ -4,8 +4,6 @@
 angular.module('routes', ['ui.router'])
   .config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise("/spaces");
-
     $stateProvider
       .state('app', {
         url: '/organizations/:organizationId/space/:spaceId/applications/:applicationId/',
@@ -86,6 +84,7 @@ angular.module('routes', ['ui.router'])
         templateUrl: 'partials/register.html',
         controller: 'registerController'
       });
+
   })
   .filter('nospace', function() {
     return function(value) {
