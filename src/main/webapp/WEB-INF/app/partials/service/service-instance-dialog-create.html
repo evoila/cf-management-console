@@ -18,7 +18,7 @@
 
             <div class="form-group">
 
-              <md-select ng-required="true" placeholder="Choose space" ng-model="createServiceInstanceForm.spaceId" md-on-open="test()" style="min-width: 200px;">
+              <md-select ng-required="true" placeholder="Choose space" ng-model="createServiceInstanceForm.spaceId" md-on-open="getSpaces()" style="min-width: 200px;">
                 <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
               </md-select>
 

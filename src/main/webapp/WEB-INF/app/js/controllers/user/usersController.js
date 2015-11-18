@@ -6,7 +6,7 @@ angular.module('controllers')
   .controller('usersController',
     function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
       console.log('user controller');
-      $scope.loading = true;
+      //$scope.loading = true;
       $scope.blockInput = true;
 
       $scope.orgId = $state.params.organizationId;
@@ -32,7 +32,7 @@ angular.module('controllers')
           orgUser.auditedSpaces = orgUser.entity.audited_spaces;
         });
         $scope.orgUsers = orgUsers;
-        $scope.loading = false;
+        //$scope.loading = false;
       }, function(response) {
           responseService.error(response);
       });
@@ -47,7 +47,7 @@ angular.module('controllers')
       }
 
       $scope.switchToEditUser = function(user) {
-        $scope.loading = true;
+        //$scope.loading = true;
 
         Restangular.one('organizations', $scope.orgId).all('spaces').getList().then(function(data) {
           $state.go('user-edit', {organizationId : $scope.orgId, userId : user.metadata.guid, user : user});

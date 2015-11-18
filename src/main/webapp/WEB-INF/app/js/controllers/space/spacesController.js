@@ -4,9 +4,12 @@
 
 angular.module('controllers')
   .controller('spacesController',
-    function SpacesController($scope, $state, $location, $mdDialog, Restangular, responseService, menu, DesignService) {
-      console.log('SpacesController');
-      $scope.organizationId = $state.params.organizationId;
+    function SpacesController($scope, $state, Restangular, responseService, menu, DesignService) {
+      $scope.spaces = menu.spaces;
+
+      Restangular.one('organizations', $state.params.organizationId).all('spaces').getList().then(function(spaces) {
+        $scope.spaces = spaces;
+      });
 
       $scope.colorString = function(name) {
         var myColor = DesignService.stringColor(name);
