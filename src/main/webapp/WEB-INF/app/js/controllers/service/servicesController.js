@@ -72,7 +72,7 @@ angular.module('controllers')
           }
 
         }],
-        templateUrl: 'partials/service/serviceInstance-create-dialog.html',
+        templateUrl: 'partials/service/service-instance-dialog-create.html',
         parent: angular.element(document.body),
         clickOutsideToClose: false
       })
@@ -94,7 +94,7 @@ angular.module('controllers')
           $scope.plan = plan;
           $scope.cancel = cancel;
         }],
-        templateUrl: 'partials/service/servicePlan-details-dialog.html',
+        templateUrl: 'partials/marketplace/service-plan-dialog-details.html',
         parent: angular.element(document.body),
         clickOutsideToClose: true
       })
