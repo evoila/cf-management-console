@@ -50,7 +50,6 @@ angular.module('controllers')
       };
 
       $scope.updateTitle = function(name) {
-        console.debug('homeController: '+name);
         $scope.appTitle = name;
       }
 

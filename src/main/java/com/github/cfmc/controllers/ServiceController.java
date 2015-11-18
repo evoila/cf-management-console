@@ -45,6 +45,7 @@ public class ServiceController {
 	private static String V2_SERVICE_PLANS = "v2/service_plans/";
 	private static String V2_SERVICE_INSTANCES = "v2/service_instances";
 	
+	
     @RequestMapping(value = "/services", method = GET)
     public @ResponseBody List<CloudFoundryResource<Service>> getServices(@RequestHeader("Authorization") String token) {
         CloudFoundryResources<Service> services = restRepository.list(token, V2_SERVICES, 1, true);
@@ -70,13 +71,21 @@ public class ServiceController {
     	return servicePlans.getResources();
     }
     
-    @RequestMapping(value = "/service_instances/{id}/service_instances", method = RequestMethod.GET)
-    public @ResponseBody List<CloudFoundryResource<ServiceInstance>> getServiceInstancesForServicePlan(@PathVariable("id") final String id) {
+  
+    @RequestMapping(value = "/service_instances/{orgId}", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<ServiceInstance>> getServiceInstancesForOrganization(@PathVariable("orgId") final String orgId) {
     	String token = userRepository.login();
-    	CloudFoundryResources<ServiceInstance> serviceInstances = restRepository.list(token, V2_SERVICE_PLANS.concat(id).concat("/service_instances"), 1, true);
+    	CloudFoundryResources<ServiceInstance> serviceInstances = restRepository.list(token, V2_SERVICE_INSTANCES.concat("?q=organization_guid:").concat(orgId), 1, false);
     	return serviceInstances.getResources();
     }
     
+    @RequestMapping(value = "/service_plans/{planId}/service_instances", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<ServiceInstance>> getServiceInstancesForServicePlan(@PathVariable("planId") final String planId) {
+    	String token = userRepository.login();
+    	CloudFoundryResources<ServiceInstance> serviceInstances = restRepository.list(token, V2_SERVICE_PLANS.concat(planId).concat("/service_instances"), 1, true);
+    	return serviceInstances.getResources();
+    }
+        
     @RequestMapping(value = "/service_instances", method = RequestMethod.POST)
     public @ResponseBody CloudFoundryResource<ServiceInstance> createServiceInstanceFromServicePlan(@RequestBody ServiceInstance instance) {
     	String token = userRepository.login();
