@@ -10,8 +10,8 @@ angular.module('controllers')
     self.service = $state.params.service;
 
     $scope.spaces = null;
-    $scope.btClass = 'bt-inactive'
 
+    /*
     $scope.init = function() {
       Restangular.one('spaces', $state.params.spaceId).all('summary').getList().then(function(data) {
         $scope.space = data;
@@ -19,6 +19,12 @@ angular.module('controllers')
 
       });
     };
+    */
+
+
+
+
+
 
     /*
      *  Dialog for
@@ -102,10 +108,6 @@ angular.module('controllers')
 
     $scope.cancel = function() {
       $mdDialog.cancel();
-    };
-
-    $scope.createServiceInstanceFromPlan = function(plan) {
-      console.log(plan.entity.name);
     };
 
     $scope.loading = false;

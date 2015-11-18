@@ -3,7 +3,7 @@
 
   <div layout="row" layout-wrap>
 
-    <md-card flex="100" flex-gt-lg="60">
+    <md-card flex="100" flex-gt-md="45">
 
       <md-toolbar>
         <div class="md-toolbar-tools">Service Plans</div>
@@ -11,31 +11,24 @@
 
 	  	<md-content class="md-padding" layout="column">
 
-        <md-grid-list md-cols-sm="1" md-cols-gt-sm="1" md-cols-lg="2" md-cols-gt-lg="2" md-row-height="160px" md-gutter="4px">
+        <md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="2" md-cols-lg="1" md-cols-gt-lg="2" md-row-height="160px" md-gutter="4px">
 
 					<md-grid-tile ng-repeat="plan in ctrl.service.entity.service_plans" md-rowspan="1" md-colspan="1" md-colspan-sm="1">
 
-						<md-content class="md-whiteframe-1dp" style="width:100%;height:100%;position:relative;" ng-mouseover="btClass='bt-active'" ng-mouseleave="btClass='bt-inactive'">
+						<md-content class="md-whiteframe-1dp" style="width:100%;height:100%;position:relative;">
 							<p class="md-title" style="text-align:center;">{{ plan.entity.name }}</p>
               <p style="text-align:center;">{{ plan.entity.free == 'true' ? 'Not free' : 'Free' }}</p>
 
-              <div ng-class="btClass" layout="row" flex="100" style="position:absolute;bottom:10px;height:40px;width:100%;">
-                <div flex="33" style="text-align:center;">
-                  <md-button class="md-icon-button md-primary" aria-label="Show Details" style="max-height:40px;" ng-click="showServicePlanDetails(plan)">
+              <div layout="row" flex="100" style="position:absolute;bottom:10px;height:40px;width:100%;">
+                <div flex="48" style="text-align:center;">
+                  <md-button class="hv-button md-icon-button md-primary" aria-label="Show Details" style="max-height:40px;" ng-click="showServicePlanDetails(plan)">
                     <i class="fa fa-info-circle fa-2x"></i>
-                    <md-tooltip md-direction="top" style="margin-top:20px;">Show Details</md-tooltip>
                   </md-button>
                 </div>
-                <div flex="33" style="text-align:center;">
-                  <md-button class="md-icon-button md-primary" aria-label="Create Instances" style="max-height:40px;" ng-click="showCreateInstanceDialog(plan)">
+								<span flex=""></span>
+                <div flex="48" style="text-align:center;">
+                  <md-button class="hv-button md-icon-button md-primary" aria-label="Create Instances" style="max-height:40px;" ng-click="showCreateInstanceDialog(plan)">
                     <i class="fa fa-plus fa-2x"></i>
-                    <md-tooltip md-direction="top" style="margin-top:20px;">Create Instance</md-tooltip>
-                  </md-button>
-                </div>
-								<div flex="33" style="text-align:center;">
-                  <md-button class="md-icon-button md-primary" aria-label="Show Instances" style="max-height:40px;">
-                    <i class="fa fa-server fa-2x"></i>
-                    <md-tooltip md-direction="top" style="margin-top:20px;">Show Instances</md-tooltip>
                   </md-button>
                 </div>
               </div>
@@ -54,6 +47,26 @@
 
 
 
+		<md-card flex="100" flex-gt-md="45">
+
+      <md-toolbar>
+        <div class="md-toolbar-tools">Service Instances</div>
+      </md-toolbar>
+
+	  	<md-content class="md-padding" layout="column">
+				<md-list id="serviceInstancesList">
+					<md-list-item id="instance-{{$index}}" class="md-3-line" ng-repeat="instance in serviceInstances">
+					</md-list-item>
+				</md-list>
+			</md-content>
+
+		</md-card>
+
+
+
+<pre style="overflow:scroll;">{{ctrl.service | json}}</pre>
+
+
 </div>
 
-<pre>{{ctrl.service | json}}</pre>
+</div>
