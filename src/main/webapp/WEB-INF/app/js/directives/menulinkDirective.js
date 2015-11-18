@@ -12,8 +12,7 @@ angular.module('directives')
       '</md-button>\n' +
       '');
   }])
-  .directive('menuLink', ['menu', function(menu) {
-    console.log('menu link directive');
+  .directive('menuLink', ['menu', function(menu) {    
     return {
       scope: {
         section: '='
@@ -23,7 +22,7 @@ angular.module('directives')
         var controller = $element.parent().controller();
 
         $scope.update = function(organization) {
-          menu.spacesToMenu(organization.metadata.guid)      
+          menu.spacesToMenu(organization.metadata.guid)
         };
       }
     };
