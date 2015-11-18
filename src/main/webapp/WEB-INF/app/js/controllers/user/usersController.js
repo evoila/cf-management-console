@@ -34,7 +34,7 @@ angular.module('controllers')
         $scope.orgUsers = orgUsers;
         $scope.loading = false;
       }, function(response) {
-          responseService.executeError(response, null, null, $scope, 'user');
+          responseService.error(response);
       });
 
       $scope.getSpacesOfOrganization = function(orgUser, spacesUrl) {
@@ -80,7 +80,7 @@ angular.module('controllers')
 
             responseService.success(user, "User was created successfully", "users", { organizationId : $scope.orgId });
           }, function(response) {
-              responseService.wrror(response);
+              responseService.error(response);
           })
 
         }, function(response) {
