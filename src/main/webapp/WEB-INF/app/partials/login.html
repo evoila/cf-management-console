@@ -1,5 +1,5 @@
-<div ng-hide="authenticating" flex ="" layout="center center" layout-align="space-around">
-  <div class="flex-sm-100 flex-md-70 flex-lg-50 flex-40">
+<div ng-hide="authenticating" flex layout="center center" layout-align="space-around">
+  <div flex-sm="100" flex-md="70" flex-lg="60" flex="30">
         <md-card>
             <md-toolbar>
                 <div class="md-toolbar-tools">
@@ -19,7 +19,13 @@
                         <input type="password" ng-model="userForm.password" required="true">
                     </md-input-container>
 
-                    <div class="layout-align-space-between-center layout-row">
+                    <div layout="row" layout-align="space-between">
+                        <md-input-container>
+                          <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
+                           Remember Me
+                         </md-checkbox>
+                        </md-input-container>
+
                         <md-input-container>
                             <a class="md-primary md-button md-ink-ripple flex" ui-sref="forgot">Forgot password?</a>
                         </md-input-container>
