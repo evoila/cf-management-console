@@ -10,7 +10,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
         },
         vars: {
             development: {
-                restApiUrl: 'http://localhost:8082/cfmc/api'
+                restApiUrl: 'http://localhost:8080/cfmc/api'
             },
             production: {
                 restApiUrl: 'https://cfmc.88.198.249.62.xip.io/api'
