@@ -8,6 +8,7 @@ angular.module('services')
     'Restangular',
     function($location, $scope, $state, Restangular) {
       var organizationInt = {};
+      var spacesInt = {};
 
       var organizations = {
         name: 'Organisations',
@@ -27,6 +28,7 @@ angular.module('services')
         sections: sections,
         organization: organizationInt,
         organizations: organizations,
+        spaces : spacesInt,
 
         toggleSelectSection: function(section) {
           self.openedSection = (self.openedSection === section ? null : section);
@@ -42,11 +44,12 @@ angular.module('services')
         },
 
         initMenu: function(callback) {
-          Restangular.all('organizations').getList().then(function(data) {            
+          Restangular.all('organizations').getList().then(function(data) {
             self.organization = data[0];
             self.orgsToMenu(data, function() {
               Restangular.one('organizations', self.organization.metadata.guid).all('spaces').getList().then(function(spaces) {
-                self.spacesToMenu(self.organization.metadata.guid, spaces);
+                self.spacesInt = spaces;
+                self.spacesToMenu(self.organization.metadata.guid);
               });
               if (typeof(callback) == "function")
                 callback(self.organization);
@@ -56,8 +59,8 @@ angular.module('services')
 
         orgsToMenu: function(orgas, callback) {
           organizationInt = orgas[0];
-          console.log("myOrga: "+organizationInt.entity.name);
-          organizations.name = 'Organizations ('+orgas.length+')';
+
+          organizations.name = 'Organizations (' + orgas.length + ')';
           organizations.pages = [];
           angular.forEach (orgas, function(orga, key) {
               var page = {};
@@ -73,11 +76,11 @@ angular.module('services')
             callback();
         },
 
-        spacesToMenu: function(orgaId, spaces) {
+        spacesToMenu: function(orgaId) {          
           sections[0].pages = [];
           sections[0].params = { "organizationId" : orgaId };
 
-          angular.forEach (spaces, function(space, key) {
+          angular.forEach (self.spaces, function(space, key) {
               var page = {};
               page.name = space.entity.name;
               page.type = 'link';
@@ -88,11 +91,12 @@ angular.module('services')
               };
               sections[0].pages.push(page);
           });
+
           sections[1] = {
             name: 'Users',
             type: 'link',
             state: 'users',
-            params: {"organizationId":orgaId},
+            params: { "organizationId" : orgaId },
             icon: 'fa fa-group'
           };
 
@@ -100,7 +104,7 @@ angular.module('services')
             name: 'Marketplace',
             type: 'link',
             state: 'marketplace',
-            params: {"organizationId":orgaId},
+            params: { "organizationId" : orgaId },
             icon: 'fa fa-shopping-cart'
           };
 
@@ -108,7 +112,7 @@ angular.module('services')
             name: 'Domains',
             type: 'link',
             state: 'users',
-            params: {"organizationId":orgaId},
+            params: { "organizationId" : orgaId },
             icon: 'fa fa-group'
           };
         }

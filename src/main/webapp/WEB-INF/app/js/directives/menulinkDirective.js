@@ -22,14 +22,8 @@ angular.module('directives')
       link: function($scope, $element) {
         var controller = $element.parent().controller();
 
-        $scope.update = function(orga) {
-          // set flag to be used later when
-          // $locationChangeSuccess calls openPage()
-          controller.autoFocusContent = true;
-          if (orga) {
-            menu.organization = orga;
-            console.log('update orga: ' + orga.metadata.guid);
-          }
+        $scope.update = function(organization) {
+          menu.spacesToMenu(organization.metadata.guid)      
         };
       }
     };
