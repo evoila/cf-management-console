@@ -9,21 +9,25 @@ angular.module('controllers')
     var self = this;
     self.service = $state.params.service;
 
-    $scope.spaces = null;
-
-    /*
-    $scope.init = function() {
-      Restangular.one('spaces', $state.params.spaceId).all('summary').getList().then(function(data) {
-        $scope.space = data;
-      }, function(response) {
-
-      });
-    };
-    */
+    $scope.spaces = $scope.org.entity.spaces;
+    $scope.instances = [];
 
 
+    Restangular.one('service_instances', $scope.orgId).getList().then(function(instances) {
 
+      instances.forEach(function(instance) {
+        self.service.entity.service_plans.forEach(function(plan) {
+          if(plan.metadata.guid == instance.entity.service_plan_guid)
+            $scope.instances.push(instance);
+        })
+      })
+      console.log($scope.instances.length);
 
+    }, function(response) {
+      responseService.error(response);
+    });
+
+    console.log($scope.instances);
 
 
     /*
@@ -51,12 +55,14 @@ angular.module('controllers')
           $scope.spaces = spaces;
           $scope.orgId = orgId;
 
+          // todo: no rest call needed for spaces
+
           $scope.test = function() {
             Restangular.one('organizations', $scope.orgId).all('spaces').getList().then(function(data) {
               $scope.spaces = data;
               console.log($scope.spaces.length);
             }, function(response) {
-
+              responseService.error(response);
             });
           }
 
@@ -72,7 +78,7 @@ angular.module('controllers')
             Restangular.all('service_instances').post(instance).then(function(response) {
               console.log(response);
             }, function(response) {
-              console.log(response);
+              responseService.error(response);
             })
 
           }

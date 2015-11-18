@@ -3,22 +3,17 @@
 
   <div layout="row" layout-wrap>
 
+		<!-- SERVICE PLANS -->
     <md-card flex="100" flex-gt-md="45">
-
       <md-toolbar>
         <div class="md-toolbar-tools">Service Plans</div>
       </md-toolbar>
-
 	  	<md-content class="md-padding" layout="column">
-
         <md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="2" md-cols-lg="1" md-cols-gt-lg="2" md-row-height="160px" md-gutter="4px">
-
 					<md-grid-tile ng-repeat="plan in ctrl.service.entity.service_plans" md-rowspan="1" md-colspan="1" md-colspan-sm="1">
-
 						<md-content class="md-whiteframe-1dp" style="width:100%;height:100%;position:relative;">
 							<p class="md-title" style="text-align:center;">{{ plan.entity.name }}</p>
               <p style="text-align:center;">{{ plan.entity.free == 'true' ? 'Not free' : 'Free' }}</p>
-
               <div layout="row" flex="100" style="position:absolute;bottom:10px;height:40px;width:100%;">
                 <div flex="48" style="text-align:center;">
                   <md-button class="hv-button md-icon-button md-primary" aria-label="Show Details" style="max-height:40px;" ng-click="showServicePlanDetails(plan)">
@@ -32,41 +27,38 @@
                   </md-button>
                 </div>
               </div>
-
 						</md-content>
-
     			</md-grid-tile>
-
 				</md-grid-list>
-
-
 	  	</md-content>
-
 		</md-card>
+		<!-- END / SERVICE PLANS -->
 
 
-
-
+		<!-- SERVICE INSTANCES -->
 		<md-card flex="100" flex-gt-md="45">
-
       <md-toolbar>
         <div class="md-toolbar-tools">Service Instances</div>
       </md-toolbar>
-
 	  	<md-content class="md-padding" layout="column">
 				<md-list id="serviceInstancesList">
-					<md-list-item id="instance-{{$index}}" class="md-3-line" ng-repeat="instance in serviceInstances">
+					<md-list-item class="md-3-line" ng-repeat="instance in instances">
+						<div class="md-list-item-text" layout="column">
+							<div layout="row">
+								<p>{{instance.entity.name}}</p>
+							</div>
+			      </div>
+					<md-divider></md-divider>
 					</md-list-item>
 				</md-list>
 			</md-content>
 
 		</md-card>
+		<!-- END / SERVICE INSTANCES -->
 
 
+		<pre style="overflow:scroll;">{{ctrl.service | json}}</pre>
 
-<pre style="overflow:scroll;">{{ctrl.service | json}}</pre>
-
-
-</div>
+	</div>
 
 </div>
