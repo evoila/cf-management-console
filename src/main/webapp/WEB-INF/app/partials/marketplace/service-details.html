@@ -1,5 +1,6 @@
 <div ng-controller="servicesController as ctrl">
 	<h2>{{ctrl.service.entity.label}}</h2>
+	<span>instances farblich codieren nach plan?</span>
 
   <div layout="row" layout-wrap>
 
@@ -35,7 +36,39 @@
 		<!-- END / SERVICE PLANS -->
 
 
-		<!-- SERVICE INSTANCES -->
+
+		<md-card flex="100" flex-gt-md="45">
+      <md-toolbar>
+        <div class="md-toolbar-tools">Current Service Instances</div>
+      </md-toolbar>
+
+			<md-card-content layout="column">
+				<div flex>
+					<md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="1" md-cols-gt-lg="2" md-row-height="4:3" md-row-height-sm="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+						<md-grid-tile class="no-focus no-link" ng-repeat="instance in instances" style="background-color:#{{colorString(instance.entity.name)}}">
+							<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(instance.planUniqueId)}}_w.png" onerror="this.style.display='none'">
+							<md-grid-tile-footer>
+								<h3>
+									{{instance.entity.name}}
+								</h3>
+							</md-grid-tile-footer>
+						</md-grid-tile>
+					</md-grid-list>
+				</div>
+			</md-card-content>
+
+
+		</md-card>
+
+
+
+
+
+
+
+
+
+<!--
 		<md-card flex="100" flex-gt-md="45">
       <md-toolbar>
         <div class="md-toolbar-tools">Service Instances</div>
@@ -54,10 +87,9 @@
 			</md-content>
 
 		</md-card>
-		<!-- END / SERVICE INSTANCES -->
+	-->
 
 
-		<pre style="overflow:hidden;">{{ctrl.service | json}}</pre>
 
 	</div>
 

@@ -1,25 +1,25 @@
 <div ng-hide="loading">
 	<h2>Services Marketplace</h2>
 	<md-subheader class="md-no-sticky">Currently available services</md-subheader>
-	<div layout="row" layout-sm="column" layout-wrap>
-		<md-card flex="33" ng-repeat="service in services" class="md-whiteframe-z2">
-			<md-card-content ng-click="showDetails(service, scope)" class="no-focus" style="cursor:pointer;">
-				<div layout="row">
-					<img ng-src="assets/png/{{service.entity.label}}.png">
-					<div layout="column">
-						<h3 class="Tab">{{service.entity.label}}</h3>
-						<p class="Tab">{{service.entity.description}}</p>
-					</div>
-				</div>
-			</md-card-content>
-		</md-card>
-	</div>
-	<md-card class="md-whiteframe-z2" layout-wrap>
-		<md-card-content>
-			<h3>Services</h3>
-			<p>View only access to all org and space info, settings, reports</p>
-			<md-divider></md-divider>
-			<h3>Plans</h3>
-			<p>View only access to all space information, settings, reports, logs</p>
+
+	<md-card class="md-whiteframe-z2" flex>
+		<md-card-content layout="column">
+			<div flex>
+				<md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="2" md-cols-gt-lg="5" md-row-height-gt-lg="1:1" md-row-height="4:3" md-row-height-sm="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+					<md-grid-tile class="no-focus" ng-repeat="service in services" style="background-color:#{{colorString(service.entity.label)}}" ng-click="showDetails(service)">
+						<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(service.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
+						<md-grid-tile-footer>
+							<h3>
+								{{service.entity.label}}
+								<md-tooltip>
+									{{service.entity.description}}
+								</md-tooltip>
+							</h3>
+						</md-grid-tile-footer>
+					</md-grid-tile>
+				</md-grid-list>
+			</div>
 		</md-card-content>
 	</md-card>
+
+</div>

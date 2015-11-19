@@ -1,6 +1,6 @@
 angular.module('controllers')
   .controller('servicesController',
-    function ServicesController($scope, $state, menu, $mdDialog, Restangular) {
+    function ServicesController($scope, $state, menu, $mdDialog, Restangular, DesignService) {
 
     $scope.orgId = $state.params.organizationId;
 
@@ -26,8 +26,10 @@ angular.module('controllers')
     Restangular.one('service_instances', $scope.orgId).getList().then(function(instances) {
       instances.forEach(function(instance) {
         self.service.entity.service_plans.forEach(function(plan) {
-          if(plan.metadata.guid == instance.entity.service_plan_guid)
+          if(plan.metadata.guid == instance.entity.service_plan_guid) {
+            instance.planUniqueId = plan.entity.unique_id;
             $scope.instances.push(instance);
+          }
         })
       })
     }, function(response) {
@@ -112,6 +114,15 @@ angular.module('controllers')
     };
 
 
+    $scope.colorString = function(name) {
+      var myColor = DesignService.stringColor(name);
+      return myColor;
+    };
+
+    $scope.servicePng = function(name) {
+      var myService = DesignService.resolveServicePng(name);
+      return myService;
+    };
 
 
   });
