@@ -52,6 +52,12 @@ public class ServiceController {
         return services.getResources();
     }
     
+    @RequestMapping(value = "/services/{serviceId}", method = RequestMethod.GET)
+    public @ResponseBody CloudFoundryResource<Service> getServiceByServiceId( @PathVariable("serviceId") final String serviceId) {
+    	String token = userRepository.login();
+    	return restRepository.one(token, V2_SERVICES, serviceId, 1);
+    }
+    
     @RequestMapping(value = "/services", method = RequestMethod.POST)
     public @ResponseBody CloudFoundryResource<Service> createSpace(@RequestHeader("Authorization") String token, 
     		@RequestBody Service service) {

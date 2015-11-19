@@ -9,9 +9,9 @@
         <div class="md-toolbar-tools">Service Plans</div>
       </md-toolbar>
 	  	<md-content class="md-padding" layout="column">
-        <md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="2" md-cols-lg="1" md-cols-gt-lg="2" md-row-height="160px" md-gutter="4px">
+        <md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="2" md-cols-lg="1" md-cols-gt-lg="2" md-row-height="160px" md-gutter="8px">
 					<md-grid-tile ng-repeat="plan in ctrl.service.entity.service_plans" md-rowspan="1" md-colspan="1" md-colspan-sm="1">
-						<md-content class="md-whiteframe-1dp" style="width:100%;height:100%;position:relative;">
+						<md-content class="md-whiteframe-1dp" style="width:100%;height:100%;position:relative;overflow:hidden;">
 							<p class="md-title" style="text-align:center;">{{ plan.entity.name }}</p>
               <p style="text-align:center;">{{ plan.entity.free == 'true' ? 'Not free' : 'Free' }}</p>
               <div layout="row" flex="100" style="position:absolute;bottom:10px;height:40px;width:100%;">

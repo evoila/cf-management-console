@@ -49,6 +49,14 @@ public class UserController {
     	CloudFoundryResources<OrganizationUser> orgUsers = restRepository.list(token, V2_ORGANIZATIONS.concat(id).concat("/users"), 2, true);
     	return orgUsers.getResources();
     }
+    
+    
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+    public @ResponseBody CloudFoundryResource<OrganizationUser> getUserByUserId(@PathVariable("userId") final String userId) {
+    	String token = userRepository.login();
+    	return restRepository.one(token, V2_USERS, userId, 1);
+    }
+    
    
     @RequestMapping(value = "/users/{userId}/organizations/{orgId}", method = RequestMethod.PUT)
     public @ResponseBody CloudFoundryResource<OrganizationUser> addUserToOrganization(@PathVariable("userId") final String userId, 
@@ -176,17 +184,6 @@ public class UserController {
     	String token = userRepository.login();
     	restRepository.delete(token, V2_USERS.concat(userId).concat("/audited_spaces"), spaceId);
     }
-    
-    @RequestMapping(value = "/organizations/{orgName}", method = RequestMethod.GET)
-	public @ResponseBody CloudFoundryResource<Organization> getOrganizationByName(@RequestHeader("Authorization") String token, @PathVariable("orgName") String orgName) {
-		CloudFoundryResources<Organization> organizations = restRepository.list(token, V2_ORGANIZATIONS, 1, true);
-		CloudFoundryResource<Organization> retOrg = new CloudFoundryResource<Organization>();
-		for(CloudFoundryResource<Organization> org : organizations.getResources()) {
-		    if(org.getEntity().getName().equals(orgName))
-		    	retOrg.getEntity().setName("invalid");
-		}
-		return retOrg;
-	}
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     public @ResponseBody UserInfo getUserInfo(@RequestHeader("Authorization") String token) {

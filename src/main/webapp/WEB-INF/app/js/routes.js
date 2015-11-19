@@ -47,8 +47,11 @@ angular.module('routes', ['ui.router'])
       })
       .state('service', {
         url: '/organizations/:organizationId/spaces/:spaceId/services',
-        templateUrl: 'partials/service/service.html',
-        controller: 'servicesController'
+        templateUrl: 'partials/service/service-instances.html',
+        controller: 'serviceInstanceController',
+        params: {
+          space: null
+        }
       })
       .state('service-details', {
         url: '/organizations/:organizationId/services/:serviceId/details',

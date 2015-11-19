@@ -2,15 +2,26 @@ angular.module('controllers')
   .controller('servicesController',
     function ServicesController($scope, $state, menu, $mdDialog, Restangular) {
 
-    $scope.org = menu.organization;
     $scope.orgId = $state.params.organizationId;
+
+    Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
+      $scope.org = org;
+      $scope.spaces = $scope.org.entity.spaces;
+    });
 
     var self = this;
     self.service = $state.params.service;
 
-    $scope.spaces = $scope.org.entity.spaces;
-    $scope.instances = [];
+    if(!self.service) {
+      Restangular.one('services', $state.params.serviceId).get().then(function(service) {
+        self.service = service;
+      })
+    }
+    else
+      self.service = $state.params.service;
 
+
+    $scope.instances = [];
 
     Restangular.one('service_instances', $scope.orgId).getList().then(function(instances) {
       instances.forEach(function(instance) {
@@ -44,8 +55,6 @@ angular.module('controllers')
           $scope.org = org;
           $scope.spaces = [];
 
-          // todo: no rest call needed for spaces
-
           $scope.getSpaces = function() {
             $scope.spaces = $scope.org.entity.spaces;
           }
@@ -59,7 +68,8 @@ angular.module('controllers')
 
             // rest: Create Service Instance
             Restangular.all('service_instances').post(instance).then(function(response) {
-              console.log(response);
+              $mdDialog.hide();
+              $state.go('service', {organizationId : $scope.orgId, spaceId : form.spaceId});
             }, function(response) {
               responseService.error(response);
             })

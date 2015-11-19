@@ -6,17 +6,21 @@ angular.module('controllers')
   .controller('usersController',
     function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
       console.log('user controller');
-      //$scope.loading = true;
+
       $scope.blockInput = true;
 
       $scope.orgId = $state.params.organizationId;
-      var org = menu.organization;
 
+      Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
+        $scope.org = org;
+      });
+
+      // TODO: url for rest call should be sth like organizations.one...users
       Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
 
         angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
 
-          var spacesUrl = org.entity.spaces_url.replace('/v2', '');
+          var spacesUrl = $scope.org.entity.spaces_url.replace('/v2', '');
           $scope.getSpacesOfOrganization(orgUser, spacesUrl);
 
           orgUser.isOrgManager = false;
@@ -32,7 +36,6 @@ angular.module('controllers')
           orgUser.auditedSpaces = orgUser.entity.audited_spaces;
         });
         $scope.orgUsers = orgUsers;
-        //$scope.loading = false;
       }, function(response) {
           responseService.error(response);
       });
@@ -47,8 +50,6 @@ angular.module('controllers')
       }
 
       $scope.switchToEditUser = function(user) {
-        //$scope.loading = true;
-
         Restangular.one('organizations', $scope.orgId).all('spaces').getList().then(function(data) {
           $state.go('user-edit', {organizationId : $scope.orgId, userId : user.metadata.guid, user : user});
         });
@@ -96,5 +97,8 @@ angular.module('controllers')
       $scope.cancel = function() {
         $mdDialog.cancel();
       };
+
+
+
 
 });

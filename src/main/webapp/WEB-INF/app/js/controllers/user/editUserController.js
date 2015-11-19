@@ -2,18 +2,60 @@ angular.module('controllers')
   .controller('editUserController',
     function EditUserController($scope, $state, menu, Restangular) {
 
-    $scope.orgId = menu.organization.metadata.guid;
-    $scope.orgName = menu.organization.entity.name;
-    $scope.loading = true;
+    $scope.orgId = $state.params.organizationId;
 
     var self = this;
-    self.user = $state.params.user;
-    self.user.isOrgBillingManager = checkIfOrgBillingManager();
-    self.user.isOrgAuditor = checkIfOrgAuditor();
-    checkIfSpaceManager();
-    checkIfSpaceDeveloper();
-    checkIfSpaceAuditor();
 
+    if($state.params.user != null) {
+      $scope.orgName = menu.organization.entity.name;
+      
+      self.user = $state.params.user;
+      self.user.isOrgBillingManager = checkIfOrgBillingManager();
+      self.user.isOrgAuditor = checkIfOrgAuditor();
+      checkIfSpaceManager();
+      checkIfSpaceDeveloper();
+      checkIfSpaceAuditor();
+    }
+    else {
+      Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
+        $scope.org = org;
+        $scope.orgName = org.entity.name;
+
+        Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
+          var user = null;
+          angular.forEach(orgUsers, function(orgUser) {
+            if(orgUser.metadata.guid == $state.params.userId)
+              user = orgUser
+          });
+          console.log('rest got user');
+          var spacesUrl = $scope.org.entity.spaces_url.replace('/v2', '');
+          Restangular.one(spacesUrl).get().then(function(spaces) {
+            user.spaces = [];
+            spaces.forEach(function(space) {
+              user.spaces.push(space);
+            })
+            user.isOrgManager = false;
+            user.entity.managed_organizations.forEach(function(org) {
+              if(org.metadata.guid == $scope.orgId)
+                user.isOrgManager = true;
+            })
+
+            user.billingManagedOrgs = user.entity.billing_managed_organizations;
+            user.auditedOrgs = user.entity.audited_organizations;
+
+            user.managedSpaces = user.entity.managed_spaces;
+            user.auditedSpaces = user.entity.audited_spaces;
+
+            self.user = user;
+            self.user.isOrgBillingManager = checkIfOrgBillingManager();
+            self.user.isOrgAuditor = checkIfOrgAuditor();
+            checkIfSpaceManager();
+            checkIfSpaceDeveloper();
+            checkIfSpaceAuditor();
+          })
+        })
+      });
+    }
 
     // check org roles
     function checkIfOrgManager() {
