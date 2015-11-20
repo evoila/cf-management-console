@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -82,17 +81,6 @@ public class ApplicationController {
     public void deleteApplicationById(@RequestHeader("Authorization") final String token, 
     		@PathVariable("id") final String id) {
     	restRepository.delete(token, V2_APPS, id);
-    }
-
-    @RequestMapping(value = "/applications/{id}/instances/{instance}/logs/{logName}", method = GET)
-    public @ResponseBody String getApplicationInstanceLog(@RequestHeader("Authorization") final String token,
-    		@PathVariable("id") String id, @PathVariable("instance") String instance,
-    		@PathVariable("logName") String logName) {
-    	String path = V2_APPS.concat("/").concat(id).concat("/instances/").concat(instance)
-    			.concat("/files/logs/").concat(logName).concat(".log");
-    	String log = restRepository.customOne(token, path, new ParameterizedTypeReference<String>() {});
-    	
-    	return log;
     }
 
 }
