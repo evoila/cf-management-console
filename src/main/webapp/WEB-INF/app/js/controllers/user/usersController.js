@@ -8,6 +8,7 @@ angular.module('controllers')
       console.log('user controller');
 
       $scope.blockInput = true;
+      $scope.editMode = false;
 
       $scope.orgId = $state.params.organizationId;
 

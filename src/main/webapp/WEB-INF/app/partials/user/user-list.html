@@ -1,24 +1,36 @@
 <div  layout="column">
 
 	<md-list id="orgUserList">
-    <span class="md-title">Users of {{menu.organization.entity.name}}</span>
-		<button class="md-icon-button md-button md-default-theme" style="margin-left:10px;">
-			<i class="no-focus fa fa-plus fa-lg" style="color:#2B5086;" ng-click="showCreateUserDialog()"></i>
-		</button>
+		<div layout="row" layout-align="start center">
+	    <span class="md-title">Users of {{menu.organization.entity.name}}</span>
+			<md-button type="button" class="md-icon-button md-primary" style="text-align:center;">
+				<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg" ng-click="showCreateUserDialog()"></md-icon>
+			</md-button>
+
+			<md-switch class="no-focus" ng-model="editMode" aria-label="Toggle edit" style="margin-left:0;">editable</md-switch>
+		</div>
+
 		<hr class="style-six" />
     <md-list-item id="item-{{$index}}" class="md-3-line" ng-repeat="user in orgUsers">
       <div class="md-list-item-text" layout="column">
 				<div layout="row">
 
-					<div flex style="max-width:50px;">
-						<button class="md-icon-button md-button md-default-theme" ng-click="showDetails = !showDetails">
-							<i ng-class="showDetails ? 'fa fa-lg fa-chevron-up' : 'fa fa-lg fa-chevron-down'" style="position:absolute;top:10px;cursor:pointer;"></i>
-						</button>
+					<div flex ng-show="editMode" layout="row" layout-align="start center" style="max-width:120px;margin-top:-15px;">
+						<div flex="auto" style="max-width:50px;">
+							<md-button type="button" class="md-icon-button md-primary" style="text-align:center;" ng-click="switchToEditUser(user)">
+								<md-icon class="no-focus" md-svg-icon="assets/svg/ic_edit_48px.svg"></md-icon>
+							</md-button>
+						</div>
+
+						<div flex="auto" style="max-width:50px;">
+							<md-button type="button" class="md-icon-button md-warn" style="text-align:center;" ng-click="deleteUser(user)">
+								<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg"></md-icon>
+							</md-button>
+						</div>
 					</div>
 
-					<div flex style="max-width:380px;">
+					<div flex="auto" style="margin-left:10px;">
         		<h3>{{ user.entity.username }}</h3>
-        		<p><span>GUID: </span>{{ user.metadata.guid }}</p>
 						<p><span>Spaces: </span>{{ user.entity.spaces.length }}</p>
 						<div class="hiddenUserInfo" style="margin-top:15px;" ng-show="showDetails">
 							<button class="md-icon-button md-button md-default-theme" style="margin-left:0;width:auto;" ng-click="switchToEditUser(user)">
@@ -27,7 +39,7 @@
 						</div>
 					</div>
 
-					<div flex style="max-width:150px;">
+					<div flex="auto" style="" hide-sm hide-md>
 						<p ng-show="user.isOrgManager">Manager</p>
 					</div>
 
