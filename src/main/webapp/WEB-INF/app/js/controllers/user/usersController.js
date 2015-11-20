@@ -74,21 +74,23 @@ angular.module('controllers')
       };
 
       $scope.submitCreateUserForm = function(form) {
-        Restangular.one('users').customPOST(undefined, undefined,({  username: form.username, firstName: form.firstname, lastName: form.lastname, password: form.password}),undefined).then(function(user) {
+        Restangular.all('users').post(form).then(function(user) {
           var createdUserId = user.metadata.guid;
 
           Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId)
-            .customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(user){
-
-            responseService.success(user, "User was created successfully", "users", { organizationId : $scope.orgId });
+            .customPUT(undefined, undefined,({ username: 'dummy' }),undefined).then(function(user){
+            responseService.success(user, 'User was created successfully', 'users', { organizationId : $scope.orgId });
           }, function(response) {
+              console.log(response);
               responseService.error(response);
           })
 
         }, function(response) {
+            console.log(response);
             responseService.error(response);
         });
         $mdDialog.hide();
+
       };
 
       $scope.hide = function() {

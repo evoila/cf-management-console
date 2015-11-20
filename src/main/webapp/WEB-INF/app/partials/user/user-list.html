@@ -3,7 +3,7 @@
 	<md-list id="orgUserList">
 		<div layout="row" layout-align="start center">
 	    <span class="md-title">Users of {{menu.organization.entity.name}}</span>
-			<md-button type="button" class="md-icon-button md-primary" style="text-align:center;">
+			<md-button type="button" aria-label="Show Create User Dialog" class="md-icon-button md-primary" style="text-align:center;">
 				<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg" ng-click="showCreateUserDialog()"></md-icon>
 			</md-button>
 
@@ -17,13 +17,13 @@
 
 					<div flex ng-show="editMode" layout="row" layout-align="start center" style="max-width:120px;margin-top:-15px;">
 						<div flex="auto" style="max-width:50px;">
-							<md-button type="button" class="md-icon-button md-primary" style="text-align:center;" ng-click="switchToEditUser(user)">
+							<md-button type="button" aria-label="Edit User" class="md-icon-button md-primary" style="text-align:center;" ng-click="switchToEditUser(user)">
 								<md-icon class="no-focus" md-svg-icon="assets/svg/ic_edit_48px.svg"></md-icon>
 							</md-button>
 						</div>
 
 						<div flex="auto" style="max-width:50px;">
-							<md-button type="button" class="md-icon-button md-warn" style="text-align:center;" ng-click="deleteUser(user)">
+							<md-button type="button" aria-label="Delete User" class="md-icon-button md-warn" style="text-align:center;" ng-click="deleteUser(user)">
 								<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg"></md-icon>
 							</md-button>
 						</div>
@@ -32,11 +32,6 @@
 					<div flex="auto" style="margin-left:10px;">
         		<h3>{{ user.entity.username }}</h3>
 						<p><span>Spaces: </span>{{ user.entity.spaces.length }}</p>
-						<div class="hiddenUserInfo" style="margin-top:15px;" ng-show="showDetails">
-							<button class="md-icon-button md-button md-default-theme" style="margin-left:0;width:auto;" ng-click="switchToEditUser(user)">
-								<i class="fa fa-pencil" style="padding-right:6px;"></i> Edit
-							</button>
-						</div>
 					</div>
 
 					<div flex="auto" style="" hide-sm hide-md>
