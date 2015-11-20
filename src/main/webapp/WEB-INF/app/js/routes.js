@@ -5,10 +5,10 @@ angular.module('routes', ['ui.router'])
   .config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider
-      .state('app', {
+      .state('application', {
         url: '/organizations/:organizationId/space/:spaceId/applications/:applicationId/',
         templateUrl: 'partials/application/application.html',
-        controller: 'appController'
+        controller: 'applicationController'
       })
       .state('org-create', {
         url: '/organizations',

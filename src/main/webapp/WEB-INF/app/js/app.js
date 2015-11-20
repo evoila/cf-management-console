@@ -65,7 +65,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       .icon("phone", "./..assets/svg/phone.svg", 512);
 
   })
-  .run(function($rootScope, $state, $http, clientCacheService, Restangular, envService) {    
+  .run(function($rootScope, $state, $http, $timeout, clientCacheService, Restangular, envService, authenticationService) {
     Restangular.setBaseUrl(envService.read('restApiUrl'))
     .setDefaultHeaders({
       "Content-Type": "application/json;charset=UTF-8",
@@ -73,22 +73,16 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
     })
     .setErrorInterceptor(function(response, deferred, responseHandler) {
       if([401,403].indexOf(response.status) != -1) {
-        logout();
+        console.log("loginRequired - setErrorIntercetpor");
+        authenticationService.authenticate();
 
         return false;
       }
       return true;
     })
 
-    if (clientCacheService.getUser() != null) {
-      var token = clientCacheService.getUser().accessToken;
-      $http.defaults.headers.common['Authorization'] = 'bearer ' + token;
-    } else {
-      logout();
-    }
+    authenticationService.authenticate();
 
-    function logout() {
-      clientCacheService.logout();
-      $state.go('login');
-    }
+    $timeout(5000);
+
   });
