@@ -6,15 +6,10 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content style="width:300px;min-width:300px;min-height:300px;max-width:800px;max-height:810px;">
-
-      <div flex ng-show="processingSubmit" layout="center center" layout-align="space-around">
-        <md-progress-circular style="margin-top:30%" class="md-accent" md-mode="indeterminate"></md-progress-circular>
-      </div>
-
+    <md-dialog-content style="width:300px;min-width:300px;min-height:330px;max-width:800px;max-height:810px;">
 
       <form name="createUserForm" ng-submit="submitCreateUserForm(createUserForm)">
-        <!-- USERNAME -->
+
         <div class="form-group">
           <md-input-container>
             <label>Username(email)</label>
@@ -34,11 +29,11 @@
           </md-input-container>
           </div>
 
-          <div class="md-actions" layout="row">
-            <md-button type="button" ng-click="cancel()" style="margin-right:20px;" >
+          <div flex layout="row" style="position:absolute;bottom:15px;right:17px;">
+            <md-button type="button" ng-click="cancel()">
               Cancel
             </md-button>
-            <md-button type="submit" style="margin-right:20px;" >
+            <md-button class="md-raised md-primary" type="submit">
               Create
             </md-button>
           </div>

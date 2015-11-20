@@ -78,7 +78,6 @@ angular.module('controllers')
       };
 
       function deleteUser(user) {
-        console.log('delete user ' + user.entity.username)
         Restangular.one('users', user.metadata.guid).remove().then(function() {
 
         })

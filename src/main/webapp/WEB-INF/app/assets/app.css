@@ -1,11 +1,17 @@
 html, body {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
-  height: auto;
+  #height: 100%;
   margin: 0px;
   padding: 0px;
 }
 
+html {
+  height: 100%;
+}
+body {
+  height: auto;
+}
 
 
 hr.style-one {

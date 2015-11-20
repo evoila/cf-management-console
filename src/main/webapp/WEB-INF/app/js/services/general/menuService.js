@@ -111,9 +111,9 @@ angular.module('services')
           sections[3] = {
             name: 'Domains',
             type: 'link',
-            state: 'users',
+            state: 'domains',
             params: { "organizationId" : orgaId },
-            icon: 'fa fa-group'
+            icon: 'fa fa-map-signs'
           };
         }
       };
