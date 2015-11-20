@@ -7,47 +7,45 @@ angular.module('controllers')
     function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
       console.log('user controller');
 
-      $scope.blockInput = true;
-      $scope.editMode = false;
+      $scope.init = function() {
+        $scope.blockInput = true;
+        $scope.editMode = false;
 
-      $scope.orgId = $state.params.organizationId;
+        $scope.orgId = $state.params.organizationId;
 
-      Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
-        $scope.org = org;
-      });
-
-      // TODO: url for rest call should be sth like organizations.one...users
-      Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
-
-        angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
-
+        Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
+          $scope.org = org;
           var spacesUrl = $scope.org.entity.spaces_url.replace('/v2', '');
-          $scope.getSpacesOfOrganization(orgUser, spacesUrl);
-
-          orgUser.isOrgManager = false;
-          orgUser.entity.managed_organizations.forEach(function(org) {
-            if(org.metadata.guid == $scope.orgId)
-              orgUser.isOrgManager = true;
+          Restangular.one(spacesUrl).get().then(function(spaces) {
+            $scope.spaces = spaces;
+            prepareUsers();
           })
-
-          orgUser.billingManagedOrgs = orgUser.entity.billing_managed_organizations;
-          orgUser.auditedOrgs = orgUser.entity.audited_organizations;
-
-          orgUser.managedSpaces = orgUser.entity.managed_spaces;
-          orgUser.auditedSpaces = orgUser.entity.audited_spaces;
         });
-        $scope.orgUsers = orgUsers;
-      }, function(response) {
-          responseService.error(response);
-      });
+      }
 
-      $scope.getSpacesOfOrganization = function(orgUser, spacesUrl) {
-        Restangular.one(spacesUrl).get().then(function(spaces) {
-          orgUser.spaces = [];
-          spaces.forEach(function(space) {
-            orgUser.spaces.push(space);
-          })
-        })
+      function prepareUsers() {
+        // TODO: url for rest call should be sth like organizations.one...users
+        Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
+
+          angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
+            orgUser.spaces = $scope.spaces;
+
+            orgUser.isOrgManager = false;
+            orgUser.entity.managed_organizations.forEach(function(org) {
+              if(org.metadata.guid == $scope.orgId)
+                orgUser.isOrgManager = true;
+            })
+
+            orgUser.billingManagedOrgs = orgUser.entity.billing_managed_organizations;
+            orgUser.auditedOrgs = orgUser.entity.audited_organizations;
+
+            orgUser.managedSpaces = orgUser.entity.managed_spaces;
+            orgUser.auditedSpaces = orgUser.entity.audited_spaces;
+          });
+          $scope.orgUsers = orgUsers;
+        }, function(response) {
+            responseService.error(response);
+        });
       }
 
       $scope.switchToEditUser = function(user) {
@@ -78,9 +76,7 @@ angular.module('controllers')
       };
 
       function deleteUser(user) {
-        Restangular.one('users', user.metadata.guid).remove().then(function() {
-
-        })
+        Restangular.one('users', user.metadata.guid).remove();
       }
 
       /*

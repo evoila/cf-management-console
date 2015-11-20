@@ -50,7 +50,8 @@ public class DomainController {
     }
 	
 	@RequestMapping(value = "/private_domains/{domainId}", method = RequestMethod.DELETE)
-    public void deletePrivateDomain(@RequestHeader("Authorization") String token, @PathVariable("domainId") final String domainId) {
+    public void deletePrivateDomain(@PathVariable("domainId") final String domainId) {
+		String token = userRepository.login();
     	restRepository.delete(token, V2_PRIVATE_DOMAINS, domainId);
     }
 }

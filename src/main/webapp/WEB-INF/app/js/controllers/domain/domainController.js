@@ -7,11 +7,13 @@ angular.module('controllers')
     function DomainController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
       console.log('domain controller');
 
-      $scope.orgId = $state.params.organizationId;
+      $scope.init = function() {
+        $scope.orgId = $state.params.organizationId;
 
-      Restangular.one('private_domains', $scope.orgId).getList().then(function(domains) {
-        $scope.domains = domains;
-      });
+        Restangular.one('private_domains', $scope.orgId).getList().then(function(domains) {
+          $scope.domains = domains;
+        });
+      }
 
       /*
        *  Dialog for
@@ -51,9 +53,6 @@ angular.module('controllers')
         $mdDialog.cancel();
       };
 
-
-
-
       /*
        *  Dialog for
        *
@@ -76,11 +75,7 @@ angular.module('controllers')
       };
 
       function deleteDomain(domain) {
-        Restangular.one('private_domains', domain.metadata.guid).remove().then(function() {
-
-        })
+        Restangular.one('private_domains', domain.metadata.guid).remove();
       }
 
-
-
-    });
+  });

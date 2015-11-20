@@ -2,41 +2,41 @@ angular.module('controllers')
   .controller('servicesController',
     function ServicesController($scope, $state, menu, $mdDialog, Restangular, DesignService) {
 
-    $scope.orgId = $state.params.organizationId;
-
-    Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
-      $scope.org = org;
-      $scope.spaces = $scope.org.entity.spaces;
-    });
-
     var self = this;
-    self.showCreate = false;
-    self.service = $state.params.service;
 
-    if(!self.service) {
-      Restangular.one('services', $state.params.serviceId).get().then(function(service) {
-        self.service = service;
-      })
-    }
-    else
+    $scope.init = function() {
+
+      self.showCreate = false;
       self.service = $state.params.service;
+      $scope.orgId = $state.params.organizationId;
+      $scope.instances = [];
 
+      Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
+        $scope.org = org;
+        $scope.spaces = $scope.org.entity.spaces;
+      });
 
-    $scope.instances = [];
-
-    Restangular.one('service_instances', $scope.orgId).getList().then(function(instances) {
-      instances.forEach(function(instance) {
-        self.service.entity.service_plans.forEach(function(plan) {
-          if(plan.metadata.guid == instance.entity.service_plan_guid) {
-            instance.planUniqueId = plan.entity.unique_id;
-            $scope.instances.push(instance);
-          }
+      if(!self.service) {
+        Restangular.one('services', $state.params.serviceId).get().then(function(service) {
+          self.service = service;
         })
-      })
-    }, function(response) {
-      responseService.error(response);
-    });
+      }
+      else
+        self.service = $state.params.service;
 
+      Restangular.one('service_instances', $scope.orgId).getList().then(function(instances) {
+        instances.forEach(function(instance) {
+          self.service.entity.service_plans.forEach(function(plan) {
+            if(plan.metadata.guid == instance.entity.service_plan_guid) {
+              instance.planUniqueId = plan.entity.unique_id;
+              $scope.instances.push(instance);
+            }
+          })
+        })
+      }, function(response) {
+        responseService.error(response);
+      });
+    }
 
     /*
      *  Dialog for
@@ -49,11 +49,13 @@ angular.module('controllers')
         locals: {
           plan: plan,
           service: self.service,
+          spaces: $scope.spaces
         },
-        controller: ['$scope', 'plan', 'service', function($scope, plan, service) {
+        controller: ['$scope', 'plan', 'service', 'spaces', function($scope, plan, service, spaces) {
           $scope.plan = plan;
           $scope.service = service;
           $scope.noOption = false;
+          $scope.spaces = spaces;
 
           $scope.cancel = function() {
             $mdDialog.cancel();
@@ -86,7 +88,6 @@ angular.module('controllers')
         clickOutsideToClose: true
       })
     };
-
 
     $scope.colorString = function(name) {
       var myColor = DesignService.stringColor(name);
