@@ -7,46 +7,45 @@ angular.module('controllers')
     function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
       console.log('user controller');
 
-      $scope.blockInput = true;
+      $scope.init = function() {
+        $scope.blockInput = true;
+        $scope.editMode = false;
 
-      $scope.orgId = $state.params.organizationId;
+        $scope.orgId = $state.params.organizationId;
 
-      Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
-        $scope.org = org;
-      });
-
-      // TODO: url for rest call should be sth like organizations.one...users
-      Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
-
-        angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
-
+        Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
+          $scope.org = org;
           var spacesUrl = $scope.org.entity.spaces_url.replace('/v2', '');
-          $scope.getSpacesOfOrganization(orgUser, spacesUrl);
-
-          orgUser.isOrgManager = false;
-          orgUser.entity.managed_organizations.forEach(function(org) {
-            if(org.metadata.guid == $scope.orgId)
-              orgUser.isOrgManager = true;
+          Restangular.one(spacesUrl).get().then(function(spaces) {
+            $scope.spaces = spaces;
+            prepareUsers();
           })
-
-          orgUser.billingManagedOrgs = orgUser.entity.billing_managed_organizations;
-          orgUser.auditedOrgs = orgUser.entity.audited_organizations;
-
-          orgUser.managedSpaces = orgUser.entity.managed_spaces;
-          orgUser.auditedSpaces = orgUser.entity.audited_spaces;
         });
-        $scope.orgUsers = orgUsers;
-      }, function(response) {
-          responseService.error(response);
-      });
+      }
 
-      $scope.getSpacesOfOrganization = function(orgUser, spacesUrl) {
-        Restangular.one(spacesUrl).get().then(function(spaces) {
-          orgUser.spaces = [];
-          spaces.forEach(function(space) {
-            orgUser.spaces.push(space);
-          })
-        })
+      function prepareUsers() {
+        // TODO: url for rest call should be sth like organizations.one...users
+        Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
+
+          angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
+            orgUser.spaces = $scope.spaces;
+
+            orgUser.isOrgManager = false;
+            orgUser.entity.managed_organizations.forEach(function(org) {
+              if(org.metadata.guid == $scope.orgId)
+                orgUser.isOrgManager = true;
+            })
+
+            orgUser.billingManagedOrgs = orgUser.entity.billing_managed_organizations;
+            orgUser.auditedOrgs = orgUser.entity.audited_organizations;
+
+            orgUser.managedSpaces = orgUser.entity.managed_spaces;
+            orgUser.auditedSpaces = orgUser.entity.audited_spaces;
+          });
+          $scope.orgUsers = orgUsers;
+        }, function(response) {
+            responseService.error(response);
+        });
       }
 
       $scope.switchToEditUser = function(user) {
@@ -55,6 +54,30 @@ angular.module('controllers')
         });
       }
 
+      /*
+       *  Dialog for
+       *
+       *  Confirm delete user
+       *
+       */
+       $scope.showConfirm = function(ev, user) {
+        var confirm = $mdDialog.confirm()
+              .title('Really delete user?')
+              .content(user.entity.username)
+              .ariaLabel('Confirm delete')
+              .targetEvent(ev)
+              .ok('Yes')
+              .cancel('Better not');
+        $mdDialog.show(confirm).then(function() {
+          deleteUser(user);
+        }, function() {
+
+        });
+      };
+
+      function deleteUser(user) {
+        Restangular.one('users', user.metadata.guid).remove();
+      }
 
       /*
        *  Dialog for
@@ -73,13 +96,12 @@ angular.module('controllers')
       };
 
       $scope.submitCreateUserForm = function(form) {
-        Restangular.one('users').customPOST(undefined, undefined,({  username: form.username, firstName: form.firstname, lastName: form.lastname, password: form.password}),undefined).then(function(user) {
+        Restangular.all('users').post(form).then(function(user) {
           var createdUserId = user.metadata.guid;
 
           Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId)
-            .customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(user){
-
-            responseService.success(user, "User was created successfully", "users", { organizationId : $scope.orgId });
+            .customPUT(undefined, undefined,({ username: 'dummy' }),undefined).then(function(user){
+            responseService.success(user, 'User was created successfully', 'users', { organizationId : $scope.orgId });
           }, function(response) {
               responseService.error(response);
           })
@@ -97,7 +119,6 @@ angular.module('controllers')
       $scope.cancel = function() {
         $mdDialog.cancel();
       };
-
 
 
 

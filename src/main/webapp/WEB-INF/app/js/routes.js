@@ -86,6 +86,11 @@ angular.module('routes', ['ui.router'])
         url: '/register',
         templateUrl: 'partials/register.html',
         controller: 'registerController'
+      })
+      .state('domains', {
+        url: '/organizations/:organizationId/private_domains',
+        templateUrl: 'partials/domain/domain-list.html',
+        controller: 'domainController'
       });
 
   })

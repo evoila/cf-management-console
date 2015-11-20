@@ -197,5 +197,11 @@ public class UserController {
         return userRepository.registerUser(token, user.getUsername(), user.getFirstname(), 
         		user.getLastname(), user.getPassword());
     }
+    
+    @RequestMapping(value = "/users/{userId}", method = RequestMethod.DELETE)
+    public void deleteUser(@RequestHeader("Authorization") String token, @PathVariable("userId") final String userId) {
+    	restRepository.delete(token, V2_USERS, userId);
+    	userRepository.deleteUser(userId);
+    }
 	
 }
