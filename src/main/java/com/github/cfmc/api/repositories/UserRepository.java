@@ -110,6 +110,11 @@ public class UserRepository extends RestRepository {
         return apiCreateUser(token, userId).getBody();
     }
     
+    public void deleteUser(String userId) {
+    	String accessToken = getAccessToken(clientId, clientSecret);
+    	uaaDeleteUser(accessToken, userId);
+    }
+    
     private String getAccessToken(String clientId, String clientSecret) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -137,6 +142,31 @@ public class UserRepository extends RestRepository {
         }
     }
 
+    
+    private String uaaDeleteUser(String accessToken, String userId) {
+    	String idDeleted = null;
+    	
+    	HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Type", "application/json;charset=utf-8");
+        httpHeaders.add("Accept", "application/json;charset=utf-8");
+        httpHeaders.add("Authorization", accessToken);
+        
+        try {
+            ResponseEntity<Map<String, Object>> createUserResponse = restTemplate.exchange(uaaBaseUri.concat("Users/").concat(userId), HttpMethod.DELETE, 
+            		new HttpEntity(null, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
+            if (!createUserResponse.getStatusCode().equals(HttpStatus.OK)) {
+                throw new RepositoryException("Unable to delete user in uaa", createUserResponse);
+            }
+            idDeleted = evalToString("id", createUserResponse.getBody());
+            return idDeleted;
+        } 
+        catch (HttpClientErrorException e) {
+            throw new RepositoryException("Unable to delete user in uaa", new ResponseEntity(e.getResponseBodyAsString(), e.getStatusCode()));
+        }
+    }
+    
+    
+    
     private String uaaCreateUser(String accessToken, String username, String firstName, String lastName, String password) {
     	String userId = null;
     	

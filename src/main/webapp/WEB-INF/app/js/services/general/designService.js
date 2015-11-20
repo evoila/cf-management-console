@@ -22,7 +22,11 @@ angular.module('services')
 
           return "00000".substring(0, 6 - c.length) + c;
         }
-        return intToRGB(hashCode(name));
+        if (name) {
+          return intToRGB(hashCode(name));
+        } else {
+          return null;
+        }
       },
       resolveServicePng: function(serviceName) {
         if (serviceName != undefined) {

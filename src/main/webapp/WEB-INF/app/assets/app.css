@@ -7,7 +7,6 @@ html, body {
 }
 
 
-
 hr.style-one {
     border: 0;
     height: 1px;
@@ -71,13 +70,29 @@ md-switch.orange.md-checked .md-thumb {
   opacity: 1;
 }
 
+md-grid-tile {
+  cursor: pointer;
+}
+md-grid-tile.no-link {
+  cursor: default;
+}
 
+md-grid-tile-footer.center {
+  text-align: center;
+}
+md-grid-tile-footer.center figcaption {
+  width: 100%;
+}
+md-grid-tile-footer.center figcaption h3 {
+  margin: 0;
+}
 
-
-
-
-
-
+md-dialog-content.less-vmargins h4 {
+  margin-bottom: 0;
+}
+md-dialog-content.less-vmargins p {
+  margin-top: 5px;
+}
 
 
 

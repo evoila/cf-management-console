@@ -214,7 +214,6 @@ public class RestRepository {
         }
 
         try {
-        	System.out.println("URL: " + baseUri.concat(path));
             return restTemplate.exchange(baseUri.concat(path), method, request, parameterizedTypeReference);
         } catch (HttpClientErrorException e) {
             throw new RepositoryException("Unable to perform exchange for path [" + path + "]", 
