@@ -56,6 +56,33 @@ angular.module('controllers')
         });
       }
 
+      /*
+       *  Dialog for
+       *
+       *  Confirm delete user
+       *
+       */
+       $scope.showConfirm = function(ev, user) {
+        var confirm = $mdDialog.confirm()
+              .title('Really delete user?')
+              .content(user.entity.username)
+              .ariaLabel('Confirm delete')
+              .targetEvent(ev)
+              .ok('Yes')
+              .cancel('Better not');
+        $mdDialog.show(confirm).then(function() {
+          deleteUser(user);
+        }, function() {
+
+        });
+      };
+
+      function deleteUser(user) {
+        console.log('delete user ' + user.entity.username)
+        Restangular.one('users', user.metadata.guid).remove().then(function() {
+
+        })
+      }
 
       /*
        *  Dialog for
@@ -81,16 +108,13 @@ angular.module('controllers')
             .customPUT(undefined, undefined,({ username: 'dummy' }),undefined).then(function(user){
             responseService.success(user, 'User was created successfully', 'users', { organizationId : $scope.orgId });
           }, function(response) {
-              console.log(response);
               responseService.error(response);
           })
 
         }, function(response) {
-            console.log(response);
             responseService.error(response);
         });
         $mdDialog.hide();
-
       };
 
       $scope.hide = function() {
@@ -100,7 +124,6 @@ angular.module('controllers')
       $scope.cancel = function() {
         $mdDialog.cancel();
       };
-
 
 
 
