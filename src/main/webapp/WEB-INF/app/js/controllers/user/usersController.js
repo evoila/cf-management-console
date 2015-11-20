@@ -7,11 +7,11 @@ angular.module('controllers')
     function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
       console.log('user controller');
 
+      $scope.orgId = $state.params.organizationId;
+
       $scope.init = function() {
         $scope.blockInput = true;
         $scope.editMode = false;
-
-        $scope.orgId = $state.params.organizationId;
 
         Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
           $scope.org = org;

@@ -7,9 +7,9 @@ angular.module('controllers')
     function DomainController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
       console.log('domain controller');
 
-      $scope.init = function() {
-        $scope.orgId = $state.params.organizationId;
+      $scope.orgId = $state.params.organizationId;
 
+      $scope.init = function() {
         Restangular.one('private_domains', $scope.orgId).getList().then(function(domains) {
           $scope.domains = domains;
         });
@@ -36,9 +36,9 @@ angular.module('controllers')
           'name': form.name,
           'owning_organization_guid': $scope.orgId
         };
-
+        console.log('name: ' + form.name + ', ' + $scope.orgId);
         Restangular.all('private_domains').post(domain).then(function(domain) {
-          //responseService.success(domain, 'Domain was created successfully', 'domains', { organizationId : $scope.orgId });
+          responseService.success(domain, 'Domain was created successfully', 'domains', { organizationId : $scope.orgId });
         }, function(response) {
             responseService.error(response);
         });

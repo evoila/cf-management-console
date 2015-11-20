@@ -65,7 +65,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       .icon("phone", "./..assets/svg/phone.svg", 512);
 
   })
-  .run(function($rootScope, $state, $http, clientCacheService, Restangular, envService) {    
+  .run(function($rootScope, $state, $http, clientCacheService, Restangular, envService) {
     Restangular.setBaseUrl(envService.read('restApiUrl'))
     .setDefaultHeaders({
       "Content-Type": "application/json;charset=UTF-8",
