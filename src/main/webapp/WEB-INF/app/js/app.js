@@ -83,6 +83,4 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
 
     authenticationService.authenticate();
 
-    $timeout(5000);
-
   });

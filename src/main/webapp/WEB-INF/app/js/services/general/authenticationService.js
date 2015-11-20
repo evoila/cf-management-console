@@ -2,13 +2,14 @@
  * authenticationService
  **/
 angular.module('services')
-  .factory('authenticationService', function authenticationService($rootScope, $state, $http, clientCacheService, envService, menu) {
+  .factory('authenticationService', function authenticationService($rootScope, $state, $http, clientCacheService, envService, menu, responseService) {
     var authentication = {};
     REST_API = envService.read('restApiUrl');
 
     authentication.authenticate = function(callback) {
-      var user = clientCacheService.getUser();
 
+      var user = clientCacheService.getUser();
+      $http.defaults.headers.common['Authorization'] = 'bearer ' + user.token;
       getToken(user);
 
       if (typeof(callback) == "function")
@@ -23,7 +24,7 @@ angular.module('services')
     authentication.logout = function() {
       clientCacheService.clearUser();
       $rootScope.isAuthenticated = false;
-      
+
       $state.go('login');
     }
 
@@ -46,6 +47,7 @@ angular.module('services')
           $http.defaults.headers.common['Authorization'] = 'bearer ' + data.accessToken;
           $rootScope.isAuthenticated = true;
 
+          user.token = data.accessToken;
           clientCacheService.storeUser(user);
 
           menu.initMenu(function(organization) {
