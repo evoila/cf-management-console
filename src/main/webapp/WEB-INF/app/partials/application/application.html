@@ -1,4 +1,23 @@
-<div ng-hide="loading" flex="50" layout="column">
+<md-card ng-cloak>
+  <div style="background-color:#{{colorString(application.entity.name)}}">
+    <img style="height:50%; padding-bottom: 45px;" ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
+    {{colorString(application.entity.name)}}
+  </div>
+  <md-card-content>
+    <h2 class="md-title">{{application.entity.name}}</h2>
+    <p>
+      Hello
+    </p>
+  </md-card-content>
+  <md-card-actions layout="row" layout-align="end center">
+    <md-button ng-show="application.entity.state != 'STARTED'">START</md-button>
+    <md-button ng-show="application.entity.state == 'STARTED'">STOP</md-button>
+    <md-button>DELETE</md-button>
+  </md-card-actions>
+</md-card>
+<pre>{{ application | json }}</pre>
+
+<!--div ng-hide="loading" flex="50" layout="column">
 	<h2>{{application.entity.name}}</h2>
 	<div layout="row" layout-sm="column">
 		<div flex="50">
@@ -145,4 +164,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div-->

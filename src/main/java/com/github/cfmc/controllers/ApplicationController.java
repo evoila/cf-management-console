@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +40,7 @@ public class ApplicationController {
 	private ObjectMapper objectMapper;
 	
 	private static final String V2_APPS = "v2/apps";
+	private static final String V3_APPS = "v3/apps";
 	
 	private static final String V2_SERVICE_INSTANCES = "v2/service_instances";
 
@@ -55,6 +55,18 @@ public class ApplicationController {
     public Application updateApplication(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
 		return restRepository.update(token, V2_APPS.concat("/").concat(id), application).getEntity();
+    }
+	
+	@RequestMapping(value = "/applications/{id}/start", method = RequestMethod.PUT)
+    public Application startApplication(@RequestHeader("Authorization") String token, 
+    		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
+		return restRepository.update(token, V3_APPS.concat("/").concat(id).concat("/start"), application).getEntity();
+    }
+	
+	@RequestMapping(value = "/applications/{id}/stop", method = RequestMethod.PUT)
+    public Application stopApplication(@RequestHeader("Authorization") String token, 
+    		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
+		return restRepository.update(token, V3_APPS.concat("/").concat(id).concat("/stop"), application).getEntity();
     }
 	
 	@RequestMapping(value = "/applications/{id}/instances", method = RequestMethod.GET)
@@ -82,17 +94,6 @@ public class ApplicationController {
     public void deleteApplicationById(@RequestHeader("Authorization") final String token, 
     		@PathVariable("id") final String id) {
     	restRepository.delete(token, V2_APPS, id);
-    }
-
-    @RequestMapping(value = "/applications/{id}/instances/{instance}/logs/{logName}", method = GET)
-    public @ResponseBody String getApplicationInstanceLog(@RequestHeader("Authorization") final String token,
-    		@PathVariable("id") String id, @PathVariable("instance") String instance,
-    		@PathVariable("logName") String logName) {
-    	String path = V2_APPS.concat("/").concat(id).concat("/instances/").concat(instance)
-    			.concat("/files/logs/").concat(logName).concat(".log");
-    	String log = restRepository.customOne(token, path, new ParameterizedTypeReference<String>() {});
-    	
-    	return log;
     }
 
 }

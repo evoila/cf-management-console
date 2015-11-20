@@ -102,7 +102,7 @@
     </md-toolbar>
 
     <div class="layout-column md-padding">
-      <md-card ng-show="isAuthenticated && !hideQuota" style="margin: 15px">
+      <!--md-card ng-show="isAuthenticated && !hideQuota" style="margin: 15px">
         <md-card-content layout="row">
           <div layout="row" layout-sm="column" flex="100">
             <div layout="column" flex="20">
@@ -148,7 +148,7 @@
             </div>
           </div>
         </md-card-content>
-      </md-card>
+      </md-card-->
     <div class="md-padding" ui-view flex ng-controller="alertController"></div>
   </div>
 
@@ -166,7 +166,6 @@
   <script src="./lib/angular-environment/src/angular-environment.js"></script>
   <script src="./lib/angular-loading-bar/build/loading-bar.min.js"></script>
 
-
   <script src="./js/services/services.js"></script>
   <script src="./js/services/general/clientCacheService.js"></script>
   <script src="./js/services/general/localStorageService.js"></script>
@@ -176,6 +175,7 @@
   <script src="./js/services/general/userDetailsService.js"></script>
   <script src="./js/services/general/menuService.js"></script>
   <script src="./js/services/general/designService.js"></script>
+  <script src="./js/services/general/authenticationService.js"></script>
 
   <script src="./js/directives/directives.js"></script>
   <script src="./js/directives/menuSingleItemDirective.js"></script>

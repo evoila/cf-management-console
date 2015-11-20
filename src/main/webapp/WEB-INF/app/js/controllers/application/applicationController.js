@@ -4,12 +4,14 @@
 
 
 angular.module('controllers')
-  .controller('appController',
-    function AppController($scope, $state, Restangular) {
+  .controller('applicationController',
+    function ApplicationController($scope, $state, Restangular, DesignService) {
       $scope.loading = true;
       $scope.organizationId = $state.params.organizationId;
+      console.log("ApplicationController");
 
       Restangular.one('applications', $state.params.applicationId).all('instances').getList().then(function(instances) {
+        console.log("applicationInstances: ", instances );
         $scope.instances = instances;
       });
 
@@ -65,6 +67,16 @@ angular.module('controllers')
             }
           });
         });
+      };
+
+      $scope.colorString = function(name) {
+        var myColor = DesignService.stringColor(name);
+        return myColor;
+      };
+
+      $scope.servicePng = function(name) {
+        var myService = DesignService.resolveServicePng(name);
+        return myService;
       };
 
 });

@@ -6,7 +6,7 @@
 		<md-card style="background-color:#{{colorString(app.entity.name)}}">
 			<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
 			<md-card-content style="background-color:#fff">
-						<h1 class="md-title" style="font-size:30px;font-style:#444">{{app.entity.name}}</h1>
+	<h1 class="md-title" style="font-size:30px;font-style:#444">{{app.entity.name}}</h1>
 				    <md-list>
 				      <md-subheader class="md-no-sticky">Details</md-subheader>
 				      <md-list-item class="md-3-line">
@@ -26,7 +26,7 @@
 									<div layout="row" layout-align="space-between center">
 										<p>State</p>
 										<p>{{app.entity.state}}</p>
-									</div>									
+									</div>
 									<div layout="row" layout-align="space-between center">
 										<p>Package State</p>
 										<p>{{app.entity.package_state}}</p>
@@ -47,10 +47,10 @@
 				      <md-subheader ng-show="app.expand=='50'" class="md-no-sticky">Service Bindings ({{app.entity.service_bindings.length}})</md-subheader>
 				    </md-list>
 					</md-card-content>
-			<div class="md-actions" layout="row" layout-align="end center">
-        <md-button ng-show="app.expand=='25'" ng-click="app.expand='50'">More</md-button>
-				<md-button ng-show="app.expand=='50'" ng-click="app.expand='25'">Less</md-button>
-				<md-button ui-sref="app({'applicationId':'{{app.metadata.guid}}','organizationId':'{{s.entity.organization.metadata.guid}}','spaceId':'{{s.metadata.guid}}'})">Rein</md-button>
+			<div class="md-actions" layout="row" layout-align="space-between center">
+				<md-button ui-sref="application({'applicationId':'{{app.metadata.guid}}','organizationId':'{{s.entity.organization.metadata.guid}}','spaceId':'{{s.metadata.guid}}'})">DETAILS</md-button>
+        <md-button ng-show="app.expand=='25'" ng-click="app.expand='50'">EXPANDED VIEW</md-button>
+				<md-button ng-show="app.expand=='50'" ng-click="app.expand='25'">CONTRACTED VIEW</md-button>
       </div>
 		</md-card>
 	</div>

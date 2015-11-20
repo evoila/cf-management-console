@@ -5,6 +5,32 @@ angular.module('services')
   .factory('clientCacheService', function ClientCacheService($rootScope, $http, localStorageService) {
     var cache = {};
 
+    cache.storePassword = function(password) {
+      localStorageService.add("cfmc.password", password);
+      console.log("storepw clientCacheService",password)
+    }
+
+    cache.getPassword = function() {
+      var password = localStorageService.get("cfmc.password");
+      return password;
+    }
+
+    cache.storeUser = function(user) {
+      localStorageService.add("cfmc.user", user);
+    }
+
+    cache.getUser= function() {
+      var user = localStorageService.get("cfmc.user");
+      return user;
+    }
+
+    cache.clearUser = function() {
+      localStorageService.clearAll();
+    }
+
+
+    /**OLD PART**/
+
     cache.storeOrganizations = function(organizations) {
       localStorageService.add("cfmc.organizations", JSON.stringify(organizations));
     }
@@ -21,16 +47,22 @@ angular.module('services')
       return organizations;
     }
 
-    cache.storeUser = function(user) {
+    /*cache.storeUser = function(user) {
       $rootScope.isAuthenticated = true;
+      console.log(user);
       $http.defaults.headers.common['Authorization'] = 'bearer ' + user.accessToken;
       localStorageService.add("cfmc.user", user);
       localStorageService.add("cfmc.lastLogin", new Date().getTime());
-    }
+      authService.loginConfirmed();
+    }*/
 
-    cache.getUser = function() {
+    /* cache.getUser = function() {
       return localStorageService.get("cfmc.user");
-    }
+    } */
+
+
+
+
 
     cache.storeFacts = function(facts) {
       localStorageService.add("cfmc.facts", facts);
@@ -57,15 +89,17 @@ angular.module('services')
       return cache.getUser() != null;
     };
 
-    cache.authenticate = function(authenticationDetails) {
+    /*cache.authenticate = function(authenticationDetails) {
+      var password = cache.getPassword();
       cache.clear();
+      cache.storePassword(password);
       cache.storeUser(authenticationDetails);
-    }
+    }*/
 
-    cache.logout = function() {
+    /*cache.logout = function() {
       $rootScope.isAuthenticated = false;
       cache.clear();
-    }
+    }*/
 
     return cache;
   });
