@@ -1,6 +1,6 @@
 <div ng-controller="servicesController as ctrl">
 	<h2>{{ctrl.service.entity.label}}</h2>
-	<span>instances farblich codieren nach plan?</span>
+	<span>instances farblich codieren nach plan</span>
 
   <div layout="row" layout-wrap>
 
@@ -11,11 +11,11 @@
       </md-toolbar>
 			<md-card-content layout="column">
 				<div flex>
-					<md-grid-list md-cols-sm="2" md-cols="2" md-row-height="4:3" md-row-height-sm="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
-						<md-grid-tile class="no-focus no-link" ng-repeat="plan in ctrl.service.entity.service_plans" style="background-color:#{{colorString(plan.entity.name)}}">
+					<md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="1" md-cols-gt-lg="2" md-row-height="4:3" md-row-height-sm="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+						<md-grid-tile class="no-focus" ng-repeat="plan in ctrl.service.entity.service_plans" style="background-color:#{{colorString(plan.entity.name)}}" ng-click="showServicePlanDetails(plan)">
 							<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
-							<md-grid-tile-footer>
-								<h3 style="text-align:center;">
+							<md-grid-tile-footer class="center">
+								<h3>
 									{{plan.entity.name}}
 								</h3>
 							</md-grid-tile-footer>

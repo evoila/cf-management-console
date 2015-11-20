@@ -1,34 +1,56 @@
-<md-dialog aria-label="Service Plan Details">
-
+<md-dialog aria-label="Service Plan Details" ng-controller="servicesController as ctrl">
 
     <md-toolbar>
-
       <div class="md-toolbar-tools" layout="column">
         <h2>Service Plan: {{plan.entity.name}}</h2>
         <span flex=""></span>
-
         <div layout="row" layout-align="end">
-
             <md-button aria-label="Close Dialog" class="md-icon-button" ng-click="cancel()">
               <md-icon md-svg-icon="assets/svg/ic_close_48px.svg"></md-icon>
             </md-button>
-
         </div>
-
       </div>
-
     </md-toolbar>
 
+    <md-dialog-content class="less-vmargins" style="max-width:400px!important;min-width:300px;min-height:300px;max-width:800px;max-height:810px;" layout="column">
 
-    <md-dialog-content style="max-width:400px!important;min-width:300px;min-height:300px;max-width:800px;max-height:810px;">
-      <div style="padding:10px 20px;">
+      <div flex ng-hide="ctrl.showCreate" layout="column">
+        <h4>Pricing:</h4>
+        <p>{{ plan.entity.free == 'true' ? 'Not free' : 'Free' }}</p>
         <h4>Description:</h4>
         <p>{{plan.entity.description}}</p>
+
+        <span flex=""></span>
+        <div flex style="text-align:center;">
+          <md-button class="md-raised md-primary" aria-label="Create new Instance" ng-click="ctrl.showCreate = true">Create new Instance</md-button>
+        </div>
       </div>
 
+      <div ng-show="ctrl.showCreate" layout="column">
+        <form name="createServiceInstanceForm" ng-submit="submitCreateServiceInstanceForm(createServiceInstanceForm)">
+          <div flex class="form-group">
+            <md-select ng-required="true" placeholder="Choose space" ng-model="createServiceInstanceForm.spaceId" md-on-open="getSpaces()" style="min-width: 200px;">
+              <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
+            </md-select>
+            <p ng-show="noOption" style="color:red;margin-top:-17px;">Please choose a space</p>
+            <md-input-container>
+              <label>Instance name</label>
+              <input type="text" ng-model="createServiceInstanceForm.instanceName" ng-required="true" minlength="5">
+            </md-input-container>
+          </div>
+          <span flex=""></span>
+          <div flex layout="row" style="position:absolute;bottom:30px;">
+            <md-button type="button" ng-click="cancel()">
+              Cancel
+            </md-button>
+            <md-button class="md-raised md-primary" type="submit">
+              Create
+            </md-button>
+          </div>
+        </form>
+      </div>
+
+
     </md-dialog-content>
-
-
-
 
 </md-dialog>

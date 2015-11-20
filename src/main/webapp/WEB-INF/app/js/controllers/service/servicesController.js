@@ -10,6 +10,7 @@ angular.module('controllers')
     });
 
     var self = this;
+    self.showCreate = false;
     self.service = $state.params.service;
 
     if(!self.service) {
@@ -40,72 +41,45 @@ angular.module('controllers')
     /*
      *  Dialog for
      *
-     *  Create Service Instance
-     *
-     */
-    $scope.showCreateInstanceDialog = function(plan) {
-
-      $mdDialog.show({
-        locals: {
-          plan: plan,
-          service: self.service,
-          org: $scope.org
-        },
-        controller: ['$scope', 'plan', 'service', 'org', function($scope, plan, service, org) {
-          $scope.plan = plan;
-          $scope.service = service;
-          $scope.org = org;
-          $scope.spaces = [];
-
-          $scope.getSpaces = function() {
-            $scope.spaces = $scope.org.entity.spaces;
-          }
-
-          $scope.submitCreateServiceInstanceForm = function(form) {
-            var instance = {
-              'space_guid': form.spaceId,
-              'name': form.instanceName,
-              'service_plan_guid': $scope.plan.metadata.guid
-            };
-
-            // rest: Create Service Instance
-            Restangular.all('service_instances').post(instance).then(function(response) {
-              $mdDialog.hide();
-              $state.go('service', {organizationId : $scope.orgId, spaceId : form.spaceId});
-            }, function(response) {
-              responseService.error(response);
-            })
-
-          }
-
-          $scope.cancel = function() {
-            $mdDialog.cancel();
-          };
-
-        }],
-        templateUrl: 'partials/service/service-instance-dialog-create.html',
-        parent: angular.element(document.body),
-        clickOutsideToClose: false
-      })
-    };
-
-
-    /*
-     *  Dialog for
-     *
-     *  Show Service Plan Details
+     *  Show Service Plan Details / Create
      *
      */
     $scope.showServicePlanDetails = function(plan) {
       $mdDialog.show({
         locals: {
-          plan: plan
+          plan: plan,
+          service: self.service,
         },
-        controller: ['$scope', 'plan', function($scope, plan) {
+        controller: ['$scope', 'plan', 'service', function($scope, plan, service) {
           $scope.plan = plan;
+          $scope.service = service;
+          $scope.noOption = false;
+
           $scope.cancel = function() {
             $mdDialog.cancel();
           };
+
+          $scope.submitCreateServiceInstanceForm = function(form) {
+            if(!form.spaceId) {
+              $scope.noOption = true;
+            }
+            else {
+              var instance = {
+                'space_guid': form.spaceId,
+                'name': form.instanceName,
+                'service_plan_guid': $scope.plan.metadata.guid
+              };
+
+              // rest: Create Service Instance
+              Restangular.all('service_instances').post(instance).then(function(response) {
+                $mdDialog.hide();
+                $state.go('service', {organizationId : $scope.orgId, spaceId : form.spaceId});
+              }, function(response) {
+                responseService.error(response);
+              })
+            }
+          };
+
         }],
         templateUrl: 'partials/marketplace/service-plan-dialog-details.html',
         parent: angular.element(document.body),
