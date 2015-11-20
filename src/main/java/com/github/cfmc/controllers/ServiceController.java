@@ -59,7 +59,7 @@ public class ServiceController {
     }
     
     @RequestMapping(value = "/services", method = RequestMethod.POST)
-    public @ResponseBody CloudFoundryResource<Service> createSpace(@RequestHeader("Authorization") String token, 
+    public @ResponseBody CloudFoundryResource<Service> createService(@RequestHeader("Authorization") String token, 
     		@RequestBody Service service) {
         return restRepository.save(token, V2_SERVICES, new CloudFoundryResource<Service>(service));
     }

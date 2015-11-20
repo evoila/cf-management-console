@@ -11,36 +11,37 @@
 		</div>
 
 		<hr class="style-six" />
-    <md-list-item id="item-{{$index}}" class="md-3-line" ng-repeat="user in orgUsers">
+
+    <md-list-item id="item-{{$index}}" class="md-3-line" ng-repeat="user in orgUsers" style="">
       <div class="md-list-item-text" layout="column">
 				<div layout="row">
 
-					<div flex ng-show="editMode" layout="row" layout-align="start center" style="max-width:120px;margin-top:-15px;">
-						<div flex="auto" style="max-width:50px;">
-							<md-button type="button" aria-label="Edit User" class="md-icon-button md-primary" style="text-align:center;" ng-click="switchToEditUser(user)">
+					<div flex ng-show="editMode" layout="row" layout-align="start center" style="max-width:120px;margin-top:-12px;">
+						<div flex style="max-width:50px;">
+							<button class="md-button md-icon-button md-primary" type="button" aria-label="Edit User" style="text-align:center;" ng-click="switchToEditUser(user)">
 								<md-icon class="no-focus" md-svg-icon="assets/svg/ic_edit_48px.svg"></md-icon>
-							</md-button>
+							</button>
 						</div>
 
-						<div flex="auto" style="max-width:50px;">
-							<md-button type="button" aria-label="Delete User" class="md-icon-button md-warn" style="text-align:center;" ng-click="showConfirm($event, user)">
+						<div flex style="max-width:50px;">
+							<button class="md-button md-icon-button md-warn" type="button" aria-label="Delete User" style="text-align:center;" ng-click="showConfirm($event, user)">
 								<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg"></md-icon>
-							</md-button>
+							</button>
 						</div>
 					</div>
 
-					<div flex="auto" style="margin-left:10px;">
+					<div flex style="margin-left:10px;">
         		<h3>{{ user.entity.username }}</h3>
 						<p><span>Spaces: </span>{{ user.entity.spaces.length }}</p>
 					</div>
 
-					<div flex="auto" style="" hide-sm hide-md>
+					<div flex hide-sm hide-md>
 						<p ng-show="user.isOrgManager">Manager</p>
 					</div>
 
 				</div>
       </div>
-		<md-divider></md-divider>
+			<md-divider></md-divider>
 
     </md-list-item>
 	</md-list>

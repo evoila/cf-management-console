@@ -30,16 +30,13 @@ angular.module('controllers')
       };
 
       $scope.submitCreateDomainForm = function(form) {
-        Restangular.all('users').post(form).then(function(user) {
-          var createdUserId = user.metadata.guid;
+        var domain = {
+          'name': form.name,
+          'owning_organization_guid': $scope.orgId
+        };
 
-          Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId)
-            .customPUT(undefined, undefined,({ username: 'dummy' }),undefined).then(function(user){
-            responseService.success(user, 'User was created successfully', 'users', { organizationId : $scope.orgId });
-          }, function(response) {
-              responseService.error(response);
-          })
-
+        Restangular.all('private_domains').post(domain).then(function(domain) {
+          //responseService.success(domain, 'Domain was created successfully', 'domains', { organizationId : $scope.orgId });
         }, function(response) {
             responseService.error(response);
         });
