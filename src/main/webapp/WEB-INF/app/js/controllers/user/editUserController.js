@@ -1,8 +1,9 @@
 angular.module('controllers')
   .controller('editUserController',
-    function EditUserController($scope, $state, menu, Restangular) {
+    function EditUserController($scope, $state, menu, Restangular, envService) {
 
       var self = this;
+      $scope.prefix = envService.read('cf_prefix');
 
       $scope.init = function() {
         $scope.orgId = $state.params.organizationId;
@@ -21,7 +22,7 @@ angular.module('controllers')
           Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
             $scope.org = org;
             $scope.orgName = org.entity.name;
-            var spacesUrl = $scope.org.entity.spaces_url.replace('/v2', '');
+            var spacesUrl = $scope.org.entity.spaces_url.replace($scope.prefix, '');
             Restangular.one(spacesUrl).get().then(function(spaces) {
               $scope.spaces = spaces;
               prepareUser();
@@ -126,14 +127,14 @@ angular.module('controllers')
 
       // switch org roles
       $scope.switchOrgManager = function() {
-        var managedOrgsUrl = self.user.entity.managed_organizations_url.replace('/v2', '') + '/';
+        var managedOrgsUrl = self.user.entity.managed_organizations_url.replace($scope.prefix, '') + '/';
         if(self.user.isOrgManager)
           Restangular.one(managedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
         else
           Restangular.one(managedOrgsUrl + $scope.orgId).remove();
       }
       $scope.switchOrgBillingManager = function() {
-        var billingManagedOrgsUrl = self.user.entity.billing_managed_organizations_url.replace('/v2', '') + '/';
+        var billingManagedOrgsUrl = self.user.entity.billing_managed_organizations_url.replace($scope.prefix, '') + '/';
         if(self.user.isOrgBillingManager)
           Restangular.one(billingManagedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
         else {
@@ -141,7 +142,7 @@ angular.module('controllers')
         }
       }
       $scope.switchOrgAuditor = function() {
-        var auditedOrgsUrl = self.user.entity.audited_organizations_url.replace('/v2', '') + '/';
+        var auditedOrgsUrl = self.user.entity.audited_organizations_url.replace($scope.prefix, '') + '/';
         if(self.user.isOrgAuditor)
           Restangular.one(auditedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
         else {
@@ -151,21 +152,21 @@ angular.module('controllers')
 
       // switch space roles
       $scope.switchSpaceManager = function(space) {
-        var managedSpacesUrl = self.user.entity.managed_spaces_url.replace('/v2', '') + '/';
+        var managedSpacesUrl = self.user.entity.managed_spaces_url.replace($scope.prefix, '') + '/';
         if(space.userIsManager)
           Restangular.one(managedSpacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
         else
             Restangular.one(managedSpacesUrl + space.metadata.guid).remove();
       }
       $scope.switchSpaceDeveloper = function(space) {
-        var spacesUrl = self.user.entity.spaces_url.replace('/v2', '') + '/';
+        var spacesUrl = self.user.entity.spaces_url.replace($scope.prefix, '') + '/';
         if(space.userIsDeveloper)
           Restangular.one(spacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
         else
             Restangular.one(spacesUrl + space.metadata.guid).remove();
       }
       $scope.switchSpaceAuditor = function(space) {
-        var auditedSpacesUrl = self.user.entity.audited_spaces_url.replace('/v2', '') + '/';
+        var auditedSpacesUrl = self.user.entity.audited_spaces_url.replace($scope.prefix, '') + '/';
         if(space.userIsAuditor)
           Restangular.one(auditedSpacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
         else

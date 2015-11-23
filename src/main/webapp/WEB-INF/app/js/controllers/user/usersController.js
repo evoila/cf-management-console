@@ -4,10 +4,11 @@
 
 angular.module('controllers')
   .controller('usersController',
-    function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location, $window) {
+    function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location, envService) {
       console.log('user controller');
 
       $scope.orgId = $state.params.organizationId;
+      $scope.prefix = envService.read('cf_prefix');
 
       $scope.init = function() {
         $scope.blockInput = true;
@@ -15,7 +16,7 @@ angular.module('controllers')
 
         Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
           $scope.org = org;
-          var spacesUrl = $scope.org.entity.spaces_url.replace('/v2', '');
+          var spacesUrl = $scope.org.entity.spaces_url.replace($scope.prefix, '');
           Restangular.one(spacesUrl).get().then(function(spaces) {
             $scope.spaces = spaces;
             prepareUsers();
