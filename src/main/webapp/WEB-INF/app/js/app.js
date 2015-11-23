@@ -81,6 +81,10 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       return true;
     })
 
+    $rootScope.$on('$stateChangeSuccess',function(){
+      window.scrollTo(0, 0);
+    })
+
     authenticationService.authenticate();
 
   });
