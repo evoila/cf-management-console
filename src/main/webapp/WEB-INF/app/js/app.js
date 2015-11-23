@@ -73,7 +73,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
     })
     .setErrorInterceptor(function(response, deferred, responseHandler) {
       if([401,403].indexOf(response.status) != -1) {
-        console.log("loginRequired - setErrorIntercetpor");
+        console.log("loginRequired - setErrorIntercetpor", response, deferred, responseHandler);
         authenticationService.authenticate();
 
         return false;
