@@ -1,13 +1,16 @@
 <div layout="column" ng-init="init()">
 
 	<md-list id="orgUserList">
-		<div layout="row" layout-align="start center">
-	    <span class="md-title">Users of {{menu.organization.entity.name}}</span>
-			<button type="button" aria-label="Show Create User Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateUserDialog()">
-				<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg"></md-icon>
-			</button>
+		<div layout="column" layout-gt-md="row" layout-align="start start">
+	    <h2>Users of {{menu.organization.entity.name}}</h2>
+			<div layout="row" layout-align="start center" style="margin-top:2px;">
+				<button type="button" aria-label="Show Create User Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateUserDialog()">
+					<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg"></md-icon>
+				</button>
 
-			<md-switch class="no-focus" ng-model="editMode" aria-label="Toggle edit" style="margin-left:0;">editable</md-switch>
+				<md-switch class="no-focus" ng-model="editMode" aria-label="Toggle edit" style="margin-left:0;">editable</md-switch>
+			</div>
+
 		</div>
 
 		<hr class="style-six" />

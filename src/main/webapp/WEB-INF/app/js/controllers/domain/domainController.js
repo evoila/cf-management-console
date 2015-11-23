@@ -76,7 +76,7 @@ angular.module('controllers')
 
       function deleteDomain(domain) {
         Restangular.one('private_domains', domain.metadata.guid).remove().then(function() {
-
+          responseService.success(domain, 'Domain was deleted successfully', 'domains', { organizationId : $scope.orgId });
         });
       }
 

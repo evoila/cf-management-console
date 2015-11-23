@@ -3,11 +3,11 @@ angular.module('controllers')
     function ServicesController($scope, $state, menu, $mdDialog, Restangular, DesignService) {
 
     var self = this;
+    self.service = $state.params.service;
 
     $scope.init = function() {
 
       self.showCreate = false;
-      self.service = $state.params.service;
       $scope.orgId = $state.params.organizationId;
       $scope.instances = [];
 
@@ -25,10 +25,14 @@ angular.module('controllers')
         self.service = $state.params.service;
 
       Restangular.one('service_instances', $scope.orgId).getList().then(function(instances) {
-        instances.forEach(function(instance) {
-          self.service.entity.service_plans.forEach(function(plan) {
+        var colors = DesignService.getNumberOfVisuallyDistinctColors(self.service.entity.service_plans.length);
+
+        instances.forEach(function(instance, instanceIndex) {
+          self.service.entity.service_plans.forEach(function(plan, planIndex) {
+            plan.color = colors[planIndex];
             if(plan.metadata.guid == instance.entity.service_plan_guid) {
               instance.planUniqueId = plan.entity.unique_id;
+              instance.color = plan.color;
               $scope.instances.push(instance);
             }
           })
@@ -85,7 +89,7 @@ angular.module('controllers')
         }],
         templateUrl: 'partials/marketplace/service-plan-dialog-details.html',
         parent: angular.element(document.body),
-        clickOutsideToClose: true
+        clickOutsideToClose: false
       })
     };
 

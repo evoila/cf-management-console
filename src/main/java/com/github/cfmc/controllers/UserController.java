@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,7 +59,9 @@ public class UserController {
     	String adminToken = userRepository.login();
     	return restRepository.one(adminToken, V2_USERS, userId, 1);
     }
-     
+    /*
+	 * requires admin token (user registration)
+	 */
     @RequestMapping(value = "/users/{userId}/organizations/{orgId}", method = RequestMethod.PUT)
     public @ResponseBody CloudFoundryResource<OrganizationUser> addUserToOrganization(@RequestHeader("Authorization") final String token,
     		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
@@ -81,10 +85,11 @@ public class UserController {
     }
 
 	@RequestMapping(value = "/users/{userId}/managed_organizations/{orgId}", method = RequestMethod.DELETE)
-	public void removeManagedOrganizationForUser(@RequestHeader("Authorization") final String token,
+	public ResponseEntity<Object> removeManagedOrganizationForUser(@RequestHeader("Authorization") final String token,
 			@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId) {
 		String adminToken = userRepository.login();
 		restRepository.delete(adminToken, V2_USERS.concat(userId).concat("/managed_organizations"), orgId);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 		
 	@RequestMapping(value = "/users/{userId}/billing_managed_organizations", method = RequestMethod.GET)
@@ -103,10 +108,11 @@ public class UserController {
     }
 	
 	@RequestMapping(value = "/users/{userId}/billing_managed_organizations/{orgId}", method = RequestMethod.DELETE)
-	public void removeBillingManagedOrganizationForUser(@RequestHeader("Authorization") final String token,
+	public ResponseEntity<Object> removeBillingManagedOrganizationForUser(@RequestHeader("Authorization") final String token,
 			@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId) {
 		String adminToken = userRepository.login();
 		restRepository.delete(adminToken, V2_USERS.concat(userId).concat("/billing_managed_organizations"), orgId);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }	
 	
 	@RequestMapping(value = "/users/{userId}/audited_organizations", method = RequestMethod.GET)
@@ -126,10 +132,11 @@ public class UserController {
     }
 	
 	@RequestMapping(value = "/users/{userId}/audited_organizations/{orgId}", method = RequestMethod.DELETE)
-	public void removeAuditedOrganizationFromUser(@RequestHeader("Authorization") final String token,
+	public ResponseEntity<Object> removeAuditedOrganizationFromUser(@RequestHeader("Authorization") final String token,
 			@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId) {
 		String adminToken = userRepository.login();
 		restRepository.delete(adminToken, V2_USERS.concat(userId).concat("/audited_organizations"), orgId);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 	
     @RequestMapping(value = "/users/{userId}/managed_spaces", method = RequestMethod.GET)
@@ -149,10 +156,11 @@ public class UserController {
     }
     
     @RequestMapping(value = "/users/{userId}/managed_spaces/{spaceId}", method = RequestMethod.DELETE)
-	public void removeManagedSpaceFromUser(@RequestHeader("Authorization") final String token,
+	public ResponseEntity<Object> removeManagedSpaceFromUser(@RequestHeader("Authorization") final String token,
 			@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId) {
     	String adminToken = userRepository.login();
 		restRepository.delete(adminToken, V2_USERS.concat(userId).concat("/managed_spaces"), spaceId);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
     @RequestMapping(value = "/users/{userId}/spaces", method = RequestMethod.GET)
@@ -172,10 +180,11 @@ public class UserController {
     }
     
     @RequestMapping(value = "/users/{userId}/spaces/{spaceId}", method = RequestMethod.DELETE)
-	public void removeSpaceFromUser(@RequestHeader("Authorization") final String token,
+	public ResponseEntity<Object> removeSpaceFromUser(@RequestHeader("Authorization") final String token,
 			@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId) {
     	String adminToken = userRepository.login();
 		restRepository.delete(adminToken, V2_USERS.concat(userId).concat("/spaces"), spaceId);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
     @RequestMapping(value = "/users/{userId}/audited_spaces", method = RequestMethod.GET)
@@ -195,10 +204,11 @@ public class UserController {
     }
     
     @RequestMapping(value = "/users/{userId}/audited_spaces/{spaceId}", method = RequestMethod.DELETE)
-    public void removeAuditedSpaceFromUser(@RequestHeader("Authorization") final String token,
+    public ResponseEntity<Object> removeAuditedSpaceFromUser(@RequestHeader("Authorization") final String token,
     		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId) {
     	String adminToken = userRepository.login();
     	restRepository.delete(adminToken, V2_USERS.concat(userId).concat("/audited_spaces"), spaceId);
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
@@ -206,7 +216,9 @@ public class UserController {
     	UserInfo userInfo = userRepository.getUserInfo(token);
     	return userInfo;
     }
-    
+    /*
+	 * requires admin token (user registration)
+	 */
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public @ResponseBody Map<String,Object> registerUser(@RequestHeader("Authorization") String token, @RequestBody RegisterUser user) {
     	String adminToken = userRepository.login();
@@ -215,9 +227,11 @@ public class UserController {
     }
     
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.DELETE)
-    public void deleteUser(@RequestHeader("Authorization") String token, @PathVariable("userId") final String userId) {
-    	restRepository.delete(token, V2_USERS, userId);
+    public ResponseEntity<Object> deleteUser(@RequestHeader("Authorization") String token, @PathVariable("userId") final String userId) {
+    	String adminToken = userRepository.login();
+    	restRepository.delete(adminToken, V2_USERS, userId);
     	userRepository.deleteUser(userId);
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 	
 }

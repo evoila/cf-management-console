@@ -70,7 +70,7 @@ public class ServiceController {
     @RequestMapping(value = "/services/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteServiceById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
     	restRepository.delete(token, V2_SERVICES, id);
-    	return new ResponseEntity<>(HttpStatus.OK);
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
     @RequestMapping(value = "/services/{id}/service_plans", method = RequestMethod.GET)

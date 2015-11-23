@@ -70,7 +70,7 @@ public class SpaceController {
     @RequestMapping(value = "/spaces/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteSpaceById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
     	restRepository.delete(token, V2_SPACES, id);
-    	return new ResponseEntity<>(HttpStatus.OK);
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
