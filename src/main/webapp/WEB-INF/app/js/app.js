@@ -74,17 +74,17 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
     .setErrorInterceptor(function(response, deferred, responseHandler) {
       if([401,403].indexOf(response.status) != -1) {
         console.log("loginRequired - setErrorIntercetpor", response, deferred, responseHandler);
-        authenticationService.authenticate();
+        authenticationService.authenticate(false);
 
         return false;
       }
       return true;
-    })
+    });
 
     $rootScope.$on('$stateChangeSuccess',function(){
       window.scrollTo(0, 0);
     })
 
-    authenticationService.authenticate();
+    authenticationService.authenticate(true);
 
   });

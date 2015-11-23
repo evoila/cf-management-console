@@ -2,22 +2,29 @@
  * authenticationService
  **/
 angular.module('services')
-  .factory('authenticationService', function authenticationService($rootScope, $state, $http, clientCacheService, envService, menu, responseService) {
+  .factory('authenticationService', function authenticationService($rootScope, $state, $http, $interval,
+      clientCacheService, envService, menu, responseService) {
     var authentication = {};
+    var timeout = 10 * 60 * 1000;
     REST_API = envService.read('restApiUrl');
 
-    authentication.authenticate = function(callback) {
+    var autoReAuthentication = $interval(function() {
+      var now = new Date().getTime();
 
+      if ((now - $rootScope.lastPageChange) < timeout)
+        authentication.authenticate(false);
+    }, 7.5 * 60 * 1000);
+
+    authentication.authenticate = function(loadMenu, callback) {
       var user = clientCacheService.getUser();
-      getToken(user);
+      getToken(user, loadMenu);
 
       if (typeof(callback) == "function")
         callback();
-
     }
 
     authentication.login = function(user) {
-      getToken(user);
+      getToken(user, true);
     }
 
     authentication.logout = function() {
@@ -27,10 +34,14 @@ angular.module('services')
       $state.go('login');
     }
 
-    function getToken(user) {
+    $rootScope.$on('$destroy', function() {
+       $interval.cancel(autoReAuthentication);
+     });
+
+    function getToken(user, loadMenu) {
       if (user != undefined && user.password != undefined && user.username != null) {
         $http.defaults.headers.common['Authorization'] = 'bearer ' + user.token;
-        
+
         var data = transformRequest({
           'grant_type': 'password',
           'username': user.username,
@@ -51,14 +62,16 @@ angular.module('services')
           user.token = data.accessToken;
           clientCacheService.storeUser(user);
 
-          menu.initMenu(function(organization) {
-            if ($state.current.name == 'login' || $state.current.name == "")
-              $state.go('spaces', {
-                organizationId: organization.metadata.guid
-              });
-            else
-              $state.go($state.current.name, $state.params);
-          });
+          if (loadMenu) {
+            menu.initMenu(function(organization) {
+              if ($state.current.name == 'login' || $state.current.name == "")
+                $state.go('spaces', {
+                  organizationId: organization.metadata.guid
+                });
+              else
+                $state.go($state.current.name, $state.params);
+            });
+          }
         }).error(function(data, status, headers) {
           responseService.error(data, "Invalid user credentials - or endpoint not reachable");
         });
