@@ -4,7 +4,7 @@
 
 angular.module('controllers')
   .controller('usersController',
-    function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
+    function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location, $window) {
       console.log('user controller');
 
       $scope.orgId = $state.params.organizationId;
@@ -75,7 +75,11 @@ angular.module('controllers')
       };
 
       function deleteUser(user) {
-        Restangular.one('users', user.metadata.guid).remove();
+        Restangular.one('users', user.metadata.guid).remove().then(function() {
+          responseService.success(user, 'User was deleted successfully', 'users', { organizationId : $scope.orgId });
+        }, function(response) {
+          console.log(response);
+        });
       }
 
       /*

@@ -1,12 +1,25 @@
 <div ng-hide="loading">
-	<h2>Services Marketplace</h2>
+	<div layout="row" layout-align="start center">
+		<h2>Services Marketplace</h2>
+		<button type="button" aria-label="Show Create Service Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateServiceDialog()">
+			<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg"></md-icon>
+		</button>
+
+		<md-switch class="no-focus" ng-model="editMode" aria-label="Toggle edit" style="margin-left:0;">editable</md-switch>
+	</div>
+
 	<md-subheader class="md-no-sticky">Currently available services</md-subheader>
 
 	<md-card class="md-whiteframe-z2" flex>
 		<md-card-content layout="column">
 			<div flex>
 				<md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="2" md-cols-gt-lg="5" md-row-height-gt-lg="1:1" md-row-height="4:3" md-row-height-sm="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
-					<md-grid-tile class="no-focus" ng-repeat="service in services" style="background-color:#{{colorString(service.entity.label)}}" ng-click="showDetails(service)">
+					<md-grid-tile class="no-focus" ng-repeat="service in services" style="background-color:#{{colorString(service.entity.label)}}" ng-click="!editMode && showDetails(service)">
+						<div ng-show="editMode" ng-click="test()" style="width:32px;height:32px;background-color:red;position:absolute;top:0;right:0;">
+							<button class="md-button md-icon-button" type="button" aria-label="Delete Service" style="text-align:center;width:32px;height:32px;margin:0;padding:3px 0 0 0;" ng-click="showConfirm($event, service)">
+								<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg" style="vertical-align:top;color:#fff;"></md-icon>
+							</button>
+						</div>
 						<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(service.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 						<md-grid-tile-footer>
 							<h3>

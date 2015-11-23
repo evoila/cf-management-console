@@ -3,6 +3,8 @@ package com.github.cfmc.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,8 +55,9 @@ public class DomainController {
     }
 	
 	@RequestMapping(value = "/private_domains/{domainId}", method = RequestMethod.DELETE)
-    public void deletePrivateDomain(@RequestHeader("Authorization") String token, @PathVariable("domainId") final String domainId) {
+    public ResponseEntity<Object> deletePrivateDomain(@RequestHeader("Authorization") String token, @PathVariable("domainId") final String domainId) {
 		String adminToken = userRepository.login();
     	restRepository.delete(adminToken, V2_PRIVATE_DOMAINS, domainId);
+    	return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -215,9 +217,10 @@ public class UserController {
     }
     
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.DELETE)
-    public void deleteUser(@RequestHeader("Authorization") String token, @PathVariable("userId") final String userId) {
+    public ResponseEntity<Object> deleteUser(@RequestHeader("Authorization") String token, @PathVariable("userId") final String userId) {
     	restRepository.delete(token, V2_USERS, userId);
     	userRepository.deleteUser(userId);
+    	return new ResponseEntity<>(HttpStatus.OK);
     }
 	
 }

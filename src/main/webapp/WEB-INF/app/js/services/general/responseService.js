@@ -7,6 +7,12 @@ angular.module('services')
     response.success = function(response, message, redirect, params) {
       if (redirect)
         $state.go(redirect, params);
+      if (redirect) {
+        if ($state.current.name == redirect)
+          $state.go(redirect, params, {reload:true});
+        else
+          $state.go(redirect, params);
+      }
       messageEmitter.message(message);
     },
     response.error = function(response, message) {
