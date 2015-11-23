@@ -58,6 +58,6 @@ public class DomainController {
     public ResponseEntity<Object> deletePrivateDomain(@RequestHeader("Authorization") String token, @PathVariable("domainId") final String domainId) {
 		String adminToken = userRepository.login();
     	restRepository.delete(adminToken, V2_PRIVATE_DOMAINS, domainId);
-    	return new ResponseEntity<>(HttpStatus.OK);
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

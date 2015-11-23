@@ -7,6 +7,8 @@ package com.github.cfmc.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -88,13 +90,15 @@ public class RouteController {
     }
 
     @RequestMapping(value = "/routes/{id}", method = RequestMethod.DELETE)
-    public void deleteOrganizationById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
+    public ResponseEntity<Object> deleteOrganizationById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
         restRepository.delete(token, V2_ROUTES, id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
     @RequestMapping(value = "/routes/{id}/apps/{appId}", method = RequestMethod.DELETE)
-    public void mapRoute(String token, @PathVariable("id") String route, @PathVariable("appId") String app) {		
+    public ResponseEntity<Object> mapRoute(String token, @PathVariable("id") String route, @PathVariable("appId") String app) {		
 		restRepository.update(token, V2_ROUTES.concat("/").concat(route).concat("/apps/").concat(app), new CloudFoundryResource<>());
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

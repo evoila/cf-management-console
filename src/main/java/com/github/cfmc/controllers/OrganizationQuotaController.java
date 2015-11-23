@@ -6,6 +6,8 @@ package com.github.cfmc.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,8 +60,9 @@ public class OrganizationQuotaController {
     }
 
     @RequestMapping(value = "/organizationQuotas/{id}", method = RequestMethod.DELETE)
-    public void deleteOrganizationById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
+    public ResponseEntity<Object> deleteOrganizationById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
     	restRepository.delete(token, V2_ORGANIZATIONS_QUOTAS, id);
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
