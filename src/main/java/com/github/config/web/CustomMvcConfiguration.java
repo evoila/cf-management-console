@@ -17,10 +17,11 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ViewResolver;
@@ -41,13 +42,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.github.cfmc"})
-@PropertySource("classpath:application.properties")
 public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
     }
+    
+    @Bean
+	public static PropertyPlaceholderConfigurer mvcPropertyPlaceholderConfigurer() {
+		PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
+		propertyPlaceholderConfigurer.setLocation(new ClassPathResource("application.properties"));
+		propertyPlaceholderConfigurer.setIgnoreUnresolvablePlaceholders(true);
+		return propertyPlaceholderConfigurer;
+	}
     
     @Bean
     public RestTemplate getRestTemplate() {
