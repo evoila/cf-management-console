@@ -94,7 +94,9 @@ md-dialog-content.less-vmargins p {
   margin-top: 5px;
 }
 
-
+md-dialog-content {
+  padding: 24px;
+}
 
 
 
