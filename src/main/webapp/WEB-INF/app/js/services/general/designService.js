@@ -55,6 +55,10 @@ angular.module('services')
             return "redis";
           if (serviceName.indexOf("elasticse") > -1)
             return "elasticsearch";
+          if (serviceName.indexOf("mysql") > -1)
+            return "mysql";
+          if (serviceName.indexOf("logstash") > -1)
+            return "logstash";
         } else {
           return "notfound";
         }
