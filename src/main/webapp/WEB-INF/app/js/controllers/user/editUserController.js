@@ -31,7 +31,6 @@ angular.module('controllers')
       }
 
       function prepareUser() {
-        // TODO: url for rest call should be sth like organizations.one...users
         Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
           var user = null;
           angular.forEach(orgUsers, function(orgUser, orgUserIndex) {

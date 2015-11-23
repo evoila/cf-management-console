@@ -36,22 +36,25 @@ public class DomainController {
 	private static final String V2_ORGANIZATIONS = "v2/organizations/";
 	private static final String V2_PRIVATE_DOMAINS = "v2/private_domains";
 	
+	
 	@RequestMapping(value = "/private_domains/{orgId}", method = RequestMethod.GET)
-	public @ResponseBody List<CloudFoundryResource<Domain>> getPrivateDomainsForOrganization(@PathVariable("orgId") final String orgId) {
-		String token = userRepository.login();
-		CloudFoundryResources<Domain> privateDomains = restRepository.list(token, V2_ORGANIZATIONS.concat(orgId).concat("/private_domains"), 2, true);
+	public @ResponseBody List<CloudFoundryResource<Domain>> getPrivateDomainsForOrganization(@RequestHeader("Authorization") String token, 
+			@PathVariable("orgId") final String orgId) {
+		String adminToken = userRepository.login();
+		CloudFoundryResources<Domain> privateDomains = restRepository.list(adminToken, V2_ORGANIZATIONS.concat(orgId).concat("/private_domains"), 2, true);
     	return privateDomains.getResources();
 	}
 	
 	@RequestMapping(value = "/private_domains", method = RequestMethod.POST)
     public @ResponseBody CloudFoundryResource<Domain> createPrivateDomainForOrganization(@RequestHeader("Authorization") String token, 
     		@RequestBody Domain domain) {
-        return restRepository.save(token, V2_PRIVATE_DOMAINS, new CloudFoundryResource<Domain>(domain));
+		String adminToken = userRepository.login();
+        return restRepository.save(adminToken, V2_PRIVATE_DOMAINS, new CloudFoundryResource<Domain>(domain));
     }
 	
 	@RequestMapping(value = "/private_domains/{domainId}", method = RequestMethod.DELETE)
-    public void deletePrivateDomain(@PathVariable("domainId") final String domainId) {
-		String token = userRepository.login();
-    	restRepository.delete(token, V2_PRIVATE_DOMAINS, domainId);
+    public void deletePrivateDomain(@RequestHeader("Authorization") String token, @PathVariable("domainId") final String domainId) {
+		String adminToken = userRepository.login();
+    	restRepository.delete(adminToken, V2_PRIVATE_DOMAINS, domainId);
     }
 }

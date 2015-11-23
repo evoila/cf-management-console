@@ -45,22 +45,25 @@ public class OrganizationController {
 	
 	@RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Organization>> getOrganizations(@RequestHeader("Authorization") final String token) {
-		CloudFoundryResources<Organization> organizations = restRepository.list(token, V2_ORGANIZATIONS, 1, true);
+		String adminToken = userRepository.login();
+		CloudFoundryResources<Organization> organizations = restRepository.list(adminToken, V2_ORGANIZATIONS, 1, true);
 		return organizations.getResources();
     }
 		
 	@RequestMapping(value = "/organizations/{id}", method = RequestMethod.GET)
-    public @ResponseBody CloudFoundryResource<Organization> getOrganization(@RequestHeader("Authorization") String token, @PathVariable("id") final String id) {
-		CloudFoundryResource<Organization> organization = restRepository.one(token, V2_ORGANIZATIONS, id, 1);
+    public @ResponseBody CloudFoundryResource<Organization> getOrganization(@RequestHeader("Authorization") String token, 
+    		@PathVariable("id") final String id) {
+		String adminToken = userRepository.login();
+		CloudFoundryResource<Organization> organization = restRepository.one(adminToken, V2_ORGANIZATIONS, id, 1);
 		return organization;
     }
 	
 	@RequestMapping(value = "/organization/{orgName}", method = RequestMethod.GET)
-    public @ResponseBody boolean checkIfOrganizationNameExists(@PathVariable("orgName") final String orgName) {
+    public @ResponseBody boolean checkIfOrganizationNameExists(@RequestHeader("Authorization") String token, 
+    		@PathVariable("orgName") final String orgName) {
 		boolean nameExists = false;
-		String token = userRepository.login();
-		
-		CloudFoundryResources<Organization> organizations = restRepository.list(token, V2_ORGANIZATIONS.concat("?q=name:").concat(orgName.toLowerCase()), 2, false);
+		String adminToken = userRepository.login();		
+		CloudFoundryResources<Organization> organizations = restRepository.list(adminToken, V2_ORGANIZATIONS.concat("?q=name:").concat(orgName.toLowerCase()), 2, false);
 		if(organizations.getTotalResults() > 0)
 			nameExists = true;
 		
@@ -68,15 +71,17 @@ public class OrganizationController {
     }
 	
 	@RequestMapping(value = "/organizations", method = RequestMethod.POST)
-    public @ResponseBody CloudFoundryResource<Organization> createOrganization(@RequestBody Organization organization) {
-		String token = userRepository.login();
-		return restRepository.save(token, V2_ORGANIZATIONS, new CloudFoundryResource<Organization>(organization));
+    public @ResponseBody CloudFoundryResource<Organization> createOrganization(@RequestHeader("Authorization") String token,
+    		@RequestBody Organization organization) {
+		String adminToken = userRepository.login();		
+		return restRepository.save(adminToken, V2_ORGANIZATIONS, new CloudFoundryResource<Organization>(organization));
     }
     
     @RequestMapping(value = "/organizations/{id}", method = RequestMethod.PUT)
     public @ResponseBody CloudFoundryResource<Organization> updateOrganization(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Organization> organization) {
-    	return restRepository.update(token, V2_ORGANIZATIONS.concat("/").concat(id), organization);
+    	String adminToken = userRepository.login();		
+    	return restRepository.update(adminToken, V2_ORGANIZATIONS.concat("/").concat(id), organization);
     }
 
     @RequestMapping(value = "/organizations/{id}", method = RequestMethod.DELETE)
