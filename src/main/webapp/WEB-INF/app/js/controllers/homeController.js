@@ -12,9 +12,9 @@ angular.module('controllers')
 
       $rootScope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams) {
-          $rootScope.lastPageChange = new Date().getTime()
-
-          console.log($rootScope.lastPageChange);
+          $rootScope.lastPageChange = new Date().getTime();
+          if (!authenticationService.isAuthenticated())
+            authenticationService.logout();
       });
 
       $scope.openMenu = function() {

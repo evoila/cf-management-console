@@ -13,6 +13,8 @@ angular.module('services')
 
       if ((now - $rootScope.lastPageChange) < timeout)
         authentication.authenticate(false);
+      else
+        authentication.logout();
     }, 7.5 * 60 * 1000);
 
     authentication.authenticate = function(loadMenu, callback) {
@@ -32,6 +34,10 @@ angular.module('services')
       $rootScope.isAuthenticated = false;
 
       $state.go('login');
+    }
+
+    authentication.isAuthenticated = function() {
+      return $rootScope.isAuthenticated;
     }
 
     $rootScope.$on('$destroy', function() {
