@@ -9,7 +9,6 @@ angular.module('services')
     authentication.authenticate = function(callback) {
 
       var user = clientCacheService.getUser();
-      $http.defaults.headers.common['Authorization'] = 'bearer ' + user.token;
       getToken(user);
 
       if (typeof(callback) == "function")
@@ -30,6 +29,8 @@ angular.module('services')
 
     function getToken(user) {
       if (user != undefined && user.password != undefined && user.username != null) {
+        $http.defaults.headers.common['Authorization'] = 'bearer ' + user.token;
+        
         var data = transformRequest({
           'grant_type': 'password',
           'username': user.username,

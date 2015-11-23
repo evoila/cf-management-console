@@ -17,12 +17,10 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ViewResolver;
@@ -46,24 +44,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @PropertySource("classpath:application.properties")
 public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
 
-    @Autowired
-    private Environment env;
-    
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
     }
     
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/app/assets/");
-        registry.addResourceHandler("/bower_components/**").addResourceLocations("/WEB-INF/app/bower_components/");
-        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/app/js/");
-        registry.addResourceHandler("/lib/**").addResourceLocations("/WEB-INF/app/lib/");
-        registry.addResourceHandler("/partials/**").addResourceLocations("/WEB-INF/app/partials/");
-        registry.addResourceHandler("/index.html").addResourceLocations("/WEB-INF/index.html");
-    }
-
     @Bean
     public RestTemplate getRestTemplate() {
     	enableSSL();
@@ -125,32 +110,22 @@ public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
         resolver.setSuffix(".html");
         return resolver;
     }
+    
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/app/assets/");
+        registry.addResourceHandler("/bower_components/**").addResourceLocations("/WEB-INF/app/bower_components/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/app/js/");
+        registry.addResourceHandler("/lib/**").addResourceLocations("/WEB-INF/app/lib/");
+        registry.addResourceHandler("/partials/**").addResourceLocations("/WEB-INF/app/partials/");
+        registry.addResourceHandler("/index.html").addResourceLocations("/WEB-INF/index.html");
+    }
 
     @Bean
     public ObjectMapper getObjectMapper() {
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         return objectMapper;
-    }
-
-    @Bean(name = "uaaBaseUri")
-    public String getUaaBaseUri() {
-        return env.getProperty("base.uaa.url");
-    }
-
-    @Bean(name = "apiBaseUri")
-    public String getApiBaseUri() {
-        return env.getProperty("base.api.url");
-    }
-
-    @Bean(name = "clientId")
-    public String getClientId() {
-        return env.getProperty("clientId");
-    }
-    
-    @Bean(name = "clientSecret")
-    public String getClientSecret() {
-        return env.getProperty("clientSecret");
     }
 
 }

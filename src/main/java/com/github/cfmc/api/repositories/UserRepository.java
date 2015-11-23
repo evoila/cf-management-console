@@ -4,10 +4,12 @@
 package com.github.cfmc.api.repositories;
 
 import static org.mvel2.MVEL.evalToString;
+
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
+
 import com.github.cfmc.api.model.AccessToken;
 import com.github.cfmc.api.model.SpaceUser;
 import com.github.cfmc.api.model.UserInfo;
@@ -35,20 +38,18 @@ import com.github.cfmc.api.model.base.CloudFoundryResources;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class UserRepository extends RestRepository {
 
-    private final String clientId;
+	@Value("${cf.client}")
+    private String client;
 
-    private final String clientSecret;
+	@Value("${cf.secret}")
+    private String secret;
 
-    @Autowired
-    protected UserRepository(String clientId, String clientSecret) {
+    protected UserRepository() {
         super();
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
     }
-    
 
     public List<CloudFoundryResource<SpaceUser>> getAllUsers(String token) {
-        final String accessToken = getAccessToken(clientId, clientSecret);
+        final String accessToken = getAccessToken(client, secret);
         CloudFoundryResources<SpaceUser> users = list(accessToken, "v2/users", 1, true);
         
         return users.getResources();
@@ -64,7 +65,7 @@ public class UserRepository extends RestRepository {
     
     // needed to prevent 403 error for operations usually limited to admin
     public String login() {
-    	return "bearer " + this.login(clientId, clientSecret).getAccessToken();
+    	return "bearer " + this.login(client, secret).getAccessToken();
     }
     
     public AccessToken login(String username, String password) {
@@ -96,7 +97,7 @@ public class UserRepository extends RestRepository {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Accept", "application/json;charset=utf-8");
 
-		ResponseEntity<Map<String, Object>> infoResponse = restTemplate.exchange(apiBaseUri.concat("info"), HttpMethod.GET, 
+		ResponseEntity<Map<String, Object>> infoResponse = restTemplate.exchange(apiUri.concat("info"), HttpMethod.GET, 
 				new HttpEntity(httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
         if (!infoResponse.getStatusCode().equals(HttpStatus.OK)) {
             throw new RepositoryException("Unable to retrieve info", infoResponse);
@@ -105,13 +106,13 @@ public class UserRepository extends RestRepository {
     }
 
     public Map<String, Object> registerUser(String token, String username, String firstName, String lastName, String password) {    	
-        String accessToken = getAccessToken(clientId, clientSecret);
+        String accessToken = getAccessToken(client, secret);
         String userId = uaaCreateUser(accessToken, username, firstName, lastName, password);
         return apiCreateUser(token, userId).getBody();
     }
     
     public void deleteUser(String userId) {
-    	String accessToken = getAccessToken(clientId, clientSecret);
+    	String accessToken = getAccessToken(client, secret);
     	uaaDeleteUser(accessToken, userId);
     }
     
@@ -128,7 +129,7 @@ public class UserRepository extends RestRepository {
 
 
         try {            
-			ResponseEntity<Map<String, Object>> tokenResponse = restTemplate.exchange(uaaBaseUri.concat("oauth/token"), HttpMethod.POST, 
+			ResponseEntity<Map<String, Object>> tokenResponse = restTemplate.exchange(uaaUri.concat("oauth/token"), HttpMethod.POST, 
 					new HttpEntity(model, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
             if (!tokenResponse.getStatusCode().equals(HttpStatus.OK)) {
                 throw new RepositoryException("Problem retrieving access token", tokenResponse);
@@ -152,7 +153,7 @@ public class UserRepository extends RestRepository {
         httpHeaders.add("Authorization", accessToken);
         
         try {
-            ResponseEntity<Map<String, Object>> createUserResponse = restTemplate.exchange(uaaBaseUri.concat("Users/").concat(userId), HttpMethod.DELETE, 
+            ResponseEntity<Map<String, Object>> createUserResponse = restTemplate.exchange(uaaUri.concat("Users/").concat(userId), HttpMethod.DELETE, 
             		new HttpEntity(null, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
             if (!createUserResponse.getStatusCode().equals(HttpStatus.OK)) {
                 throw new RepositoryException("Unable to delete user in uaa", createUserResponse);
@@ -189,7 +190,7 @@ public class UserRepository extends RestRepository {
                 .append("\"}}\"").toString();
 
         try {
-            ResponseEntity<Map<String, Object>> createUserResponse = restTemplate.exchange(uaaBaseUri.concat("Users"), HttpMethod.POST, 
+            ResponseEntity<Map<String, Object>> createUserResponse = restTemplate.exchange(uaaUri.concat("Users"), HttpMethod.POST, 
             		new HttpEntity(body, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
             if (!createUserResponse.getStatusCode().equals(HttpStatus.CREATED)) {
                 throw new RepositoryException("Unable to create user in uaa", createUserResponse);
@@ -210,7 +211,7 @@ public class UserRepository extends RestRepository {
         String body = "{\"guid\":\"".concat(userId).concat("\"}");
 
         try {
-            ResponseEntity<Map<String, Object>> createUserResponse = restTemplate.exchange(apiBaseUri.concat("v2/users"), HttpMethod.POST, 
+            ResponseEntity<Map<String, Object>> createUserResponse = restTemplate.exchange(apiUri.concat("v2/users"), HttpMethod.POST, 
             		new HttpEntity(body, httpHeaders), new ParameterizedTypeReference<Map<String, Object>>() {});
             if (!createUserResponse.getStatusCode().equals(HttpStatus.CREATED)) {
                 throw new RepositoryException("Unable to create user using api", createUserResponse);

@@ -6,6 +6,7 @@ package com.github.cfmc.api.repositories;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,11 +32,11 @@ public class RestRepository {
     @Autowired
     protected RestTemplate restTemplate;
 
-    @Autowired
-    protected String apiBaseUri;
+    @Value("${cf.api}")
+    protected String apiUri;
     
-    @Autowired
-    protected String uaaBaseUri;
+    @Value("${cf.uaa}")
+    protected String uaaUri;
     
     public RestRepository() {
     }
@@ -56,11 +57,11 @@ public class RestRepository {
     public <T> CloudFoundryResources<T> list(String token, String path, int depth, boolean useDepth) {
     	ResponseEntity<CloudFoundryResources<T>> responseEntity;
     	if(useDepth)
-    		responseEntity = exchange(token, apiBaseUri, 
+    		responseEntity = exchange(token, apiUri, 
     			HttpMethod.GET, path.concat("?inline-relations-depth=" + depth), null, 
     			new ParameterizedTypeReference<CloudFoundryResources<T>>() {});
     	else
-    		responseEntity = exchange(token, apiBaseUri, 
+    		responseEntity = exchange(token, apiUri, 
         			HttpMethod.GET, path, null, 
         			new ParameterizedTypeReference<CloudFoundryResources<T>>() {});
     	
@@ -77,7 +78,7 @@ public class RestRepository {
      * @return
      */
     public <T> Map<String, T> customList(String token, String path, int depth) {
-    	ResponseEntity<Map<String, T>> responseEntity = exchange(token, apiBaseUri, HttpMethod.GET, 
+    	ResponseEntity<Map<String, T>> responseEntity = exchange(token, apiUri, HttpMethod.GET, 
     			path.concat("?inline-relations-depth=" + depth), null, 
     			new ParameterizedTypeReference<Map<String, T>>() {});
     	if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
@@ -93,7 +94,7 @@ public class RestRepository {
      * @return
      */
     public <T> Map<String, T> customOne(String token, String path, String id, int depth) {
-    	ResponseEntity<Map<String, T>> responseEntity = exchange(token, apiBaseUri, HttpMethod.GET, 
+    	ResponseEntity<Map<String, T>> responseEntity = exchange(token, apiUri, HttpMethod.GET, 
     			path.concat("?inline-relations-depth=" + depth), null, 
     			new ParameterizedTypeReference<Map<String, T>>() {});
     	if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
@@ -110,7 +111,7 @@ public class RestRepository {
      * @return
      */
     public <T> CloudFoundryResource<T> one(String token, String path, String id, int depth) {
-    	ResponseEntity<CloudFoundryResource<T>> responseEntity = exchange(token, apiBaseUri, HttpMethod.GET, 
+    	ResponseEntity<CloudFoundryResource<T>> responseEntity = exchange(token, apiUri, HttpMethod.GET, 
     			path.concat("/").concat(id).concat("?inline-relations-depth=" + depth), null, 
     			new ParameterizedTypeReference<CloudFoundryResource<T>>() {});
     	if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
@@ -127,7 +128,7 @@ public class RestRepository {
      * @return
      */
     public <T> T customOneUaa(String token, String path, ParameterizedTypeReference<T> parameterizedTypeReference) {
-        ResponseEntity<T> responseEntity = exchange(token, uaaBaseUri, HttpMethod.GET, path, null, 
+        ResponseEntity<T> responseEntity = exchange(token, uaaUri, HttpMethod.GET, path, null, 
         		parameterizedTypeReference);
         if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             throw new RepositoryException("Cannot perform uaa get for path [" + path + "]", responseEntity);
@@ -143,7 +144,7 @@ public class RestRepository {
      * @return
      */
     public <T> T customOne(String token, String path, ParameterizedTypeReference<T> parameterizedTypeReference) {
-        ResponseEntity<T> responseEntity = exchange(token, apiBaseUri, HttpMethod.GET, path, null, 
+        ResponseEntity<T> responseEntity = exchange(token, apiUri, HttpMethod.GET, path, null, 
         		parameterizedTypeReference);
         if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             throw new RepositoryException("Cannot perform uaa get for path [" + path + "]", responseEntity);
@@ -159,7 +160,7 @@ public class RestRepository {
      * @return
      */
     public <T> CloudFoundryResource<T> save(String token, String path, CloudFoundryResource<T> resource) {
-    	ResponseEntity<CloudFoundryResource<T>> responseEntity = exchangev2(token, apiBaseUri, HttpMethod.POST, path, resource.getEntity(), 
+    	ResponseEntity<CloudFoundryResource<T>> responseEntity = exchangev2(token, apiUri, HttpMethod.POST, path, resource.getEntity(), 
     			new ParameterizedTypeReference<CloudFoundryResource<T>>() {});
         if (!responseEntity.getStatusCode().equals(HttpStatus.CREATED)) {
             throw new RepositoryException("Cannot perform api put for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
@@ -175,7 +176,7 @@ public class RestRepository {
      * @return
      */
     public <T> CloudFoundryResource<T> update(String token, String path, CloudFoundryResource<T> resource) {
-        ResponseEntity<CloudFoundryResource<T>> responseEntity = exchangev2(token, apiBaseUri, HttpMethod.PUT, path, resource.getEntity(), 
+        ResponseEntity<CloudFoundryResource<T>> responseEntity = exchangev2(token, apiUri, HttpMethod.PUT, path, resource.getEntity(), 
         		new ParameterizedTypeReference<CloudFoundryResource<T>>() {});
         if (!responseEntity.getStatusCode().equals(HttpStatus.CREATED)) {
             throw new RepositoryException("Cannot perform api put for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
@@ -191,7 +192,7 @@ public class RestRepository {
      * @return
      */
     public String delete(String token, String path, String id) {
-        ResponseEntity<String> responseEntity = exchange(token, apiBaseUri, HttpMethod.DELETE, path.concat("/").concat(id), null, 
+        ResponseEntity<String> responseEntity = exchange(token, apiUri, HttpMethod.DELETE, path.concat("/").concat(id), null, 
         		new ParameterizedTypeReference<String>() {});
         if (!responseEntity.getStatusCode().equals(HttpStatus.NO_CONTENT)) {
             throw new RepositoryException("Cannot perform api delete for path [" + path + "]", responseEntity, responseEntity.getStatusCode());

@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 /**
- * TODO: Add previous authors
+ *
  * @author Johannes Hiemer
  *
  */
