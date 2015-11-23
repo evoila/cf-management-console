@@ -36,7 +36,7 @@ angular.module('controllers')
           'name': form.name,
           'owning_organization_guid': $scope.orgId
         };
-        console.log('name: ' + form.name + ', ' + $scope.orgId);
+
         Restangular.all('private_domains').post(domain).then(function(domain) {
           responseService.success(domain, 'Domain was created successfully', 'domains', { organizationId : $scope.orgId });
         }, function(response) {
@@ -75,7 +75,9 @@ angular.module('controllers')
       };
 
       function deleteDomain(domain) {
-        Restangular.one('private_domains', domain.metadata.guid).remove();
+        Restangular.one('private_domains', domain.metadata.guid).remove().then(function() {
+
+        });
       }
 
   });

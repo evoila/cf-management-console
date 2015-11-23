@@ -3,9 +3,9 @@
 	<md-list id="privateDomainsList">
 		<div layout="row" layout-align="start center">
 	    <span class="md-title">Private Domains of {{menu.organization.entity.name}}</span>
-			<md-button type="button" aria-label="Show Create Private Domain Dialog" class="md-icon-button md-primary" style="text-align:center;">
-				<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg" ng-click="showCreateDomainDialog($event)"></md-icon>
-			</md-button>
+			<button type="button" aria-label="Show Create Private Domain Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateDomainDialog($event)">
+				<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg"></md-icon>
+			</button>
 
 			<md-switch class="no-focus" ng-model="editMode" aria-label="Toggle edit" style="margin-left:0;">editable</md-switch>
 		</div>
