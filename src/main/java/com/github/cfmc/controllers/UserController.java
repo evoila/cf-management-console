@@ -59,7 +59,9 @@ public class UserController {
     	String adminToken = userRepository.login();
     	return restRepository.one(adminToken, V2_USERS, userId, 1);
     }
-     
+    /*
+	 * requires admin token (user registration)
+	 */
     @RequestMapping(value = "/users/{userId}/organizations/{orgId}", method = RequestMethod.PUT)
     public @ResponseBody CloudFoundryResource<OrganizationUser> addUserToOrganization(@RequestHeader("Authorization") final String token,
     		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
@@ -214,7 +216,9 @@ public class UserController {
     	UserInfo userInfo = userRepository.getUserInfo(token);
     	return userInfo;
     }
-    
+    /*
+	 * requires admin token (user registration)
+	 */
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public @ResponseBody Map<String,Object> registerUser(@RequestHeader("Authorization") String token, @RequestBody RegisterUser user) {
     	String adminToken = userRepository.login();
@@ -224,7 +228,8 @@ public class UserController {
     
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteUser(@RequestHeader("Authorization") String token, @PathVariable("userId") final String userId) {
-    	restRepository.delete(token, V2_USERS, userId);
+    	String adminToken = userRepository.login();
+    	restRepository.delete(adminToken, V2_USERS, userId);
     	userRepository.deleteUser(userId);
     	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

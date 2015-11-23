@@ -47,19 +47,20 @@ public class OrganizationController {
 	
 	@RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<Organization>> getOrganizations(@RequestHeader("Authorization") final String token) {
-		String adminToken = userRepository.login();
-		CloudFoundryResources<Organization> organizations = restRepository.list(adminToken, V2_ORGANIZATIONS, 1, true);
+		CloudFoundryResources<Organization> organizations = restRepository.list(token, V2_ORGANIZATIONS, 1, true);
 		return organizations.getResources();
     }
 		
 	@RequestMapping(value = "/organizations/{id}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<Organization> getOrganization(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") final String id) {
-		String adminToken = userRepository.login();
-		CloudFoundryResource<Organization> organization = restRepository.one(adminToken, V2_ORGANIZATIONS, id, 1);
+		CloudFoundryResource<Organization> organization = restRepository.one(token, V2_ORGANIZATIONS, id, 1);
 		return organization;
     }
 	
+	/*
+	 * requires admin token (user registration)
+	 */
 	@RequestMapping(value = "/organization/{orgName}", method = RequestMethod.GET)
     public @ResponseBody boolean checkIfOrganizationNameExists(@RequestHeader("Authorization") String token, 
     		@PathVariable("orgName") final String orgName) {
@@ -71,7 +72,9 @@ public class OrganizationController {
 		
 		return nameExists;
     }
-	
+	/*
+	 * requires admin token (user registration)
+	 */
 	@RequestMapping(value = "/organizations", method = RequestMethod.POST)
     public @ResponseBody CloudFoundryResource<Organization> createOrganization(@RequestHeader("Authorization") String token,
     		@RequestBody Organization organization) {
@@ -81,9 +84,8 @@ public class OrganizationController {
     
     @RequestMapping(value = "/organizations/{id}", method = RequestMethod.PUT)
     public @ResponseBody CloudFoundryResource<Organization> updateOrganization(@RequestHeader("Authorization") String token, 
-    		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Organization> organization) {
-    	String adminToken = userRepository.login();		
-    	return restRepository.update(adminToken, V2_ORGANIZATIONS.concat("/").concat(id), organization);
+    		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Organization> organization) {	
+    	return restRepository.update(token, V2_ORGANIZATIONS.concat("/").concat(id), organization);
     }
 
     @RequestMapping(value = "/organizations/{id}", method = RequestMethod.DELETE)
