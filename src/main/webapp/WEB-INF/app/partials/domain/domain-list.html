@@ -4,20 +4,18 @@
 		<div layout="column" layout-gt-md="row" layout-align="start start">
 	    <h2>Private Domains of {{menu.organization.entity.name}}</h2>
 			<div flex-md="100" layout="row" layout-align="start center" style="margin-top:2px;">
-			<button type="button" aria-label="Show Create Private Domain Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateDomainDialog($event)">
-				<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg"></md-icon>
-			</button>
-
-			<md-switch class="no-focus" ng-model="editMode" aria-label="Toggle edit" style="margin-left:0;">editable</md-switch>
-		</div>
-
+				<button type="button" aria-label="Show Create Private Domain Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateDomainDialog($event)">
+					<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg"></md-icon>
+				</button>
+				<md-switch class="no-focus" ng-model="editMode" aria-label="Toggle edit" style="margin-left:0;">editable</md-switch>
+			</div>
 		</div>
 
 		<hr class="style-six" />
-    <md-list-item id="item-{{$index}}" class="md-3-line" ng-repeat="domain in domains" style="min-height:48px;max-height:48px;padding:10px 0;">
+
+    <md-list-item class="md-3-line" ng-repeat="domain in domains" style="min-height:48px;max-height:48px;padding:10px 0;">
       <div class="md-list-item-text">
 				<div layout="row">
-
 					<div flex ng-show="editMode" style="max-width:60px;margin-top:-16px;">
 						<div flex style="max-width:50px;">
 							<button class="md-button md-icon-button md-warn" type="button" aria-label="Delete Domain" class="md-icon-button md-warn" style="text-align:center;max-height:30px;" ng-click="showConfirm($event, domain)">
@@ -25,15 +23,12 @@
 							</button>
 						</div>
 					</div>
-
 					<div flex style="margin-left:10px;">
         		<h3>{{ domain.entity.name }}</h3>
 					</div>
-
 				</div>
       </div>
 		  <md-divider></md-divider>
-
     </md-list-item>
 	</md-list>
 

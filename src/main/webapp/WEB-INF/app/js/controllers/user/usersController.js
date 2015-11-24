@@ -5,8 +5,6 @@
 angular.module('controllers')
   .controller('usersController',
     function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location, envService) {
-      console.log('user controller');
-
       $scope.orgId = $state.params.organizationId;
       $scope.prefix = envService.read('cf_prefix');
 

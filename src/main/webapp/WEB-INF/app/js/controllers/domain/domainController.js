@@ -40,7 +40,10 @@ angular.module('controllers')
         Restangular.all('private_domains').post(domain).then(function(domain) {
           responseService.success(domain, 'Domain was created successfully', 'domains', { organizationId : $scope.orgId });
         }, function(response) {
-            responseService.error(response);
+            if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
+              responseService.error(response, 'Domain already taken');
+            else
+              responseService.error(response);
         });
         $mdDialog.hide();
       };
