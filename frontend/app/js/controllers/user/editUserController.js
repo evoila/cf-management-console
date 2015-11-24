@@ -3,7 +3,7 @@ angular.module('controllers')
     function EditUserController($scope, $state, menu, Restangular, envService) {
 
       var self = this;
-      $scope.prefix = envService.read('cf_prefix');
+      $scope.cfPrefix = envService.read('cf_prefix');
 
       $scope.init = function() {
         $scope.orgId = $state.params.organizationId;
@@ -22,7 +22,7 @@ angular.module('controllers')
           Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
             $scope.org = org;
             $scope.orgName = org.entity.name;
-            var spacesUrl = $scope.org.entity.spaces_url.replace($scope.prefix, '');
+            var spacesUrl = $scope.org.entity.spaces_url.replace($scope.cfPrefix, '');
             Restangular.one(spacesUrl).get().then(function(spaces) {
               $scope.spaces = spaces;
               prepareUser();
@@ -30,6 +30,7 @@ angular.module('controllers')
           });
         }
       }
+
 
       function prepareUser() {
         Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {

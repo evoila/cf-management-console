@@ -49,6 +49,15 @@
 				      <md-subheader ng-show="instance.expand=='50'" class="md-no-sticky">Service Plan ({{instance.entity.service_plan.entity.name}})</md-subheader>
 				      <md-divider ng-show="instance.expand=='50'" ></md-divider>
 				      <md-subheader ng-show="instance.expand=='50'" class="md-no-sticky">Service Bindings ({{instance.entity.service_bindings.length}})</md-subheader>
+
+				      <div flex="100" layout="row" layout-align="center center" ng-show="instance.expand=='50'" class="md-no-sticky" style="margin-top:20px;padding-right:16px;">
+								<div>
+									<button class="md-button md-raised md-warn" type="button" aria-label="Delete Service Instance" style="text-align:center;" ng-click="showConfirm($event, instance)">
+										<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg"></md-icon> Delete instance
+									</button>
+								</div>
+							</div>
+
 				    </md-list>
 					</md-card-content>
 					<div class="md-actions" layout="row" layout-align="end center">

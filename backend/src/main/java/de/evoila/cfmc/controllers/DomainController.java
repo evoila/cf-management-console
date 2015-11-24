@@ -42,7 +42,7 @@ public class DomainController {
 	public @ResponseBody List<CloudFoundryResource<Domain>> getPrivateDomainsForOrganization(@RequestHeader("Authorization") String token, 
 			@PathVariable("orgId") final String orgId) {
 		String adminToken = userRepository.login();
-		CloudFoundryResources<Domain> privateDomains = restRepository.list(adminToken, V2_ORGANIZATIONS.concat(orgId).concat("/private_domains"), 2, true);
+		CloudFoundryResources<Domain> privateDomains = restRepository.list(adminToken, V2_ORGANIZATIONS.concat(orgId).concat("/private_domains"), 1, false);
     	return privateDomains.getResources();
 	}
 	

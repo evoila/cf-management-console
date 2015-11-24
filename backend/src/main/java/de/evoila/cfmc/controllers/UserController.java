@@ -49,7 +49,7 @@ public class UserController {
     public @ResponseBody List<CloudFoundryResource<OrganizationUser>> getUsersByOrganizationId(@RequestHeader("Authorization") final String token, 
     		@PathVariable("id") final String id) {
     	String adminToken = userRepository.login();
-    	CloudFoundryResources<OrganizationUser> orgUsers = restRepository.list(adminToken, V2_ORGANIZATIONS.concat(id).concat("/users"), 2, true);
+    	CloudFoundryResources<OrganizationUser> orgUsers = restRepository.list(adminToken, V2_ORGANIZATIONS.concat(id).concat("/users"), 1, true);
     	return orgUsers.getResources();
     }
        
@@ -73,7 +73,7 @@ public class UserController {
     public @ResponseBody List<CloudFoundryResource<Organization>> getManagedOrgsForUser(@RequestHeader("Authorization") final String token,
     		@PathVariable("userId") final String userId) {
 		String adminToken = userRepository.login();
-		CloudFoundryResources<Organization> managedOrgas = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/managed_organizations"), 2, true);
+		CloudFoundryResources<Organization> managedOrgas = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/managed_organizations"), 1, false);
     	return managedOrgas.getResources();
     }
 	
@@ -96,7 +96,7 @@ public class UserController {
     public @ResponseBody List<CloudFoundryResource<Space>> getBillingManagedOrgsForUser(@RequestHeader("Authorization") final String token,
     		@PathVariable("userId") final String userId) {
 		String adminToken = userRepository.login();
-    	CloudFoundryResources<Space> billingManagedOrgs = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/billing_managed_organizations"), 2, true);
+    	CloudFoundryResources<Space> billingManagedOrgs = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/billing_managed_organizations"), 1, false);
     	return billingManagedOrgs.getResources();
     }
 	
@@ -119,7 +119,7 @@ public class UserController {
     public @ResponseBody List<CloudFoundryResource<Space>> getAuditedOrgsForUser(@RequestHeader("Authorization") final String token,
     		@PathVariable("userId") final String userId) {
 		String adminToken = userRepository.login();
-    	CloudFoundryResources<Space> auditedOrgs = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/audited_organizations"), 2, true);
+    	CloudFoundryResources<Space> auditedOrgs = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/audited_organizations"), 1, false);
     	return auditedOrgs.getResources();
     }
 	
@@ -143,7 +143,7 @@ public class UserController {
     public @ResponseBody List<CloudFoundryResource<Space>> getManagedSpacesForUser(@RequestHeader("Authorization") final String token,
     		@PathVariable("userId") final String userId) {
     	String adminToken = userRepository.login();
-    	CloudFoundryResources<Space> managedSpaces = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/managed_spaces"), 2, true);
+    	CloudFoundryResources<Space> managedSpaces = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/managed_spaces"), 1, false);
     	return managedSpaces.getResources();
     }
   
@@ -167,7 +167,7 @@ public class UserController {
     public @ResponseBody List<CloudFoundryResource<Space>> getSpacesForUser(@RequestHeader("Authorization") final String token,
     		@PathVariable("userId") final String userId) {
     	String adminToken = userRepository.login();
-    	CloudFoundryResources<Space> spaces = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/spaces"), 2, true);
+    	CloudFoundryResources<Space> spaces = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/spaces"), 1, false);
     	return spaces.getResources();
     }
 
@@ -191,7 +191,7 @@ public class UserController {
     public @ResponseBody List<CloudFoundryResource<Space>> getAuditedSpacesForUser(@RequestHeader("Authorization") final String token,
     		@PathVariable("userId") final String userId) {
     	String adminToken = userRepository.login();
-    	CloudFoundryResources<Space> auditedSpaces = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/audited_spaces"), 2, true);
+    	CloudFoundryResources<Space> auditedSpaces = restRepository.list(adminToken, V2_USERS.concat(userId).concat("/audited_spaces"), 1, false);
     	return auditedSpaces.getResources();
     }
     

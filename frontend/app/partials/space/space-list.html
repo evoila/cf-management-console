@@ -23,9 +23,9 @@
 			<div layout="row" layout-sm="column" >
 				<md-card class="md-whiteframe-z2" flex>
 					<md-card-content layout="column">
-						<div layout="row">
-							<h1 class="md-title" flex="50">Apps</h1>
-							<p class="md-title" flex="40">
+						<div layout="column" layout-gt-lg="row" layout-align="start center">
+							<h1 class="md-title" flex="100" flex-gt-lg="50">Apps</h1>
+							<p class="md-title" flex="100" flex-gt-lg="40">
 								{{s.entity.apps.length}}
 							</p>
 						</div>
@@ -33,7 +33,7 @@
 							<br>
 						</md-divider>
 						<div flex>
-							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
+							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-sm="2:1" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile ng-repeat="app in s.entity.apps" md-rowspan="2" md-colspan="2"
 									md-colspan-sm="1" style="background-color:#{{colorString(app.entity.name)}}" ng-click="state.go('space', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
 									<img style="height:50%; padding-bottom: 45px;" ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
@@ -52,9 +52,9 @@
 				</md-card>
 				<md-card class="md-whiteframe-z2" flex>
 					<md-card-content layout="column">
-						<div layout="row">
-							<h2 class="md-title" flex="50">Service Instances</h2>
-							<p class="md-title" flex="40">
+						<div layout="column" layout-gt-lg="row" layout-align="start center">
+							<h1 class="md-title" flex="100" flex-gt-lg="50">Service Instances</h1>
+							<p class="md-title" flex="100" flex-gt-lg="40">
 								{{s.entity.service_instances.length}}
 							</p>
 						</div>
@@ -63,7 +63,7 @@
 							<!--span class=" pull-right fa fa-chevron-down md-toggle-icon md-button-toggle" ng-class="{'toggled' : hideApps}"></span-->
 						</md-divider>
 						<div flex ng-cloak>
-							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
+							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-sm="2:1" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile class="no-focus" ng-repeat="ser in s.entity.service_instances" md-rowspan="2" md-colspan="2" md-colspan-sm="1" style="background-color:#{{colorString(ser.entity.name)}}"
 									ng-click="showServiceInstances(s.entity.organization.metadata.guid, s.metadata.guid, s)">
 									<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">

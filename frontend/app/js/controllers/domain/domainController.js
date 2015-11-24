@@ -40,7 +40,10 @@ angular.module('controllers')
         Restangular.all('private_domains').post(domain).then(function(domain) {
           responseService.success(domain, 'Domain was created successfully', 'domains', { organizationId : $scope.orgId });
         }, function(response) {
-            responseService.error(response);
+            if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
+              responseService.error(response, 'Domain already taken');
+            else
+              responseService.error(response);
         });
         $mdDialog.hide();
       };
@@ -69,14 +72,14 @@ angular.module('controllers')
               .cancel('Better not');
         $mdDialog.show(confirm).then(function() {
           deleteDomain(domain);
-        }, function() {
-
         });
       };
 
       function deleteDomain(domain) {
         Restangular.one('private_domains', domain.metadata.guid).remove().then(function() {
           responseService.success(domain, 'Domain was deleted successfully', 'domains', { organizationId : $scope.orgId });
+        }, function(response) {
+          responseService.error(response);
         });
       }
 

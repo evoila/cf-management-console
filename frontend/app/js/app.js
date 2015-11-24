@@ -81,8 +81,21 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       return true;
     });
 
-    $rootScope.$on('$stateChangeSuccess',function(){
+    $rootScope.$on('$stateChangeSuccess',function(ev, to, toParams, from, fromParams){
       window.scrollTo(0, 0);
+
+      $rootScope.previousState = from.name;
+      $rootScope.previousParams = fromParams;
+      $rootScope.currentState = to.name;
+      /*
+      console.log('#### app.js - run ####')
+      console.log('State has changed')
+      console.log('from ' + $rootScope.previousState)
+      console.log('to ' + $rootScope.currentState)
+      console.log('with params ' + fromParams)
+      console.log('######################')
+      console.log('')
+      */
     })
 
     authenticationService.authenticate(true);

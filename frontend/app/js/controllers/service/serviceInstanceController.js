@@ -1,6 +1,6 @@
 angular.module('controllers')
   .controller('serviceInstanceController',
-    function ServiceInstanceController($scope, $state, menu, $mdDialog, Restangular, DesignService) {
+    function ServiceInstanceController($scope, $state, menu, $mdDialog, Restangular, DesignService, responseService) {
 
       $scope.space = $state.params.space;
 
@@ -13,6 +13,32 @@ angular.module('controllers')
       else
         $scope.instances = $scope.space.entity.service_instances;
 
+      /*
+       *  Dialog for
+       *
+       *  Confirm delete user
+       *
+       */
+       $scope.showConfirm = function(ev, instance) {
+        var confirm = $mdDialog.confirm()
+              .title('Really delete instance?')
+              .content(instance.entity.name)
+              .ariaLabel('Confirm delete')
+              .targetEvent(ev)
+              .ok('Yes')
+              .cancel('Better not');
+        $mdDialog.show(confirm).then(function() {
+          deleteServiceInstance(instance);
+        });
+      };
+
+      function deleteServiceInstance(instance) {
+        Restangular.one('service_instances', instance.metadata.guid).remove().then(function() {
+          responseService.success(instance, 'Instance was deleted successfully', 'service', { organizationId : $scope.orgId, spaceId : $state.params.spaceId });
+        }, function(response) {
+          responseService.error(response);
+        });
+      }
 
 
       $scope.colorString = function(name) {

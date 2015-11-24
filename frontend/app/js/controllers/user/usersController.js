@@ -5,10 +5,8 @@
 angular.module('controllers')
   .controller('usersController',
     function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location, envService) {
-      console.log('user controller');
-
       $scope.orgId = $state.params.organizationId;
-      $scope.prefix = envService.read('cf_prefix');
+      $scope.cfPrefix = envService.read('cf_prefix');
 
       $scope.init = function() {
         $scope.blockInput = true;
@@ -16,7 +14,7 @@ angular.module('controllers')
 
         Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
           $scope.org = org;
-          var spacesUrl = $scope.org.entity.spaces_url.replace($scope.prefix, '');
+          var spacesUrl = $scope.org.entity.spaces_url.replace($scope.cfPrefix, '');
           Restangular.one(spacesUrl).get().then(function(spaces) {
             $scope.spaces = spaces;
             prepareUsers();
@@ -48,10 +46,9 @@ angular.module('controllers')
         });
       }
 
+
       $scope.switchToEditUser = function(user) {
-        Restangular.one('organizations', $scope.orgId).all('spaces').getList().then(function(data) {
-          $state.go('user-edit', {organizationId : $scope.orgId, userId : user.metadata.guid, user : user});
-        });
+        $state.go('user-edit', {organizationId : $scope.orgId, userId : user.metadata.guid});
       }
 
       /*
@@ -70,8 +67,6 @@ angular.module('controllers')
               .cancel('Better not');
         $mdDialog.show(confirm).then(function() {
           deleteUser(user);
-        }, function() {
-
         });
       };
 
@@ -79,7 +74,7 @@ angular.module('controllers')
         Restangular.one('users', user.metadata.guid).remove().then(function() {
           responseService.success(user, 'User was deleted successfully', 'users', { organizationId : $scope.orgId });
         }, function(response) {
-          console.log(response);
+          responseService.error(response);
         });
       }
 
