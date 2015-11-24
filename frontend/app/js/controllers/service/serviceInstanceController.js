@@ -16,7 +16,7 @@ angular.module('controllers')
       /*
        *  Dialog for
        *
-       *  Confirm delete user
+       *  Confirm delete instance
        *
        */
        $scope.showConfirm = function(ev, instance) {

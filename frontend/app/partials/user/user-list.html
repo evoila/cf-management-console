@@ -17,9 +17,9 @@
 
     <md-list-item id="item-{{$index}}" class="md-3-line" ng-repeat="user in orgUsers" style="">
       <div class="md-list-item-text" layout="column">
-				<div layout="row">
+				<div layout="row" layout-align="start center">
 
-					<div flex ng-show="editMode" layout="row" layout-align="start center" style="max-width:120px;margin-top:-10px;">
+					<div flex ng-show="editMode" layout="row" layout-align="start center" style="max-width:120px;">
 						<div flex style="max-width:50px;">
 							<button class="md-button md-icon-button md-primary" type="button" aria-label="Edit User" style="text-align:center;" ng-click="switchToEditUser(user)">
 								<md-icon class="no-focus" md-svg-icon="assets/svg/ic_edit_48px.svg"></md-icon>
@@ -33,13 +33,18 @@
 						</div>
 					</div>
 
-					<div flex style="margin-left:10px;">
-        		<h3>{{ user.entity.username }}</h3>
-						<p><span>Spaces: </span>{{ user.entity.spaces.length }}</p>
-					</div>
+					<div flex layout="row" layout-align="start center">
 
-					<div flex hide-sm hide-md>
-						<p ng-show="user.isOrgManager">Manager</p>
+						<div flex="40" style="margin-left:10px;">
+	        		<h3>{{ user.entity.username }}</h3>
+						</div>
+
+						<div flex="60" layout="column" layout-gt-md="row" layout-align="start center">
+							<div flex="30" ng-show="user.isOrgManager"><p>Manager</p></div>
+							<div flex="40" ng-show="user.isOrgBillingManager"><p>Billing Manager</p></div>
+							<div flex="30" ng-show="user.isOrgAuditor"><p>Auditor</p></div>
+						</div>
+
 					</div>
 
 				</div>

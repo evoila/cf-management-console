@@ -1,6 +1,6 @@
 angular.module('controllers')
   .controller('editUserController',
-    function EditUserController($scope, $state, menu, Restangular, envService) {
+    function EditUserController($scope, $state, menu, Restangular, envService, responseService) {
 
       var self = this;
       $scope.cfPrefix = envService.read('cf_prefix');

@@ -14,38 +14,31 @@ angular.module('controllers')
 
         Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
           $scope.org = org;
-          var spacesUrl = $scope.org.entity.spaces_url.replace($scope.cfPrefix, '');
-          Restangular.one(spacesUrl).get().then(function(spaces) {
-            $scope.spaces = spaces;
-            prepareUsers();
-          })
+          getUsersAndOrgRoles();
         });
       }
 
-      function prepareUsers() {
+      function getUsersAndOrgRoles() {
         Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
-
-          angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
-            orgUser.spaces = $scope.spaces;
-
-            orgUser.isOrgManager = false;
-            orgUser.entity.managed_organizations.forEach(function(org) {
-              if(org.metadata.guid == $scope.orgId)
-                orgUser.isOrgManager = true;
-            })
-
-            orgUser.billingManagedOrgs = orgUser.entity.billing_managed_organizations;
-            orgUser.auditedOrgs = orgUser.entity.audited_organizations;
-
-            orgUser.managedSpaces = orgUser.entity.managed_spaces;
-            orgUser.auditedSpaces = orgUser.entity.audited_spaces;
+          angular.forEach(orgUsers, function(orgUser) {
+            orgUser.isOrgManager = _.find($scope.org.entity.managers, function (ou) {
+              if(ou.metadata.guid === orgUser.metadata.guid)
+                return true;
+            });
+            orgUser.isOrgBillingManager = _.find($scope.org.entity.billing_managers, function (ou) {
+              if(ou.metadata.guid === orgUser.metadata.guid)
+                return true;
+            });
+            orgUser.isOrgAuditor = _.find($scope.org.entity.auditors, function (ou) {
+              if(ou.metadata.guid === orgUser.metadata.guid)
+                return true;
+            });
           });
           $scope.orgUsers = orgUsers;
         }, function(response) {
             responseService.error(response);
         });
       }
-
 
       $scope.switchToEditUser = function(user) {
         $state.go('user-edit', {organizationId : $scope.orgId, userId : user.metadata.guid});
@@ -118,7 +111,5 @@ angular.module('controllers')
       $scope.cancel = function() {
         $mdDialog.cancel();
       };
-
-
 
 });
