@@ -70,12 +70,27 @@ angular.module('services')
 
           if (loadMenu) {
             menu.initMenu(function(organization) {
-              if ($state.current.name == 'login' || $state.current.name == "")
-                $state.go('spaces', {
-                  organizationId: organization.metadata.guid
-                });
-              else
-                $state.go($state.current.name, $state.params);
+              /*
+              console.log('#### authService.js - getToken ####')
+              console.log('State has changed')
+              console.log('from ' + $rootScope.previousState)
+              console.log('to ' + $rootScope.currentState)
+              console.log('with params ' + $rootScope.previousParams)
+              console.log('######################')
+              console.log('')
+              */
+
+              if($rootScope.previousState != '')
+                $state.go($rootScope.previousState, $rootScope.previousParams);
+
+              else {
+                if ($state.current.name == 'login' || $state.current.name == "")
+                  $state.go('spaces', {
+                    organizationId: organization.metadata.guid
+                  });
+                else
+                  $state.go($state.current.name, $state.params);
+                }
             });
           }
         }).error(function(data, status, headers) {

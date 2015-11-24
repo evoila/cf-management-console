@@ -18,7 +18,9 @@ angular.module('controllers')
           Restangular.one(spacesUrl).get().then(function(spaces) {
             $scope.spaces = spaces;
             prepareUsers();
-          })
+          }, function(response) {
+              responseService.error(response);
+          });
         });
       }
 
