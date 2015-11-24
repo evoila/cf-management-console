@@ -49,7 +49,7 @@ public class UserController {
     public @ResponseBody List<CloudFoundryResource<OrganizationUser>> getUsersByOrganizationId(@RequestHeader("Authorization") final String token, 
     		@PathVariable("id") final String id) {
     	String adminToken = userRepository.login();
-    	CloudFoundryResources<OrganizationUser> orgUsers = restRepository.list(adminToken, V2_ORGANIZATIONS.concat(id).concat("/users"), 1, false);
+    	CloudFoundryResources<OrganizationUser> orgUsers = restRepository.list(adminToken, V2_ORGANIZATIONS.concat(id).concat("/users"), 1, true);
     	return orgUsers.getResources();
     }
        

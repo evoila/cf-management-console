@@ -1,6 +1,7 @@
-<div layout="column">
+<div ng-hide="loading" layout="column" ng-controller="editUserController as ctrl" ng-init="init()">
 
-  <span class="md-title">Edit user {{user.entity.username}} in {{org.entity.name}}</span>
+	<div>
+  <span class="md-title">Edit user {{ctrl.user.entity.username}} in {{orgName}}</span>
 
   <div layout="row" layout-wrap>
 

@@ -7,7 +7,7 @@ angular.module('controllers')
 
       $scope.init = function() {
         $scope.orgId = $state.params.organizationId;
-        /*
+
         if($state.params.user != null) {
           $scope.orgName = menu.organization.entity.name;
 
@@ -19,7 +19,6 @@ angular.module('controllers')
           checkIfSpaceAuditor();
         }
         else {
-        */
           Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
             $scope.org = org;
             $scope.orgName = org.entity.name;
@@ -29,7 +28,7 @@ angular.module('controllers')
               prepareUser();
             })
           });
-        //}
+        }
       }
 
 

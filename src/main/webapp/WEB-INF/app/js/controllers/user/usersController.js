@@ -14,25 +14,19 @@ angular.module('controllers')
 
         Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
           $scope.org = org;
-          /*
           var spacesUrl = $scope.org.entity.spaces_url.replace($scope.cfPrefix, '');
           Restangular.one(spacesUrl).get().then(function(spaces) {
             $scope.spaces = spaces;
             prepareUsers();
-          }, function(response) {
-              responseService.error(response);
-          });
-          */
-          //$scope.spaces = $scope.org.entity.spaces;
-          prepareUsers();
+          })
         });
       }
 
       function prepareUsers() {
         Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
-          /*
-          angular.forEach(orgUsers, function(orgUser) {
-            //orgUser.spaces = $scope.spaces;
+
+          angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
+            orgUser.spaces = $scope.spaces;
 
             orgUser.isOrgManager = false;
             orgUser.entity.managed_organizations.forEach(function(org) {
@@ -46,7 +40,6 @@ angular.module('controllers')
             orgUser.managedSpaces = orgUser.entity.managed_spaces;
             orgUser.auditedSpaces = orgUser.entity.audited_spaces;
           });
-          */
           $scope.orgUsers = orgUsers;
         }, function(response) {
             responseService.error(response);
@@ -55,7 +48,6 @@ angular.module('controllers')
 
 
       $scope.switchToEditUser = function(user) {
-        $scope.name = user.entity.username;
         $state.go('user-edit', {organizationId : $scope.orgId, userId : user.metadata.guid});
       }
 
