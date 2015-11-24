@@ -5,13 +5,7 @@ applications:
   host: cfmc-api
   instances: 2
   memory: 1024M
-  path: backend/target/cfmc.jar
+  path: target/cfmc.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
   env:
     JAVA_OPTS: -Djava.security.egd=file:/dev/urandom
-- name: cfmc
-  host: cfmc
-  instances: 1
-  memory: 64M
-  path: frontend/app
-  buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git

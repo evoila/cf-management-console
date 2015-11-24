@@ -1,0 +1,9 @@
+---
+# This is a minimal manifest
+applications:
+- name: cfmc
+  host: cfmc
+  instances: 1
+  memory: 64M
+  path: app
+  buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
