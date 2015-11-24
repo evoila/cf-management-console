@@ -128,50 +128,96 @@ angular.module('controllers')
 
       // switch org roles
       $scope.switchOrgManager = function() {
-        var managedOrgsUrl = self.user.entity.managed_organizations_url.replace($scope.prefix, '') + '/';
+        var managedOrgsUrl = self.user.entity.managed_organizations_url.replace($scope.cfPrefix, '') + '/';
         if(self.user.isOrgManager)
-          Restangular.one(managedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
+          Restangular.one(managedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+            responseService.success(response, 'Role was set successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
         else
-          Restangular.one(managedOrgsUrl + $scope.orgId).remove();
+          Restangular.one(managedOrgsUrl + $scope.orgId).remove().then(function(response) {
+            responseService.success(response, 'Role was removed successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
       }
       $scope.switchOrgBillingManager = function() {
         var billingManagedOrgsUrl = self.user.entity.billing_managed_organizations_url.replace($scope.prefix, '') + '/';
         if(self.user.isOrgBillingManager)
-          Restangular.one(billingManagedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
-        else {
-          Restangular.one(billingManagedOrgsUrl + $scope.orgId).remove();
-        }
+          Restangular.one(billingManagedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+            responseService.success(response, 'Role was set successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
+        else
+          Restangular.one(billingManagedOrgsUrl + $scope.orgId).remove().then(function(response) {
+            responseService.success(response, 'Role was removed successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
       }
       $scope.switchOrgAuditor = function() {
-        var auditedOrgsUrl = self.user.entity.audited_organizations_url.replace($scope.prefix, '') + '/';
+        var auditedOrgsUrl = self.user.entity.audited_organizations_url.replace($scope.cfPrefix, '') + '/';
         if(self.user.isOrgAuditor)
-          Restangular.one(auditedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
-        else {
-          Restangular.one(auditedOrgsUrl + $scope.orgId).remove();
-        }
+          Restangular.one(auditedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+            responseService.success(response, 'Role was set successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
+        else
+          Restangular.one(auditedOrgsUrl + $scope.orgId).remove().then(function(response) {
+            responseService.success(response, 'Role was removed successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
       }
 
       // switch space roles
       $scope.switchSpaceManager = function(space) {
-        var managedSpacesUrl = self.user.entity.managed_spaces_url.replace($scope.prefix, '') + '/';
+        var managedSpacesUrl = self.user.entity.managed_spaces_url.replace($scope.cfPrefix, '') + '/';
         if(space.userIsManager)
-          Restangular.one(managedSpacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
+          Restangular.one(managedSpacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+            responseService.success(response, 'Role was set successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
         else
-            Restangular.one(managedSpacesUrl + space.metadata.guid).remove();
+          Restangular.one(managedSpacesUrl + space.metadata.guid).remove().then(function(response) {
+            responseService.success(response, 'Role was removed successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
       }
       $scope.switchSpaceDeveloper = function(space) {
-        var spacesUrl = self.user.entity.spaces_url.replace($scope.prefix, '') + '/';
+        var spacesUrl = self.user.entity.spaces_url.replace($scope.cfPrefix, '') + '/';
         if(space.userIsDeveloper)
-          Restangular.one(spacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
+          Restangular.one(spacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+            responseService.success(response, 'Role was set successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
         else
-            Restangular.one(spacesUrl + space.metadata.guid).remove();
+          Restangular.one(spacesUrl + space.metadata.guid).remove().then(function(response) {
+            responseService.success(response, 'Role was removed successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
       }
       $scope.switchSpaceAuditor = function(space) {
-        var auditedSpacesUrl = self.user.entity.audited_spaces_url.replace($scope.prefix, '') + '/';
+        var auditedSpacesUrl = self.user.entity.audited_spaces_url.replace($scope.cfPrefix, '') + '/';
         if(space.userIsAuditor)
-          Restangular.one(auditedSpacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined);
+          Restangular.one(auditedSpacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+            responseService.success(response, 'Role was set successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
         else
-            Restangular.one(auditedSpacesUrl + space.metadata.guid).remove();
+          Restangular.one(auditedSpacesUrl + space.metadata.guid).remove().then(function(response) {
+            responseService.success(response, 'Role was removed successfully');
+          }, function(response) {
+            responseService.error(response);
+          });
       }
 
       $scope.loading = false;

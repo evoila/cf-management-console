@@ -10,10 +10,12 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
         },
         vars: {
             development: {
-                restApiUrl: 'http://localhost:8080/api'
+                restApiUrl: 'http://localhost:8080/api',
+                cf_prefix: '/v2'
             },
             production: {
-                restApiUrl: 'https://cfmc-api.88.198.249.62.xip.io/api'
+                restApiUrl: 'https://cfmc-api.88.198.249.62.xip.io/api',
+                cf_prefix: '/v2'
             }
         }
     });

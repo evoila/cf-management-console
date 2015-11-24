@@ -41,7 +41,11 @@ angular.module('controllers')
       }
 
       $scope.switchToEditUser = function(user) {
-        $state.go('user-edit', {organizationId : $scope.orgId, userId : user.metadata.guid});
+        var spacesUrl = $scope.org.entity.spaces_url.replace($scope.cfPrefix, '');
+        Restangular.one(spacesUrl).get().then(function(spaces) {
+          user.spaces = spaces;
+          $state.go('user-edit', {organizationId : $scope.orgId, userId : user.metadata.guid, user : user});
+        });
       }
 
       /*
