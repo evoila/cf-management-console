@@ -72,14 +72,14 @@ angular.module('controllers')
               .cancel('Better not');
         $mdDialog.show(confirm).then(function() {
           deleteDomain(domain);
-        }, function() {
-
         });
       };
 
       function deleteDomain(domain) {
         Restangular.one('private_domains', domain.metadata.guid).remove().then(function() {
           responseService.success(domain, 'Domain was deleted successfully', 'domains', { organizationId : $scope.orgId });
+        }, function(response) {
+          responseService.error(response);
         });
       }
 

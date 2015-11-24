@@ -3,11 +3,11 @@ angular.module('controllers')
     function EditUserController($scope, $state, menu, Restangular, envService) {
 
       var self = this;
-      $scope.prefix = envService.read('cf_prefix');
+      $scope.cfPrefix = envService.read('cf_prefix');
 
       $scope.init = function() {
         $scope.orgId = $state.params.organizationId;
-
+        /*
         if($state.params.user != null) {
           $scope.orgName = menu.organization.entity.name;
 
@@ -19,17 +19,19 @@ angular.module('controllers')
           checkIfSpaceAuditor();
         }
         else {
+        */
           Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
             $scope.org = org;
             $scope.orgName = org.entity.name;
-            var spacesUrl = $scope.org.entity.spaces_url.replace($scope.prefix, '');
+            var spacesUrl = $scope.org.entity.spaces_url.replace($scope.cfPrefix, '');
             Restangular.one(spacesUrl).get().then(function(spaces) {
               $scope.spaces = spaces;
               prepareUser();
             })
           });
-        }
+        //}
       }
+
 
       function prepareUser() {
         Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {

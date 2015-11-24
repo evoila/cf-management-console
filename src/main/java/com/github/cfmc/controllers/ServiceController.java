@@ -105,4 +105,10 @@ public class ServiceController {
 		return restRepository.save(adminToken, V2_SERVICE_INSTANCES.concat("?accepts_incomplete=true"), new CloudFoundryResource<ServiceInstance>(instance));
     }
     
+    @RequestMapping(value = "/service_instances/{instanceId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteServiceInstanceById(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("instanceId") final String instanceId) {
+    	restRepository.delete(token, V2_SERVICE_INSTANCES, instanceId);
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
