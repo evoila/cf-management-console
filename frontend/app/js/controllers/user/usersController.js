@@ -15,6 +15,8 @@ angular.module('controllers')
         Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
           $scope.org = org;
           getUsersAndOrgRoles();
+        }, function(response) {
+          responseService.error(response);
         });
       }
 
@@ -44,7 +46,9 @@ angular.module('controllers')
         var spacesUrl = $scope.org.entity.spaces_url.replace($scope.cfPrefix, '');
         Restangular.one(spacesUrl).get().then(function(spaces) {
           user.spaces = spaces;
-          $state.go('user-edit', {organizationId : $scope.orgId, userId : user.metadata.guid, user : user});
+          $state.go('user-edit', {organizationId : $scope.orgId, orgName : $scope.org.entity.name, userId : user.metadata.guid, user : user});
+        }, function(response) {
+          responseService.error(response);
         });
       }
 

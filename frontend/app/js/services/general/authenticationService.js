@@ -13,8 +13,12 @@ angular.module('services')
 
       if ((now - $rootScope.lastPageChange) < timeout)
         authentication.authenticate(false);
-      else
+
+      else {
+        $rootScope.hideLoginForm = false;
         authentication.logout();
+      }
+
     }, 7.5 * 60 * 1000);
 
     authentication.authenticate = function(loadMenu, callback) {
@@ -46,6 +50,8 @@ angular.module('services')
 
     function getToken(user, loadMenu) {
       if (user != undefined && user.password != undefined && user.username != null) {
+        $rootScope.hideLoginForm = true;
+
         $http.defaults.headers.common['Authorization'] = 'bearer ' + user.token;
 
         var data = transformRequest({
@@ -70,17 +76,8 @@ angular.module('services')
 
           if (loadMenu) {
             menu.initMenu(function(organization) {
-              /*
-              console.log('#### authService.js - getToken ####')
-              console.log('State has changed')
-              console.log('from ' + $rootScope.previousState)
-              console.log('to ' + $rootScope.currentState)
-              console.log('with params ' + $rootScope.previousParams)
-              console.log('######################')
-              console.log('')
-              */
 
-              if($rootScope.previousState != '')
+              if($rootScope.previousState != '' && $state.current.name != '')
                 $state.go($rootScope.previousState, $rootScope.previousParams);
 
               else {
@@ -97,6 +94,8 @@ angular.module('services')
           responseService.error(data, "Invalid user credentials - or endpoint not reachable");
         });
       } else {
+        $rootScope.hideLoginForm = false;
+
         clientCacheService.clearUser();
         $state.go('login');
       }

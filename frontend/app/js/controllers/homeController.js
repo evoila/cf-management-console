@@ -13,8 +13,9 @@ angular.module('controllers')
       $rootScope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams) {
           $rootScope.lastPageChange = new Date().getTime();
-          if (!authenticationService.isAuthenticated())
+          if (!authenticationService.isAuthenticated()) {
             authenticationService.logout();
+          }
       });
 
       $scope.openMenu = function() {
@@ -22,6 +23,7 @@ angular.module('controllers')
       };
 
       $scope.logout = function() {
+        $rootScope.hideLoginForm = false;
         authenticationService.logout();
       };
 

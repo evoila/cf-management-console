@@ -5,7 +5,9 @@
 
 angular.module('controllers')
   .controller('loginController',
-    function LoginController($scope, authenticationService) {
+    function LoginController($scope, $state, $rootScope, authenticationService) {
+
+      $scope.hideForm = $rootScope.hideLoginForm;
 
       $scope.login = function(userForm) {
         var user = {};

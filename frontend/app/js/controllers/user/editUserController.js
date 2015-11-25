@@ -9,11 +9,9 @@ angular.module('controllers')
         $scope.orgId = $state.params.organizationId;
 
         if($state.params.user != null) {
-          $scope.orgName = menu.organization.entity.name;
+          $scope.orgName = $state.params.orgName;
 
           self.user = $state.params.user;
-          self.user.isOrgBillingManager = checkIfOrgBillingManager();
-          self.user.isOrgAuditor = checkIfOrgAuditor();
           checkIfSpaceManager();
           checkIfSpaceDeveloper();
           checkIfSpaceAuditor();
@@ -35,7 +33,7 @@ angular.module('controllers')
       function prepareUser() {
         Restangular.one('users', $scope.orgId).get().then(function(orgUsers) {
           var user = null;
-          angular.forEach(orgUsers, function(orgUser, orgUserIndex) {
+          angular.forEach(orgUsers, function(orgUser) {
             if(orgUser.metadata.guid == $state.params.userId)
               user = orgUser
           });
