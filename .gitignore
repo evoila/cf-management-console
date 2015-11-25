@@ -23,17 +23,5 @@
 *.war
 *.ear
 
+frontend/app/lib/**/*
 frontend/node_modules
-frontend/app/lib/angular
-frontend/app/lib/angular-animate
-frontend/app/lib/angular-aria
-frontend/app/lib/angular-material
-frontend/app/lib/angular-material-data-table
-frontend/app/lib/angular-material-icons
-frontend/app/lib/angular-ui-router
-frontend/app/lib/ng-clip
-frontend/app/lib/restangular
-frontend/app/lib/underscore
-frontend/app/lib/zeroclipboard
-frontend/app/lib/angular-environment
-frontend/app/lib/angular-loading-bar

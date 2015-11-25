@@ -1,6 +1,6 @@
 angular.module('controllers')
   .controller('servicesController',
-    function ServicesController($scope, $state, menu, $mdDialog, Restangular, DesignService) {
+    function ServicesController($scope, $state, menu, $mdDialog, Restangular, DesignService, responseService) {
 
     var self = this;
     self.service = $state.params.service;
@@ -81,7 +81,10 @@ angular.module('controllers')
                 $mdDialog.hide();
                 $state.go('service', {organizationId : $scope.orgId, spaceId : form.spaceId});
               }, function(response) {
-                responseService.error(response);
+                if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
+                  responseService.error(response, 'Instance name already in use');
+                else
+                  responseService.error(response);
               })
             }
           };
