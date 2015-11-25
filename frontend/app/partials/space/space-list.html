@@ -33,9 +33,9 @@
 							<br>
 						</md-divider>
 						<div flex>
-							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-sm="2:1" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
-								<md-grid-tile ng-repeat="app in s.entity.apps" md-rowspan="2" md-colspan="2"
-									md-colspan-sm="1" style="background-color:#{{colorString(app.entity.name)}}" ng-click="state.go('space', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
+							<md-grid-list md-cols="2" md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+								<md-grid-tile ng-repeat="app in s.entity.apps"
+									style="background-color:#{{colorString(app.entity.name)}}" ng-click="state.go('space', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
 									<img style="height:50%; padding-bottom: 45px;" ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
 									<md-grid-tile-footer>
 										<h3>
@@ -63,8 +63,8 @@
 							<!--span class=" pull-right fa fa-chevron-down md-toggle-icon md-button-toggle" ng-class="{'toggled' : hideApps}"></span-->
 						</md-divider>
 						<div flex ng-cloak>
-							<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-sm="2:1" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
-								<md-grid-tile class="no-focus" ng-repeat="ser in s.entity.service_instances" md-rowspan="2" md-colspan="2" md-colspan-sm="1" style="background-color:#{{colorString(ser.entity.name)}}"
+							<md-grid-list md-cols="2" md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+								<md-grid-tile class="no-focus" ng-repeat="ser in s.entity.service_instances" style="background-color:#{{colorString(ser.entity.name)}}"
 									ng-click="showServiceInstances(s.entity.organization.metadata.guid, s.metadata.guid, s)">
 									<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 									<!--img style="width:60%" ng-src="assets/png/mysql_w.png"-->

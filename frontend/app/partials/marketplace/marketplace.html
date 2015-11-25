@@ -2,20 +2,17 @@
 <div layout="column" layout-gt-md="row" layout-align="start start" style="padding-top:8px;">
 	<h2>Services Marketplace</h2>
 	<div layout="row" layout-align="start center" style="margin-top:2px;">
-		<!--
-		<button type="button" aria-label="Show Create Service Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateServiceDialog()">
-			<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg"></md-icon>
-		</button>
-		-->
 		<md-switch class="no-focus" ng-model="editMode" aria-label="Toggle edit" style="margin-left:20px;">editable</md-switch>
 	</div>
 
 </div>
 
+<hr class="style-six" />
+
 <md-card class="md-whiteframe-z2" flex>
 	<md-card-content layout="column">
 		<div flex>
-			<md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="2" md-cols-gt-lg="5" md-row-height-gt-lg="1:1" md-row-height="4:3" md-row-height-sm="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+			<md-grid-list md-cols-sm="2" md-cols-gt-sm="3"  md-cols-gt-lg="5" md-row-height-gt-lg="1:1" md-row-height="4:3" md-row-height-sm="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 				<md-grid-tile class="no-focus" ng-repeat="service in services" style="background-color:#{{colorString(service.entity.label)}}" ng-click="!editMode && showDetails(service)">
 					<div ng-show="editMode" ng-click="test()" style="width:32px;height:32px;background-color:red;position:absolute;top:0;right:0;">
 						<button class="md-button md-icon-button" type="button" aria-label="Delete Service" style="text-align:center;width:32px;height:32px;margin:0;padding:3px 0 0 0;" ng-click="showConfirm($event, service)">

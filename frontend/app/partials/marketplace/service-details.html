@@ -1,5 +1,9 @@
 <div ng-controller="servicesController as ctrl" ng-init="init()">
-	<h2>{{ctrl.service.entity.label}}</h2>
+	<div style="padding-top:8px;padding-bottom:1px;">
+		<h2>{{ctrl.service.entity.label}}</h2>
+	</div>
+
+	<hr class="style-six" />
 
   <div layout="row" layout-wrap>
 
@@ -10,7 +14,7 @@
       </md-toolbar>
 			<md-card-content layout="column">
 				<div flex>
-					<md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="1" md-cols-gt-lg="2" md-row-height="4:3" md-row-height-sm="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+					<md-grid-list md-cols-sm="2" md-cols-gt-sm="3" md-cols-gt-md="2" md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 						<md-grid-tile class="no-focus" ng-repeat="plan in ctrl.service.entity.service_plans" ng-style="{'background-color': plan.color}" ng-click="showServicePlanDetails(plan)">
 							<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 							<md-grid-tile-footer class="center">
@@ -32,7 +36,7 @@
       </md-toolbar>
 			<md-card-content layout="column">
 				<div flex>
-					<md-grid-list md-cols-sm="2" md-cols-gt-sm="1" md-cols-md="1" md-cols-gt-md="1" md-cols-gt-lg="2" md-row-height="4:3" md-row-height-sm="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+					<md-grid-list md-cols-sm="2" md-cols-gt-sm="3" md-cols-gt-md="2" md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 						<md-grid-tile class="no-focus no-link" ng-repeat="instance in instances" ng-style="{'background-color': instance.color}">
 							<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(instance.planUniqueId)}}_w.png" onerror="this.style.display='none'">
 							<md-grid-tile-footer>

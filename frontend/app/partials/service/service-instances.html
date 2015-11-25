@@ -2,11 +2,12 @@
 	<span class="single-space-title">SERVICE INSTANCES</span>
 </div>
 <div layout="row" style="padding: 10px" layout-wrap>
-	<div ng-repeat="instance in instances" flex-sm="{{instance.expand*4}}" flex-md="{{instance.expand*2}}" flex-lg="{{instance.expand*2}}" flex-gt-lg="{{instance.expand}}" id="single-space" ng-init="instance.expand='30'">
+	<div ng-repeat="instance in instances" flex-sm="100" id="single-space">
 		<md-card style="background-color:#{{colorString(instance.entity.name)}}">
 			<img style="height:50%; padding-bottom: 45px;" ng-src="assets/png/{{servicePng(instance.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 			<md-card-content style="background-color:#fff">
 						<h1 class="md-title" style="font-size:30px;font-style:#444">{{instance.entity.name}}</h1>
+						<p>expand: {{instance.expand}}</p>
 				    <md-list>
 				      <md-subheader class="md-no-sticky">Details</md-subheader>
 				      <md-list-item class="md-3-line">
