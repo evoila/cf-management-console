@@ -13,6 +13,7 @@ angular.module('controllers')
       else
         $scope.instances = $scope.space.entity.service_instances;
 
+
       /*
        *  Dialog for
        *
@@ -50,4 +51,5 @@ angular.module('controllers')
         var myService = DesignService.resolveServicePng(name);
         return myService;
       };
+
     });
