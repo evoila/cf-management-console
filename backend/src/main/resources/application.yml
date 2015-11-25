@@ -1,0 +1,9 @@
+server:
+  address: localhost
+  port: 8080
+
+cf:
+  api: https://api.88.198.249.62.xip.io/
+  uaa: https://uaa.88.198.249.62.xip.io/
+  client: admin
+  secret: c1oudc0w
