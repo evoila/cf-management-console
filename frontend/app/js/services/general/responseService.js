@@ -17,8 +17,13 @@ angular.module('services')
     response.error = function(response, message) {
       var sendMsg = null;
       if (!message) {
+        try {
           var obj = JSON.parse(response.data.message);
           sendMsg = obj.message;
+        }
+        catch(err) {
+          sendMsg = 'An undefined error occured';
+        }
       } else {
         sendMsg = message;
       }

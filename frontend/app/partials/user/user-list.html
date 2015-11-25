@@ -35,14 +35,14 @@
 
 					<div flex layout="row" layout-align="start center">
 
-						<div flex="40" style="margin-left:10px;">
+						<div flex="80" flex-gt-sm="50">
 	        		<h3>{{ user.entity.username }}</h3>
 						</div>
 
-						<div flex="60" layout="column" layout-gt-md="row" layout-align="start center">
-							<div flex="30" ng-show="user.isOrgManager"><p>Manager</p></div>
-							<div flex="40" ng-show="user.isOrgBillingManager"><p>Billing Manager</p></div>
-							<div flex="30" ng-show="user.isOrgAuditor"><p>Auditor</p></div>
+						<div flex="20" flex-gt-sm="50" layout="column" layout-gt-md="row" layout-align="start center">
+							<div flex="33" ng-show="user.isOrgManager" style="text-align:center;"><p hide-sm>Manager</p><p hide-gt-sm>M</p></div>
+							<div flex="33" ng-show="user.isOrgBillingManager" style="text-align:center;"><p hide-sm>Billing Manager</p><p hide-gt-sm>BM</p></div>
+							<div flex="33" ng-show="user.isOrgAuditor" style="text-align:center;"><p hide-sm>Auditor</p><p hide-gt-sm>A</p></div>
 						</div>
 
 					</div>

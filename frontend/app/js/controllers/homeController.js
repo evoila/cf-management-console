@@ -12,6 +12,7 @@ angular.module('controllers')
 
       $rootScope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams) {
+          $mdSidenav('left').close();
           $rootScope.lastPageChange = new Date().getTime();
           if (!authenticationService.isAuthenticated()) {
             authenticationService.logout();
