@@ -1,11 +1,6 @@
-/**
- * DomainController
- **/
-
 angular.module('controllers')
   .controller('domainController',
     function DomainController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
-      console.log('domain controller');
 
       $scope.orgId = $state.params.organizationId;
 
@@ -18,7 +13,7 @@ angular.module('controllers')
       /*
        *  Dialog for
        *
-       *  Create new user
+       *  Create new domain
        *
        */
       $scope.showCreateDomainDialog = function(ev) {

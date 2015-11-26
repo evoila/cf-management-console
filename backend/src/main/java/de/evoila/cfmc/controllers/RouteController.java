@@ -90,7 +90,7 @@ public class RouteController {
     }
 
     @RequestMapping(value = "/routes/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteOrganizationById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
+    public ResponseEntity<Object> deleteRouteById(@RequestHeader("Authorization") final String token, @PathVariable("id") final String id) {
         restRepository.delete(token, V2_ROUTES, id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

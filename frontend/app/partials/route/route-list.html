@@ -1,0 +1,62 @@
+<div layout="column" ng-init="init()" style="padding-top:8px;">
+
+  <div layout="row" layout-align="start start">
+    <h2>Routes</h2>
+
+  		<button type="button" aria-label="Show Create Route Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateRouteDialog()">
+  			<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg" style="margin-top:8px;"></md-icon>
+  		</button>
+
+  </div>
+
+
+	<md-divider></md-divider>
+
+  <div id="masonry-container" style="margin-bottom:50px;">
+    <div id="item-{{$index}}" class="item no-focus" ng-repeat="route in routes" style="max-width:100%;width:{{route.w}};height:{{route.h}};padding:5px;">
+      <div class="md-whiteframe-z2" style="height:100%;border-left:3px solid #{{colorString(route.entity.domain.entity.name)}};padding-right:10px;">
+        <div flex layout="column" style="margin:5px 0 0 8px;overflow:hidden;">
+          <h3 style="margin:10px 0 5px 13px;">{{route.entity.domain.entity.name}}</h3>
+          <md-divider></md-divider>
+
+          <md-list>
+  		      <md-list-item class="md-3-line">
+  		        <div class="md-list-item-text" layout="column" style="margin:0;">
+  							<div class="decent-line" layout="row" layout-align="space-between start">
+  								<p style="min-width:45px;">Host:</p>
+  								<p>{{route.entity.host}}</p>
+  							</div>
+                <div class="decent-line" layout="row" layout-align="space-between start">
+  								<p style="min-width:45px;">Path:</p>
+  								<p>{{route.entity.path}}</p>
+  							</div>
+
+                <!-- HIDDEN -->
+                <div ng-show="route.w==w_expanded">
+                  <div class="decent-line" layout="row" layout-align="space-between start">
+    								<p>Port:</p>
+    								<p>{{route.entity.port}}</p>
+    							</div>
+                  <div class="decent-line" layout="row" layout-align="space-between start">
+    								<p>Space:</p>
+    								<p>{{route.entity.space.entity.name}}</p>
+    							</div>
+                  <div class="decent-line" layout="row" layout-align="space-between start">
+    								<p>Apps:</p>
+    								<p>{{route.entity.apps.length}}</p>
+    							</div>
+                </div>
+              </div>
+            </md-list-item>
+          </md-list>
+
+          <!-- BUTTONS -->
+          <md-button style="position:absolute;bottom:0px;left:18px;" ng-click="" ng-show="route.w==w_expanded" class="md-warn" >Delete Route</md-button>
+          <md-button id="tglbt-{{$index}}" style="position:absolute;bottom:0;right:8px;" ng-click="toggle(route, $event)">{{route.w === w_expanded ? "Less" : "MORE"}}</md-button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

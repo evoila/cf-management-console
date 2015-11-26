@@ -1,0 +1,53 @@
+<md-dialog aria-label="Create new route">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Create new route</h2>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content style="width:300px;min-width:300px;min-height:370px;max-width:800px;max-height:810px;">
+
+      <form name="createRouteForm" ng-submit="submitCreateRouteForm(createRouteForm)">
+
+        <div class="form-group">
+          <md-input-container>
+            <md-select ng-required="true" placeholder="Choose domain" ng-model="createRouteForm.domain_guid" style="min-width: 200px;">
+              <md-option ng-value="domain.metadata.guid" ng-repeat="domain in domains">{{domain.entity.name}}</md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container>
+            <md-select ng-required="true" placeholder="Choose space" ng-model="createRouteForm.space_guid" style="min-width: 200px;">
+              <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container>
+            <label>Host (optional)</label>
+            <input ng-model="createRouteForm.host" ng-required="false" minlength="4">
+          </md-input-container>
+          <md-input-container>
+            <label>Port (optional)</label>
+            <input ng-model="createRouteForm.port" ng-required="false" type="number" min="1024" max="65535">
+          </md-input-container>
+          <md-input-container>
+            <label>Path (optional)</label>
+            <input ng-model="createRouteForm.path" ng-required="false" minlength="2" maxlength="128">
+          </md-input-container>
+          </div>
+
+          <div flex layout="row" style="position:absolute;bottom:15px;right:17px;">
+            <md-button type="button" ng-click="cancel()">
+              Cancel
+            </md-button>
+            <md-button class="md-raised md-primary" type="submit">
+              Create
+            </md-button>
+          </div>
+
+      </form>
+    </md-dialog-content>
+
+
+
+
+</md-dialog>

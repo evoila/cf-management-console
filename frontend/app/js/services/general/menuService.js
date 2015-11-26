@@ -115,6 +115,14 @@ angular.module('services')
             params: { "organizationId" : orgaId },
             icon: 'fa fa-map-signs'
           };
+
+          sections[4] = {
+            name: 'Routes',
+            type: 'link',
+            state: 'routes',
+            params: { "organizationId" : orgaId },
+            icon: 'fa fa-road'
+          };
         }
       };
 
