@@ -1,17 +1,61 @@
-<md-card ng-cloak>
-  <div style="background-color:#{{colorString(application.entity.name)}}">
-    <img style="height:50%; padding-bottom: 45px;" ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
-    {{colorString(application.entity.name)}}
+<md-card ng-cloak ng-if="application.entity.name != null">
+  <div style="background-color:#{{colorString(application.entity.name)}}" id="single-space" layout-gt-md="row" layout="column" layout-align="space-around center">
+    <div flex="50" layout-align="center center">
+      <h1 style="text-align:center; text-transform: uppercase; color:white;"class="md-display-2">{{application.entity.name}}</h1>
+    </div>
+    <div flex="50">
+      <img ng-src="assets/png/{{servicePng(application.entity.name)}}_w.png" onerror="this.style.display='none'">
+    </div>
   </div>
   <md-card-content>
-    <h2 class="md-title">{{application.entity.name}}</h2>
-    <p>
-      Hello
-    </p>
+    <md-list>
+      <md-list-item class="md-3-line">
+        <div class="md-list-item-text" layout="column">
+          <div layout="row" layout-align="space-between center">
+            <p>Memory</p>
+            <p>{{application.entity.memory}}</p>
+          </div>
+          <div layout="row" layout-align="space-between center">
+            <p>Instances</p>
+            <p>{{application.entity.instances}}</p>
+          </div>
+          <div layout="row" layout-align="space-between center">
+            <p>Disk Quota</p>
+            <p>{{application.entity.disk_quota}}</p>
+          </div>
+          <div layout="row" layout-align="space-between center">
+            <p>State</p>
+            <p>{{application.entity.state}}</p>
+          </div>
+          <div layout="row" layout-align="space-between center">
+            <p>Package State</p>
+            <p>{{app.entity.package_state}}</p>
+          </div>
+        </div>
+      </md-list-item>
+
+
+      <div ng-show="app.showMore" style="margin-top:14px;">
+        <md-divider></md-divider>
+        <md-subheader class="md-no-sticky">Routes ({{app.entity.routes.length}})</md-subheader>
+        <md-list-item class="md-3-line" ng-show="app.expand=='50'">
+          <div class="md-list-item-text" layout="column">
+            <div layout="row" layout-align="space-between center" ng-repeat="route in app.entity.routes">
+              <p>Host</p>
+              <p>{{route.entity.host}}</p>
+            </div>
+          </div>
+        </md-list-item>
+        <md-divider></md-divider>
+        <md-subheader class="md-no-sticky">Service Bindings ({{app.entity.service_bindings.length}})</md-subheader>
+      </div>
+
+
+    </md-list>
   </md-card-content>
-  <md-card-actions layout="row" layout-align="end center">
-    <md-button ng-show="application.entity.state != 'STARTED'">START</md-button>
-    <md-button ng-show="application.entity.state == 'STARTED'">STOP</md-button>
+  <md-card-actions layout="row" layout-align="end center" style="background-color:#{{colorString(application.entity.name)}}">
+    <md-button ng-show="application.entity.state != 'STARTED'" ng-click="startApplication(application.metadata.guid)">START</md-button>
+    <md-button ng-show="application.entity.state == 'STARTED'" ng-click="stopApplication(application.metadata.guid)">STOP</md-button>
     <md-button>DELETE</md-button>
   </md-card-actions>
 </md-card>
