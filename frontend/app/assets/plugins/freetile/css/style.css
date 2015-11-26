@@ -1,0 +1,65 @@
+/*	Resets
+	------	*/
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, 
+p, blockquote, pre, a, abbr, address, cite, code, del, dfn, em, 
+img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, hr, 
+dl, dt, dd, ol, ul, li, fieldset, form, label, legend, 
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figure, figcaption, hgroup, 
+menu, footer, header, nav, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+/*	Stuf
+	------	*/
+
+body {
+	background: #e9eaeb;
+	font: 12px/16px Helvetica, Arial, sans-serif;
+}
+
+h4 {
+	clear: both;
+	width: 100%;
+}
+
+#freetile-demo {
+	margin: 50px auto;
+	max-width: 962px;
+}
+
+.test {
+	background: #eceeef;
+	border: 1px solid #ccc;
+	margin: 30px 0;
+}
+
+.third.test {
+	float: left;
+	clear: right;
+	width: 80px;
+}
+
+.fourth.test {
+	clear: both;
+	width: 100%;
+}
+
+.empty.test {
+	padding: 0 0 14px 0;
+	background: #efeff1;
+}
+
+.test.loading {
+	height: 32px;
+	background: #efeff1 url(loader-alt.gif) center no-repeat;
+}
+
+.element {
+	background: #585a5a;
+	border-right: 1px solid #e9eaeb;
+	border-bottom: 1px solid #e9eaeb;
+}

@@ -3,7 +3,7 @@
 applications:
 - name: cfmc-api
   host: cfmc-api
-  instances: 2
+  instances: 1
   memory: 1024M
   path: backend/target/cfmc.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
