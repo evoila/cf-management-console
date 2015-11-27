@@ -54,8 +54,8 @@
     </md-list>
   </md-card-content>
   <md-card-actions layout="row" layout-align="end center" style="background-color:#{{colorString(application.entity.name)}}">
-    <md-button ng-show="application.entity.state != 'STARTED'" ng-click="startApplication(application.metadata.guid)">START</md-button>
-    <md-button ng-show="application.entity.state == 'STARTED'" ng-click="stopApplication(application.metadata.guid)">STOP</md-button>
+    <md-button ng-show="application.entity.state != 'STARTED'" ng-click="startApplication(application)">START</md-button>
+    <md-button ng-show="application.entity.state == 'STARTED'" ng-click="stopApplication(application)">STOP</md-button>
     <md-button>DELETE</md-button>
   </md-card-actions>
 </md-card>

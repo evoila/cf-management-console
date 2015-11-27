@@ -85,6 +85,18 @@ public class Space {
 	
 	@JsonProperty("auditors")
 	private CloudFoundryResources<SpaceUser> auditors;
+	
+	@JsonProperty("space_quota_definition_guid")
+	private String spaceQuotaDefinitionGuid;
+	
+	@JsonProperty("allow_ssh")
+	private Boolean allowSsh;
+	
+	@JsonProperty("routes_url")
+	private String routesUrl;
+	
+	@JsonProperty("security_groups_url")
+	private String securityGroupsUrl;
 
 	public String getName() {
 		return name;
@@ -220,6 +232,78 @@ public class Space {
 
 	public void setAuditors(CloudFoundryResources<SpaceUser> auditors) {
 		this.auditors = auditors;
+	}
+
+	public List<UUID> getDevelopersGuids() {
+		return developersGuids;
+	}
+
+	public void setDevelopersGuids(List<UUID> developersGuids) {
+		this.developersGuids = developersGuids;
+	}
+
+	public List<UUID> getManagerGuids() {
+		return managerGuids;
+	}
+
+	public void setManagerGuids(List<UUID> managerGuids) {
+		this.managerGuids = managerGuids;
+	}
+
+	public List<UUID> getAuditorGuids() {
+		return auditorGuids;
+	}
+
+	public void setAuditorGuids(List<UUID> auditorGuids) {
+		this.auditorGuids = auditorGuids;
+	}
+
+	public List<UUID> getAppGuids() {
+		return appGuids;
+	}
+
+	public void setAppGuids(List<UUID> appGuids) {
+		this.appGuids = appGuids;
+	}
+
+	public List<UUID> getDomainGuids() {
+		return domainGuids;
+	}
+
+	public void setDomainGuids(List<UUID> domainGuids) {
+		this.domainGuids = domainGuids;
+	}
+
+	public String getSpaceQuotaDefinitionGuid() {
+		return spaceQuotaDefinitionGuid;
+	}
+
+	public void setSpaceQuotaDefinitionGuid(String spaceQuotaDefinitionGuid) {
+		this.spaceQuotaDefinitionGuid = spaceQuotaDefinitionGuid;
+	}
+
+	public Boolean getAllowSsh() {
+		return allowSsh;
+	}
+
+	public void setAllowSsh(Boolean allowSsh) {
+		this.allowSsh = allowSsh;
+	}
+
+	public String getRoutesUrl() {
+		return routesUrl;
+	}
+
+	public void setRoutesUrl(String routesUrl) {
+		this.routesUrl = routesUrl;
+	}
+
+	public String getSecurityGroupsUrl() {
+		return securityGroupsUrl;
+	}
+
+	public void setSecurityGroupsUrl(String securityGroupsUrl) {
+		this.securityGroupsUrl = securityGroupsUrl;
 	}
 	
 }

@@ -183,6 +183,22 @@ public class RestRepository {
         }
         return responseEntity.getBody();
     }
+    
+    /**
+     * 
+     * @param token
+     * @param path
+     * @param body
+     * @return
+     */
+    public <T> T update2(String token, String path, T resource) {
+        ResponseEntity<T> responseEntity = exchange(token, apiUri, HttpMethod.PUT, path, resource, 
+        		new ParameterizedTypeReference<T>() {});
+        if (!responseEntity.getStatusCode().equals(HttpStatus.CREATED)) {
+            throw new RepositoryException("Cannot perform api put for path [" + path + "]", responseEntity, responseEntity.getStatusCode());
+        }
+        return responseEntity.getBody();
+    }
 
 
     /**

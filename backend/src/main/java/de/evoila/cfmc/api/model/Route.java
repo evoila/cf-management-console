@@ -39,6 +39,9 @@ public class Route {
 	
 	@JsonProperty("apps_url")
 	private String appsUrl;
+	
+	@JsonProperty("port")
+	private int port;
 
 	public String getHost() {
 		return host;
@@ -110,6 +113,14 @@ public class Route {
 
 	public void setAppsUrl(String appsUrl) {
 		this.appsUrl = appsUrl;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 }

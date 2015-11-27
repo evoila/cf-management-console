@@ -55,9 +55,9 @@ public class ApplicationController {
     }
 	
 	@RequestMapping(value = "/applications/{id}", method = RequestMethod.PUT)
-    public Application updateApplication(@RequestHeader("Authorization") String token, 
+    public CloudFoundryResource<Application> updateApplication(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
-		return restRepository.update(token, V2_APPS.concat("/").concat(id), application).getEntity();
+		return restRepository.update(token, V2_APPS.concat("/").concat(id), application);
     }
 	
 	@RequestMapping(value = "/applications/{id}/start", method = RequestMethod.PUT)
@@ -69,7 +69,7 @@ public class ApplicationController {
 	@RequestMapping(value = "/applications/{id}/stop", method = RequestMethod.PUT)
     public Application stopApplication(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
-		return restRepository.update(token, V3_APPS.concat("/").concat(id).concat("/stop"), application).getEntity();
+		return restRepository.update(token, V3_APPS.concat("/guid-").concat(id).concat("/stop"), application).getEntity();
     }
 	
 	@RequestMapping(value = "/applications/{id}/instances", method = RequestMethod.GET)
