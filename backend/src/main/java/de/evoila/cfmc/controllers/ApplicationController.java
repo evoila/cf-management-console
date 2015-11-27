@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.evoila.cfmc.api.model.Application;
 import de.evoila.cfmc.api.model.Instance;
 import de.evoila.cfmc.api.model.base.CloudFoundryResource;
+import de.evoila.cfmc.api.model.base.CloudFoundryResources;
 import de.evoila.cfmc.api.repositories.RestRepository;
 
 /**
@@ -53,6 +54,13 @@ public class ApplicationController {
 		CloudFoundryResource<Application> application = restRepository.one(token, V2_APPS, id, 1);
         return application;
     }
+	
+	@RequestMapping(value = "/apps/{orgId}", method = RequestMethod.GET)
+	public @ResponseBody List<CloudFoundryResource<Application>> getApplicationsForOrganization(@RequestHeader("Authorization") String token,
+			@PathVariable("orgId") String orgId) {
+		CloudFoundryResources<Application> apps = restRepository.list(token, V2_APPS.concat("?q=organization_guid:").concat(orgId), 1, false);
+		return apps.getResources();
+	}
 	
 	@RequestMapping(value = "/applications/{id}", method = RequestMethod.PUT)
     public Application updateApplication(@RequestHeader("Authorization") String token, 

@@ -3,7 +3,7 @@
   <div layout="row" layout-align="start start">
     <h2>Routes</h2>
 
-  		<button type="button" aria-label="Show Create Route Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateUpdateRouteDialog($event, 'create')">
+  		<button type="button" aria-label="Show Create Route Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateRouteDialog($event, 'create')">
   			<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg" style="margin-top:8px;"></md-icon>
   		</button>
 
@@ -12,7 +12,8 @@
 
 	<md-divider></md-divider>
 
-  <div id="masonry-container" style="margin-bottom:50px;">
+  <div style="margin-bottom:60px;">
+
     <div id="item-{{$index}}" class="item no-focus" ng-repeat="route in routes" style="max-width:100%;width:{{route.w}};height:{{route.h}};padding:5px;">
       <div class="md-whiteframe-z2" style="height:100%;border-left:3px solid #{{colorString(route.entity.domain.entity.name)}};padding-right:10px;">
         <div flex layout="column" style="margin:5px 0 0 8px;overflow:hidden;">
@@ -33,14 +34,17 @@
 
                 <!-- HIDDEN -->
                 <div ng-show="route.w==w_expanded">
-                  <div class="decent-line" layout="row" layout-align="space-between start">
+                  <div class="decent-line" layout="row" layout-align="space-between start" ng-hide="route.entity.domain.entity.router_group_guid==null">
     								<p>Port:</p>
     								<input ng-model="route.entity.port" ng-readonly="readOnly" class="input-toggle-edit no-focus" />
     							</div>
-                  <div class="decent-line" layout="row" layout-align="space-between start">
-    								<p>Space:</p>
-    								<!--<inputng-model="route.entity.space.entity.name" ng-readonly="readOnly" class="input-toggle-edit no-focus" />-->
-                    <p>{{route.entity.space.entity.name}}</p>
+                  <div class="decent-line" layout="row" layout-align="space-between start" style="height:35px;">
+    								<div style="margin-top:4px;"><p>Space:</p></div>
+    							  <div>
+                      <md-select class="no-bg" ng-required="true" placeholder="Choose space" ng-disabled="readOnly" ng-model="route.entity.space.entity.name" style="margin:0;">
+                        <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
+                      </md-select>
+                    </div>
     							</div>
                   <div class="decent-line" layout="row" layout-align="space-between start">
     								<p>Apps:</p>
@@ -48,9 +52,10 @@
     							</div>
                   <div layout="row">
                     <div><md-button ng-click="showAssociateRouteDialog($event, route)">Associate with App</md-button></div>
-                    <div>
-                      <md-button ng-show="readOnly" ng-click="readOnly=false">Edit Route</md-button>
-                      <md-button ng-hide="readOnly" ng-click="updateRoute(route)">Save changes</md-button>
+                    <div layout="row">
+                      <md-button style="text-align:center;" ng-show="readOnly" ng-click="readOnly=false">Edit Route</md-button>
+                      <md-button style="text-align:center;" ng-hide="readOnly" ng-click="readOnly=true">Cancel</md-button>
+                      <md-button style="text-align:center;" ng-hide="readOnly" ng-click="updateRoute(route)">Save</md-button>
                     </div>
                   </div>
                 </div>
@@ -65,6 +70,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
 </div>

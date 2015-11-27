@@ -5,12 +5,14 @@ package de.evoila.cfmc.api.model;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Johannes Hiemer.
  *
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Route {
 	
 	@JsonProperty("host")
@@ -18,6 +20,9 @@ public class Route {
 	
 	@JsonProperty("path")
 	private String path;
+	
+	@JsonProperty("port")
+	private int port;
 	
 	@JsonProperty("domain_guid")
 	private UUID domainGuid;
@@ -54,6 +59,14 @@ public class Route {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 	public UUID getDomainGuid() {

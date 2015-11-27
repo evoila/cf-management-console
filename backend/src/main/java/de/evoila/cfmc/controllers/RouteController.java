@@ -22,6 +22,7 @@ import de.evoila.cfmc.api.model.Route;
 import de.evoila.cfmc.api.model.base.CloudFoundryResource;
 import de.evoila.cfmc.api.model.base.CloudFoundryResources;
 import de.evoila.cfmc.api.repositories.RestRepository;
+import de.evoila.cfmc.api.repositories.UserRepository;
 
 
 /**
@@ -83,10 +84,10 @@ public class RouteController {
 		return restRepository.save(token, V2_ROUTES, new CloudFoundryResource<Route>(route));
     }
     
-    @RequestMapping(value = "/routes/{id}", method = RequestMethod.PUT)
-    public @ResponseBody CloudFoundryResource<Route> updateOrganization(@RequestHeader("Authorization") String token, 
-    		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Route> route) {
-    	return restRepository.update(token, V2_ROUTES.concat("/").concat(id), route);
+    @RequestMapping(value = "/routes/{routeId}", method = RequestMethod.PUT)
+    public @ResponseBody CloudFoundryResource<Route> updateRoute(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("routeId") final String routeId, @RequestBody CloudFoundryResource<Route> route) {
+    	return restRepository.update(token, V2_ROUTES.concat("/").concat(routeId), route);
     }
 
     @RequestMapping(value = "/routes/{id}", method = RequestMethod.DELETE)
@@ -95,10 +96,19 @@ public class RouteController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
-    @RequestMapping(value = "/routes/{id}/apps/{appId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> mapRoute(String token, @PathVariable("id") String route, @PathVariable("appId") String app) {		
-		restRepository.update(token, V2_ROUTES.concat("/").concat(route).concat("/apps/").concat(app), new CloudFoundryResource<>());
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @RequestMapping(value = "/routes/{routeId}/apps/{appId}", method = RequestMethod.PUT)
+    public CloudFoundryResource<Route> associateRouteWithApplication(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("routeId") String routeId, @PathVariable("appId") String appId) {		
+		return restRepository.update(token, V2_ROUTES.concat("/").concat(routeId).concat("/apps/").concat(appId), new CloudFoundryResource<>());
     }
+    
+    /* geht das gut?
+    @RequestMapping(value = "/routes/{routeId}/apps/{appId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> removeApplicationFromRoute(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("routeId") String routeId, @PathVariable("appId") String appId) {		
+		restRepository.delete(token, V2_ROUTES.concat("/").concat(routeId).concat("/apps/").concat(appId), null);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    */
 
 }

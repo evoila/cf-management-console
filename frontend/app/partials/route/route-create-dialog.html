@@ -27,7 +27,7 @@
             <label>Host (optional)</label>
             <input ng-model="createRouteForm.host" ng-required="false" minlength="4">
           </md-input-container>
-          <md-input-container>
+          <md-input-container ng-hide="domain.entity.router_group_guid==null">
             <label>Port (optional)</label>
             <input ng-model="createRouteForm.port" ng-required="false" type="number" min="1024" max="65535">
           </md-input-container>

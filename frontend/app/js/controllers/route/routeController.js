@@ -37,17 +37,18 @@ angular.module('controllers')
           })
           $scope.routes = routes;
 
-          initContainer();
-
         });
       }
 
       $scope.updateRoute = function(route) {
         console.log(route)
+        route.entity.port = 2343;
+        delete route.w;
+        delete route.h;
 
         Restangular.one('routes', route.metadata.guid)//.put({ "host": "abcdef" }).then(function(route){
-          .customPUT(undefined, undefined, ({ "host": "new host" }), undefined).then(function(route){
-            $scope.readOnly = false;
+          .customPUT(route, undefined, undefined, undefined).then(function(route){
+            //$scope.readOnly = false;
             $state.go('routes', {organizationId : $scope.orgId});
         }, function(response) {
           console.log(response)
@@ -71,16 +72,17 @@ angular.module('controllers')
       function expand(item, gotoId) {
         item.w = $scope.w_expanded;
         item.h = $scope.h_expanded;
-        initContainer();
+
         $('html, body').animate({
           scrollTop: $('#'+gotoId).offset().top
         }, "slow");
       }
 
       function collapse(item) {
+        $scope.readOnly = true;
+
         item.w = $scope.w_collapsed;
         item.h = $scope.h_collapsed;
-        initContainer();
         $("html, body").animate({ scrollTop: 0 }, "slow");
       }
 
