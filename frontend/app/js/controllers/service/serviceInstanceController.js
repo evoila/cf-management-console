@@ -37,6 +37,7 @@ angular.module('controllers')
         Restangular.one('service_instances', instance.metadata.guid).remove().then(function() {
           responseService.success(instance, 'Instance was deleted successfully', 'service', { organizationId : $scope.orgId, spaceId : $state.params.spaceId });
         }, function(response) {
+          console.log(response)
           responseService.error(response);
         });
       }
