@@ -100,7 +100,7 @@ angular.module('controllers')
           var createdUserId = user.metadata.guid;
 
           Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId)
-            .customPUT(undefined, undefined,({ username: 'dummy' }),undefined).then(function(user){
+            .customPUT(undefined, undefined,({ username: 'dummy' }),undefined).then(function(user) {
             responseService.success(user, 'User was created successfully', 'users', { organizationId : $scope.orgId });
           }, function(response) {
               responseService.error(response);

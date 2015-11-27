@@ -71,7 +71,14 @@ md-dialog-content {
   font-weight:500;
 }
 
+.item {
+  position:relative;
+  float:left;
+}
 
+md-select.no-bg md-select-value.md-select-value {
+  background: none;
+}
 
 
 

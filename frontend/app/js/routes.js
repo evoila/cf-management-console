@@ -93,7 +93,7 @@ angular.module('routes', ['ui.router'])
         url: 'organizations/:organizationId/routes',
         templateUrl: 'partials/route/route-list.html',
         controller: 'routeController'
-      });
+      })
 
   })
   .filter('nospace', function() {

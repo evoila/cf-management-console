@@ -3,12 +3,14 @@
  */
 package de.evoila.cfmc.api.model.base;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Johannes Hiemer.
  *
  */
+
 public class CloudFoundryResource<T> {
 	
 	@JsonProperty("metadata")
