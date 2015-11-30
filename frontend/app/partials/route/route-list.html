@@ -54,8 +54,8 @@
                   <div layout="row">
                     <div><md-button ng-click="showAssociateRouteDialog($event, route)">Associate with App</md-button></div>
                     <div layout="row">
-                      <md-button type="button" style="text-align:center;" ng-show="readOnly" ng-click="readOnly=false">Edit</md-button>
-                      <md-button type="button" style="text-align:center;" ng-hide="readOnly" ng-click="readOnly=true">Cancel</md-button>
+                      <md-button type="button" style="text-align:center;" ng-show="readOnly" ng-click="prepareEdit(route)">Edit</md-button>
+                      <md-button type="button" style="text-align:center;" ng-hide="readOnly" ng-click="cancelEdit(route)">Cancel</md-button>
                       <md-button style="text-align:center;" ng-hide="readOnly" ng-click="updateRoute(route)">Save</md-button>
                     </div>
                   </div>

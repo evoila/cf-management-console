@@ -40,6 +40,18 @@ angular.module('controllers')
         });
       }
 
+      $scope.prepareEdit = function(route) {
+        $scope.readOnly = false;
+        $scope.oldHost = route.entity.host;
+        $scope.oldPath = route.entity.path;
+      }
+
+      $scope.cancelEdit = function(route) {
+        route.entity.host = $scope.oldHost;
+        route.entity.path = $scope.oldPath;
+        $scope.readOnly = true;
+      }
+
       $scope.updateRoute = function(route) {
         console.log(route)
 
