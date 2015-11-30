@@ -53,10 +53,16 @@
 
     </md-list>
   </md-card-content>
-  <md-card-actions layout="row" layout-align="end center" style="background-color:#{{colorString(application.entity.name)}}">
-    <md-button ng-show="application.entity.state != 'STARTED'" ng-click="startApplication(application)">START</md-button>
-    <md-button ng-show="application.entity.state == 'STARTED'" ng-click="stopApplication(application)">STOP</md-button>
-    <md-button>DELETE</md-button>
+  <md-card-actions layout="row" layout-align="space-between  center" style="background-color:#{{colorString(application.entity.name)}}">
+    <div layout="row" layout-align="space-between center">
+        <input ng-model="application.entity.instances" type="number" step="1" flex style="background-color:#{{colorString(application.entity.name)}}">
+        <md-button  ng-click="scaleApplication(application,instacesCount)">Scale</md-button>
+    </div>
+    <div layout="row" layout-align="space-between center">
+      <md-button ng-show="application.entity.state != 'STARTED'" ng-click="startApplication(application)">START</md-button>
+      <md-button ng-show="application.entity.state == 'STARTED'" ng-click="stopApplication(application)">STOP</md-button>
+      <md-button ng-click="deleteApplication($event, application)">DELETE</md-button>
+    </div>
   </md-card-actions>
 </md-card>
 <pre>{{ application | json }}</pre>
