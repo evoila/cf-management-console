@@ -21,9 +21,6 @@ public class Route {
 	@JsonProperty("path")
 	private String path;
 	
-	@JsonProperty("port")
-	private int port;
-	
 	@JsonProperty("domain_guid")
 	private UUID domainGuid;
 	
@@ -126,14 +123,6 @@ public class Route {
 
 	public void setAppsUrl(String appsUrl) {
 		this.appsUrl = appsUrl;
-	}
-
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
 	}
 
 }
