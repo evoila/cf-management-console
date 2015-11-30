@@ -25,11 +25,12 @@
   		        <div class="md-list-item-text" layout="column" style="margin:0;">
   							<div class="decent-line" layout="row" layout-align="space-between start">
   								<p style="min-width:45px;">Host:</p>
-  								<input ng-model="route.entity.host" ng-readonly="readOnly" ng-required="false" minlength="4" class="input-toggle-edit no-focus" />
+  								<input ng-hide="route.invalidHost" ng-model="route.entity.host" ng-readonly="readOnly" ng-required="false" class="input-toggle-edit no-focus" />
+                  <p ng-show="route.invalidHost" style="color:red;" ng-click="route.invalidHost=false">{{route.invalidHost}}</p>
   							</div>
                 <div class="decent-line" layout="row" layout-align="space-between start">
   								<p style="min-width:45px;">Path:</p>
-  								<input ng-hide="route.invalidPath" ng-model="route.entity.path" ng-readonly="readOnly" ng-required="false" minlength="2" maxlength="128" class="input-toggle-edit no-focus" />
+  								<input ng-hide="route.invalidPath" ng-model="route.entity.path" ng-readonly="readOnly" class="input-toggle-edit no-focus" />
                   <p ng-show="route.invalidPath" style="color:red;" ng-click="route.invalidPath=false">{{route.invalidPath}}</p>
   							</div>
 

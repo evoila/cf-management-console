@@ -43,15 +43,20 @@ angular.module('controllers')
       $scope.updateRoute = function(route) {
         console.log(route)
 
-        console.log(route.entity.path.length)
+        if(route.entity.host.length < 4)
+          route.invalidHost = 'Host must be at least 4 characters'
 
-        if(route.entity.path && route.entity.path.indexOf('/') != 0 || route.entity.path && route.entity.path.indexOf('?') > -1)
+        else if(route.entity.path.length < 2 || route.entity.path.length > 128)
+          route.invalidPath = 'Path must be between 2 and 128 characters';
+
+        else if(route.entity.path && route.entity.path.indexOf('/') != 0 || route.entity.path && route.entity.path.indexOf('?') > -1)
           route.invalidPath = 'Path must begin with "/", character "?" is not allowed';
 
         else {
           delete route.w;
           delete route.h;
           delete route.invalidPath;
+          delete route.invalidHost;
 
           Restangular.one('routes', route.metadata.guid)
             .customPUT(route, undefined, undefined, undefined).then(function(route){
