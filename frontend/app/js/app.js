@@ -14,7 +14,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
                 cf_prefix: '/v2'
             },
             production: {
-                restApiUrl: 'https://api.onevoila.rocks',
+                restApiUrl: 'https://cfmc-api.onevoila.rocks',
                 cf_prefix: '/v2'
             }
         }
