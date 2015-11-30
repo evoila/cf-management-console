@@ -96,7 +96,7 @@ angular.module('controllers')
         item.w = $scope.w_expanded;
         item.h = $scope.h_expanded;
 
-        //scroll
+        //scroll to item
       }
 
       function collapse(item) {
@@ -104,7 +104,7 @@ angular.module('controllers')
 
         item.w = $scope.w_collapsed;
         item.h = $scope.h_collapsed;
-        // scroll
+        window.scrollTo(0, 0);
       }
 
       $scope.colorString = function(name) {
