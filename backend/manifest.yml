@@ -8,4 +8,5 @@ applications:
   path: target/cfmc.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
   env:
+    SPRING_PROFILES_ACTIVE: development
     JAVA_OPTS: -Djava.security.egd=file:/dev/urandom
