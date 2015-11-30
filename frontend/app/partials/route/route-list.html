@@ -25,36 +25,36 @@
   		        <div class="md-list-item-text" layout="column" style="margin:0;">
   							<div class="decent-line" layout="row" layout-align="space-between start">
   								<p style="min-width:45px;">Host:</p>
-  								<input ng-model="route.entity.host" ng-readonly="readOnly" class="input-toggle-edit no-focus" />
+  								<input ng-model="route.entity.host" ng-readonly="readOnly" ng-required="false" minlength="4" class="input-toggle-edit no-focus" />
   							</div>
                 <div class="decent-line" layout="row" layout-align="space-between start">
   								<p style="min-width:45px;">Path:</p>
-  								<input ng-model="route.entity.path" ng-readonly="readOnly" class="input-toggle-edit no-focus" />
+  								<input ng-hide="route.invalidPath" ng-model="route.entity.path" ng-readonly="readOnly" ng-required="false" minlength="2" maxlength="128" class="input-toggle-edit no-focus" />
+                  <p ng-show="route.invalidPath" style="color:red;" ng-click="route.invalidPath=false">{{route.invalidPath}}</p>
   							</div>
 
                 <!-- HIDDEN -->
                 <div ng-show="route.w==w_expanded">
                   <div class="decent-line" layout="row" layout-align="space-between start" ng-hide="route.entity.domain.entity.router_group_guid==null">
     								<p>Port:</p>
-    								<input ng-model="route.entity.port" ng-readonly="readOnly" class="input-toggle-edit no-focus" />
+    								<input ng-model="route.entity.port" ng-required="false" type="number" min="1024" max="65535" class="input-toggle-edit no-focus" />
     							</div>
                   <div class="decent-line" layout="row" layout-align="space-between start" style="height:35px;">
     								<div style="margin-top:4px;"><p>Space:</p></div>
     							  <div>
-                      <md-select class="no-bg" ng-required="true" placeholder="Choose space" ng-disabled="readOnly" ng-model="route.entity.space.entity.name" style="margin:0;">
-                        <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
-                      </md-select>
+                      <p>{{route.entity.space.entity.name}}</p>
+
                     </div>
     							</div>
                   <div class="decent-line" layout="row" layout-align="space-between start">
     								<p>Apps:</p>
-                    <input ng-model="route.entity.apps.length" ng-readonly="readOnly" class="input-toggle-edit no-focus" />
+                    <p>{{route.entity.apps.length}}</p>
     							</div>
                   <div layout="row">
                     <div><md-button ng-click="showAssociateRouteDialog($event, route)">Associate with App</md-button></div>
                     <div layout="row">
-                      <md-button style="text-align:center;" ng-show="readOnly" ng-click="readOnly=false">Edit Route</md-button>
-                      <md-button style="text-align:center;" ng-hide="readOnly" ng-click="readOnly=true">Cancel</md-button>
+                      <md-button type="button" style="text-align:center;" ng-show="readOnly" ng-click="readOnly=false">Edit</md-button>
+                      <md-button type="button" style="text-align:center;" ng-hide="readOnly" ng-click="readOnly=true">Cancel</md-button>
                       <md-button style="text-align:center;" ng-hide="readOnly" ng-click="updateRoute(route)">Save</md-button>
                     </div>
                   </div>

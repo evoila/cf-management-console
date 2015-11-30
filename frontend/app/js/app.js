@@ -6,7 +6,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
     envServiceProvider.config({
         domains: {
             development: ['localhost', '127.0.0.1'],
-            production: ['cfmc.88.198.249.62.xip.io']
+            production: ['https://cfmc.onevoila.rocks']
         },
         vars: {
             development: {
@@ -14,7 +14,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
                 cf_prefix: '/v2'
             },
             production: {
-                restApiUrl: 'https://cfmc-api.88.198.249.62.xip.io/api',
+                restApiUrl: 'https://api.onevoila.rocks',
                 cf_prefix: '/v2'
             }
         }

@@ -34,7 +34,7 @@
           <md-input-container>
             <label>Path (optional)</label>
             <input ng-model="createRouteForm.path" ng-required="false" minlength="2" maxlength="128">
-            <p ng-show="invalidPath" style="color:red;margin-top:-17px;">Path must begin with '/'</p>
+            <p ng-show="invalidPath" style="color:red;margin-top:-17px;">Path must begin with '/', character '?' is not allowed</p>
           </md-input-container>
           </div>
 

@@ -42,19 +42,25 @@ angular.module('controllers')
 
       $scope.updateRoute = function(route) {
         console.log(route)
-        route.entity.port = 2343;
-        delete route.w;
-        delete route.h;
 
-        Restangular.one('routes', route.metadata.guid)//.put({ "host": "abcdef" }).then(function(route){
-          .customPUT(route, undefined, undefined, undefined).then(function(route){
-            //$scope.readOnly = false;
-            $state.go('routes', {organizationId : $scope.orgId});
-        }, function(response) {
-          console.log(response)
-          responseService.error(response);
-        })
+        console.log(route.entity.path.length)
 
+        if(route.entity.path && route.entity.path.indexOf('/') != 0 || route.entity.path && route.entity.path.indexOf('?') > -1)
+          route.invalidPath = 'Path must begin with "/", character "?" is not allowed';
+
+        else {
+          delete route.w;
+          delete route.h;
+          delete route.invalidPath;
+
+          Restangular.one('routes', route.metadata.guid)
+            .customPUT(route, undefined, undefined, undefined).then(function(route){
+              responseService.success(route, 'Route was updated successfully', 'routes', { organizationId : $scope.orgId });
+          }, function(response) {
+            console.log(response)
+            responseService.error(response);
+          })
+        }
       };
 
 
@@ -73,9 +79,7 @@ angular.module('controllers')
         item.w = $scope.w_expanded;
         item.h = $scope.h_expanded;
 
-        $('html, body').animate({
-          scrollTop: $('#'+gotoId).offset().top
-        }, "slow");
+        //scroll
       }
 
       function collapse(item) {
@@ -83,7 +87,7 @@ angular.module('controllers')
 
         item.w = $scope.w_collapsed;
         item.h = $scope.h_collapsed;
-        $("html, body").animate({ scrollTop: 0 }, "slow");
+        // scroll
       }
 
       $scope.colorString = function(name) {
@@ -158,7 +162,6 @@ angular.module('controllers')
                 $scope.noApp = true;
 
               else {
-                console.log('routeId: ' + route.metadata.guid + ', appId: ' + form.app_guid)
                 Restangular.all('routes/' + route.metadata.guid + '/apps/' + form.app_guid)
                   .customPUT(undefined, undefined, undefined, undefined).then(function(route){
                   $mdDialog.hide();
@@ -214,14 +217,19 @@ angular.module('controllers')
               else if(!form.space_guid)
                 $scope.noSpace = true;
 
-              else if(form.path && form.path.indexOf('/') != 0)
+              else if(form.path && form.path.indexOf('/') != 0 || form.path && form.path.indexOf('?') > -1)
                 $scope.invalidPath = true;
 
               else {
+                var route = {
+                  domain_guid: form.domain_guid,
+                  space_guid: form.space_guid
+                };
                 Restangular.all('routes').post(form).then(function(route) {
                   $mdDialog.hide();
                   responseService.success(route, 'Route was created successfully', 'routes', { organizationId : $scope.orgId });
                 }, function(response) {
+                  console.log(response)
                   responseService.error(response);
                 })
               }
