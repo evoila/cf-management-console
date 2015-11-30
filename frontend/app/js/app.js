@@ -6,7 +6,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
     envServiceProvider.config({
         domains: {
             development: ['localhost', '127.0.0.1'],
-            production: ['https://cfmc.onevoila.rocks']
+            production: ['cfmc.onevoila.rocks']
         },
         vars: {
             development: {
