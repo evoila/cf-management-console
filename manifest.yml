@@ -3,6 +3,7 @@
 applications:
 - name: cfmc-api
   host: cfmc-api
+  domain: onevoila.rocks
   instances: 1
   memory: 1024M
   path: backend/target/cfmc.jar
@@ -11,6 +12,7 @@ applications:
     JAVA_OPTS: -Djava.security.egd=file:/dev/urandom
 - name: cfmc
   host: cfmc
+  domain: onevoila.rocks
   instances: 1
   memory: 64M
   path: frontend/app
