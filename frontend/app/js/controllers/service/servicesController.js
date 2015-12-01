@@ -77,9 +77,9 @@ angular.module('controllers')
               };
 
               // rest: Create Service Instance
-              Restangular.all('service_instances').post(instance).then(function(response) {
+              Restangular.all('service_instances').post(instance).then(function(instance) {
                 $mdDialog.hide();
-                $state.go('service', {organizationId : $scope.orgId, spaceId : form.spaceId});
+                responseService.success(instance, 'Instance was created successfully', 'service', { organizationId : $state.params.organizationId, spaceId : form.spaceId });
               }, function(response) {
                 console.log(response)
 

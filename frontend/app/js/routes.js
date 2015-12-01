@@ -90,7 +90,7 @@ angular.module('routes', ['ui.router'])
         controller: 'domainController'
       })
       .state('routes', {
-        url: 'organizations/:organizationId/routes',
+        url: '/organizations/:organizationId/routes',
         templateUrl: 'partials/route/route-list.html',
         controller: 'routeController'
       })

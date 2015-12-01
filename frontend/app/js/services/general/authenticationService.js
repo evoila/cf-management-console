@@ -7,7 +7,6 @@ angular.module('services')
     var authentication = {};
     var timeout = 10 * 60 * 1000;
     REST_API = envService.read('restApiUrl');
-    console.log('REST_API: ' + envService.read('restApiUrl'))
 
     var autoReAuthentication = $interval(function() {
       var now = new Date().getTime();
