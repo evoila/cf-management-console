@@ -35,11 +35,12 @@
 						<div flex>
 							<md-grid-list md-cols="2" md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile ng-repeat="app in s.entity.apps"
-									style="background-color:#{{colorString(app.entity.name)}}" ng-click="state.go('space', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">
+									style="background-color:#{{colorString(app.entity.name)}}"
+									ui-sref="application({'applicationId':'{{app.metadata.guid}}','organizationId':'{{s.entity.organization.metadata.guid}}','spaceId':'{{s.metadata.guid}}'})">
 									<img style="height:50%; padding-bottom: 45px;" ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
 									<md-grid-tile-footer>
 										<h3>
-											{{app.entity.name}}
+											{{app.entity.name}}x
 											<md-tooltip>
 												{{app.entity.name}}
 											</md-tooltip>
@@ -65,6 +66,7 @@
 						<div flex ng-cloak>
 							<md-grid-list md-cols="2" md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile class="no-focus" ng-repeat="ser in s.entity.service_instances" style="background-color:#{{colorString(ser.entity.name)}}"
+									
 									ng-click="showServiceInstances(s.entity.organization.metadata.guid, s.metadata.guid, s)">
 									<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 									<!--img style="width:60%" ng-src="assets/png/mysql_w.png"-->
