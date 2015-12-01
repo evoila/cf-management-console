@@ -101,13 +101,12 @@ public class RouteController {
 		return restRepository.update(token, V2_ROUTES.concat("/").concat(routeId).concat("/apps/").concat(appId), new CloudFoundryResource<>());
     }
     
-    /* geht das gut?
     @RequestMapping(value = "/routes/{routeId}/apps/{appId}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> removeApplicationFromRoute(@RequestHeader("Authorization") final String token, 
     		@PathVariable("routeId") String routeId, @PathVariable("appId") String appId) {		
-		restRepository.delete(token, V2_ROUTES.concat("/").concat(routeId).concat("/apps/").concat(appId), null);
+		restRepository.delete(token, V2_ROUTES.concat("/").concat(routeId).concat("/apps/"), appId);
 		return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    */
+   
 
 }

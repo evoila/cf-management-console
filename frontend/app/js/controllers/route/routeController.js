@@ -54,7 +54,6 @@ angular.module('controllers')
       }
 
       $scope.updateRoute = function(route) {
-        console.log(route)
 
         if(route.entity.host.length < 4)
           route.invalidHost = 'Host must be at least 4 characters'
@@ -105,7 +104,8 @@ angular.module('controllers')
 
         item.w = $scope.w_collapsed;
         item.h = $scope.h_collapsed;
-        window.scrollTo(0, 0);
+
+        //window.scrollTo(0, 0);
       }
 
       $scope.colorString = function(name) {
@@ -157,25 +157,13 @@ angular.module('controllers')
       }
 
 
-
-
-      $scope.getApps = function(ev, route) {
-        console.log($scope.apps.length)
-        var remainingApps = [];
-        $scope.apps.forEach(function(app) {
+      $scope.prepareAssociateDialog = function(ev, route) {
+        route.entity.apps.forEach(function(app) {
           var appId = app.metadata.guid;
-          route.entity.apps.forEach(function(enapp, index) {
-            if(enapp.metadata.guid != appId) {
-              console.log(enapp.entity.name + ', ' + index)
-              remainingApps.push(app);
-            }
-          })
+          $scope.apps = _.reject($scope.apps, function(el) { return el.metadata.guid === appId; });
         })
-        console.log(remainingApps.length)
-        $scope.showAssociateRouteDialog(ev, route, remainingApps);
-      }
-
-
+        $scope.showAssociateRouteDialog(ev, route);
+      };
 
       /*
        *  Dialog for
@@ -204,7 +192,7 @@ angular.module('controllers')
                 Restangular.all('routes/' + route.metadata.guid + '/apps/' + form.app_guid)
                   .customPUT(undefined, undefined, undefined, undefined).then(function(route){
                   $mdDialog.hide();
-                  $state.go('routes', {organizationId : $scope.orgId});
+                  responseService.success(route, 'Association was successful', 'routes', { organizationId : $scope.orgId });
                 }, function(response) {
                   responseService.error(response);
                 })
@@ -226,6 +214,61 @@ angular.module('controllers')
           clickOutsideToClose:false
         })
       };
+
+
+
+      /*
+       *  Dialog for
+       *
+       *  Remove app from route
+       *
+       */
+       $scope.showRemoveAppDialog = function(ev, route) {
+         $mdDialog.show({
+           locals: {
+             route: route
+           },
+           controller: ['$scope', 'route', function($scope, route) {
+             $scope.orgId = $state.params.organizationId;
+             $scope.route = route;
+
+             $scope.submitRemoveAppForm = function(form) {
+               $scope.noApp = false;
+
+               if(!form.app_guid)
+                 $scope.noApp = true;
+
+               else {
+                 Restangular.one('routes/' + route.metadata.guid + '/apps/' + form.app_guid).remove().then(function() {
+                 $mdDialog.hide();
+                 responseService.success(route, 'Removing App was successful', 'routes', { organizationId : $scope.orgId });
+               }, function(response) {
+                 responseService.error(response);
+               })
+               }
+             };
+
+             $scope.hide = function() {
+               $mdDialog.hide();
+             };
+
+             $scope.cancel = function() {
+               $mdDialog.cancel();
+             };
+
+           }],
+           templateUrl: 'partials/route/route-remove-app-dialog.html',
+           parent: angular.element(document.body),
+           targetEvent: ev,
+           clickOutsideToClose:false
+         })
+       };
+
+
+
+
+
+
 
 
       /*

@@ -1,19 +1,19 @@
-<md-dialog aria-label="Associate with App">
+<md-dialog aria-label="Remove App">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Associate with App</h2>
+        <h2>Remove App</h2>
       </div>
     </md-toolbar>
 
     <md-dialog-content style="width:300px;min-width:300px;min-height:100px;max-width:800px;">
 
-      <form name="associateRouteForm" ng-submit="submitAssociateRouteForm(associateRouteForm)">
+      <form name="removeAppForm" ng-submit="submitRemoveAppForm(removeAppForm)">
 
         <div class="form-group">
           <md-input-container>
-            <md-select ng-required="true" placeholder="Choose app" ng-model="associateRouteForm.app_guid" style="min-width: 200px;">
-              <md-option ng-value="app.metadata.guid" ng-repeat="app in apps">{{app.entity.name}}</md-option>
+            <md-select ng-required="true" placeholder="Choose app" ng-model="removeAppForm.app_guid" style="min-width: 200px;">
+              <md-option ng-value="app.metadata.guid" ng-repeat="app in route.entity.apps">{{app.entity.name}}</md-option>
             </md-select>
             <p ng-show="noApp" style="color:red;margin-top:-17px;">Please choose an app</p>
           </md-input-container>
@@ -24,7 +24,7 @@
               Cancel
             </md-button>
             <md-button class="md-raised md-primary" type="submit">
-              Associate
+              Remove
             </md-button>
           </div>
 

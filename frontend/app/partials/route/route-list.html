@@ -52,7 +52,9 @@
                     <p>{{route.entity.apps.length}}</p>
     							</div>
                   <div layout="row">
-                    <div><md-button ng-click="showAssociateRouteDialog($event, route)">Associate with App</md-button></div>
+                    <div>
+                      <md-button ng-hide="route.entity.apps.length==apps.length" ng-click="prepareAssociateDialog($event, route)">Associate with App</md-button>
+                    </div>
                     <div layout="row">
                       <md-button type="button" style="text-align:center;" ng-show="readOnly" ng-click="prepareEdit(route)">Edit</md-button>
                       <md-button type="button" style="text-align:center;" ng-hide="readOnly" ng-click="cancelEdit(route)">Cancel</md-button>
@@ -65,8 +67,9 @@
           </md-list>
 
           <!-- BUTTONS -->
-          <md-button style="position:absolute;bottom:0px;left:18px;" ng-click="showConfirm($event, route, 'delete')" ng-show="route.w==w_expanded" class="md-warn" >Delete Route</md-button>
-          <md-button id="tglbt-{{$index}}" style="position:absolute;bottom:0;right:8px;" ng-click="toggle(route, $event)">{{route.w === w_expanded ? "Less" : "MORE"}}</md-button>
+            <md-button class="md-warn" style="position:absolute;bottom:0px;left:18px;" ng-click="showConfirm($event, route, 'delete')" ng-show="route.w==w_expanded">Delete Route</md-button>
+            <md-button class="md-warn" style="position:absolute;bottom:0px;left:135px;"ng-click="showRemoveAppDialog($event, route)" ng-show="route.w==w_expanded && route.entity.apps.length>0">Remove App</md-button>
+            <md-button id="tglbt-{{$index}}" style="position:absolute;bottom:0;right:8px;" ng-click="toggle(route, $event)">{{route.w === w_expanded ? "Less" : "MORE"}}</md-button>
 
         </div>
       </div>
