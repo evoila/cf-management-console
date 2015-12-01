@@ -79,9 +79,9 @@ public class UserController {
 	
 	@RequestMapping(value = "/users/{userId}/managed_organizations/{orgId}", method = RequestMethod.PUT)
 	public @ResponseBody CloudFoundryResource<OrganizationUser> setManagedOrganizationForUser(@RequestHeader("Authorization") final String token,
-			@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+			@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId) {
 		String adminToken = userRepository.login();
-		return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/managed_organizations/").concat(orgId), orgUserDummy);
+		return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/managed_organizations/").concat(orgId), new CloudFoundryResource<OrganizationUser>());
     }
 
 	@RequestMapping(value = "/users/{userId}/managed_organizations/{orgId}", method = RequestMethod.DELETE)
@@ -102,9 +102,9 @@ public class UserController {
 	
 	@RequestMapping(value = "/users/{userId}/billing_managed_organizations/{orgId}", method = RequestMethod.PUT)
 	public @ResponseBody CloudFoundryResource<OrganizationUser> setBillingManagedOrganizationForUser(@RequestHeader("Authorization") final String token,
-			@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+			@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId) {
 		String adminToken = userRepository.login();
-		return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/billing_managed_organizations/").concat(orgId), orgUserDummy);
+		return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/billing_managed_organizations/").concat(orgId), new CloudFoundryResource<OrganizationUser>());
     }
 	
 	@RequestMapping(value = "/users/{userId}/billing_managed_organizations/{orgId}", method = RequestMethod.DELETE)
@@ -125,10 +125,9 @@ public class UserController {
 	
 	@RequestMapping(value = "/users/{userId}/audited_organizations/{orgId}", method = RequestMethod.PUT)
 	public @ResponseBody CloudFoundryResource<OrganizationUser> setAuditedOrganizationForUser(@RequestHeader("Authorization") final String token,
-			@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId, 
-			@RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+			@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId) {
 		String adminToken = userRepository.login();
-		return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/audited_organizations/").concat(orgId), orgUserDummy);
+		return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/audited_organizations/").concat(orgId), new CloudFoundryResource<OrganizationUser>());
     }
 	
 	@RequestMapping(value = "/users/{userId}/audited_organizations/{orgId}", method = RequestMethod.DELETE)
@@ -149,10 +148,9 @@ public class UserController {
   
     @RequestMapping(value = "/users/{userId}/managed_spaces/{spaceId}", method = RequestMethod.PUT)
 	public @ResponseBody CloudFoundryResource<OrganizationUser> setManagedSpaceForUser(@RequestHeader("Authorization") final String token,
-			@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId, 
-			@RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+			@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId) {
     	String adminToken = userRepository.login();
-		return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/managed_spaces/").concat(spaceId), orgUserDummy);
+		return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/managed_spaces/").concat(spaceId), new CloudFoundryResource<OrganizationUser>());
     }
     
     @RequestMapping(value = "/users/{userId}/managed_spaces/{spaceId}", method = RequestMethod.DELETE)
@@ -173,10 +171,9 @@ public class UserController {
 
     @RequestMapping(value = "/users/{userId}/spaces/{spaceId}", method = RequestMethod.PUT)
     public @ResponseBody CloudFoundryResource<OrganizationUser> setSpaceForUser(@RequestHeader("Authorization") final String token,
-    		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId, 
-    		@RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+    		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId) {
     	String adminToken = userRepository.login();
-    	return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/spaces/").concat(spaceId), orgUserDummy);
+    	return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/spaces/").concat(spaceId), new CloudFoundryResource<OrganizationUser>());
     }
     
     @RequestMapping(value = "/users/{userId}/spaces/{spaceId}", method = RequestMethod.DELETE)
@@ -197,10 +194,9 @@ public class UserController {
     
     @RequestMapping(value = "/users/{userId}/audited_spaces/{spaceId}", method = RequestMethod.PUT)
     public @ResponseBody CloudFoundryResource<OrganizationUser> setAuditedSpaceForUser(@RequestHeader("Authorization") final String token,
-    		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId, 
-    		@RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+    		@PathVariable("userId") final String userId, @PathVariable("spaceId") final String spaceId) {
     	String adminToken = userRepository.login();
-    	return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/audited_spaces/").concat(spaceId), orgUserDummy);
+    	return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/audited_spaces/").concat(spaceId), new CloudFoundryResource<OrganizationUser>());
     }
     
     @RequestMapping(value = "/users/{userId}/audited_spaces/{spaceId}", method = RequestMethod.DELETE)

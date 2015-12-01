@@ -128,7 +128,7 @@ angular.module('controllers')
       $scope.switchOrgManager = function() {
         var managedOrgsUrl = self.user.entity.managed_organizations_url.replace($scope.cfPrefix, '') + '/';
         if(self.user.isOrgManager)
-          Restangular.one(managedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+          Restangular.one(managedOrgsUrl, $scope.orgId).put(null).then(function(response) {
             responseService.success(response, 'Role was set successfully');
           }, function(response) {
             responseService.error(response);
@@ -141,9 +141,9 @@ angular.module('controllers')
           });
       }
       $scope.switchOrgBillingManager = function() {
-        var billingManagedOrgsUrl = self.user.entity.billing_managed_organizations_url.replace($scope.prefix, '') + '/';
+        var billingManagedOrgsUrl = self.user.entity.billing_managed_organizations_url.replace($scope.cfPrefix, '') + '/';
         if(self.user.isOrgBillingManager)
-          Restangular.one(billingManagedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+          Restangular.one(billingManagedOrgsUrl, $scope.orgId).put(null).then(function(response) {
             responseService.success(response, 'Role was set successfully');
           }, function(response) {
             responseService.error(response);
@@ -158,7 +158,7 @@ angular.module('controllers')
       $scope.switchOrgAuditor = function() {
         var auditedOrgsUrl = self.user.entity.audited_organizations_url.replace($scope.cfPrefix, '') + '/';
         if(self.user.isOrgAuditor)
-          Restangular.one(auditedOrgsUrl, $scope.orgId).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+          Restangular.one(auditedOrgsUrl, $scope.orgId).put(null).then(function(response) {
             responseService.success(response, 'Role was set successfully');
           }, function(response) {
             responseService.error(response);
@@ -175,7 +175,7 @@ angular.module('controllers')
       $scope.switchSpaceManager = function(space) {
         var managedSpacesUrl = self.user.entity.managed_spaces_url.replace($scope.cfPrefix, '') + '/';
         if(space.userIsManager)
-          Restangular.one(managedSpacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+          Restangular.one(managedSpacesUrl, space.metadata.guid).put(null).then(function(response) {
             responseService.success(response, 'Role was set successfully');
           }, function(response) {
             responseService.error(response);
@@ -190,7 +190,7 @@ angular.module('controllers')
       $scope.switchSpaceDeveloper = function(space) {
         var spacesUrl = self.user.entity.spaces_url.replace($scope.cfPrefix, '') + '/';
         if(space.userIsDeveloper)
-          Restangular.one(spacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+          Restangular.one(spacesUrl, space.metadata.guid).put(null).then(function(response) {
             responseService.success(response, 'Role was set successfully');
           }, function(response) {
             responseService.error(response);
@@ -205,7 +205,7 @@ angular.module('controllers')
       $scope.switchSpaceAuditor = function(space) {
         var auditedSpacesUrl = self.user.entity.audited_spaces_url.replace($scope.cfPrefix, '') + '/';
         if(space.userIsAuditor)
-          Restangular.one(auditedSpacesUrl, space.metadata.guid).customPUT(undefined, undefined,({ username: "dummy" }),undefined).then(function(response) {
+          Restangular.one(auditedSpacesUrl, space.metadata.guid).put(null).then(function(response) {
             responseService.success(response, 'Role was set successfully');
           }, function(response) {
             responseService.error(response);
