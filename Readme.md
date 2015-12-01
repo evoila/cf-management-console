@@ -13,6 +13,8 @@ Cloud Foundry Management Console (CFMC) is an Opensource (OSS) web based framewo
 
 ### Manage Applications
 
+# Planned Features
+
 # Development
 
 # Issues
