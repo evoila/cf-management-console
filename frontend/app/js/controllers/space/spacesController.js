@@ -11,10 +11,6 @@ angular.module('controllers')
         $scope.spaces = spaces;
       });
 
-      $scope.showServiceInstances = function(orgId, spaceId, space) {
-        $state.go('service', {organizationId : orgId, spaceId : spaceId, space : space});
-      };
-
       $scope.colorString = function(name) {
         var myColor = DesignService.stringColor(name);
         return myColor;

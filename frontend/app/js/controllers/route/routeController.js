@@ -81,9 +81,6 @@ angular.module('controllers')
       };
 
 
-
-
-
       $scope.toggle = function(item, event) {
         var id = event.currentTarget.attributes.id.value.replace('tglbt', 'item');
         if(item.w == $scope.w_collapsed)
