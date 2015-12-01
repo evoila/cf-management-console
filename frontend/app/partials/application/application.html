@@ -49,9 +49,24 @@
         <md-divider></md-divider>
         <md-subheader class="md-no-sticky">Service Bindings ({{app.entity.service_bindings.length}})</md-subheader>
       </div>
-
-
     </md-list>
+    <md-card>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Scale Memory</span>
+          <span class="md-subhead">Small</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-sm card-media">
+            <i ng-class="{'fa fa-cubes' : true}"></i>
+          </div>
+        </md-card-title-media>
+      </md-card-title>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button>Action 1</md-button>
+        <md-button>Action 2</md-button>
+      </md-card-actions>
+    </md-card>
   </md-card-content>
   <md-card-actions layout="row" layout-align="space-between  center" style="background-color:#{{colorString(application.entity.name)}}">
     <div layout="row" layout-align="space-between center">
@@ -62,7 +77,7 @@
       <md-button class="md-icon-button" aria-label="Favorite" ng-click="application.entity.instances=application.entity.instances+1">
         <md-icon md-svg-icon="assets/svg/add_circle.svg"></md-icon>
       </md-button>
-      <md-button  ng-click="scaleApplication(application,instacesCount)">Scale</md-button>
+      <md-button ng-click="scaleApplication(application,instacesCount)">Scale</md-button>
     </div>
     <div layout="row" layout-align="space-between center">
       <md-button ng-show="application.entity.state != 'STARTED'" ng-click="startApplication(application)">START</md-button>
