@@ -3,6 +3,7 @@
 applications:
 - name: cfmc
   host: cfmc
+  domain: onevoila.rocks
   instances: 1
   memory: 64M
   path: app
