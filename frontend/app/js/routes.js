@@ -30,11 +30,6 @@ angular.module('routes', ['ui.router'])
         templateUrl: "partials/space/space.html",
         controller: 'spaceController',
       })
-      .state('space-create', {
-        url: '/organizations/:organizationId/spaces/create',
-        templateUrl: 'partials/space/space-create.html',
-        controller: 'spaceController'
-      })
       .state('space-settings', {
         url: '/organizations/:organizationId/spaces/:spaceId/settings',
         templateUrl: 'partials/space/space-settings.html',

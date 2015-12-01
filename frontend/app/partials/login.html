@@ -1,5 +1,5 @@
 <div ng-hide="authenticating" flex layout="center center" layout-align="space-around">
-  <div flex-sm="100" flex-md="70" flex-lg="60" flex="50" ng-hide="hideForm">
+  <div flex="100" flex-gt-md="70" flex-lg="60" flex-gt-lg="50" ng-hide="hideForm">
         <md-card>
             <md-toolbar>
                 <div class="md-toolbar-tools">
@@ -31,9 +31,9 @@
                         </md-input-container>
                     </div>
 
-                    <div layout="row" layout-align="space-between center">
-                      <md-button ui-sref="register" class="md-primary" ng-click="state.go('register')">Don't have an account? Create one now</md-button>
-                      <md-button class="md-raised md-primary" ng-disabled="login.$invalid" type="submit">Log in</md-button>
+                    <div layout="column" layout-gt-sm="row" layout-align="space-between center">
+                      <md-button flex-sm="100" flex-order-sm="2" type="button" ui-sref="register" class="md-primary">Don't have an account? Create one now</md-button>
+                      <md-button flex-sm="100" flex-order-sm="1" type="submit" class="md-raised md-primary" ng-disabled="login.$invalid">Log in</md-button>
                     </div>
                 </form>
             </md-content>

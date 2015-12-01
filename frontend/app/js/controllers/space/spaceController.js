@@ -23,4 +23,5 @@ angular.module('controllers')
         var myService = DesignService.resolveServicePng(name);
         return myService;
       };
+
     });
