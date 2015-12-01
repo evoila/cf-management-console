@@ -81,6 +81,8 @@ angular.module('controllers')
                 $mdDialog.hide();
                 $state.go('service', {organizationId : $scope.orgId, spaceId : form.spaceId});
               }, function(response) {
+                console.log(response)
+
                 if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
                   responseService.error(response, 'Instance name already in use');
                 else

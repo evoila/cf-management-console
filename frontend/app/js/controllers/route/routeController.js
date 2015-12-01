@@ -21,6 +21,7 @@ angular.module('controllers')
 
         Restangular.one('apps', $state.params.organizationId).get().then(function(apps) {
           $scope.apps = apps;
+
         }, function(response) {
           responseService.error(response);
         });
@@ -58,7 +59,7 @@ angular.module('controllers')
         if(route.entity.host.length < 4)
           route.invalidHost = 'Host must be at least 4 characters'
 
-        else if(route.entity.path.length < 2 || route.entity.path.length > 128)
+        else if(route.entity.path && route.entity.path.length < 2 || route.entity.path.length > 128)
           route.invalidPath = 'Path must be between 2 and 128 characters';
 
         else if(route.entity.path && route.entity.path.indexOf('/') != 0 || route.entity.path && route.entity.path.indexOf('?') > -1)
@@ -155,6 +156,27 @@ angular.module('controllers')
         });
       }
 
+
+
+
+      $scope.getApps = function(ev, route) {
+        console.log($scope.apps.length)
+        var remainingApps = [];
+        $scope.apps.forEach(function(app) {
+          var appId = app.metadata.guid;
+          route.entity.apps.forEach(function(enapp, index) {
+            if(enapp.metadata.guid != appId) {
+              console.log(enapp.entity.name + ', ' + index)
+              remainingApps.push(app);
+            }
+          })
+        })
+        console.log(remainingApps.length)
+        $scope.showAssociateRouteDialog(ev, route, remainingApps);
+      }
+
+
+
       /*
        *  Dialog for
        *
@@ -169,8 +191,8 @@ angular.module('controllers')
           },
           controller: ['$scope', 'apps', 'route', function($scope, apps, route) {
             $scope.orgId = $state.params.organizationId;
-            $scope.apps = apps;
             $scope.route = route;
+            $scope.apps = apps;
 
             $scope.submitAssociateRouteForm = function(form) {
               $scope.noApp = false;
