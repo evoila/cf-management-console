@@ -82,12 +82,12 @@ angular.module('routes', ['ui.router'])
       .state('domains', {
         url: '/organizations/:organizationId/private_domains',
         templateUrl: 'partials/domain/domain-list.html',
-        controller: 'domainController'
+        controller: 'domainsController'
       })
       .state('routes', {
         url: '/organizations/:organizationId/routes',
         templateUrl: 'partials/route/route-list.html',
-        controller: 'routeController'
+        controller: 'routesController'
       })
 
   })

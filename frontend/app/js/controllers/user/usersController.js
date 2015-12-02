@@ -8,6 +8,20 @@ angular.module('controllers')
       $scope.orgId = $state.params.organizationId;
       $scope.cfPrefix = envService.read('cf_prefix');
 
+      var originatorEv;
+
+      $scope.query = {
+        filter: '',
+        order: 'entity.username',
+        limit: 10,
+        page: 1
+      };
+
+      $scope.openMenu = function($mdOpenMenu, ev) {
+        originatorEv = ev;
+        $mdOpenMenu(ev);
+      };
+
       $scope.init = function() {
         $scope.blockInput = true;
         $scope.editMode = false;

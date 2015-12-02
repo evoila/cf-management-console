@@ -1,6 +1,6 @@
 angular.module('controllers')
-  .controller('routeController',
-    function RouteController($scope, $state, Restangular, menu, clientCacheService, DesignService, responseService, $mdDialog, $location) {
+  .controller('routesController',
+    function RoutesController($scope, $state, Restangular, menu, clientCacheService, DesignService, responseService, $mdDialog, $location) {
 
       $scope.orgId = $state.params.organizationId;
       $scope.editActive = false;
@@ -40,15 +40,8 @@ angular.module('controllers')
           responseService.error(response);
         });
 
-        $scope.w_collapsed = '250px;'
-        $scope.w_expanded = '510px';
-        $scope.h_collapsed = '140px';
-        $scope.h_expanded = '290px';
-
         Restangular.one('routes').getList().then(function(routes) {
           routes.forEach(function(route) {
-            route.w = $scope.w_collapsed;
-            route.h = $scope.h_collapsed;
             route.readOnly = true;
           })
           $scope.routes = routes;
@@ -87,8 +80,6 @@ angular.module('controllers')
           route.invalidPort = 'Port must be betwenn 1024 and 65535';
 
         else {
-          delete route.w;
-          delete route.h;
           delete route.invalidPath;
           delete route.invalidHost;
           delete route.invalidPort;
@@ -108,44 +99,11 @@ angular.module('controllers')
         }
       };
 
-
-      $scope.toggle = function(item, event) {
-        var id = event.currentTarget.attributes.id.value.replace('tglbt', 'item');
-        if(item.w == $scope.w_collapsed)
-          expand(item, id);
-        else
-          collapse(item);
-      }
-
-      function expand(item, gotoId) {
-        item.w = $scope.w_expanded;
-        item.h = $scope.h_expanded;
-
-        //scroll to item
-      }
-
-      function collapse(item) {
-        $scope.readOnly = true;
-
-        item.w = $scope.w_collapsed;
-        item.h = $scope.h_collapsed;
-
-        //window.scrollTo(0, 0);
-      }
-
       $scope.colorString = function(name) {
         var myColor = DesignService.stringColor(name);
         return myColor;
       };
 
-      function initContainer() {
-        $('#masonry-container').freetile({
-            animate: true,
-            elementDelay: 10,
-            selector: '.item',
-            containerResize: true
-        });
-      }
 
       /*
        *  Dialog for
@@ -153,17 +111,10 @@ angular.module('controllers')
        *  Confirm delete route
        *
        */
-       $scope.showConfirm = function(ev, route, method) {
-         var title, content = null;
-
-        if(method == 'delete') {
-          title = 'Really delete route?';
-          content = route.entity.domain.entity.name + ' in space ' + route.entity.space.entity.name;
-        }
-
+       $scope.showConfirm = function(ev, route) {
         var confirm = $mdDialog.confirm()
-              .title(title)
-              .textContent(content)
+              .title('Really delete route?')
+              .textContent(route.entity.domain.entity.name + ' in space ' + route.entity.space.entity.name)
               .ariaLabel('Confirm delete')
               .targetEvent(ev)
               .ok('Yes')
@@ -291,12 +242,6 @@ angular.module('controllers')
        };
 
 
-
-
-
-
-
-
       /*
        *  Dialog for
        *
@@ -359,7 +304,5 @@ angular.module('controllers')
         })
 
       };
-
-
 
   });

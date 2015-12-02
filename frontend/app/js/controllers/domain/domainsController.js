@@ -1,6 +1,6 @@
 angular.module('controllers')
-  .controller('domainController',
-    function DomainController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
+  .controller('domainsController',
+    function DomainsController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
 
       $scope.orgId = $state.params.organizationId;
 
@@ -18,7 +18,7 @@ angular.module('controllers')
        */
       $scope.showCreateDomainDialog = function(ev) {
         $mdDialog.show({
-          controller: DomainController,
+          controller: DomainsController,
           templateUrl: 'partials/domain/domain-create-dialog.html',
           parent: angular.element(document.body),
           targetEvent: ev,

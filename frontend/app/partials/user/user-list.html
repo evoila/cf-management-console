@@ -1,62 +1,62 @@
-<div layout="column" ng-init="init()">
+<div layout="column" ng-init="init()" style="padding-top:8px;">
 
-	<md-list id="orgUserList">
-		<div layout="column" layout-gt-md="row" layout-align="start start">
-	    <h2>Users of {{org.entity.name}}</h2>
-			<div layout="row" layout-align="start center" style="margin-top:2px;">
-				<button type="button" aria-label="Show Create User Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateUserDialog()">
-					<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg"></md-icon>
-				</button>
+  <div layout="row" layout-align="start start">
+    <h2>Users of {{org.entity.name}}</h2>
 
-				<md-switch class="no-focus" ng-model="editMode" aria-label="Toggle edit" style="margin-left:0;">editable</md-switch>
-			</div>
+  		<button type="button" aria-label="Show Create Route Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateUserDialog($event, user)">
+  			<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg" style="margin-top:8px;"></md-icon>
+  		</button>
 
-		</div>
+  </div>
 
-		<md-divider></md-divider>
 
-    <md-list-item id="item-{{$index}}" class="md-3-line" ng-repeat="user in orgUsers" ng-mouseover="editMode=true" ng-mouseleave="editMode=false" style="padding:10px 0;">
-      <div class="md-list-item-text" layout="column">
-				<div layout="row" layout-align="start center">
+	<md-divider></md-divider>
 
-					<div flex class="fadeInLeft" ng-show="editMode" layout="row" layout-align="start center" style="max-width:120px;">
-						<div flex style="max-width:50px;">
-							<button class="md-button md-icon-button md-primary" type="button" aria-label="Edit User" style="text-align:center;" ng-click="switchToEditUser(user)">
-								<md-icon class="no-focus" md-svg-icon="assets/svg/ic_edit_48px.svg"></md-icon>
-							</button>
-						</div>
+	<md-data-table-container>
+    <table md-data-table md-progress="deferred">
+      <thead md-order="query.order" md-trigger="onOrderChange">
+        <tr>
+          <th style="min-width:30px;width:30px;max-width:30px;padding:0;"></th>
+          <th name="Username" order-by="entity.username"></th>
+					<th name="Organization Roles"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="data-table-row" ng-repeat="user in orgUsers | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit" ng-mouseover="showButtons=true" ng-mouseleave="showButtons=false">
 
-						<div flex style="max-width:50px;">
-							<button class="md-button md-icon-button md-warn" type="button" aria-label="Delete User" style="text-align:center;" ng-click="showConfirm($event, user)">
-								<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg"></md-icon>
-							</button>
-						</div>
-					</div>
+          <td style="min-width:30px;width:30px;max-width:30px;padding:0;">
+            <div ng-show="showButtons">
+              <md-menu>
+                <md-button aria-label="Open route interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)" style="width:30px;height:36px;line-height:0;">
+                  <md-icon md-menu-origin="" md-svg-icon="assets/svg/menu.svg"></md-icon>
+                </md-button>
+                <md-menu-content width="2">
+                  <md-menu-item>
+                    <md-button ng-click="switchToEditUser(user)">Edit</md-button>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-button class="md-warn" ng-click="showConfirm($event, user)">Delete</md-button>
+                  </md-menu-item>
 
-					<div flex layout="column" layout-align="start start">
+                </md-menu-content>
+              </md-menu>
+            </div>
+          </td>
 
-						<div flex="100" layout="row">
-	        		<h3>{{ user.entity.username }}</h3>
-						</div>
+          <td style="font-weight:bold;">{{user.entity.username}}</td>
 
-						<div flex="100" layout="column" style="min-width:100%;">
-							<!--
-							<div flex="33" ng-show="user.isOrgManager"><p style="text-align:center" hide-sm>Manager</p><p style="text-align:right" hide-gt-sm>M</p></div>
-							<div flex="33" ng-show="user.isOrgBillingManager"><p style="text-align:center" hide-sm>Billing Manager</p><p style="text-align:right" hide-gt-sm>BM</p></div>
-							<div flex="33" ng-show="user.isOrgAuditor"><p style="text-align:center" hide-sm>Auditor</p><p style="text-align:right" hide-gt-sm>A</p></div>
-						-->
-						<div flex= ng-show="user.isOrgManager"><p>Manager</p></div>
-						<div flex ng-show="user.isOrgBillingManager"><p>Billing Manager</p></div>
-						<div flex ng-show="user.isOrgAuditor"><p>Auditor</p></div>
-						</div>
+					<td>
+						<p ng-if="user.isOrgManager">Manager</p>
+						<p ng-if="user.isOrgBillingManager">Billing Manager</p>
+						<p ng-if="user.isOrgAuditor">Auditor</p>
+					</td>
 
-					</div>
+        </tr>
+      </tbody>
+    </table>
+  </md-data-table-container>
 
-				</div>
-      </div>
-			<md-divider></md-divider>
+  <md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{orgUsers.length}}" md-trigger="onPaginationChange"></md-data-table-pagination>
 
-    </md-list-item>
-	</md-list>
 
 </div>

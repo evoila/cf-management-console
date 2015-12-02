@@ -74,12 +74,11 @@ md-dialog-content {
 
 .data-table-row.active {
   height: 70px;
-  background-color: #adbfd8;
+  background-color: #cecece;
 }
 .data-table-row.active:hover {
-  background-color: #adbfd8 !important;
+  background-color: #cecece !important;
 }
-
 
 .item {
   position:relative;

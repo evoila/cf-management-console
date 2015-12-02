@@ -1,6 +1,6 @@
 angular.module('controllers')
-  .controller('routeController',
-    function RouteController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
+  .controller('routesController',
+    function RoutesController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location) {
 
       $scope.orgId = $state.params.organizationId;
 
