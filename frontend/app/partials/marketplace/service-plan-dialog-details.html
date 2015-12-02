@@ -29,7 +29,7 @@
       <div ng-show="ctrl.showCreate" layout="column">
         <form name="createServiceInstanceForm" ng-submit="submitCreateServiceInstanceForm(createServiceInstanceForm)">
           <div flex class="form-group">
-            <md-select ng-required="true" placeholder="Choose space" ng-model="createServiceInstanceForm.spaceId" md-on-open="getSpaces()" style="min-width: 200px;">
+            <md-select ng-required="true" placeholder="Choose space" ng-model="createServiceInstanceForm.spaceId" style="min-width: 200px;">
               <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
             </md-select>
             <p ng-show="noOption" style="color:red;margin-top:-17px;">Please choose a space</p>

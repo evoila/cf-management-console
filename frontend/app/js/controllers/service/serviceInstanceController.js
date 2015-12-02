@@ -3,16 +3,18 @@ angular.module('controllers')
     function ServiceInstanceController($scope, $state, menu, $mdDialog, Restangular, DesignService, responseService) {
 
       $scope.space = $state.params.space;
+      $scope.orgId = $state.params.organizationId;
 
-      if(!$scope.space) {
-        Restangular.one('spaces', $state.params.spaceId).get().then(function(space) {
-          $scope.space = space;
-          $scope.instances = space.entity.service_instances;
-        })
-      }
-      else
-        $scope.instances = $scope.space.entity.service_instances;
-
+      $scope.init = function() {
+        if(!$scope.space) {
+          Restangular.one('spaces', $state.params.spaceId).get().then(function(space) {
+            $scope.space = space;
+            $scope.instances = space.entity.service_instances;
+          })
+        }
+        else
+          $scope.instances = $scope.space.entity.service_instances;
+      };
 
       /*
        *  Dialog for
@@ -35,7 +37,8 @@ angular.module('controllers')
 
       function deleteServiceInstance(instance) {
         Restangular.one('service_instances', instance.metadata.guid).remove().then(function() {
-          responseService.success(instance, 'Instance was deleted successfully', 'service', { organizationId : $state.params.organizationId, spaceId : $state.params.spaceId });
+          $mdDialog.hide();
+          responseService.success(instance, 'Instance was deleted successfully', 'service', { organizationId : $scope.orgId, spaceId : $scope.space.metadata.guid });
         }, function(response) {
           console.log(response)
           responseService.error(response);
