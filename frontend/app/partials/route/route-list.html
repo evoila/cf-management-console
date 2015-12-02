@@ -16,8 +16,9 @@
     <table md-data-table md-progress="deferred">
       <thead md-order="query.order" md-trigger="onOrderChange">
         <tr>
+          <th style="min-width:30px;width:30px;max-width:30px;padding:0;"></th>
           <th name="Domain" order-by="entity.domain.entity.name"></th>
-          <th style="min-width:50px;width:50px;max-width:50px;"></th>
+          <th name="Apps" numeric order-by="entity.apps.length"></th>
           <th name="Host" order-by="entity.host"></th>
           <th name="Path" order-by="entity.path"></th>
           <th name="Port" order-by="entity.port"></th>
@@ -25,28 +26,43 @@
       </thead>
       <tbody>
         <tr class="data-table-row" ng-repeat="route in routes | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit" ng-mouseover="showButtons=true" ng-mouseleave="showButtons=false" ng-class="{'active': route.readOnly == false}">
-          <td>{{route.entity.domain.entity.name}}</td>
 
-          <td style="min-width:50px;width:50px;max-width:50px;" > <!--ng-hide="oldHost && route.readOnly"-->
+          <td style="min-width:30px;width:30px;max-width:30px;padding:0;">
             <div ng-show="showButtons && !editActive || !route.readOnly">
-              <md-menu md-position-mode="target-right target">
+              <md-menu>
                 <md-button aria-label="Open route interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
                   <md-icon md-menu-origin="" md-svg-icon="assets/svg/menu.svg"></md-icon>
                 </md-button>
-                <md-menu-content width="4">
+                <md-menu-content width="2">
                   <md-menu-item>
-                    <md-button type="button" ng-disabled="route.readOnly==false" ng-click="prepareEdit(route)">Edit</md-button>
+                    <md-button ng-disabled="route.readOnly==false" ng-click="prepareEdit(route)">Edit</md-button>
                   </md-menu-item>
                   <md-menu-item>
-                    <md-button type="button" ng-disabled="route.readOnly" ng-click="updateRoute(route)">Save changes</md-button>
+                    <md-button ng-disabled="route.readOnly" ng-click="updateRoute(route)">Save changes</md-button>
                   </md-menu-item>
                   <md-menu-item>
-                    <md-button type="button" ng-disabled="route.readOnly" ng-click="cancelEdit(route)">Dismiss changes</md-button>
+                    <md-button ng-disabled="route.readOnly" ng-click="cancelEdit(route)">Dismiss changes</md-button>
                   </md-menu-item>
+                  <md-menu-divider></md-menu-divider>
+                  <md-menu-item>
+                    <md-button ng-disabled="route.entity.apps.length==apps.length" ng-click="prepareAssociateDialog($event, route)">Associate with App</md-button>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-button ng-disabled="route.entity.apps.length==0" class="md-warn" ng-click="showRemoveAppDialog($event, route)">Remove App</md-button>
+                  </md-menu-item>
+                  <md-menu-divider></md-menu-divider>
+                  <md-menu-item>
+                    <md-button class="md-warn" ng-click="showConfirm($event, route, 'delete')">Delete</md-button>
+                  </md-menu-item>
+
                 </md-menu-content>
               </md-menu>
             </div>
           </td>
+
+          <td>{{route.entity.domain.entity.name}}</td>
+
+          <td>{{route.entity.apps.length}}</td>
 
           <td>
             <input ng-hide="route.invalidHost" ng-model="route.entity.host" ng-readonly="route.readOnly" class="input-toggle-edit no-focus" ng-class="{'active': route.readOnly == false}" />
@@ -57,7 +73,7 @@
             <p ng-show="route.invalidPath" style="color:red;" ng-click="route.invalidPath=false">{{route.invalidPath}}</p>
           </td>
           <td>
-            <input ng-hide="route.invalidPort" ng-model="route.entity.port" ng-readonly="route.readOnly" class="input-toggle-edit no-focus" ng-class="{'active': route.readOnly == false}" type="number" />
+            <input ng-hide="route.invalidPort" ng-model="route.entity.port" ng-readonly="route.readOnly || route.entity.domain.entity.router_group_guid == null" class="input-toggle-edit no-focus" ng-class="{'active': route.readOnly == false}" type="number" />
             <p ng-show="route.invalidPort" style="color:red;" ng-click="route.invalidPort=false">{{route.invalidPort}}</p>
           </td>
 

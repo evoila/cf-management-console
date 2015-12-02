@@ -73,7 +73,6 @@ angular.module('controllers')
       }
 
       $scope.updateRoute = function(route) {
-        console.log(route.entity.port)
 
         if(route.entity.host.length < 4)
           route.invalidHost = 'Host must be at least 4 characters'
@@ -99,8 +98,12 @@ angular.module('controllers')
             .customPUT(route, undefined, undefined, undefined).then(function(route){
               responseService.success(route, 'Route was updated successfully', 'routes', { organizationId : $scope.orgId });
           }, function(response) {
-            console.log(response)
-            responseService.error(response);
+            if(response.status == '400' && response.data.message.indexOf('domains of TCP router groups only') > -1)
+              responseService.error(response, 'Port is supported for domains of TCP router groups only');
+            else {
+              $mdDialog.hide();
+              responseService.error(response);
+            }
           })
         }
       };
