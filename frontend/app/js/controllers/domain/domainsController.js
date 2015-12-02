@@ -4,9 +4,24 @@ angular.module('controllers')
 
       $scope.orgId = $state.params.organizationId;
 
+      var originatorEv;
+
+      $scope.query = {
+        filter: '',
+        order: 'entity.name',
+        limit: 10,
+        page: 1
+      };
+
+      $scope.openMenu = function($mdOpenMenu, ev) {
+        originatorEv = ev;
+        $mdOpenMenu(ev);
+      };
+
       $scope.init = function() {
         Restangular.one('private_domains', $scope.orgId).getList().then(function(domains) {
           $scope.domains = domains;
+          console.log(domains)
         });
       }
 

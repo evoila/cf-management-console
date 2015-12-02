@@ -19,7 +19,6 @@ angular.module('controllers')
        *
        */
        $scope.showConfirm = function(ev, instance) {
-         console.log(instance)
         var confirm = $mdDialog.confirm()
               .title('Really delete instance?')
               .textContent(instance.entity.name)
@@ -37,7 +36,6 @@ angular.module('controllers')
           $mdDialog.hide();
           responseService.success(instance, 'Instance was deleted successfully', 'service', { organizationId : $scope.orgId, spaceId : $scope.space.metadata.guid });
         }, function(response) {
-          console.log(response)
           responseService.error(response);
         });
       }

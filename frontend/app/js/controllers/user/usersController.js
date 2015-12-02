@@ -23,9 +23,6 @@ angular.module('controllers')
       };
 
       $scope.init = function() {
-        $scope.blockInput = true;
-        $scope.editMode = false;
-
         Restangular.one('organizations', $state.params.organizationId).get().then(function(org) {
           $scope.org = org;
           getUsersAndOrgRoles();
