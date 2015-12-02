@@ -1,43 +1,37 @@
 <div ng-hide="authenticating" layout="row" layout-align="center center space-around">
-        <md-card flex="100" flex-gt-md="70" flex-lg="60" flex-gt-lg="50" ng-hide="hideForm">
-            <md-toolbar>
-                <div class="md-toolbar-tools">
-                  <h2>
-                    <span>Login</span>
-                  </h2>
-                </div>
-            </md-toolbar>
-            <md-card-content layout="column" layout-align="space-around start">
-                <form name="userForm" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" ng-submit="login(userForm)">
-                  <div layout="column" layout-gt-sm="row" layout-align="space-around start">
-                    <md-input-container class="md-input-invalid">
-                      <label>Username(email)</label>
-                      <input type="text" ng-model="userForm.email" required="true">
-                    </md-input-container>
-                    <md-input-container>
-                      <label>Password</label>
-                      <input type="password" ng-model="userForm.password" required="true">
-                    </md-input-container>
-                  </div>
-
-
-                    <div layout="row" layout-align="space-around center">
-                      <md-input-container>
-                          <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
-                           Remember Me
-                          </md-checkbox>
-                      </md-input-container>
-
-
-                            <a class="md-primary md-button md-ink-ripple flex" ui-sref="forgot">Forgot password?</a>
-
-                    </div>
-
-                    <div layout="column" layout-gt-sm="row" layout-align="space-between center">
-                      <md-button flex-sm="100" flex-order-sm="2" type="button" ui-sref="register" class="md-primary">Don't have an account? Create one now</md-button>
-                      <md-button flex-sm="100" flex-order-sm="1" type="submit" class="md-raised md-primary" ng-disabled="login.$invalid">Log in</md-button>
-                    </div>
-                </form>
-            </md-card-content>
-        </md-card>
+  <md-card flex="100" flex-gt-md="70" flex-lg="40" flex-gt-lg="40" ng-hide="hideForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          <span>Login</span>
+        </h2>
+      </div>
+    </md-toolbar>
+    <md-card-content layout="column">
+      <form name="userForm" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" ng-submit="login(userForm)">
+        <div layout="column" layout-sm="column">
+          <md-input-container class="md-input-invalid" flex>
+            <label>Username(email)</label>
+            <input type="text" ng-model="userForm.email" required="true">
+          </md-input-container>
+          <md-input-container flex>
+            <label>Password</label>
+            <input type="password" ng-model="userForm.password" required="true">
+          </md-input-container>
+        </div>
+        <div layout="row" layout-align="space-between center">
+          <md-input-container flex>
+            <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
+              Remember Me
+            </md-checkbox>
+          </md-input-container>
+          <a class="md-primary md-button md-ink-ripple flex" ui-sref="forgot">Forgot password?</a>
+        </div>
+        <div layout="column" layout-gt-sm="row" layout-align="space-between center">
+          <md-button flex-sm="100" flex-order-sm="2" type="button" ui-sref="register" class="md-primary">Don't have an account? Create one now</md-button>
+          <md-button flex-sm="100" flex-order-sm="1" type="submit" class="md-raised md-primary" ng-disabled="login.$invalid">Log in</md-button>
+        </div>
+      </form>
+    </md-card-content>
+  </md-card>
 </div>

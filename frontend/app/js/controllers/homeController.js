@@ -10,6 +10,7 @@ angular.module('controllers')
       vm.toggleOpen = toggleOpen;
       $scope.menu = menu;
 
+
       $rootScope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams) {
           $mdSidenav('left').close();

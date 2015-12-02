@@ -6,6 +6,7 @@ angular.module('services')
       clientCacheService, envService, menu, responseService) {
     var authentication = {};
     var timeout = 10 * 60 * 1000;
+    var anonymousStates = ['register', 'logout'];
     REST_API = envService.read('restApiUrl');
 
     var autoReAuthentication = $interval(function() {
@@ -41,7 +42,7 @@ angular.module('services')
     }
 
     authentication.isAuthenticated = function() {
-      return $rootScope.isAuthenticated;
+      return $rootScope.isAuthenticated || (anonymousStates.indexOf($state.current.name) > -1);
     }
 
     $rootScope.$on('$destroy', function() {

@@ -63,8 +63,7 @@ public class OrganizationController {
 	 * requires admin token (user registration)
 	 */
 	@RequestMapping(value = "/organization/{orgName}", method = RequestMethod.GET)
-    public @ResponseBody boolean checkIfOrganizationNameExists(@RequestHeader("Authorization") String token, 
-    		@PathVariable("orgName") final String orgName) {
+    public @ResponseBody boolean checkIfOrganizationNameExists(@PathVariable("orgName") final String orgName) {
 		boolean nameExists = false;
 		String adminToken = userRepository.login();		
 		CloudFoundryResources<Organization> organizations = restRepository.list(adminToken, V2_ORGANIZATIONS.concat("?q=name:").concat(orgName.toLowerCase()), 2, false);
