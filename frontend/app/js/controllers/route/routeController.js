@@ -3,13 +3,19 @@ angular.module('controllers')
     function RouteController($scope, $state, Restangular, menu, clientCacheService, DesignService, responseService, $mdDialog, $location) {
 
       $scope.orgId = $state.params.organizationId;
-      $scope.readOnly = true;
+
+      var originatorEv;
 
       $scope.query = {
         filter: '',
         order: 'entity.domain.entity.name',
         limit: 10,
         page: 1
+      };
+
+      $scope.openMenu = function($mdOpenMenu, ev) {
+        originatorEv = ev;
+        $mdOpenMenu(ev);
       };
 
       $scope.init = function() {
@@ -42,6 +48,7 @@ angular.module('controllers')
           routes.forEach(function(route) {
             route.w = $scope.w_collapsed;
             route.h = $scope.h_collapsed;
+            route.readOnly = true;
           })
           $scope.routes = routes;
         });
@@ -49,7 +56,7 @@ angular.module('controllers')
 
 
       $scope.prepareEdit = function(route) {
-        $scope.readOnly = false;
+        route.readOnly = false;
         $scope.oldHost = route.entity.host;
         $scope.oldPath = route.entity.path;
       }
@@ -57,7 +64,7 @@ angular.module('controllers')
       $scope.cancelEdit = function(route) {
         route.entity.host = $scope.oldHost;
         route.entity.path = $scope.oldPath;
-        $scope.readOnly = true;
+        route.readOnly = true;
       }
 
       $scope.updateRoute = function(route) {
@@ -76,6 +83,7 @@ angular.module('controllers')
           delete route.h;
           delete route.invalidPath;
           delete route.invalidHost;
+          delete route.readOnly;
 
           Restangular.one('routes', route.metadata.guid)
             .customPUT(route, undefined, undefined, undefined).then(function(route){
