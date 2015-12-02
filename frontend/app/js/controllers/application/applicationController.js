@@ -55,7 +55,7 @@ angular.module('controllers')
       $scope.deleteApplication = function(ev, application) {
          var confirm = $mdDialog.confirm()
                .title('Really delete this application?')
-               .content(application.entity.name)
+               .textContent(application.entity.name)
                .ariaLabel('Confirm delete')
                .targetEvent(ev)
                .ok('Yes')

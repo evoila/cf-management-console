@@ -61,7 +61,7 @@ angular.module('controllers')
        $scope.showConfirm = function(ev, user) {
         var confirm = $mdDialog.confirm()
               .title('Really delete user?')
-              .content(user.entity.username)
+              .textContent(user.entity.username)
               .ariaLabel('Confirm delete')
               .targetEvent(ev)
               .ok('Yes')

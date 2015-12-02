@@ -163,7 +163,7 @@ angular.module('controllers')
 
         var confirm = $mdDialog.confirm()
               .title(title)
-              .content(content)
+              .textContent(content)
               .ariaLabel('Confirm delete')
               .targetEvent(ev)
               .ok('Yes')

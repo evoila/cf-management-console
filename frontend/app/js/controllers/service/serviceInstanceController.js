@@ -19,9 +19,10 @@ angular.module('controllers')
        *
        */
        $scope.showConfirm = function(ev, instance) {
+         console.log(instance)
         var confirm = $mdDialog.confirm()
               .title('Really delete instance?')
-              .content(instance.entity.name)
+              .textContent(instance.entity.name)
               .ariaLabel('Confirm delete')
               .targetEvent(ev)
               .ok('Yes')

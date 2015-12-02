@@ -62,7 +62,7 @@ angular.module('controllers')
        $scope.showConfirm = function(ev, domain) {
         var confirm = $mdDialog.confirm()
               .title('Really delete domain?')
-              .content(domain.entity.name)
+              .textContent(domain.entity.name)
               .ariaLabel('Confirm delete')
               .targetEvent(ev)
               .ok('Yes')

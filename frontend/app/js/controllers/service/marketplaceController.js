@@ -22,7 +22,7 @@ angular.module('controllers')
        $scope.showConfirm = function(ev, service) {
         var confirm = $mdDialog.confirm()
               .title('Really delete service?')
-              .content(service.entity.label)
+              .textContent(service.entity.label)
               .ariaLabel('Confirm delete')
               .targetEvent(ev)
               .ok('Yes')
