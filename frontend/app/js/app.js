@@ -1,89 +1,111 @@
-angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'controllers', 'directives' ,'services', 'routes',
-    'ngMdIcons', 'ngClipboard', 'restangular','ngAnimate', 'environment','angular-loading-bar',
+angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'controllers', 'directives', 'services', 'routes',
+    'ngMdIcons', 'ngClipboard', 'restangular', 'ngAnimate', 'environment', 'angular-loading-bar', 'cmanaha.angular-elasticsearch-logger',
   ])
-  .config(function(ngClipProvider, $mdThemingProvider, $mdIconProvider, envServiceProvider) {
+  .config(['ngClipProvider', '$mdThemingProvider', '$mdIconProvider', 'envServiceProvider',
+    'CMRESLoggerProvider',
+    function(ngClipProvider, $mdThemingProvider, $mdIconProvider, envServiceProvider, esLoggingProvider) {
 
-    envServiceProvider.config({
+      envServiceProvider.config({
         domains: {
-            development: ['localhost', '127.0.0.1'],
-            production: ['cfmc.onevoila.rocks']
+          development: ['localhost', '127.0.0.1'],
+          production: ['cfmc.onevoila.rocks']
         },
         vars: {
-            development: {
-                restApiUrl: 'http://localhost:8080/api',
-                cf_prefix: '/v2'
-            },
-            production: {
-                restApiUrl: 'https://cfmc-api.onevoila.rocks/api',
-                cf_prefix: '/v2'
-            }
+          development: {
+            restApiUrl: 'http://localhost:8080/api',
+            cf_prefix: '/v2'
+          },
+          production: {
+            restApiUrl: 'https://cfmc-api.onevoila.rocks/api',
+            cf_prefix: '/v2'
+          }
         }
-    });
-    envServiceProvider.check();
-    ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");
+      });
+      envServiceProvider.check();
 
-    $mdThemingProvider.definePalette('amazingPaletteName', {
-      '50': 'ae2225',
-      '100': 'ffcdd2',
-      '200': 'ef9a9a',
-      '300': 'e57373',
-      '400': '467fd3',
-      '500': '2b5086',
-      '600': 'ae2225',
-      '700': 'ae2225',
-      '800': 'c62828',
-      '900': 'b71c1c',
-      'A100': 'ff8a80',
-      'A200': 'ff5252',
-      'A400': 'ff1744',
-      'A700': '78a3e1',
-      'contrastDefaultColor': 'light',
-      'contrastDarkColors': ['50', '100',
-        '200', '300', '400', 'A100'
-      ],
-      'contrastLightColors': undefined
-    });
-
-    $mdThemingProvider.theme('default')
-      .primaryPalette('amazingPaletteName', {
-        'default': '500'
-      })
-      .warnPalette('amazingPaletteName', {
-        'default': '600'
-      })
-      .accentPalette('amazingPaletteName', {
-        'default': '400'
+      ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");
+      $mdThemingProvider.definePalette('amazingPaletteName', {
+        '50': 'ae2225',
+        '100': 'ffcdd2',
+        '200': 'ef9a9a',
+        '300': 'e57373',
+        '400': '467fd3',
+        '500': '2b5086',
+        '600': 'ae2225',
+        '700': 'ae2225',
+        '800': 'c62828',
+        '900': 'b71c1c',
+        'A100': 'ff8a80',
+        'A200': 'ff5252',
+        'A400': 'ff1744',
+        'A700': '78a3e1',
+        'contrastDefaultColor': 'light',
+        'contrastDarkColors': ['50', '100',
+          '200', '300', '400', 'A100'
+        ],
+        'contrastLightColors': undefined
       });
 
-    $mdIconProvider
-      .defaultIconSet("./../assets/svg/avatars.svg", 128)
-      .icon("menu", "./../assets/svg/menu.svg", 24)
-      .icon("info", "./../assets/svg/info.svg", 24)
-      .icon("create", "./../assets/svg/create.svg", 24)
-      .icon("share", "./../assets/svg/share.svg", 24)
-      .icon("google_plus", "./..assets/svg/google_plus.svg", 512)
-      .icon("hangouts", "./../assets/svg/hangouts.svg", 512)
-      .icon("twitter", "./../assets/svg/twitter.svg", 512)
-      .icon("phone", "./..assets/svg/phone.svg", 512);
+      $mdThemingProvider.theme('default')
+        .primaryPalette('amazingPaletteName', {
+          'default': '500'
+        })
+        .warnPalette('amazingPaletteName', {
+          'default': '600'
+        })
+        .accentPalette('amazingPaletteName', {
+          'default': '400'
+        });
 
-  })
-  .run(function($rootScope, $state, $http, $timeout, clientCacheService, Restangular, envService, authenticationService) {
+      $mdIconProvider
+        .defaultIconSet("./../assets/svg/avatars.svg", 128)
+        .icon("menu", "./../assets/svg/menu.svg", 24)
+        .icon("info", "./../assets/svg/info.svg", 24)
+        .icon("create", "./../assets/svg/create.svg", 24)
+        .icon("share", "./../assets/svg/share.svg", 24)
+        .icon("google_plus", "./..assets/svg/google_plus.svg", 512)
+        .icon("hangouts", "./../assets/svg/hangouts.svg", 512)
+        .icon("twitter", "./../assets/svg/twitter.svg", 512)
+        .icon("phone", "./..assets/svg/phone.svg", 512);
+
+      esLoggingProvider.setElasticSearchConfig({
+        'host': 'http://88.198.249.61:9200',
+        'apiVersion': '1.7'
+      });
+
+      esLoggingProvider.setLogConfig({
+        'index': 'cf-management-console',
+        'type': 'jslog',
+        'bufferSize': 1,
+        'flushIntervalInMS': 3000
+      });
+
+      esLoggingProvider.setApplicationLogContext({
+        'appNameTag': 'cf-management-console',
+        'envTag': envServiceProvider.get()
+      });
+
+    }
+  ])
+  .run(function($rootScope, $state, $http, $timeout, clientCacheService, Restangular, envService, authenticationService, CMRESLogger) {
     Restangular.setBaseUrl(envService.read('restApiUrl'))
-    .setDefaultHeaders({
-      "Content-Type": "application/json;charset=UTF-8",
-      "Accept": "application/json;charset=UTF-8",
-    })
-    .setErrorInterceptor(function(response, deferred, responseHandler) {
-      if([401,403].indexOf(response.status) != -1) {
-        console.log("loginRequired - setErrorIntercetpor", response, deferred, responseHandler);
-        authenticationService.authenticate(false);
+      .setDefaultHeaders({
+        "Content-Type": "application/json;charset=UTF-8",
+        "Accept": "application/json;charset=UTF-8",
+      })
+      .setErrorInterceptor(function(response, deferred, responseHandler) {
+        if ([401, 403].indexOf(response.status) != -1) {
+          CMRESLogger.info("loginRequired - setErrorIntercetpor", response, deferred, responseHandler);
+          console.log("loginRequired - setErrorIntercetpor", response, deferred, responseHandler);
+          authenticationService.authenticate(false);
 
-        return false;
-      }
-      return true;
-    });
+          return false;
+        }
+        return true;
+      });
 
-    $rootScope.$on('$stateChangeSuccess',function(ev, to, toParams, from, fromParams){
+    CMRESLogger.info("loginRequired - setErrorIntercetpor");
+    $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
       window.scrollTo(0, 0);
       $rootScope.previousState = from.name;
       $rootScope.previousParams = fromParams;
