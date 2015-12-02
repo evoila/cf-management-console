@@ -3,6 +3,7 @@ angular.module('controllers')
     function RouteController($scope, $state, Restangular, menu, clientCacheService, DesignService, responseService, $mdDialog, $location) {
 
       $scope.orgId = $state.params.organizationId;
+      $scope.editActive = false;
 
       var originatorEv;
 
@@ -56,18 +57,23 @@ angular.module('controllers')
 
 
       $scope.prepareEdit = function(route) {
+        $scope.editActive = true;
         route.readOnly = false;
         $scope.oldHost = route.entity.host;
         $scope.oldPath = route.entity.path;
+        $scope.oldPort = route.entity.port;
       }
 
       $scope.cancelEdit = function(route) {
+        $scope.editActive = false;
         route.entity.host = $scope.oldHost;
         route.entity.path = $scope.oldPath;
+        route.entity.port = $scope.oldPort;
         route.readOnly = true;
       }
 
       $scope.updateRoute = function(route) {
+        console.log(route.entity.port)
 
         if(route.entity.host.length < 4)
           route.invalidHost = 'Host must be at least 4 characters'
@@ -78,11 +84,15 @@ angular.module('controllers')
         else if(route.entity.path && route.entity.path.indexOf('/') != 0 || route.entity.path && route.entity.path.indexOf('?') > -1)
           route.invalidPath = 'Path must begin with "/", character "?" is not allowed';
 
+        else if(route.entity.port && route.entity.port < 1024 || route.entity.port > 65535)
+          route.invalidPort = 'Port must be betwenn 1024 and 65535';
+
         else {
           delete route.w;
           delete route.h;
           delete route.invalidPath;
           delete route.invalidHost;
+          delete route.invalidPort;
           delete route.readOnly;
 
           Restangular.one('routes', route.metadata.guid)

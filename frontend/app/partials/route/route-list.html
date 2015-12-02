@@ -17,18 +17,18 @@
       <thead md-order="query.order" md-trigger="onOrderChange">
         <tr>
           <th name="Domain" order-by="entity.domain.entity.name"></th>
-          <th style="min-width:50px;width:50px;"></th>
+          <th style="min-width:50px;width:50px;max-width:50px;"></th>
           <th name="Host" order-by="entity.host"></th>
           <th name="Path" order-by="entity.path"></th>
           <th name="Port" order-by="entity.port"></th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="route in routes | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit" ng-mouseover="showButtons=true" ng-mouseleave="showButtons=false">
+        <tr class="data-table-row" ng-repeat="route in routes | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit" ng-mouseover="showButtons=true" ng-mouseleave="showButtons=false" ng-class="{'active': route.readOnly == false}">
           <td>{{route.entity.domain.entity.name}}</td>
 
-          <td style="min-width:50px;width:50px;">
-            <div ng-show="showButtons">
+          <td style="min-width:50px;width:50px;max-width:50px;" > <!--ng-hide="oldHost && route.readOnly"-->
+            <div ng-show="showButtons && !editActive || !route.readOnly">
               <md-menu md-position-mode="target-right target">
                 <md-button aria-label="Open route interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
                   <md-icon md-menu-origin="" md-svg-icon="assets/svg/menu.svg"></md-icon>
@@ -48,9 +48,19 @@
             </div>
           </td>
 
-          <td><input ng-hide="route.invalidHost" ng-model="route.entity.host" ng-readonly="route.readOnly" ng-required="false" class="input-toggle-edit no-focus" /></td>
-          <td><input ng-hide="route.invalidPath" ng-model="route.entity.path" ng-readonly="route.readOnly" ng-required="false" class="input-toggle-edit no-focus" /></td>
-          <td><input ng-hide="route.invalidPort" ng-model="route.entity.port" ng-readonly="route.readOnly" ng-required="false" class="input-toggle-edit no-focus" type="number" min="1024" max="65535" /></td>
+          <td>
+            <input ng-hide="route.invalidHost" ng-model="route.entity.host" ng-readonly="route.readOnly" class="input-toggle-edit no-focus" ng-class="{'active': route.readOnly == false}" />
+            <p ng-show="route.invalidHost" style="color:red;" ng-click="route.invalidHost=false">{{route.invalidHost}}</p>
+          </td>
+          <td>
+            <input ng-hide="route.invalidPath" ng-model="route.entity.path" ng-readonly="route.readOnly" class="input-toggle-edit no-focus" ng-class="{'active': route.readOnly == false}"/>
+            <p ng-show="route.invalidPath" style="color:red;" ng-click="route.invalidPath=false">{{route.invalidPath}}</p>
+          </td>
+          <td>
+            <input ng-hide="route.invalidPort" ng-model="route.entity.port" ng-readonly="route.readOnly" class="input-toggle-edit no-focus" ng-class="{'active': route.readOnly == false}" type="number" />
+            <p ng-show="route.invalidPort" style="color:red;" ng-click="route.invalidPort=false">{{route.invalidPort}}</p>
+          </td>
+
         </tr>
       </tbody>
     </table>

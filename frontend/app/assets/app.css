@@ -65,11 +65,21 @@ md-dialog-content {
 }
 
 .input-toggle-edit {
-  #text-align:right;
-  #color:rgba(0,0,0,0.54);
-  border:none;
-  #font-weight:500;
+  border: none;
+  background: transparent;
 }
+.input-toggle-edit.active {
+  background: white;
+}
+
+.data-table-row.active {
+  height: 70px;
+  background-color: #adbfd8;
+}
+.data-table-row.active:hover {
+  background-color: #adbfd8 !important;
+}
+
 
 .item {
   position:relative;
