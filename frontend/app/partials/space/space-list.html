@@ -20,7 +20,7 @@
 			</div>
 		</md-toolbar>
 		<md-card-content class="animate-hide" ng-hide="s.minimize">
-			<div layout="row" layout-sm="column" >
+			<div layout="column" layout-gt-sm="row">
 				<md-card class="md-whiteframe-z2" flex>
 					<md-card-content layout="column">
 						<div layout="column" layout-gt-md="row" layout-align="start center">
@@ -33,7 +33,7 @@
 							<br>
 						</md-divider>
 						<div flex>
-							<md-grid-list md-cols="1" md-cols-gt-xs="2" md-cols-gt-md="3" md-cols-gt-lg="4" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+							<md-grid-list md-cols="1" md-cols-sm="2" md-cols-gt-md="3" md-cols-gt-lg="4" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile ng-repeat="app in s.entity.apps"
 									style="background-color:#{{colorString(app.entity.name)}}"
 									ui-sref="application({'applicationId':'{{app.metadata.guid}}','organizationId':'{{s.entity.organization.metadata.guid}}','spaceId':'{{s.metadata.guid}}'})">
@@ -64,7 +64,7 @@
 							<!--span class=" pull-right fa fa-chevron-down md-toggle-icon md-button-toggle" ng-class="{'toggled' : hideApps}"></span-->
 						</md-divider>
 						<div flex ng-cloak>
-							<md-grid-list md-cols="2" md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+							<md-grid-list md-cols="1" md-cols-sm="2" md-cols-gt-md="3" md-cols-gt-lg="4" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile class="no-focus" ng-repeat="ser in s.entity.service_instances" style="background-color:#{{colorString(ser.entity.name)}}"
 									ui-sref="service({organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid, space: s})">
 									<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">

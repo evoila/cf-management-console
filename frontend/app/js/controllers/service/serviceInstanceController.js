@@ -6,14 +6,10 @@ angular.module('controllers')
       $scope.orgId = $state.params.organizationId;
 
       $scope.init = function() {
-        if(!$scope.space) {
-          Restangular.one('spaces', $state.params.spaceId).get().then(function(space) {
-            $scope.space = space;
-            $scope.instances = space.entity.service_instances;
-          })
-        }
-        else
-          $scope.instances = $scope.space.entity.service_instances;
+        Restangular.one('spaces', $state.params.spaceId).get().then(function(space) {
+          $scope.space = space;
+          $scope.instances = space.entity.service_instances;
+        })
       };
 
       /*
@@ -44,7 +40,6 @@ angular.module('controllers')
           responseService.error(response);
         });
       }
-
 
       $scope.colorString = function(name) {
         var myColor = DesignService.stringColor(name);
