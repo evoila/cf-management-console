@@ -76,7 +76,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       esLoggingProvider.setLogConfig({
         'index': 'cf-management-console',
         'type': 'jslog',
-        'bufferSize': 1,
+        'bufferSize': 50,
         'flushIntervalInMS': 3000
       });
 
@@ -103,8 +103,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
         }
         return true;
       });
-
-    CMRESLogger.info("loginRequired - setErrorIntercetpor");
+    
     $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
       window.scrollTo(0, 0);
       $rootScope.previousState = from.name;
