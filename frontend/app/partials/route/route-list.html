@@ -12,6 +12,66 @@
 
 	<md-divider></md-divider>
 
+  <md-data-table-container>
+    <table md-data-table md-progress="deferred">
+      <thead md-order="query.order" md-trigger="onOrderChange">
+        <tr>
+          <th name="Domain" order-by="entity.domain.entity.name"></th>
+          <th name="Host" order-by="entity.host"></th>
+          <th name="Path" order-by="entity.path"></th>
+          <th name="Port" order-by="entity.port"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="route in routes | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
+          <td>{{route.entity.domain.entity.name}}</td>
+          <td>{{route.entity.host}}</td>
+          <td>{{route.entity.path}}</td>
+          <td>{{route.entity.port}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </md-data-table-container>
+
+  <md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{routes.length}}" md-trigger="onPaginationChange"></md-data-table-pagination>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!--
   <div style="margin-bottom:60px;">
 
     <div id="item-{{$index}}" class="item no-focus" ng-repeat="route in routes" style="max-width:100%;width:{{route.w}};height:{{route.h}};padding:5px;">
@@ -34,7 +94,7 @@
                   <p ng-show="route.invalidPath" style="color:red;" ng-click="route.invalidPath=false">{{route.invalidPath}}</p>
   							</div>
 
-                <!-- HIDDEN -->
+
                 <div ng-show="route.w==w_expanded">
                   <div class="decent-line" layout="row" layout-align="space-between start" ng-hide="route.entity.domain.entity.router_group_guid==null">
     								<p>Port:</p>
@@ -66,7 +126,7 @@
             </md-list-item>
           </md-list>
 
-          <!-- BUTTONS -->
+
             <md-button class="md-warn" style="position:absolute;bottom:0px;left:18px;" ng-click="showConfirm($event, route, 'delete')" ng-show="route.w==w_expanded">Delete Route</md-button>
             <md-button class="md-warn" style="position:absolute;bottom:0px;left:135px;"ng-click="showRemoveAppDialog($event, route)" ng-show="route.w==w_expanded && route.entity.apps.length>0">Remove App</md-button>
             <md-button id="tglbt-{{$index}}" style="position:absolute;bottom:0;right:8px;" ng-click="toggle(route, $event)">{{route.w === w_expanded ? "Less" : "MORE"}}</md-button>
@@ -76,5 +136,5 @@
     </div>
 
   </div>
-
+-->
 </div>

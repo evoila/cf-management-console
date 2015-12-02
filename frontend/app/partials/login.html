@@ -7,29 +7,30 @@
                   </h2>
                 </div>
             </md-toolbar>
-            <md-content layout="column" layout-align="space-around start">
+            <md-card-content layout="column" layout-align="space-around start">
                 <form name="userForm" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" ng-submit="login(userForm)">
-                  <div layout="column" layout-align="space-around start">
+                  <div layout="column" layout-gt-sm="row" layout-align="space-around start">
                     <md-input-container class="md-input-invalid">
-                        <label>Username(email)</label>
-                        <input type="text" ng-model="userForm.email" required="true" width="100%">
+                      <label>Username(email)</label>
+                      <input type="text" ng-model="userForm.email" required="true">
                     </md-input-container>
                     <md-input-container>
-                        <label>password</label>
-                        <input type="password" ng-model="userForm.password" required="true">
+                      <label>Password</label>
+                      <input type="password" ng-model="userForm.password" required="true">
                     </md-input-container>
                   </div>
 
+
                     <div layout="row" layout-align="space-around center">
-                        <md-input-container>
+                      <md-input-container>
                           <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
                            Remember Me
-                         </md-checkbox>
-                        </md-input-container>
+                          </md-checkbox>
+                      </md-input-container>
 
-                        <md-input-container>
+
                             <a class="md-primary md-button md-ink-ripple flex" ui-sref="forgot">Forgot password?</a>
-                        </md-input-container>
+
                     </div>
 
                     <div layout="column" layout-gt-sm="row" layout-align="space-between center">
@@ -37,6 +38,6 @@
                       <md-button flex-sm="100" flex-order-sm="1" type="submit" class="md-raised md-primary" ng-disabled="login.$invalid">Log in</md-button>
                     </div>
                 </form>
-            </md-content>
+            </md-card-content>
         </md-card>
 </div>

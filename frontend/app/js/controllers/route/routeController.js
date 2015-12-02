@@ -5,6 +5,13 @@ angular.module('controllers')
       $scope.orgId = $state.params.organizationId;
       $scope.readOnly = true;
 
+      $scope.query = {
+        filter: '',
+        order: 'entity.domain.entity.name',
+        limit: 10,
+        page: 1
+      };
+
       $scope.init = function() {
 
         Restangular.one('private_domains', $state.params.organizationId).getList().then(function(domains) {
@@ -37,9 +44,9 @@ angular.module('controllers')
             route.h = $scope.h_collapsed;
           })
           $scope.routes = routes;
-
         });
       }
+
 
       $scope.prepareEdit = function(route) {
         $scope.readOnly = false;
