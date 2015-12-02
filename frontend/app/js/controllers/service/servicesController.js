@@ -6,7 +6,6 @@ angular.module('controllers')
     self.service = $state.params.service;
 
     $scope.init = function() {
-
       self.showCreate = false;
       $scope.orgId = $state.params.organizationId;
       $scope.instances = [];

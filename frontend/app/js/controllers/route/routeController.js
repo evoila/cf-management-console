@@ -191,6 +191,7 @@ angular.module('controllers')
                   $mdDialog.hide();
                   responseService.success(route, 'Association was successful', 'routes', { organizationId : $scope.orgId });
                 }, function(response) {
+                  console.log(response)
                   responseService.error(response);
                 })
               }
