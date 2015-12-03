@@ -54,6 +54,7 @@ angular.module('controllers')
 
       function deleteServiceBinding(service_binding_guid) {
         Restangular.one('service_bindings', service_binding_guid).remove().then(function() {
+          $mdDialog.hide();
           responseService.success(null, 'Binding was deleted successfully', 'service', { organizationId : $scope.orgId, spaceId : $scope.space.metadata.guid });
         }, function(response) {
           responseService.error(response);
@@ -82,6 +83,7 @@ angular.module('controllers')
 
       function deleteServiceInstance(instance) {
         Restangular.one('service_instances', instance.metadata.guid).remove().then(function() {
+          $mdDialog.hide();
           responseService.success(instance, 'Instance was deleted successfully', 'service', { organizationId : $scope.orgId, spaceId : $scope.space.metadata.guid });
         }, function(response) {
           responseService.error(response);

@@ -100,6 +100,7 @@ angular.module('controllers')
 
           Restangular.one('routes', route.metadata.guid)
             .customPUT(route, undefined, undefined, undefined).then(function(route){
+              $mdDialog.hide();
               responseService.success(route, 'Route was updated successfully', 'routes', { organizationId : $scope.orgId });
           }, function(response) {
               responseService.error(response);
@@ -134,6 +135,7 @@ angular.module('controllers')
 
       function deleteRoute(route) {
         Restangular.one('routes', route.metadata.guid).remove().then(function() {
+          $mdDialog.hide();
           responseService.success(route, 'Route was deleted successfully', 'routes', { organizationId : $scope.orgId });
         }, function(response) {
           responseService.error(response);

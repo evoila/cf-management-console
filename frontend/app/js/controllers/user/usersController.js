@@ -84,6 +84,7 @@ angular.module('controllers')
 
       function deleteUser(user) {
         Restangular.one('users', user.metadata.guid).remove().then(function() {
+          $mdDialog.hide();
           responseService.success(user, 'User was deleted successfully', 'users', { organizationId : $scope.orgId });
         }, function(response) {
           responseService.error(response);
@@ -112,6 +113,7 @@ angular.module('controllers')
 
           Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId)
             .customPUT(undefined, undefined,({ username: 'dummy' }),undefined).then(function(user) {
+            $mdDialog.hide();
             responseService.success(user, 'User was created successfully', 'users', { organizationId : $scope.orgId });
           }, function(response) {
               responseService.error(response);

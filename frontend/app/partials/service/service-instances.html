@@ -25,8 +25,18 @@
 										<p>{{instance.entity.disk_quota}}</p>
 									</div>
 									<div layout="row" layout-align="space-between center">
-										<p>Tags</p>
-										<p>{{instance.entity.tags}}</p>
+										<div layout="column">
+											<p class="no-focus" style="cursor:pointer;" ng-click="showTags = !showTags">Tags
+												<i class="fa fa-sm" ng-show="instance.entity.tags.length>0" ng-class="{'fa-chevron-down' : !showTags, 'fa-chevron-up' : showTags}" style="margin-left:3px;"></i>
+											</p>
+											<div ng-show="showTags && instance.entity.tags.length>0">
+												<div class="spacer-10"></div>
+												<p>
+													<span ng-repeat="tag in instance.entity.tags">{{tag}}{{$last ? '' : ', '}}</span>
+												</p>
+												<div class="spacer-10"></div>
+											</div>
+										</div>
 									</div>
 									<div layout="row" layout-align="space-between center">
 										<p>Last Operation</p>
@@ -53,7 +63,7 @@
 					      <md-divider></md-divider>
 					      <md-subheader class="md-no-sticky no-focus" style="cursor:pointer;" ng-click="showBindings = !showBindings">
 									Service Bindings ({{instance.entity.service_bindings.length}})
-									<i class="fa fa-sm" ng-class="{'fa-chevron-down' : !showBindings, 'fa-chevron-up' : showBindings}" style="margin-left:8px;"></i>
+									<i class="fa fa-sm" ng-show="instance.entity.service_bindings.length>0" ng-class="{'fa-chevron-down' : !showBindings, 'fa-chevron-up' : showBindings}" style="margin-left:8px;"></i>
 								</md-subheader>
 
 								<div ng-show="showBindings" style="padding:0 16px;color:rgba(0,0,0,0.54);">

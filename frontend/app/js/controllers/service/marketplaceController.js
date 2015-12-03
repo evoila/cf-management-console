@@ -34,6 +34,7 @@ angular.module('controllers')
 
       function deleteService(service) {
         Restangular.one('services', service.metadata.guid).remove().then(function() {
+          $mdDialog.hide();
           responseService.success(service, 'Service was deleted successfully', 'marketplace', { organizationId : $scope.orgId });
         }, function(response) {
           responseService.error(response);
