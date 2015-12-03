@@ -41,6 +41,9 @@
               </md-select>
               <span class="custom-validation-msg" ng-show="!createServiceInstanceForm.spaceId && noOption">Please choose a space</span>
             </md-input-container>
+
+            <md-chips ng-model="tags" readonly="false" placeholder="Enter a tag" delete-button-label="Remove Tag" delete-hint="Press delete to remove tag" secondary-placeholder="+Tag"></md-chips>
+
           </div>
           <span flex=""></span>
           <md-dialog-actions flex layout="row">

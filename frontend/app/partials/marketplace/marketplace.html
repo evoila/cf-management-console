@@ -1,10 +1,6 @@
 
 <div layout="column" layout-gt-md="row" layout-align="start start" style="padding-top:8px;">
 	<h2>Services Marketplace</h2>
-	<div layout="row" layout-align="start center">
-		<md-switch class="no-focus" ng-model="editMode" aria-label="Toggle edit" style="margin-left:20px;">editable</md-switch>
-	</div>
-
 </div>
 
 <md-divider></md-divider>
@@ -13,12 +9,9 @@
 	<md-card-content layout="column">
 		<div flex>
 			<md-grid-list md-cols-sm="2" md-cols-gt-sm="3" md-cols-gt-lg="5" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
-				<md-grid-tile class="no-focus" ng-repeat="service in services" style="background-color:#{{colorString(service.entity.label)}}" ng-click="!editMode && showDetails(service)">
-					<div ng-show="editMode" ng-click="test()" style="width:32px;height:32px;background-color:red;position:absolute;top:0;right:0;">
-						<button class="md-button md-icon-button" type="button" aria-label="Delete Service" style="text-align:center;width:32px;height:32px;margin:0;padding:3px 0 0 0;" ng-click="showConfirm($event, service)">
-							<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg" style="vertical-align:top;color:#fff;"></md-icon>
-						</button>
-					</div>
+				<md-grid-tile class="no-focus" ng-repeat="service in services" style="background-color:#{{colorString(service.entity.label)}}"
+				ui-sref="service-details({'organizationId':'{{orgId}}','serviceId':'{{service.metadata.guid}}', 'service':service})">
+		
 					<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(service.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 					<md-grid-tile-footer>
 						<h3>

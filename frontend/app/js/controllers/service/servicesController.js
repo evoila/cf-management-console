@@ -65,6 +65,7 @@ angular.module('controllers')
           $scope.service = service;
           $scope.noOption = false;
           $scope.spaces = spaces;
+          $scope.tags = [];
 
           $scope.cancel = function() {
             $mdDialog.cancel();
@@ -73,21 +74,19 @@ angular.module('controllers')
           $scope.submitCreateServiceInstanceForm = function(form) {
             if(!form.spaceId)
               $scope.noOption = true;
-              
+
             else {
               var instance = {
                 'space_guid': form.spaceId,
                 'name': form.instanceName,
-                'service_plan_guid': $scope.plan.metadata.guid
+                'service_plan_guid': $scope.plan.metadata.guid,
+                'tags': $scope.tags
               };
 
-              // rest: Create Service Instance
               Restangular.all('service_instances').post(instance).then(function(instance) {
                 $mdDialog.hide();
                 responseService.success(instance, 'Instance was created successfully', 'service', { organizationId : $state.params.organizationId, spaceId : form.spaceId });
               }, function(response) {
-                console.log(response)
-
                 if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
                   responseService.error(response, 'Instance name already in use');
                 else

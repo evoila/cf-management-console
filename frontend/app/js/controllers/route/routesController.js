@@ -95,17 +95,14 @@ angular.module('controllers')
           delete route.invalidHost;
           delete route.invalidPort;
           delete route.readOnly;
+          delete route.apps;
+          delete route.maxApps;
 
           Restangular.one('routes', route.metadata.guid)
             .customPUT(route, undefined, undefined, undefined).then(function(route){
               responseService.success(route, 'Route was updated successfully', 'routes', { organizationId : $scope.orgId });
           }, function(response) {
-            if(response.status == '400' && response.data.message.indexOf('domains of TCP router groups only') > -1)
-              responseService.error(response, 'Port is supported for domains of TCP router groups only');
-            else {
-              $mdDialog.hide();
               responseService.error(response);
-            }
           })
         }
       };

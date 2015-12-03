@@ -29,20 +29,16 @@ angular.module('controllers')
               .cancel('Better not');
         $mdDialog.show(confirm).then(function() {
           deleteService(service);
-        }, function() {
-
         });
       };
 
       function deleteService(service) {
         Restangular.one('services', service.metadata.guid).remove().then(function() {
           responseService.success(service, 'Service was deleted successfully', 'marketplace', { organizationId : $scope.orgId });
+        }, function(response) {
+          responseService.error(response);
         });
       }
-
-      $scope.showDetails = function(service) {
-        $state.go('service-details', {organizationId : $scope.orgId, serviceId : service.metadata.guid, service : service});
-      };
 
       $scope.colorString = function(name) {
         var myColor = DesignService.stringColor(name);

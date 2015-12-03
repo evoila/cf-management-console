@@ -1,10 +1,10 @@
-<div style="padding-left: 30px" ng-init="init()" >
+<div style="" ng-init="init()" >
 	<span class="single-space-title">SERVICE INSTANCES</span>
 </div>
 
 <div layout="row" style="padding: 10px" layout-wrap>
 
-	<div ng-repeat="instance in instances" flex="100" flex-gt-sm="50" flex-gt-lg="33" id="single-space" ng-init="instance.showMore=false" style="max-width:420px;">
+	<div class="single-space" ng-repeat="instance in instances" ng-init="instance.showMore=false" style="width:350px;">
 		<md-card style="background-color:#{{colorString(instance.entity.name)}};">
 			<img style="height:50%; padding-bottom: 45px;" ng-src="assets/png/{{servicePng(instance.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 			<md-card-content style="background-color:#fff">

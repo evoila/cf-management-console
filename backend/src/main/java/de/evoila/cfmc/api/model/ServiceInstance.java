@@ -33,7 +33,11 @@ public class ServiceInstance {
 	
 	@JsonProperty("service_bindings_url")
 	private String serviceBindingUrl;
+	
+	@JsonProperty("tags")
+	private String[] tags;
 
+	
 	public String getName() {
 		return name;
 	}
@@ -80,6 +84,14 @@ public class ServiceInstance {
 
 	public void setServiceBindingUrl(String serviceBindingUrl) {
 		this.serviceBindingUrl = serviceBindingUrl;
+	}
+	
+	public String[] getTags() {
+		return tags;
+	}
+	
+	public void setTags(String[] tags) {
+		this.tags = tags;
 	}
 	
 }
