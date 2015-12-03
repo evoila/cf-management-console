@@ -10,6 +10,10 @@ html, body {
     outline: none;
 }
 
+.grey {
+  color: #8c8c8c;
+}
+
 .orange-bg {
   background-color: #D0711D !important;
 }
@@ -112,6 +116,12 @@ md-dialog-actions {
   padding-bottom: 15px;
 }
 
+.clickable {
+  cursor: pointer;
+}
+.clickable.delete {
+  color: red;
+}
 
 
 
@@ -322,10 +332,17 @@ span.name {
 md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-grid-tile-footer h3 {
   font-size: 16px; }
 
-/**********SINGLE SPACE VIEW ***********/
-/**/
 
-.single-space img {
+/**********SERVICE INSTANCES VIEW ***********/
+
+.service-instance {
+  width:350px;
+}
+.service-instance > md-card > img {
+  height: 50%;
+  padding-bottom: 45px;
+}
+.service-instance img {
   height:50px;
   max-height: 80%;
   padding:30px;
@@ -333,8 +350,22 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
   margin-left:auto;
   margin-right:auto;
 }
-
-.single-space-title {
+.service-instance md-card-content {
+  background-color: #fff;
+}
+.service-instance md-card-content > h1.md-title {
+  font-size: 30px;
+  color: #444;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.service-instance .instance-bindings {
+  padding:0 16px;
+}
+.service-instance .instance-more {
+  margin-top: 14px;
+}
+.service-instances-title {
     font-size: 50px;
     text-transform: uppercase;
     font-weight: bold;
