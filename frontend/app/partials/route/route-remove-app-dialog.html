@@ -6,27 +6,27 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content style="width:300px;min-width:300px;min-height:100px;max-width:800px;">
+    <md-dialog-content>
 
       <form name="removeAppForm" ng-submit="submitRemoveAppForm(removeAppForm)">
 
-        <div class="form-group">
+        <div class="form-group full-width less-vmargins">
           <md-input-container>
-            <md-select ng-required="true" placeholder="Choose app" ng-model="removeAppForm.app_guid" style="min-width: 200px;">
+            <md-select ng-required="true" placeholder="Choose app" ng-model="removeAppForm.app_guid">
               <md-option ng-value="app.metadata.guid" ng-repeat="app in route.entity.apps">{{app.entity.name}}</md-option>
             </md-select>
-            <p ng-show="noApp" style="color:red;margin-top:-17px;">Please choose an app</p>
+            <span class="custom-validation-msg" ng-show="!removeAppForm.app_guid && noApp">Please choose an app</span>
           </md-input-container>
           </div>
 
-          <div flex layout="row" style="position:absolute;bottom:15px;right:17px;">
+          <md-dialog-actions flex layout="row">
             <md-button type="button" ng-click="cancel()">
               Cancel
             </md-button>
             <md-button class="md-raised md-primary" type="submit">
               Remove
             </md-button>
-          </div>
+          </md-dialog-actions>
 
       </form>
     </md-dialog-content>

@@ -6,7 +6,7 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content style="width:300px;min-width:300px;min-height:360px;">
+    <md-dialog-content>
 
       <form name="createRouteForm" ng-submit="submitCreateRouteForm(createRouteForm)">
 
@@ -38,19 +38,16 @@
           </md-input-container>
           </div>
 
-          <div flex layout="row" style="position:absolute;bottom:15px;right:17px;">
+          <md-dialog-actions flex layout="row">
             <md-button type="button" ng-click="cancel()">
               Cancel
             </md-button>
             <md-button class="md-raised md-primary" type="submit">
               Create
             </md-button>
-          </div>
+          </md-dialog-actions>
 
       </form>
     </md-dialog-content>
-
-
-
 
 </md-dialog>

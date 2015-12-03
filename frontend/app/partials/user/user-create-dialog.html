@@ -6,11 +6,11 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content style="width:300px;min-width:300px;min-height:330px;max-width:800px;max-height:810px;">
+    <md-dialog-content>
 
       <form name="createUserForm" ng-submit="submitCreateUserForm(createUserForm)">
 
-        <div class="form-group">
+        <div class="form-group full-width less-vmargins">
           <md-input-container>
             <label>Username(email)</label>
             <input type="email" ng-model="createUserForm.username" ng-required="true">
@@ -29,19 +29,16 @@
           </md-input-container>
           </div>
 
-          <div flex layout="row" style="position:absolute;bottom:15px;right:17px;">
+          <md-dialog-actions flex layout="row">
             <md-button type="button" ng-click="cancel()">
               Cancel
             </md-button>
             <md-button class="md-raised md-primary" type="submit">
               Create
             </md-button>
-          </div>
+          </md-dialog-actions>
 
       </form>
     </md-dialog-content>
-
-
-
 
 </md-dialog>

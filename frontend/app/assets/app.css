@@ -90,8 +90,22 @@ span.custom-validation-msg {
   color: red;
   font-size: 11px;
   margin-top: 10px;
+  margin-left: 2px;
 }
-
+md-dialog-content {
+  padding-bottom: 10px;
+  max-width: 380px;
+}
+md-dialog-actions {
+  margin-top: 8px;
+}
+.bold {
+  font-weight: bold;
+}
+.spacer-30 {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 
 
 

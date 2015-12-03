@@ -53,10 +53,8 @@ angular.module('controllers')
         }, function(response) {
             if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
               responseService.error(response, 'Domain already taken');
-            else {
-              $mdDialog.hide();
+            else
               responseService.error(response);
-            }
         });
       };
 

@@ -18,11 +18,16 @@ angular.module('controllers')
       if(!self.service) {
         Restangular.one('services', $state.params.serviceId).get().then(function(service) {
           self.service = service;
+          getInstances();
         })
       }
-      else
+      else {
         self.service = $state.params.service;
+        getInstances();
+      }
+    }
 
+    function getInstances() {
       Restangular.one('service_instances', $scope.orgId).getList().then(function(instances) {
         var colors = DesignService.getNumberOfVisuallyDistinctColors(self.service.entity.service_plans.length);
 
@@ -40,6 +45,7 @@ angular.module('controllers')
         responseService.error(response);
       });
     }
+
 
     /*
      *  Dialog for
@@ -65,9 +71,9 @@ angular.module('controllers')
           };
 
           $scope.submitCreateServiceInstanceForm = function(form) {
-            if(!form.spaceId) {
+            if(!form.spaceId)
               $scope.noOption = true;
-            }
+              
             else {
               var instance = {
                 'space_guid': form.spaceId,

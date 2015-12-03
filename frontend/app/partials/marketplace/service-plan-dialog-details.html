@@ -12,41 +12,45 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content class="less-vmargins" style="max-width:400px!important;min-width:300px;min-height:300px;max-width:800px;max-height:810px;" layout="column">
+    <md-dialog-content>
 
-      <div flex ng-hide="ctrl.showCreate" layout="column">
-        <h4>Pricing:</h4>
+      <div flex ng-hide="ctrl.showCreate">
+        <p class="bold">Pricing:</p>
         <p>{{ plan.entity.free == 'true' ? 'Not free' : 'Free' }}</p>
-        <h4>Description:</h4>
+        <md-divider></md-divider>
+        <p class="bold">Description:</p>
         <p>{{plan.entity.description}}</p>
 
-        <span flex=""></span>
+        <div class="spacer-30"></div>
+
         <div flex style="text-align:center;">
           <md-button class="md-raised md-primary" aria-label="Create new Instance" ng-click="ctrl.showCreate = true">Create new Instance</md-button>
         </div>
       </div>
 
-      <div ng-show="ctrl.showCreate" layout="column">
+      <div ng-show="ctrl.showCreate">
         <form name="createServiceInstanceForm" ng-submit="submitCreateServiceInstanceForm(createServiceInstanceForm)">
-          <div flex class="form-group">
-            <md-select ng-required="true" placeholder="Choose space" ng-model="createServiceInstanceForm.spaceId" style="min-width: 200px;">
-              <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
-            </md-select>
-            <p ng-show="noOption" style="color:red;margin-top:-17px;">Please choose a space</p>
+          <div flex class="form-group full-width less-vmargins">
             <md-input-container>
               <label>Instance name</label>
               <input type="text" ng-model="createServiceInstanceForm.instanceName" ng-required="true" minlength="5">
             </md-input-container>
+            <md-input-container>
+              <md-select placeholder="Choose space" ng-model="createServiceInstanceForm.spaceId">
+                <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
+              </md-select>
+              <span class="custom-validation-msg" ng-show="!createServiceInstanceForm.spaceId && noOption">Please choose a space</span>
+            </md-input-container>
           </div>
           <span flex=""></span>
-          <div flex layout="row" style="position:absolute;bottom:15px;right:15px;">
+          <md-dialog-actions flex layout="row">
             <md-button type="button" ng-click="cancel()">
               Cancel
             </md-button>
             <md-button class="md-raised md-primary" type="submit">
               Create
             </md-button>
-          </div>
+          </md-dialog-actions>
         </form>
       </div>
 

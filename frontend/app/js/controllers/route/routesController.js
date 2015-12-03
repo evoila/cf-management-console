@@ -169,8 +169,10 @@ angular.module('controllers')
                   $mdDialog.hide();
                   responseService.success(route, 'Association was successful', 'routes', { organizationId : $scope.orgId });
                 }, function(response) {
-                  console.log(response)
-                  responseService.error(response);
+                  if(response.status == '400' && response.data.message.indexOf('Invalid relation') > -1)
+                    responseService.error(response, 'Invalid relation');
+                  else
+                    responseService.error(response);
                 })
               }
             };
