@@ -51,16 +51,32 @@
 					      <md-divider></md-divider>
 					      <md-subheader class="md-no-sticky">Service Plan ({{instance.entity.service_plan.entity.name}})</md-subheader>
 					      <md-divider></md-divider>
-					      <md-subheader class="md-no-sticky">Service Bindings ({{instance.entity.service_bindings.length}})</md-subheader>
+					      <md-subheader class="md-no-sticky no-focus" style="cursor:pointer;" ng-click="showBindings = !showBindings">
+									Service Bindings ({{instance.entity.service_bindings.length}})
+									<i class="fa fa-sm" ng-class="{'fa-chevron-down' : !showBindings, 'fa-chevron-up' : showBindings}" style="margin-left:8px;"></i>
+								</md-subheader>
+
+								<div ng-show="showBindings" style="padding:0 16px;color:rgba(0,0,0,0.54);">
+									<div ng-repeat="binding in instance.bindingsDetails" layout="column">
+										<div layout="row">
+											<div flex="10" layout="column"><i class="fa fa-times no-focus" style="cursor:pointer;margin-top:2px;width:14px;color:red;" ng-click="deleteServiceBinding($event, instance, binding)"></i></div>
+											<div flex="70" layout="column">{{binding.app_name}}</div>
+											<div flex="20" layout="column">{{binding.app_state}}</div>
+										</div>
+										<div class="spacer-10"></div>
+										<md-divider></md-divider>
+										<div class="spacer-10"></div>
+									</div>
+								</div>
 
 					      <div flex="100" layout="column" layout-align="center center" class="md-no-sticky" style="margin-top:14px;padding-right:16px;">
 									<div flex="60">
-										<button ng-disabled="instance.entity.service_bindings" class="md-button md-raised md-warn" type="button" aria-label="Delete Service Instance" style="text-align:center;" ng-click="showConfirm($event, instance)">
+										<button ng-disabled="instance.entity.service_bindings.length>0" class="md-button md-raised md-warn" type="button" aria-label="Delete Service Instance" style="text-align:center;" ng-click="showConfirm($event, instance)">
 											<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg"></md-icon> Delete instance
 										</button>
 									</div>
 									<div ng-hide="instance.entity.service_bindings.length==0" flex="100">
-										<span>Delete bindings first</span>
+										<span style="color:#8c8c8c;">Delete bindings first</span>
 									</div>
 
 								</div>

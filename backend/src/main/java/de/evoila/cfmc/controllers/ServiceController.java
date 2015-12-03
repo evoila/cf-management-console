@@ -44,6 +44,7 @@ public class ServiceController {
 	private static String V2_SERVICES = "v2/services";
 	private static String V2_SERVICE_PLANS = "v2/service_plans/";
 	private static String V2_SERVICE_INSTANCES = "v2/service_instances";
+	private static String V2_SERVICE_BINDINGS = "v2/service_bindings";
 	
 	
     @RequestMapping(value = "/services", method = GET)
@@ -80,7 +81,6 @@ public class ServiceController {
     	CloudFoundryResources<ServicePlan> servicePlans = restRepository.list(adminToken, V2_SERVICES.concat("/").concat(id).concat("/service_plans"), 1, true);
     	return servicePlans.getResources();
     }
-    
   
     @RequestMapping(value = "/service_instances/{orgId}", method = RequestMethod.GET)
     public @ResponseBody List<CloudFoundryResource<ServiceInstance>> getServiceInstancesForOrganization(@RequestHeader("Authorization") String token,
@@ -109,6 +109,13 @@ public class ServiceController {
     public ResponseEntity<Object> deleteServiceInstanceById(@RequestHeader("Authorization") final String token, 
     		@PathVariable("instanceId") final String instanceId) {
     	restRepository.delete(token, V2_SERVICE_INSTANCES, instanceId);
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    @RequestMapping(value = "/service_bindings/{bindingId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteServiceBindingById(@RequestHeader("Authorization") final String token,
+    		@PathVariable("bindingId") final String bindingId) {
+    	restRepository.delete(token, V2_SERVICE_BINDINGS, bindingId);
     	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

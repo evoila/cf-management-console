@@ -21,7 +21,6 @@ angular.module('controllers')
       $scope.init = function() {
         Restangular.one('private_domains', $scope.orgId).getList().then(function(domains) {
           $scope.domains = domains;
-          console.log(domains)
         });
       }
 

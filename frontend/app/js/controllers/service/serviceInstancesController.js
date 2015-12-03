@@ -9,8 +9,57 @@ angular.module('controllers')
         Restangular.one('spaces', $state.params.spaceId).get().then(function(space) {
           $scope.space = space;
           $scope.instances = space.entity.service_instances;
+          getServiceBindingsDetails($scope.instances);
         })
       };
+
+
+      function getServiceBindingsDetails(instances) {
+        instances.forEach(function(instance) {
+          instance.bindingsDetails = [];
+          instance.entity.service_bindings.forEach(function(binding) {
+            var appId = binding.entity.app_guid;
+            Restangular.one('applications', appId).get().then(function(app) {
+              var bindingDetail = {
+                app_guid: app.metadata.guid,
+                app_name: app.entity.name,
+                app_state: app.entity.state,
+                guid: binding.metadata.guid
+              };
+              instance.bindingsDetails.push(bindingDetail);
+            });
+          })
+        })
+      }
+
+
+      /*
+       *  Dialog for
+       *
+       *  Confirm delete service binding
+       *
+       */
+      $scope.deleteServiceBinding = function(ev, instance, binding) {
+        var confirm = $mdDialog.confirm()
+              .title('Really delete binding?')
+              .textContent(instance.entity.name + ' with ' + binding.app_name)
+              .ariaLabel('Confirm delete')
+              .targetEvent(ev)
+              .ok('Yes')
+              .cancel('Better not');
+        $mdDialog.show(confirm).then(function() {
+          deleteServiceBinding(binding.guid);
+        });
+      };
+
+      function deleteServiceBinding(service_binding_guid) {
+        Restangular.one('service_bindings', service_binding_guid).remove().then(function() {
+          responseService.success(null, 'Binding was deleted successfully', 'service', { organizationId : $scope.orgId, spaceId : $scope.space.metadata.guid });
+        }, function(response) {
+          responseService.error(response);
+        });
+      }
+
 
       /*
        *  Dialog for
@@ -33,7 +82,6 @@ angular.module('controllers')
 
       function deleteServiceInstance(instance) {
         Restangular.one('service_instances', instance.metadata.guid).remove().then(function() {
-          $mdDialog.hide();
           responseService.success(instance, 'Instance was deleted successfully', 'service', { organizationId : $scope.orgId, spaceId : $scope.space.metadata.guid });
         }, function(response) {
           responseService.error(response);

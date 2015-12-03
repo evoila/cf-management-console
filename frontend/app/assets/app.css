@@ -102,6 +102,11 @@ md-dialog-actions {
 .bold {
   font-weight: bold;
 }
+
+.spacer-10 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 .spacer-30 {
   padding-top: 15px;
   padding-bottom: 15px;
