@@ -15,11 +15,11 @@ angular.module('controllers')
 
       $scope.checkOrgName = function(orgName) {
         Restangular.one('organization/' + orgName).get().then(function(data) {
-          if(!data == true)
+          if(!data)
             $scope.organizationValid = true;
           else
             $scope.organizationValid = false;
-        })
+        });
       };
 
       $scope.register = function(registerForm) {

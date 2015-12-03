@@ -1,5 +1,5 @@
-<div ng-hide="authenticating" layout="row" layout-align="center center space-around">
-  <md-card flex="100" flex-gt-md="70" flex-lg="40" flex-gt-lg="40" ng-hide="hideForm">
+<div ng-hide="authenticating" layout="row" layout-align="center center">
+  <md-card flex="100" flex-gt-md="70" flex-gt-lg="50" ng-hide="hideForm">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>
@@ -19,13 +19,17 @@
             <input type="password" ng-model="userForm.password" required="true">
           </md-input-container>
         </div>
-        <div layout="row" layout-align="space-between center">
-          <md-input-container flex>
-            <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
-              Remember Me
-            </md-checkbox>
-          </md-input-container>
-          <a class="md-primary md-button md-ink-ripple flex" ui-sref="forgot">Forgot password?</a>
+        <div layout="row" layout-align="start center">
+          <div>
+            <md-input-container>
+              <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
+                Remember Me
+              </md-checkbox>
+            </md-input-container>
+          </div>
+          <div>
+            <a class="md-primary md-button md-ink-ripple flex" ui-sref="forgot" style="margin-top:12px;">Forgot password?</a>
+          </div>
         </div>
         <div layout="column" layout-gt-sm="row" layout-align="space-between center">
           <md-button flex-sm="100" flex-order-sm="2" type="button" ui-sref="register" class="md-primary">Don't have an account? Create one now</md-button>
