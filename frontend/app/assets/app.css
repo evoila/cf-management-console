@@ -6,15 +6,6 @@ html, body {
   padding: 0px;
 }
 
-#masonry-container {
-    max-width: 1600px;
-}
-
-.decent-line {
-  border-bottom:1px solid #c9c9c9;
-  margin-bottom:3px;
-}
-
 .no-focus:focus {
     outline: none;
 }
@@ -89,7 +80,17 @@ md-select.no-bg md-select-value.md-select-value {
   background: none;
 }
 
-
+.full-width > * {
+  width: 100%;
+}
+.form-group.less-vmargins > md-input-container {
+  margin-top: 6px;
+}
+span.custom-validation-msg {
+  color: red;
+  font-size: 11px;
+  margin-top: 10px;
+}
 
 
 

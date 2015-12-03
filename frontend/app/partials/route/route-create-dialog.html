@@ -6,22 +6,22 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content style="width:300px;min-width:300px;min-height:380px;max-width:800px;max-height:810px;">
+    <md-dialog-content style="width:300px;min-width:300px;min-height:360px;">
 
       <form name="createRouteForm" ng-submit="submitCreateRouteForm(createRouteForm)">
 
-        <div class="form-group">
+        <div class="form-group full-width less-vmargins">
           <md-input-container>
-            <md-select ng-required="true" placeholder="Choose domain" ng-model="createRouteForm.domain_guid" style="min-width: 200px;">
+            <md-select placeholder="Choose domain" ng-model="createRouteForm.domain_guid">
               <md-option ng-value="domain.metadata.guid" ng-repeat="domain in domains">{{domain.entity.name}}</md-option>
             </md-select>
-            <p ng-show="noDomain" style="color:red;margin-top:-17px;">Please choose a domain</p>
+            <span class="custom-validation-msg" ng-show="!createRouteForm.domain_guid && noDomain">Please choose a domain</span>
           </md-input-container>
           <md-input-container>
-            <md-select ng-required="true" placeholder="Choose space" ng-model="createRouteForm.space_guid" style="min-width: 200px;">
+            <md-select placeholder="Choose space" ng-model="createRouteForm.space_guid">
               <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
             </md-select>
-            <p ng-show="noSpace" style="color:red;margin-top:-17px;">Please choose a space</p>
+            <span class="custom-validation-msg" ng-show="!createRouteForm.space_guid && noSpace">Please choose a space</span>
           </md-input-container>
           <md-input-container>
             <label>Host (optional)</label>
@@ -34,7 +34,7 @@
           <md-input-container>
             <label>Path (optional)</label>
             <input ng-model="createRouteForm.path" ng-required="false" minlength="2" maxlength="128">
-            <p ng-show="invalidPath" style="color:red;margin-top:-17px;">Path must begin with '/', character '?' is not allowed</p>
+            <span class="custom-validation-msg" ng-show="invalidPath">Path must begin with '/', character '?' is not allowed</span>
           </md-input-container>
           </div>
 

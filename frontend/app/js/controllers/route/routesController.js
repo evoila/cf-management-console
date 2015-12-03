@@ -48,7 +48,6 @@ angular.module('controllers')
         });
       }
 
-
       $scope.prepareEdit = function(route) {
         $scope.editActive = true;
         route.readOnly = false;

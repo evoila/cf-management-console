@@ -78,7 +78,10 @@ angular.module('services')
           if (loadMenu) {
             menu.initMenu(function(organization) {
 
-              if($rootScope.previousState != '' && $state.current.name != '' && $state.current.name != 'login' && $state.current.name != 'register')
+              if($rootScope.previousState == 'register' && $rootScope.currentState == 'login')
+                $state.go('spaces', {organizationId: organization.metadata.guid});
+
+              else if($rootScope.previousState != '' && $state.current.name != '')
                 $state.go($rootScope.previousState, $rootScope.previousParams);
 
               else {
