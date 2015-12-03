@@ -14,8 +14,8 @@
 				</h2>
 				<span flex></span>
 				<md-button class="md-icon-button" ng-click="s.minimize=!s.minimize" aria-label="collapse">
-					<md-icon ng-hide="s.minimize" md-svg-icon="assets/svg/arrow_up.svg" style="color: white;"></md-icon>
-					<md-icon ng-show="s.minimize" md-svg-icon="assets/svg/arrow_down.svg" style="color: white;"></md-icon>
+					<md-icon class="white" ng-hide="s.minimize" md-svg-icon="assets/svg/arrow_up.svg"></md-icon>
+					<md-icon class="white" ng-show="s.minimize" md-svg-icon="assets/svg/arrow_down.svg"></md-icon>
 				</md-button>
 			</div>
 		</md-toolbar>
@@ -33,11 +33,11 @@
 							<br>
 						</md-divider>
 						<div flex>
-							<md-grid-list md-cols="1" md-cols-gt-xs="2"  md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+							<md-grid-list class="space-apps-grid" md-cols="1" md-cols-gt-xs="2"  md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile ng-repeat="app in s.entity.apps"
 									style="background-color:#{{colorString(app.entity.name)}}"
 									ui-sref="application({'applicationId':'{{app.metadata.guid}}','organizationId':'{{s.entity.organization.metadata.guid}}','spaceId':'{{s.metadata.guid}}'})">
-									<img style="height:50%; padding-bottom: 45px;" ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
+									<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
 									<md-grid-tile-footer>
 										<h3>
 											{{app.entity.name}}
@@ -64,10 +64,10 @@
 							<!--span class=" pull-right fa fa-chevron-down md-toggle-icon md-button-toggle" ng-class="{'toggled' : hideApps}"></span-->
 						</md-divider>
 						<div flex ng-cloak>
-							<md-grid-list md-cols="1" md-cols-gt-xs="2"  md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
+							<md-grid-list class="space-instances-grid" md-cols="1" md-cols-gt-xs="2"  md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile class="no-focus" ng-repeat="ser in s.entity.service_instances" style="background-color:#{{colorString(ser.entity.name)}}"
 									ui-sref="service({organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid, space: s})">
-									<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
+									<img ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 									<!--img style="width:60%" ng-src="assets/png/mysql_w.png"-->
 									<md-grid-tile-footer>
 										<h3>
@@ -96,7 +96,7 @@
 			<md-tooltip>
 				Add Space
 			</md-tooltip>
-			<ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
+			<ng-md-icon icon="add" size="40"></ng-md-icon>
 		</md-button>
 	</div>
 </div>

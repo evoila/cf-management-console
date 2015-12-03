@@ -6,26 +6,28 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content style="width:300px;min-width:300px;height:150px;min-height:150px;">
+    <md-dialog-content>
 
       <form name="createSpaceForm" ng-submit="submitCreateSpaceForm(createSpaceForm)">
 
-        <div class="form-group">
+        <div class="form-group full-width less-vmargins">
           <md-input-container>
             <label>Space name</label>
-            <input ng-model="createSpaceForm.name" ng-required="true" minlength="3" style="padding-bottom:5px;">
+            <input ng-model="createSpaceForm.name" ng-required="true" minlength="3">
           </md-input-container>
-          <md-switch class="no-focus" ng-model="createSpaceForm.allow_ssh" aria-label="Toggle allow ssh" style="margin:0;">allow SSH</md-switch>
-          </div>
+          <md-input-container>
+            <md-switch class="no-focus" ng-model="createSpaceForm.allow_ssh" aria-label="Toggle allow ssh">allow SSH</md-switch>
+          </md-input-container>
+        </div>
 
-          <div flex layout="row" style="position:absolute;bottom:15px;right:17px;">
-            <md-button type="button" ng-click="cancel()">
-              Cancel
-            </md-button>
-            <md-button class="md-raised md-primary" type="submit">
-              Create
-            </md-button>
-          </div>
+        <md-dialog-actions flex layout="row">
+          <md-button type="button" ng-click="cancel()">
+            Cancel
+          </md-button>
+          <md-button class="md-raised md-primary" type="submit">
+            Create
+          </md-button>
+        </md-dialog-actions>
 
       </form>
     </md-dialog-content>

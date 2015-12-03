@@ -10,8 +10,14 @@ html, body {
     outline: none;
 }
 
+.red {
+  color: red;
+}
 .grey {
   color: #8c8c8c;
+}
+.white {
+  color: #fff;
 }
 
 .orange-bg {
@@ -84,14 +90,14 @@ md-select.no-bg md-select-value.md-select-value {
   background: none;
 }
 
-.full-width > * {
+.full-width md-input-container {
   width: 100%;
 }
-.form-group.less-vmargins > md-input-container {
+.form-group.less-vmargins md-input-container {
   margin-top: 6px;
 }
 span.custom-validation-msg {
-  color: red;
+  #color: red;
   font-size: 11px;
   margin-top: 10px;
   margin-left: 2px;
@@ -332,13 +338,20 @@ span.name {
 md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-grid-tile-footer h3 {
   font-size: 16px; }
 
+/**********SPACE LIST VIEW ***********/
+.space-apps-grid md-grid-tile img, .space-instances-grid md-grid-tile img {
+  height: 50%;
+  padding-bottom: 45px;
+}
+
+
 
 /**********SERVICE INSTANCES VIEW ***********/
 
 .service-instance {
   width:350px;
 }
-.service-instance > md-card > img {
+.service-instance md-card img {
   height: 50%;
   padding-bottom: 45px;
 }
@@ -353,7 +366,7 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
 .service-instance md-card-content {
   background-color: #fff;
 }
-.service-instance md-card-content > h1.md-title {
+.service-instance md-card-content h1.md-title {
   font-size: 30px;
   color: #444;
   margin-top: 0;

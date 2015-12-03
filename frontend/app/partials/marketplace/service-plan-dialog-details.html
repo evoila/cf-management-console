@@ -39,10 +39,11 @@
               <md-select placeholder="Choose space" ng-model="createServiceInstanceForm.spaceId">
                 <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
               </md-select>
-              <span class="custom-validation-msg" ng-show="!createServiceInstanceForm.spaceId && noOption">Please choose a space</span>
+              <span class="custom-validation-msg red" ng-show="!createServiceInstanceForm.spaceId && noOption">Please choose a space</span>
             </md-input-container>
 
             <md-chips ng-model="tags" readonly="false" placeholder="Add another" delete-button-label="Remove Tag" delete-hint="Press delete to remove tag" secondary-placeholder="Add a tag"></md-chips>
+            <span class="custom-validation-msg grey">Press enter to apply tag</span>
 
           </div>
           <span flex=""></span>
