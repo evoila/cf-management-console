@@ -103,8 +103,10 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
         }
         return true;
       });
-    
+
     $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+      console.log('from ' + from.name + ' to ' + to.name)
+      
       window.scrollTo(0, 0);
       $rootScope.previousState = from.name;
       $rootScope.previousParams = fromParams;

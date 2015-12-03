@@ -78,7 +78,7 @@ angular.module('services')
           if (loadMenu) {
             menu.initMenu(function(organization) {
 
-              if($rootScope.previousState != '' && $state.current.name != '')
+              if($rootScope.previousState != '' && $state.current.name != '' && $state.current.name != 'login' && $state.current.name != 'register')
                 $state.go($rootScope.previousState, $rootScope.previousParams);
 
               else {
