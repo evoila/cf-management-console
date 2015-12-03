@@ -46,7 +46,7 @@
                   </md-menu-item>
                   <md-menu-divider></md-menu-divider>
                   <md-menu-item>
-                    <md-button ng-disabled="route.entity.apps.length==apps.length" ng-click="prepareAssociateDialog($event, route)">Associate with App</md-button>
+                    <md-button ng-disabled="route.apps.length-route.entity.apps.length==0" ng-click="prepareAssociateDialog($event, route)">Associate with App</md-button>
                   </md-menu-item>
                   <md-menu-item>
                     <md-button ng-disabled="route.entity.apps.length==0" class="md-warn" ng-click="showRemoveAppDialog($event, route)">Remove App</md-button>
@@ -63,7 +63,7 @@
 
           <td style="font-weight:bold;">{{route.entity.domain.entity.name}}</td>
 
-          <td>{{route.entity.apps.length}}</td>
+          <td>{{route.entity.apps.length}} | {{route.maxApps}}</td>
 
           <td>{{route.entity.space.entity.name}}</td>
 

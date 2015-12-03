@@ -34,7 +34,7 @@ angular.module('controllers')
         });
 
         Restangular.one('apps', $state.params.organizationId).get().then(function(apps) {
-          $scope.apps = apps;
+          $scope.allApps = apps;
 
         }, function(response) {
           responseService.error(response);
@@ -43,10 +43,22 @@ angular.module('controllers')
         Restangular.one('routes').getList().then(function(routes) {
           routes.forEach(function(route) {
             route.readOnly = true;
+            getSelectableApps(route);
           })
           $scope.routes = routes;
         });
       }
+
+      function getSelectableApps(route) {
+        route.apps = [];
+        route.entity.apps.forEach(function(app) {
+          var appId = app.metadata.guid;
+          route.apps = _.reject($scope.allApps, function(el) { return el.metadata.guid === appId; });
+        })
+        route.apps = _.reject($scope.allApps, function(el) { return el.entity.space_guid !== route.entity.space_guid; });
+        route.maxApps = route.apps.length;
+      }
+
 
       $scope.prepareEdit = function(route) {
         $scope.editActive = true;
@@ -135,7 +147,7 @@ angular.module('controllers')
       $scope.prepareAssociateDialog = function(ev, route) {
         route.entity.apps.forEach(function(app) {
           var appId = app.metadata.guid;
-          $scope.apps = _.reject($scope.apps, function(el) { return el.metadata.guid === appId; });
+          route.apps = _.reject(route.apps, function(el) { return el.metadata.guid === appId; });
         })
         $scope.showAssociateRouteDialog(ev, route);
       };
@@ -149,7 +161,7 @@ angular.module('controllers')
       $scope.showAssociateRouteDialog = function(ev, route) {
         $mdDialog.show({
           locals: {
-            apps: $scope.apps,
+            apps: route.apps,
             route: route
           },
           controller: ['$scope', 'apps', 'route', function($scope, apps, route) {
@@ -202,6 +214,9 @@ angular.module('controllers')
        *
        */
        $scope.showRemoveAppDialog = function(ev, route) {
+         console.log('route.apps: ' + route.apps.length)
+         console.log('route.entity.apps: ' + route.entity.apps.length)
+
          $mdDialog.show({
            locals: {
              route: route
