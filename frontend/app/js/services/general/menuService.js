@@ -83,7 +83,7 @@ angular.module('services')
           angular.forEach (self.spacesInt, function(space, key) {
               var page = {};
               page.name = space.entity.name;
-              page.type = 'link';
+              page.type = 'scroll';
               page.state = 'space-list';
               page.params = {
                 organizationId : orgaId,

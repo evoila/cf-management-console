@@ -55,11 +55,8 @@
                     <h2 class="menu-heading" ng-if="section.type === 'heading'" id="heading_{{ section.name | nospace }}">
                       {{section}}
                     </h2>
-
                     <menu-link section="section" ng-if="section.type === 'link'"></menu-link>
                     <menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>
-                    <menu-scroll section="section" ng-if="section.type === 'scroll'"></menu-scroll>
-
                   </li>
                 </ul>
               </md-card-content>
