@@ -1,5 +1,5 @@
 <div ng-hide="authenticating" layout="row" layout-align="center center">
-  <md-card flex="90" flex-gt-sm="70" flex-gt-lg="40" ng-hide="hideForm">
+  <md-card flex="100" flex-gt-md="70" flex-gt-lg="50" ng-hide="hideForm">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>
@@ -7,9 +7,9 @@
         </h2>
       </div>
     </md-toolbar>
-    <md-card-content>
+    <md-card-content layout="column">
       <form name="userForm" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" ng-submit="login(userForm)">
-        <div layout="column">
+        <div layout="column" layout-sm="column">
           <md-input-container class="md-input-invalid" flex>
             <label>Username(email)</label>
             <input type="text" ng-model="userForm.email" required="true">
@@ -18,18 +18,22 @@
             <label>Password</label>
             <input type="password" ng-model="userForm.password" required="true">
           </md-input-container>
-          <div layout="row" layout-align="space-between center">
-
-                <md-checkbox ng-model="data.cb1" aria-label="Remember Me" id="loginCheckBox">
-                  Remember Me
-                </md-checkbox>
-
-              <md-button ui-sref="forgot" class="md-raised">Forgot password?</md-button>
+        </div>
+        <div layout="row" layout-align="start center">
+          <div>
+            <md-input-container>
+              <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
+                Remember Me
+              </md-checkbox>
+            </md-input-container>
           </div>
-          <div layout="column" layout-gt-sm="row" layout-align="space-between center">
-            <md-button flex-sm="100" type="button" ui-sref="register" class="md-raised">Don't have an account? Create one now</md-button>
-            <md-button flex-sm="100" type="submit" class="md-raised md-primary" ng-disabled="login.$invalid">Log in</md-button>
+          <div>
+            <a class="md-primary md-button md-ink-ripple flex" ui-sref="forgot" style="margin-top:12px;">Forgot password?</a>
           </div>
+        </div>
+        <div layout="column" layout-gt-sm="row" layout-align="space-between center">
+          <md-button flex-sm="100" flex-order-sm="2" type="button" ui-sref="register" class="md-primary">Don't have an account? Create one now</md-button>
+          <md-button flex-sm="100" flex-order-sm="1" type="submit" class="md-raised md-primary" ng-disabled="login.$invalid">Log in</md-button>
         </div>
       </form>
     </md-card-content>
