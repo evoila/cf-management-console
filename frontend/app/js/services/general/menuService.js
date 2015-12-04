@@ -18,7 +18,7 @@ angular.module('services')
       var sections = [{
         name: 'Spaces',
         type: 'toggle',
-        state: 'spaces',
+        state: 'space-list',
         icon: 'fa fa-cubes'
       }];
 
@@ -66,7 +66,7 @@ angular.module('services')
               var page = {};
               page.name = orga.entity.name;
               page.type = 'link';
-              page.state = 'spaces';
+              page.state = 'space-list';
               page.params = {organizationId: orga.metadata.guid};
               page.orga = orga;
               organizations.pages.push(page);
@@ -84,7 +84,7 @@ angular.module('services')
               var page = {};
               page.name = space.entity.name;
               page.type = 'link';
-              page.state = 'space';
+              page.state = 'space-list';
               page.params = {
                 organizationId : orgaId,
                 spaceId: space.metadata.guid

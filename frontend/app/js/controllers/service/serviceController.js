@@ -1,6 +1,6 @@
 angular.module('controllers')
-  .controller('servicesController',
-    function ServicesController($scope, $state, menu, $mdDialog, Restangular, DesignService, responseService) {
+  .controller('serviceController',
+    function ServiceController($scope, $state, menu, $mdDialog, Restangular, DesignService, responseService) {
 
     var self = this;
     self.service = $state.params.service;

@@ -10,6 +10,11 @@ angular.module('routes', ['ui.router'])
         templateUrl: 'partials/application/application.html',
         controller: 'applicationController'
       })
+      .state('application-list', {
+        url: '/organizations/:organizationId/space/:spaceId/applications',
+        templateUrl: 'partials/application/application-list.html',
+        controller: 'applicationListController'
+      })
       .state('org-create', {
         url: '/organizations',
         templateUrl: 'partials/organization/organization-create.html',
@@ -20,30 +25,20 @@ angular.module('routes', ['ui.router'])
         templateUrl: 'partials/organization/org-settings.html',
         controller: 'organizationController'
       })
-      .state('spaces', {
+      .state('space-list', {
         url: "/organizations/:organizationId/spaces",
         templateUrl: "partials/space/space-list.html",
-        controller: 'spacesController',
-      })
-      .state('space', {
-        url: "/organizations/:organizationId/spaces/:spaceId",
-        templateUrl: "partials/space/space.html",
-        controller: 'spaceController',
-      })
-      .state('space-settings', {
-        url: '/organizations/:organizationId/spaces/:spaceId/settings',
-        templateUrl: 'partials/space/space-settings.html',
-        controller: 'spaceController'
+        controller: 'spaceListController',
       })
       .state('marketplace', {
         url: '/organizations/:organizationId/marketplace',
         templateUrl: 'partials/marketplace/marketplace.html',
         controller: 'marketplaceController'
       })
-      .state('service', {
+      .state('service-list', {
         url: '/organizations/:organizationId/spaces/:spaceId/services',
-        templateUrl: 'partials/service/service-instances.html',
-        controller: 'serviceInstanceController',
+        templateUrl: 'partials/service/service-instance-list.html',
+        controller: 'serviceInstanceListController',
         params: {
           space: null
         }
