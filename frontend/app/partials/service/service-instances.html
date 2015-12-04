@@ -1,10 +1,10 @@
 <div class="md-padding" ng-init="init()" >
-	<span class="service-instances-title">SERVICE INSTANCES</span>
+	<span class="imposing-title">SERVICE INSTANCES</span>
 </div>
 
 <div layout="row" layout-wrap>
 
-	<div class="service-instance" ng-repeat="instance in instances" ng-init="instance.showMore=false">
+	<div class="single-instance" ng-repeat="instance in instances" ng-init="instance.showMore=false">
 		<md-card style="background-color:#{{colorString(instance.entity.name)}};">
 			<img ng-src="assets/png/{{servicePng(instance.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 			<md-card-content>
