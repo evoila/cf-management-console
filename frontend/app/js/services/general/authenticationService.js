@@ -79,14 +79,14 @@ angular.module('services')
             menu.initMenu(function(organization) {
 
               if($rootScope.previousState == 'register' && $rootScope.currentState == 'login')
-                $state.go('spaces', {organizationId: organization.metadata.guid});
+                $state.go('space-list', {organizationId: organization.metadata.guid});
 
               else if($rootScope.previousState != '' && $state.current.name != '')
                 $state.go($rootScope.previousState, $rootScope.previousParams);
 
               else {
                 if ($state.current.name == 'login' || $state.current.name == "")
-                  $state.go('spaces', {
+                  $state.go('space-list', {
                     organizationId: organization.metadata.guid
                   });
                 else

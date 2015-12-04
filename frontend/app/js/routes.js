@@ -45,7 +45,7 @@ angular.module('routes', ['ui.router'])
       })
       .state('service-details', {
         url: '/organizations/:organizationId/services/:serviceId/details',
-        templateUrl: 'partials/marketplace/marektplace-service-details.html',
+        templateUrl: 'partials/marketplace/marketplace-service-details.html',
         params: {
           service: null
         }
