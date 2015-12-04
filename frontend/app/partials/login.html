@@ -20,19 +20,19 @@
           </md-input-container>
         </div>
         <div layout="row" layout-align="start center">
-          <div>
+          <div layout="column">
             <md-input-container>
               <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
                 Remember Me
               </md-checkbox>
             </md-input-container>
           </div>
-          <div>
-            <a class="md-primary md-button md-ink-ripple flex" ui-sref="forgot" style="margin-top:12px;">Forgot password?</a>
+          <div layout="column">
+            <a class="md-primary md-button no-hover md-ink-ripple" ui-sref="forgot">Forgot password?</a>
           </div>
         </div>
-        <div layout="column" layout-gt-sm="row" layout-align="space-between center">
-          <md-button flex-sm="100" flex-order-sm="2" type="button" ui-sref="register" class="md-primary">Don't have an account? Create one now</md-button>
+        <div class="fit-to-checkbox" layout="column" layout-gt-sm="row" layout-align="space-between center">
+          <a class="md-primary md-button no-hover md-ink-ripple" ui-sref="register">Don't have an account? Create one now</a>
           <md-button flex-sm="100" flex-order-sm="1" type="submit" class="md-raised md-primary" ng-disabled="login.$invalid">Log in</md-button>
         </div>
       </form>

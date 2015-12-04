@@ -36,6 +36,11 @@ md-switch.orange.md-checked .md-thumb {
 .hv-button:hover i {
   opacity: 1;
 }
+.no-hover:hover {
+  background: none !important;
+  background-color: none !important;
+}
+
 
 md-grid-tile {
   cursor: pointer;
@@ -125,8 +130,9 @@ md-dialog-actions {
 .clickable {
   cursor: pointer;
 }
-.clickable.delete {
-  color: red;
+
+.fit-to-checkbox {
+  margin-left: -2px;
 }
 
 
@@ -380,6 +386,11 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
 }
 .single-instance .instance-more {
   margin-top: 14px;
+}
+
+.single-instance .tag-list {
+  padding-left: 10px;
+  opacity: .8;
 }
 
 /* rename single-title */

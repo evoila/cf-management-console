@@ -26,15 +26,11 @@
 									</div>
 									<div layout="row" layout-align="space-between center">
 										<div layout="column">
-											<p class="no-focus" ng-class="{'clickable' : instance.entity.tags.length>0}" ng-click="showTags = !showTags">Tags
-												<i class="fa fa-sm" ng-show="instance.entity.tags.length>0" ng-class="{'fa-chevron-down' : !showTags, 'fa-chevron-up' : showTags}"></i>
-											</p>
-											<div ng-show="showTags && instance.entity.tags.length>0">
-												<div class="spacer-10"></div>
-												<p>
+											<div ng-show="instance.showMore && instance.entity.tags.length>0">
+												<p>Tags</p>
+												<p class="tag-list">
 													<span ng-repeat="tag in instance.entity.tags">{{tag}}{{$last ? '' : ', '}}</span>
 												</p>
-												<div class="spacer-10"></div>
 											</div>
 										</div>
 									</div>
