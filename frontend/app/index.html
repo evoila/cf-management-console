@@ -47,30 +47,30 @@
               </h2>
               <menu-link section="menu.organizations" ng-if="menu.organizations.type === 'link'"></menu-link>
               <menu-toggle section="menu.organizations" ng-if="menu.organizations.type === 'toggle'"></menu-toggle>
-              </li>
-              <md-card ng-show="isAuthenticated">
-                <md-card-content layout="row">
-                  <ul flex="100">
-                    <li ng-repeat="section in menu.sections" class="parent-list-item" ng-class="{'parentActive' : isSectionSelected(section)}">
-                      <h2 class="menu-heading" ng-if="section.type === 'heading'" id="heading_{{ section.name | nospace }}">
-                        {{section}}
-                      </h2>
+            </li>
+            <md-card ng-show="isAuthenticated">
+              <md-card-content layout="row">
+                <ul flex="100">
+                  <li ng-repeat="section in menu.sections" class="parent-list-item" ng-class="{'parentActive' : isSectionSelected(section)}">
+                    <h2 class="menu-heading" ng-if="section.type === 'heading'" id="heading_{{ section.name | nospace }}">
+                      {{section}}
+                    </h2>
 
-                      <menu-single-item section="section" ng-if="section.type === 'single'"></menu-single-item>
-                      <menu-link section="section" ng-if="section.type === 'link'"></menu-link>
-                      <menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>
+                    <menu-link section="section" ng-if="section.type === 'link'"></menu-link>
+                    <menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>
+                    <menu-scroll section="section" ng-if="section.type === 'scroll'"></menu-scroll>
 
-                    </li>
-                  </ul>
-                </md-card-content>
-              </md-card>
+                  </li>
+                </ul>
+              </md-card-content>
+            </md-card>
           </ul>
         </md-content>
       </md-sidenav>
     </div>
   </div>
   <div class="layout-column" flex="">
-    <md-toolbar layout="row" layout-align="end end">
+    <md-toolbar id="main-toolbar" layout="row" layout-align="end end">
       <div class="md-toolbar-tools md-whiteframe-z1" layout="row" layout-align="end end">
         <md-button class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
          Menu
@@ -92,56 +92,11 @@
       </div>
     </md-toolbar>
 
-    <div class="layout-column md-padding">
-      <!--md-card ng-show="isAuthenticated && !hideQuota" style="margin: 15px">
-        <md-card-content layout="row">
-          <div layout="row" layout-sm="column" flex="100">
-            <div layout="column" flex="20">
-              <div flex="50">
-                <p>Name</p>
-              </div>
-              <div flex="50">
-                <p>{{menu.organization.entity.name}}</p>
-              </div>
-            </div>
-            <div layout="column" flex="20">
-              <div flex="50">
-                <p>Total Services</p>
-              </div>
-              <div flex="50">
-                <p>{{menu.organization.entity.quota_definition.entity.total_services}}</p>
-              </div>
-            </div>
-            <div layout="column" flex="20">
-              <div flex="50">
-                <p>Memory Limit</p>
-              </div>
-              <div flex="50">
-                <p>{{menu.organization.entity.quota_definition.entity.memory_limit}} MB</p>
-              </div>
-            </div>
-            <div layout="column" flex="20">
-              <div flex="50">
-                <p>None Basic Services</p>
-              </div>
-              <div flex="50">
-                <p>{{menu.organization.entity.quota_definition.entity.non_basic_services_allowed}}</p>
-              </div>
-            </div>
-            <div layout="column" flex="20">
-              <span class=" fa fa-close md-toggle-icon" style="margin-top:-14px; text-align:right" ng-click="hideQuota=true"></span>
-              <div flex="50">
-                <p>Trial DB Allowed</p>
-              </div>
-              <div flex="50">
-                <p>{{menu.organization.entity.quota_definition.entity.trial_db_allowed}}</p>
-              </div>
-            </div>
-          </div>
-        </md-card-content>
-      </md-card-->
-    <div id="theContent" class="md-padding" ui-view flex ng-controller="alertController"></div>
-  </div>
+
+    <div id="content-wrapper" class="layout-column md-padding">
+      <div class="md-padding" ui-view flex ng-controller="alertController">
+    </div>
+
 
   <script src="./lib/angular/angular.js"></script>
   <script src="./lib/angular-animate/angular-animate.js"></script>
@@ -156,6 +111,7 @@
   <script src="./lib/angular-material-data-table/dist/md-data-table.min.js"></script>
   <script src="./lib/angular-environment/src/angular-environment.js"></script>
   <script src="./lib/angular-loading-bar/build/loading-bar.min.js"></script>
+  <script src="./lib/angular-scroll/angular-scroll.min.js"></script>
 
   <script src="./lib/elasticsearch/elasticsearch.js"></script>
   <script src="./lib/elasticsearch/elasticsearch.angular.js"></script>
@@ -174,9 +130,9 @@
   <script src="./js/services/general/authenticationService.js"></script>
 
   <script src="./js/directives/directives.js"></script>
-  <script src="./js/directives/menuSingleItemDirective.js"></script>
   <script src="./js/directives/menulinkDirective.js"></script>
   <script src="./js/directives/menuToggleDirective.js"></script>
+  <script src="./js/directives/menuScrollDirective.js"></script>
   <script src="./js/directives/printJsonDirective.js"></script>
 
   <script src="./js/controllers/controllers.js"></script>

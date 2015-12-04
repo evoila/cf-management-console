@@ -1,5 +1,5 @@
 angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'controllers', 'directives', 'services', 'routes',
-    'ngMdIcons', 'ngClipboard', 'restangular', 'ngAnimate', 'environment', 'angular-loading-bar', 'cmanaha.angular-elasticsearch-logger',
+    'ngMdIcons', 'ngClipboard', 'restangular', 'ngAnimate', 'environment', 'angular-loading-bar', 'cmanaha.angular-elasticsearch-logger', 'duScroll',
   ])
   .config(['ngClipProvider', '$mdThemingProvider', '$mdIconProvider', 'envServiceProvider',
     'CMRESLoggerProvider',
@@ -103,6 +103,10 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
         }
         return true;
       });
+
+
+
+
 
     $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
       window.scrollTo(0, 0);

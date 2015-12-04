@@ -1,5 +1,5 @@
 .side-menu {
-  height: 1000px;
+  #height: 1000px;
 }
 
 .side-menu, .side-menu ul {
@@ -83,9 +83,7 @@
   transition-property: max-height;
 }
 
-
 .side-menu menu-toggle span{
-
   padding-top: 12px;
   padding-bottom: 12px;
 }

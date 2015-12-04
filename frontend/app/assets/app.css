@@ -4,6 +4,7 @@ html, body {
   height: 100%;
   margin: 0px;
   padding: 0px;
+  overflow: hidden;
 }
 
 .no-focus:focus {
@@ -136,8 +137,6 @@ md-dialog-actions {
 }
 
 
-
-
 /* Toolbar area */
 
 .menu {
@@ -150,6 +149,7 @@ md-dialog-actions {
 md-toolbar h1 {
   margin: auto;
 }
+
 
 /* Sidenav area */
 
@@ -167,6 +167,10 @@ md-sidenav md-list {
 }
 
 /* Primary content area */
+
+#content-wrapper {
+  overflow: scroll;
+}
 
 #content {
   overflow: hidden;
