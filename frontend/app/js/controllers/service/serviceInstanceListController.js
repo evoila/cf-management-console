@@ -1,6 +1,6 @@
 angular.module('controllers')
-  .controller('serviceInstanceController',
-    function ServiceInstanceController($scope, $state, menu, $mdDialog, Restangular, DesignService, responseService) {
+  .controller('serviceInstanceListController',
+    function ServiceInstanceListController($scope, $state, menu, $mdDialog, Restangular, DesignService, responseService) {
 
       $scope.space = $state.params.space;
       $scope.orgId = $state.params.organizationId;

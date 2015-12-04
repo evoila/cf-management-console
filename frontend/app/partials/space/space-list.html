@@ -66,7 +66,7 @@
 						<div flex ng-cloak>
 							<md-grid-list class="space-instances-grid" md-cols="1" md-cols-gt-xs="2"  md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile class="no-focus" ng-repeat="ser in s.entity.service_instances" style="background-color:#{{colorString(ser.entity.name)}}"
-									ui-sref="service({organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid, space: s})">
+									ui-sref="service-list({organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid, space: s})">
 									<img ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 									<!--img style="width:60%" ng-src="assets/png/mysql_w.png"-->
 									<md-grid-tile-footer>

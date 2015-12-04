@@ -3,8 +3,8 @@
  **/
 
 angular.module('controllers')
-  .controller('spacesController',
-    function SpacesController($scope, $state, Restangular, responseService, $mdDialog, menu, DesignService) {
+  .controller('spaceListController',
+    function SpaceListController($scope, $state, Restangular, responseService, $mdDialog, menu, DesignService) {
       $scope.spaces = menu.spaces;
       $scope.orgId = $state.params.organizationId;
 

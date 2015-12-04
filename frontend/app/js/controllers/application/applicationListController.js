@@ -3,8 +3,8 @@
  **/
 
 angular.module('controllers')
-  .controller('spaceController',
-    function SpaceController($scope, $state, Restangular, DesignService) {
+  .controller('applicationListController',
+    function ApplicationListController($scope, $state, Restangular, DesignService) {
 
       $scope.init = function() {
         Restangular.one('spaces', $state.params.spaceId).get().then(function(data, status, headers) {
