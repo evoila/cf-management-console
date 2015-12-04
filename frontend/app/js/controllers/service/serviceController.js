@@ -96,7 +96,7 @@ angular.module('controllers')
           };
 
         }],
-        templateUrl: 'partials/marketplace/service-plan-dialog-details.html',
+        templateUrl: 'partials/marketplace/marketplace-service-plan-dialog-details.html',
         parent: angular.element(document.body),
         clickOutsideToClose: false
       })
