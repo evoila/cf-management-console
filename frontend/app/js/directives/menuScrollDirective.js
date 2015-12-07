@@ -7,7 +7,7 @@ angular.module('directives')
       '</md-button>\n' +
       '');
   }])
-  .directive('menuScroll', ['$rootScope', 'menu', function($rootScope, menu) {
+  .directive('menuScroll', ['$rootScope', '$document', 'menu', function($rootScope, $document, menu) {
     return {
       scope: {
         section: '='

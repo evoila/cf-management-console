@@ -1,5 +1,5 @@
 
-<div layout="column" layout-gt-md="row" layout-align="start start" style="padding-top:8px;">
+<div layout="column" layout-gt-md="row" layout-align="start start">
 	<h2>Services Marketplace</h2>
 </div>
 
@@ -11,7 +11,7 @@
 			<md-grid-list md-cols-sm="2" md-cols-gt-sm="3" md-cols-gt-lg="5" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 				<md-grid-tile class="no-focus" ng-repeat="service in services" style="background-color:#{{colorString(service.entity.label)}}"
 				ui-sref="service-details({'organizationId':'{{orgId}}','serviceId':'{{service.metadata.guid}}', 'service':service})">
-		
+
 					<img style="height:50%; padding-bottom:45px;" ng-src="assets/png/{{servicePng(service.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 					<md-grid-tile-footer>
 						<h3>

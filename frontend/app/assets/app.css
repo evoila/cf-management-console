@@ -358,6 +358,14 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
 }
 
 
+th.button-table-cell, td.button-table-cell {
+  min-width:30px !important;
+  width:30px !important;
+  max-width:30px !important;
+  padding:0 !important;
+}
+
+
 
 /********** SERVICE INSTANCES ***********/
 
