@@ -63,7 +63,7 @@ angular.module('controllers')
          $mdDialog.show(confirm).then(function() {
            Restangular.one('applications', application.metadata.guid).remove().then(function(data) {
              console.log("app deleted");
-             responseService.success(data, 'application deleted', 'space', $state.params);
+             responseService.success(data, 'application deleted', 'space-list', $state.params);
            });
          });
        };

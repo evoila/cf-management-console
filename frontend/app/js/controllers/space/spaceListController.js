@@ -47,7 +47,7 @@ angular.module('controllers')
 
         Restangular.all('spaces').post(space).then(function(space) {
           $mdDialog.hide();
-          responseService.success(space, 'Space was created successfully', 'spaces', { organizationId : $scope.orgId });
+          responseService.success(space, 'Space was created successfully', 'space-list', { organizationId : $scope.orgId });
         }, function(response) {
           if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
             responseService.error(response, 'Space name already in use');

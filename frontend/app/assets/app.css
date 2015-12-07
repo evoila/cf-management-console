@@ -136,6 +136,10 @@ md-dialog-actions {
   margin-left: -2px;
 }
 
+.center {
+  text-align: center;
+}
+
 
 /* Toolbar area */
 
@@ -364,8 +368,11 @@ th.button-table-cell, td.button-table-cell {
   max-width:30px !important;
   padding:0 !important;
 }
-
-
+button.md-icon-button.table-cell-menu-button, .md-button.md-icon-button.table-cell-menu-button {
+  width:30px !important;
+  height:36px !important;
+  line-height:0 !important;
+}
 
 /********** SERVICE INSTANCES ***********/
 

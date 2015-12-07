@@ -1,10 +1,10 @@
 <div layout="column" ng-init="init()">
 
-  <div layout="row" layout-align="start start">
+  <div layout="row" layout-align="start center">
     <h2>Private Domains of {{menu.organization.entity.name}}</h2>
 
-  		<button type="button" aria-label="Show Create Domain Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateDomainDialog($event)">
-  			<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg" style="margin-top:8px;"></md-icon>
+  		<button type="button" aria-label="Show Create Domain Dialog" class="md-button md-icon-button md-primary" ng-click="showCreateDomainDialog($event)">
+  			<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg"></md-icon>
   		</button>
 
   </div>
@@ -26,7 +26,7 @@
           <td class="button-table-cell">
             <div ng-show="showButtons">
               <md-menu>
-                <md-button aria-label="Open route interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)" style="width:30px;height:36px;line-height:0;">
+                <md-button aria-label="Open route interactions menu" class="md-icon-button table-cell-menu-button" ng-click="openMenu($mdOpenMenu, $event)">
                   <md-icon md-menu-origin="" md-svg-icon="assets/svg/menu.svg"></md-icon>
                 </md-button>
                 <md-menu-content width="2">
@@ -39,7 +39,7 @@
             </div>
           </td>
 
-          <td style="font-weight:bold;">{{domain.entity.name}}</td>
+          <td class="bold">{{domain.entity.name}}</td>
 
         </tr>
       </tbody>

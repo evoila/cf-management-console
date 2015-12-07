@@ -1,10 +1,11 @@
 <div layout="column" ng-init="init()">
 
-  <div layout="row" layout-align="start start">
+  <div layout="row" layout-align="start center">
     <h2>Users of {{org.entity.name}}</h2>
 
-  		<button type="button" aria-label="Show Create User Dialog" class="md-button md-icon-button md-primary" style="text-align:center;" ng-click="showCreateUserDialog($event)">
-  			<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg" style="margin-top:8px;"></md-icon>
+
+  		<button type="button" aria-label="Show Create User Dialog" class="md-button md-icon-button md-primary" ng-click="showCreateUserDialog($event)">
+  			<md-icon class="no-focus" md-svg-icon="assets/svg/ic_add_48px.svg"></md-icon>
   		</button>
 
   </div>
@@ -16,7 +17,7 @@
     <table md-data-table md-progress="deferred">
       <thead md-order="query.order" md-trigger="onOrderChange">
         <tr>
-          <th style="min-width:30px;width:30px;max-width:30px;padding:0;"></th>
+          <th class="button-table-cell"></th>
           <th name="Username" order-by="entity.username"></th>
 					<th name="Organization Roles"></th>
         </tr>
@@ -24,10 +25,10 @@
       <tbody>
         <tr class="data-table-row" ng-repeat="user in orgUsers | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit" ng-mouseover="showButtons=true" ng-mouseleave="showButtons=false">
 
-          <td style="min-width:30px;width:30px;max-width:30px;padding:0;">
+          <td class="button-table-cell">
             <div ng-show="showButtons">
               <md-menu>
-                <md-button aria-label="Open route interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)" style="width:30px;height:36px;line-height:0;">
+                <md-button aria-label="Open route interactions menu" class="md-icon-button table-cell-menu-button" ng-click="openMenu($mdOpenMenu, $event)">
                   <md-icon md-menu-origin="" md-svg-icon="assets/svg/menu.svg"></md-icon>
                 </md-button>
                 <md-menu-content width="2">
@@ -43,7 +44,7 @@
             </div>
           </td>
 
-          <td style="font-weight:bold;">{{user.entity.username}}</td>
+          <td class="bold">{{user.entity.username}}</td>
 
 					<td>
 						<p ng-if="user.isOrgManager">Manager</p>
