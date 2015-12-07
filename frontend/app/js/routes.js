@@ -6,7 +6,7 @@ angular.module('routes', ['ui.router'])
 
     $stateProvider
       .state('application', {
-        url: '/organizations/:organizationId/space/:spaceId/applications/:applicationId/',
+        url: '/organizations/:organizationId/space/:spaceId/applications/:applicationId',
         templateUrl: 'partials/application/application.html',
         controller: 'applicationController'
       })

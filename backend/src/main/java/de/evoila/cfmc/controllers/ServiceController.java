@@ -82,12 +82,20 @@ public class ServiceController {
     	return servicePlans.getResources();
     }
   
-    @RequestMapping(value = "/service_instances/{orgId}", method = RequestMethod.GET)
-    public @ResponseBody List<CloudFoundryResource<ServiceInstance>> getServiceInstancesForOrganization(@RequestHeader("Authorization") String token,
-    		@PathVariable("orgId") final String orgId) {
+    @RequestMapping(value = "/service_instances{filter}", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<ServiceInstance>> getServiceInstancesForFilter(@RequestHeader("Authorization") String token,
+    		@PathVariable("filter") final String filter) {
     	String adminToken = userRepository.login();
-    	CloudFoundryResources<ServiceInstance> serviceInstances = restRepository.list(adminToken, V2_SERVICE_INSTANCES.concat("?q=organization_guid:").concat(orgId), 1, false);
+    	CloudFoundryResources<ServiceInstance> serviceInstances = restRepository.list(adminToken, V2_SERVICE_INSTANCES.concat(filter), 1, true);
     	return serviceInstances.getResources();
+    }
+    
+    @RequestMapping(value = "/service_instances/{instanceId}", method = RequestMethod.GET)
+    public @ResponseBody CloudFoundryResource<ServiceInstance> getServiceInstancesForId(@RequestHeader("Authorization") String token,
+    		@PathVariable("instanceId") final String instanceId) {
+    	String adminToken = userRepository.login();
+    	CloudFoundryResource<ServiceInstance> serviceInstance = restRepository.one(adminToken, V2_SERVICE_INSTANCES, instanceId, 1);
+    	return serviceInstance;
     }
     
     @RequestMapping(value = "/service_plans/{planId}/service_instances", method = RequestMethod.GET)

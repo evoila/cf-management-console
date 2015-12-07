@@ -1,12 +1,16 @@
-<div class="layout-row md-padding" style="padding-left:30px" ng-init="init()">
+<div class="md-padding" ng-init="init()">
 	<span class="imposing-title">APPLICATIONS</span>
 </div>
-<div layout="row" style="padding: 10px" layout-wrap>
-	<div ng-repeat="app in s.entity.apps" flex="100" flex-gt-sm="50" id="single-instance" ng-init="app.showMore=false" style="max-width:400px;">
+
+<div layout="row" layout-wrap>
+
+	<div class="single-instance" ng-repeat="app in s.entity.apps" ng-init="app.showMore=false">
 		<md-card style="background-color:#{{colorString(app.entity.name)}}">
-			<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
-			<md-card-content style="background-color:#fff">
-				<h1 class="md-title" style="font-size:30px;color:#444;margin:0">{{app.entity.name}}</h1>
+			<div class="img-container">
+				<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
+			</div>
+			<md-card-content>
+				<h1 class="md-title">{{app.entity.name}}</h1>
 		    <md-list>
 		      <md-list-item class="md-3-line">
 		        <div class="md-list-item-text" layout="column">
@@ -46,7 +50,38 @@
 							</div>
 						</md-list-item>
 			      <md-divider></md-divider>
-			      <md-subheader class="md-no-sticky">Service Bindings ({{app.entity.service_bindings.length}})</md-subheader>
+			      <!--<md-subheader class="md-no-sticky">Service Bindings ({{app.entity.service_bindings.length}})</md-subheader>-->
+
+						<md-subheader class="md-no-sticky no-focus" ng-class="{'clickable' : app.entity.service_bindings.length>0}" ng-click="showBindings = !showBindings">
+							Service Bindings ({{app.entity.service_bindings.length}})
+							<i class="fa fa-sm" ng-show="app.entity.service_bindings.length>0" ng-class="{'fa-chevron-down' : !showBindings, 'fa-chevron-up' : showBindings}"></i>
+						</md-subheader>
+
+						<div class="app-bindings grey" ng-show="showBindings">
+							<div ng-repeat="binding in app.bindingsDetails" layout="column">
+								<div layout="row" layout-align="center center">
+									<div flex="10" layout="column"><i class="fa fa-times no-focus clickable delete red" ng-click=""></i></div>
+									<div flex="70" layout="column">{{binding.instance_name}}</div>
+								</div>
+								<div class="spacer-10"></div>
+								<md-divider></md-divider>
+								<div class="spacer-10"></div>
+							</div>
+						</div>
+
+						<div flex="100" layout="column" layout-align="center center" class="md-no-sticky">
+							<div flex="60">
+								<button ng-disabled="app.entity.service_bindings.length>0" class="md-button md-raised md-warn" type="button" aria-label="Delete Service Instance" ng-click="">
+									<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg"></md-icon> Delete app
+								</button>
+							</div>
+							<div ng-hide="app.entity.service_bindings.length==0" flex="100">
+								<span class="grey">Delete bindings first</span>
+							</div>
+
+						</div>
+
+
 					</div>
 
 

@@ -108,17 +108,17 @@ angular.module('controllers')
       };
 
       $scope.submitCreateUserForm = function(form) {
-        var u = {
+        var usr = {
           username: form.username,
           firstname: form.firstname,
           lastname: form.lastname,
           password: form.password
         };
-        Restangular.all('users').post(u).then(function(user) {
+        Restangular.all('users').post(usr).then(function(user) {
           var createdUserId = user.metadata.guid;
 
-          Restangular.all('users/' + createdUserId + '/organizations/' + $scope.orgId)
-            .customPUT(undefined, undefined,({ username: 'dummy' }),undefined).then(function(user) {
+          Restangular.one('users/' + createdUserId + '/organizations/' + $scope.orgId)
+            .customPUT(undefined, undefined,({ username: 'dummy' }), undefined).then(function(user) {
             $mdDialog.hide();
             responseService.success(user, 'User was created successfully', 'users', { organizationId : $scope.orgId });
           }, function(response) {

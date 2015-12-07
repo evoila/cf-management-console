@@ -6,94 +6,96 @@
 
 	<div class="single-instance" ng-repeat="instance in instances" ng-init="instance.showMore=false">
 		<md-card style="background-color:#{{colorString(instance.entity.name)}};">
-			<img ng-src="assets/png/{{servicePng(instance.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
+			<div class="img-container">
+				<img ng-src="assets/png/{{servicePng(instance.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
+			</div>
 			<md-card-content>
-						<h1 class="md-title">{{instance.entity.name}}</h1>
-				    <md-list>
-				      <md-list-item class="md-3-line">
-				        <div class="md-list-item-text" layout="column">
-									<div layout="row" layout-align="space-between center">
-										<p>Dashboard</p>
-										<p>{{instance.entity.dashboard_url}}</p>
+				<h1 class="md-title">{{instance.entity.name}}</h1>
+		    <md-list>
+		      <md-list-item class="md-3-line">
+		        <div class="md-list-item-text" layout="column">
+							<div layout="row" layout-align="space-between center">
+								<p>Dashboard</p>
+								<p>{{instance.entity.dashboard_url}}</p>
+							</div>
+							<div layout="row" layout-align="space-between center">
+								<p>Type</p>
+								<p>{{instance.entity.type}}</p>
+							</div>
+							<div layout="row" layout-align="space-between center">
+								<p>Disk Quota</p>
+								<p>{{instance.entity.disk_quota}}</p>
+							</div>
+							<div layout="row" layout-align="space-between center">
+								<div layout="column">
+									<div ng-show="instance.showMore && instance.entity.tags.length>0">
+										<p>Tags</p>
+										<p class="tag-list">
+											<span ng-repeat="tag in instance.entity.tags">{{tag}}{{$last ? '' : ', '}}</span>
+										</p>
 									</div>
-									<div layout="row" layout-align="space-between center">
-										<p>Type</p>
-										<p>{{instance.entity.type}}</p>
-									</div>
-									<div layout="row" layout-align="space-between center">
-										<p>Disk Quota</p>
-										<p>{{instance.entity.disk_quota}}</p>
-									</div>
-									<div layout="row" layout-align="space-between center">
-										<div layout="column">
-											<div ng-show="instance.showMore && instance.entity.tags.length>0">
-												<p>Tags</p>
-												<p class="tag-list">
-													<span ng-repeat="tag in instance.entity.tags">{{tag}}{{$last ? '' : ', '}}</span>
-												</p>
-											</div>
-										</div>
-									</div>
-									<div layout="row" layout-align="space-between center">
-										<p>Last Operation</p>
-										<p>{{instance.entity.last_operation.type}}</p>
-									</div>
-									<div layout="row" layout-align="space-between center">
-										<p>State</p>
-										<p>{{instance.entity.last_operation.state}}</p>
-									</div>
-									<div layout="row" layout-align="space-between center">
-										<p>Created</p>
-										<p>{{instance.entity.last_operation.created_at | date: 'dd.MM.yyyy'}}</p>
-									</div>
-									<div layout="row" layout-align="space-between center">
-										<p>Updated</p>
-										<p>{{instance.entity.last_operation.updated_at | date: 'dd.MM.yyyy'}}</p>
-									</div>
-				        </div>
-				      </md-list-item>
-
-							<div class="instance-more" ng-show="instance.showMore">
-					      <md-divider></md-divider>
-					      <md-subheader class="md-no-sticky">Service Plan ({{instance.entity.service_plan.entity.name}})</md-subheader>
-					      <md-divider></md-divider>
-					      <md-subheader class="md-no-sticky no-focus" ng-class="{'clickable' : instance.entity.service_bindings.length>0}" ng-click="showBindings = !showBindings">
-									Service Bindings ({{instance.entity.service_bindings.length}})
-									<i class="fa fa-sm" ng-show="instance.entity.service_bindings.length>0" ng-class="{'fa-chevron-down' : !showBindings, 'fa-chevron-up' : showBindings}"></i>
-								</md-subheader>
-
-								<div class="instance-bindings grey" ng-show="showBindings">
-									<div ng-repeat="binding in instance.bindingsDetails" layout="column">
-										<div layout="row" layout-align="center center">
-											<div flex="10" layout="column"><i class="fa fa-times no-focus clickable delete" ng-click="deleteServiceBinding($event, instance, binding)"></i></div>
-											<div flex="70" layout="column">{{binding.app_name}}</div>
-											<div flex="20" layout="column">{{binding.app_state}}</div>
-										</div>
-										<div class="spacer-10"></div>
-										<md-divider></md-divider>
-										<div class="spacer-10"></div>
-									</div>
-								</div>
-
-					      <div flex="100" layout="column" layout-align="center center" class="md-no-sticky">
-									<div flex="60">
-										<button ng-disabled="instance.entity.service_bindings.length>0" class="md-button md-raised md-warn" type="button" aria-label="Delete Service Instance" ng-click="showConfirm($event, instance)">
-											<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg"></md-icon> Delete instance
-										</button>
-									</div>
-									<div ng-hide="instance.entity.service_bindings.length==0" flex="100">
-										<span class="grey">Delete bindings first</span>
-									</div>
-
 								</div>
 							</div>
+							<div layout="row" layout-align="space-between center">
+								<p>Last Operation</p>
+								<p>{{instance.entity.last_operation.type}}</p>
+							</div>
+							<div layout="row" layout-align="space-between center">
+								<p>State</p>
+								<p>{{instance.entity.last_operation.state}}</p>
+							</div>
+							<div layout="row" layout-align="space-between center">
+								<p>Created</p>
+								<p>{{instance.entity.last_operation.created_at | date: 'dd.MM.yyyy'}}</p>
+							</div>
+							<div layout="row" layout-align="space-between center">
+								<p>Updated</p>
+								<p>{{instance.entity.last_operation.updated_at | date: 'dd.MM.yyyy'}}</p>
+							</div>
+		        </div>
+		      </md-list-item>
 
-				    </md-list>
-					</md-card-content>
-					<div class="md-actions" layout="row" layout-align="end center">
-		        <md-button ng-show="instance.showMore==false" ng-click="instance.showMore=true">More</md-button>
-						<md-button ng-show="instance.showMore==true" ng-click="instance.showMore=false">Less</md-button>
-		      </div>
+					<div class="instance-more" ng-show="instance.showMore">
+			      <md-divider></md-divider>
+			      <md-subheader class="md-no-sticky">Service Plan ({{instance.entity.service_plan.entity.name}})</md-subheader>
+			      <md-divider></md-divider>
+			      <md-subheader class="md-no-sticky no-focus" ng-class="{'clickable' : instance.entity.service_bindings.length>0}" ng-click="showBindings = !showBindings">
+							Service Bindings ({{instance.entity.service_bindings.length}})
+							<i class="fa fa-sm" ng-show="instance.entity.service_bindings.length>0" ng-class="{'fa-chevron-down' : !showBindings, 'fa-chevron-up' : showBindings}"></i>
+						</md-subheader>
+
+						<div class="instance-bindings grey" ng-show="showBindings">
+							<div ng-repeat="binding in instance.bindingsDetails" layout="column">
+								<div layout="row" layout-align="center center">
+									<div flex="10" layout="column"><i class="fa fa-times no-focus clickable delete red" ng-click="deleteServiceBinding($event, instance, binding)"></i></div>
+									<div flex="70" layout="column">{{binding.app_name}}</div>
+									<div flex="20" layout="column">{{binding.app_state}}</div>
+								</div>
+								<div class="spacer-10"></div>
+								<md-divider></md-divider>
+								<div class="spacer-10"></div>
+							</div>
+						</div>
+
+			      <div flex="100" layout="column" layout-align="center center" class="md-no-sticky">
+							<div flex="60">
+								<button ng-disabled="instance.entity.service_bindings.length>0" class="md-button md-raised md-warn" type="button" aria-label="Delete Service Instance" ng-click="showConfirm($event, instance)">
+									<md-icon class="no-focus" md-svg-icon="assets/svg/ic_delete_48px.svg"></md-icon> Delete instance
+								</button>
+							</div>
+							<div ng-hide="instance.entity.service_bindings.length==0" flex="100">
+								<span class="grey">Delete bindings first</span>
+							</div>
+
+						</div>
+					</div>
+
+		    </md-list>
+			</md-card-content>
+			<div class="md-actions" layout="row" layout-align="end center">
+        <md-button ng-show="instance.showMore==false" ng-click="instance.showMore=true">More</md-button>
+				<md-button ng-show="instance.showMore==true" ng-click="instance.showMore=false">Less</md-button>
+      </div>
 		</md-card>
 	</div>
 

@@ -9,10 +9,26 @@ angular.module('controllers')
       $scope.init = function() {
         Restangular.one('spaces', $state.params.spaceId).get().then(function(data, status, headers) {
           $scope.s = data;
-          console.log("space init tatds");
-          console.log($scope.s);
+          getServiceBindingsDetails($scope.s);
         });
       };
+
+      function getServiceBindingsDetails(space) {
+        space.entity.apps.forEach(function(app) {
+          app.bindingsDetails = [];
+          app.entity.service_bindings.forEach(function(binding) {
+            var instanceId = binding.entity.service_instance_guid;
+            Restangular.one('service_instances/' + instanceId).get().then(function(instance) {
+              var bindingDetail = {
+                instance_guid: instance.metadata.guid,
+                instance_name: instance.entity.name,
+                guid: binding.metadata.guid
+              };
+              app.bindingsDetails.push(bindingDetail);
+            });
+          })
+        })
+      }
 
       $scope.colorString = function(name) {
         var myColor = DesignService.stringColor(name);

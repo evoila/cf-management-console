@@ -407,8 +407,11 @@ button.md-icon-button.table-cell-menu-button, .md-button.md-icon-button.table-ce
 .single-instance {
   width:350px;
 }
+.single-instance md-card .img-container {
+  height: 255px;
+}
 .single-instance md-card img {
-  height: 50%;
+  height: 60%;
   padding-bottom: 45px;
 }
 .single-instance img {
