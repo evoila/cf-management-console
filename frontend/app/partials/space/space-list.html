@@ -24,7 +24,7 @@
 				<md-card class="md-whiteframe-z2" flex>
 					<md-card-content layout="column">
 						<div layout="column" layout-gt-md="row" layout-align="start center">
-							<h1 class="md-title" flex="100" flex-gt-md="80">Apps</h1>
+							<h1 class="md-title no-focus" ng-class="{ 'clickable hover' : s.entity.apps.length > 0 }" flex="100" flex-gt-md="80" ng-click="checkIfApps(s)">Apps</h1>
 							<p class="md-title" flex="100" flex-gt-md="10">
 								{{s.entity.apps.length}}
 							</p>
@@ -54,7 +54,7 @@
 				<md-card class="md-whiteframe-z2" flex>
 					<md-card-content layout="column">
 						<div layout="column" layout-gt-md="row" layout-align="start center">
-							<h1 class="md-title" flex="100" flex-gt-md="80">Service Instances</h1>
+							<h1 class="md-title no-focus" ng-class="{ 'clickable hover' : s.entity.service_instances.length > 0 }" flex="100" flex-gt-md="80" ng-click="checkIfInstances(s)">Service Instances</h1>
 							<p class="md-title" flex="100" flex-gt-md="10">
 								{{s.entity.service_instances.length}}
 							</p>
@@ -65,8 +65,7 @@
 						</md-divider>
 						<div flex ng-cloak>
 							<md-grid-list class="space-instances-grid" md-cols="1" md-cols-gt-xs="2"  md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
-								<md-grid-tile class="no-focus" ng-repeat="ser in s.entity.service_instances" style="background-color:#{{colorString(ser.entity.name)}}"
-									ui-sref="service-list({organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid, space: s})">
+								<md-grid-tile class="no-focus no-link" ng-repeat="ser in s.entity.service_instances" style="background-color:#{{colorString(ser.entity.name)}}">
 									<img ng-src="assets/png/{{servicePng(ser.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
 									<!--img style="width:60%" ng-src="assets/png/mysql_w.png"-->
 									<md-grid-tile-footer>

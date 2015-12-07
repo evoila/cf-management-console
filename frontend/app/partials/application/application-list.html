@@ -1,8 +1,8 @@
 <div class="layout-row md-padding" style="padding-left:30px" ng-init="init()">
-	<span class="single-space-title">APPLICATIONS</span>
+	<span class="imposing-title">APPLICATIONS</span>
 </div>
 <div layout="row" style="padding: 10px" layout-wrap>
-	<div ng-repeat="app in s.entity.apps" flex="100" flex-gt-sm="50" id="single-space" ng-init="app.showMore=false" style="max-width:400px;">
+	<div ng-repeat="app in s.entity.apps" flex="100" flex-gt-sm="50" id="single-instance" ng-init="app.showMore=false" style="max-width:400px;">
 		<md-card style="background-color:#{{colorString(app.entity.name)}}">
 			<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
 			<md-card-content style="background-color:#fff">

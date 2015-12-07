@@ -1,33 +1,33 @@
-<md-card ng-cloak ng-if="application.entity.name != null">
-  <div style="background-color:#{{colorString(application.entity.name)}}" id="single-space" layout-gt-md="row" layout="column" layout-align="space-around center">
-    <div flex="50" layout-align="center center">
-      <h1 style="text-align:center; text-transform: uppercase; color:white;" class="md-display-2">{{application.entity.name}}</h1>
+<md-card id="single-app" ng-cloak ng-if="application.entity.name != null">
+  <div class="app-header" style="background-color:#{{colorString(application.entity.name)}}" layout-gt-md="row" layout="column" layout-align="space-around center">
+    <div flex="100" flex-gt-md="70">
+      <h1 class="app-title" class="md-display-2">{{application.entity.name}}</h1>
     </div>
-    <div flex="50">
-      <img ng-src="assets/png/{{servicePng(application.entity.name)}}_w.png" onerror="this.style.display='none'">
+    <div flex="100" flex-gt-md="30">
+      <img class="app-img" ng-src="assets/png/{{servicePng(application.entity.name)}}_w.png" onerror="this.style.display='none'">
     </div>
   </div>
   <md-card-content>
     <md-list>
       <md-list-item class="md-3-line">
         <div class="md-list-item-text" layout="column">
-          <div layout="row" layout-align="space-between center">
+          <div class="decent-line" layout="row" layout-align="space-between center">
             <p>Memory</p>
             <p>{{application.entity.memory}}</p>
           </div>
-          <div layout="row" layout-align="space-between center">
+          <div class="decent-line" layout="row" layout-align="space-between center">
             <p>Instances</p>
             <p>{{application.entity.instances}}</p>
           </div>
-          <div layout="row" layout-align="space-between center">
+          <div class="decent-line" layout="row" layout-align="space-between center">
             <p>Disk Quota</p>
             <p>{{application.entity.disk_quota}}</p>
           </div>
-          <div layout="row" layout-align="space-between center">
+          <div class="decent-line" layout="row" layout-align="space-between center">
             <p>State</p>
             <p>{{application.entity.state}}</p>
           </div>
-          <div layout="row" layout-align="space-between center">
+          <div class="decent-line" layout="row" layout-align="space-between center">
             <p>Package State</p>
             <p>{{app.entity.package_state}}</p>
           </div>
@@ -68,7 +68,7 @@
       </md-card-actions>
     </md-card>
   </md-card-content>
-  <md-card-actions layout="row" layout-align="space-between  center" style="background-color:#{{colorString(application.entity.name)}}">
+  <md-card-actions layout="column" layout-gt-sm="row" layout-align="space-between  center" style="background-color:#{{colorString(application.entity.name)}}">
     <div layout="row" layout-align="space-between center">
       <md-button class="md-icon-button" aria-label="Favorite" ng-click="application.entity.instances=application.entity.instances-1">
         <md-icon md-svg-icon="assets/svg/add_circle.svg"></md-icon>

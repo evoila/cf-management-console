@@ -131,6 +131,9 @@ md-dialog-actions {
 .clickable {
   cursor: pointer;
 }
+.clickable.hover:hover {
+  color: #2B5086;
+}
 
 .fit-to-checkbox {
   margin-left: -2px;
@@ -139,6 +142,12 @@ md-dialog-actions {
 .center {
   text-align: center;
 }
+
+.decent-line {
+  border-bottom:1px solid #c9c9c9;
+  margin-bottom:3px;
+}
+
 
 
 /* Toolbar area */
@@ -362,6 +371,8 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
 }
 
 
+/********** DATA TABLE ***********/
+
 th.button-table-cell, td.button-table-cell {
   min-width:30px !important;
   width:30px !important;
@@ -373,6 +384,21 @@ button.md-icon-button.table-cell-menu-button, .md-button.md-icon-button.table-ce
   height:36px !important;
   line-height:0 !important;
 }
+
+/********** APPLICATION  ***********/
+
+.app-header {
+  padding: 20px;
+}
+.app-header .app-title {
+  text-align:center;
+  text-transform: uppercase;
+  color:white;
+}
+.app-header .app-img {
+  width: auto;
+}
+
 
 /********** SERVICE INSTANCES ***********/
 

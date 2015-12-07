@@ -22,6 +22,16 @@ angular.module('controllers')
         return myService;
       };
 
+      $scope.checkIfApps = function(space) {
+        if(space.entity.apps.length > 0)
+          $state.go('application-list', { organizationId : space.entity.organization.metadata.guid, spaceId : space.metadata.guid })
+      }
+
+      $scope.checkIfInstances = function(space) {
+        if(space.entity.service_instances.length > 0)
+          $state.go('service-list', { organizationId : space.entity.organization.metadata.guid, spaceId : space.metadata.guid, space: space })
+      }
+
       /*
        *  Dialog for
        *
