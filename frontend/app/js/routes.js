@@ -28,7 +28,7 @@ angular.module('routes', ['ui.router'])
       .state('space-list', {
         url: "/organizations/:organizationId/spaces",
         templateUrl: "partials/space/space-list.html",
-        controller: 'spaceListController',
+        controller: 'spaceListController'
       })
       .state('marketplace', {
         url: '/organizations/:organizationId/marketplace',

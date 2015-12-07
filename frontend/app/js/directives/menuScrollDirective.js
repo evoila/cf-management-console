@@ -2,12 +2,12 @@ angular.module('directives')
   .run(['$templateCache', function($templateCache) {
     $templateCache.put('partials/menu-scroll.tmpl.html',
       '<md-button \n' +
-      '  ng-click="test">\n' +
+      '  ng-click="doScroll(section.name, section.orga)">\n' +
       '  {{section | humanizeDoc}}\n' +
       '</md-button>\n' +
       '');
   }])
-  .directive('menuScroll', ['menu', function(menu) {
+  .directive('menuScroll', ['$rootScope', 'menu', function($rootScope, menu) {
     return {
       scope: {
         section: '='
@@ -16,12 +16,15 @@ angular.module('directives')
       link: function($scope, $element, $attrs) {
         var controller = $element.parent().controller();
 
-        $scope.test = 'doScroll(anc-' + $attrs.target + ')';
-
         $scope.update = function(organization) {
           if(organization)
             menu.spacesToMenu(organization.metadata.guid)
         };
+
+        $scope.doScroll = function(target, id) {
+          $rootScope.$broadcast('doScroll', { target: target });
+        }
+
       }
     }
   }])

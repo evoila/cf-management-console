@@ -4,7 +4,7 @@
 
 angular.module('controllers')
   .controller('spaceListController',
-    function SpaceListController($scope, $state, Restangular, responseService, $mdDialog, menu, DesignService) {
+    function SpaceListController($scope, $state, $mdDialog, $rootScope, $document, Restangular, responseService, menu, DesignService) {
       $scope.spaces = menu.spaces;
       $scope.orgId = $state.params.organizationId;
 
@@ -30,7 +30,7 @@ angular.module('controllers')
        */
       $scope.showCreateSpaceDialog = function(ev) {
         $mdDialog.show({
-          controller: SpacesController,
+          controller: SpaceListController,
           templateUrl: 'partials/space/space-create-dialog.html',
           parent: angular.element(document.body),
           targetEvent: ev,
@@ -63,5 +63,11 @@ angular.module('controllers')
       $scope.cancel = function() {
         $mdDialog.cancel();
       };
+
+      $scope.$on('doScroll', function (event, args) {
+        var id = 'anc-' + args.target;
+        var targetSpace = angular.element(document.getElementById(id));
+        $document.scrollToElement(targetSpace, 30, 800);
+      });
 
 });

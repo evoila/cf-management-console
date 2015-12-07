@@ -14,7 +14,7 @@ angular.module('directives')
       '<ul ng-show="isOpen()" id="docs-menu-{{section.name | nospace}}" class="menu-toggle-list">\n' +
       '  <li ng-repeat="page in section.pages">\n' +
       '    <menu-link section="page" ng-if="page.type === \'link\'"></menu-link>\n' +
-      '    <menu-scroll section="page" target="{{page.name}}" ng-if="page.type === \'scroll\'"></menu-scroll>\n' +
+      '    <menu-scroll section="page" ng-if="page.type === \'scroll\'"></menu-scroll>\n' +
       '  </li>\n' +
       '</ul>\n' +
       '');

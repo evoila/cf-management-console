@@ -87,7 +87,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
 
     }
   ])
-  .run(function($rootScope, $state, $http, $timeout, clientCacheService, Restangular, envService, authenticationService, CMRESLogger) {
+  .run(function($rootScope, $state, $http, $timeout, $location, clientCacheService, Restangular, envService, authenticationService, CMRESLogger) {
     Restangular.setBaseUrl(envService.read('restApiUrl'))
       .setDefaultHeaders({
         "Content-Type": "application/json;charset=UTF-8",
@@ -103,10 +103,6 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
         }
         return true;
       });
-
-
-
-
 
     $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
       window.scrollTo(0, 0);

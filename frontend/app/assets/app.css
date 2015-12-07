@@ -4,7 +4,7 @@ html, body {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  overflow: hidden;
+  #overflow: hidden;
 }
 
 .no-focus:focus {
@@ -169,7 +169,7 @@ md-sidenav md-list {
 /* Primary content area */
 
 #content-wrapper {
-  overflow: scroll;
+  #overflow: scroll;
 }
 
 #content {
