@@ -2,9 +2,16 @@
 	<md-card ng-repeat="s in spaces" class="md-whiteframe-z4" flex="100">
 		<md-toolbar>
 			<div class="md-toolbar-tools">
-				<md-button class="md-icon-button" aria-label="Settings">
-					<md-icon md-svg-icon="assets/svg/menu.svg"></md-icon>
-				</md-button>
+				<md-menu md-offset="0 45">
+					<md-button class="md-icon-button" aria-label="Open Space interactions menu" ng-click="openMenu($mdOpenMenu, $event)">
+						<md-icon md-svg-icon="assets/svg/menu.svg"></md-icon>
+					</md-button>
+					<md-menu-content width="2">
+						<md-menu-item>
+							<md-button class="md-warn" ng-click="showConfirm($event, s)">Delete</md-button>
+						</md-menu-item>
+					</md-menu-content>
+				</md-menu>
 				<h2 id="anc-{{s.entity.name}}">
 					<span>
 						<a ng-click="state.go('space', {organizationId : s.entity.organization.metadata.guid, spaceId : s.metadata.guid})">

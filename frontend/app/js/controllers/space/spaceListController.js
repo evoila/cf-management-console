@@ -12,6 +12,11 @@ angular.module('controllers')
         $scope.spaces = spaces;
       });
 
+      $scope.openMenu = function($mdOpenMenu, ev) {
+        originatorEv = ev;
+        $mdOpenMenu(ev);
+      };
+
       $scope.colorString = function(name) {
         var myColor = DesignService.stringColor(name);
         return myColor;
@@ -30,6 +35,34 @@ angular.module('controllers')
       $scope.checkIfInstances = function(space) {
         if(space.entity.service_instances.length > 0)
           $state.go('service-list', { organizationId : space.entity.organization.metadata.guid, spaceId : space.metadata.guid, space: space })
+      }
+
+      /*
+       *  Dialog for
+       *
+       *  Confirm delete space
+       *
+       */
+       $scope.showConfirm = function(ev, space) {
+        var confirm = $mdDialog.confirm()
+              .title('Really delete space?')
+              .textContent(space.entity.name)
+              .ariaLabel('Confirm delete')
+              .targetEvent(ev)
+              .ok('Yes')
+              .cancel('Better not');
+        $mdDialog.show(confirm).then(function() {
+          deleteSpace(space);
+        });
+      };
+
+      function deleteSpace(space) {
+        Restangular.one('spaces', space.metadata.guid).remove().then(function() {
+          $mdDialog.hide();
+          responseService.success(space, 'Space was deleted successfully', 'space-list', { organizationId : $scope.orgId });
+        }, function(response) {
+          responseService.error(response);
+        });
       }
 
       /*
@@ -60,7 +93,7 @@ angular.module('controllers')
           responseService.success(space, 'Space was created successfully', 'space-list', { organizationId : $scope.orgId });
         }, function(response) {
           if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
-            responseService.error(response, 'Space name already in use');
+            $scope.nameInUse = true;
           else
             responseService.error(response);
         })

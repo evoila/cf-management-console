@@ -15,7 +15,7 @@
             <md-select placeholder="Choose app" ng-model="associateRouteForm.app_guid">
               <md-option ng-value="app.metadata.guid" ng-repeat="app in apps">{{app.entity.name}}</md-option>
             </md-select>
-            <span class="custom-validation-msg" ng-show="!associateRouteForm.app_guid && noApp">Please choose an app</span>
+            <span class="custom-validation-msg red" ng-show="!associateRouteForm.app_guid && noApp">Please choose an app</span>
           </md-input-container>
           </div>
 

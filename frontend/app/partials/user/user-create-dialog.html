@@ -12,8 +12,9 @@
 
         <div class="form-group full-width less-vmargins">
           <md-input-container>
-            <label>Username(email)</label>
+            <label>Username (email)</label>
             <input type="email" ng-model="createUserForm.username" ng-required="true">
+            <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
           </md-input-container>
           <md-input-container>
             <label>First Name</label>

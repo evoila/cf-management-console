@@ -88,7 +88,7 @@ angular.module('controllers')
                 responseService.success(instance, 'Instance was created successfully', 'service-list', { organizationId : $state.params.organizationId, spaceId : form.spaceId });
               }, function(response) {
                 if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
-                  responseService.error(response, 'Instance name already in use');
+                  $scope.nameInUse = true;
                 else
                   responseService.error(response);
               })

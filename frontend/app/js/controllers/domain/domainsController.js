@@ -51,7 +51,7 @@ angular.module('controllers')
           responseService.success(domain, 'Domain was created successfully', 'domains', { organizationId : $scope.orgId });
         }, function(response) {
             if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
-              responseService.error(response, 'Domain already taken');
+              $scope.nameInUse = true;
             else
               responseService.error(response);
         });

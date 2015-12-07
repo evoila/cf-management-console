@@ -34,6 +34,7 @@
             <md-input-container>
               <label>Instance name</label>
               <input type="text" ng-model="createServiceInstanceForm.instanceName" ng-required="true" minlength="5">
+              <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
             </md-input-container>
             <md-input-container>
               <md-select placeholder="Choose space" ng-model="createServiceInstanceForm.spaceId">

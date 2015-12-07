@@ -14,6 +14,7 @@
           <md-input-container>
             <label>Name</label>
             <input ng-model="createDomainForm.name" ng-required="true" minlength="4">
+            <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
           </md-input-container>
           </div>
 
@@ -28,5 +29,5 @@
 
       </form>
     </md-dialog-content>
-    
+
 </md-dialog>

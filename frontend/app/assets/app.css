@@ -42,7 +42,6 @@ md-switch.orange.md-checked .md-thumb {
   background-color: none !important;
 }
 
-
 md-grid-tile {
   cursor: pointer;
 }
@@ -147,6 +146,9 @@ md-dialog-actions {
   border-bottom:1px solid #c9c9c9;
   margin-bottom:3px;
 }
+
+
+
 
 
 

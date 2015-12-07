@@ -14,6 +14,7 @@
           <md-input-container>
             <label>Space name</label>
             <input ng-model="createSpaceForm.name" ng-required="true" minlength="3">
+            <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
           </md-input-container>
           <md-input-container>
             <md-switch class="no-focus" ng-model="createSpaceForm.allow_ssh" aria-label="Toggle allow ssh">allow SSH</md-switch>
