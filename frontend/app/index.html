@@ -48,8 +48,12 @@
               <menu-link section="menu.organizations" ng-if="menu.organizations.type === 'link'"></menu-link>
               <menu-toggle section="menu.organizations" ng-if="menu.organizations.type === 'toggle'"></menu-toggle>
             </li>
-            <md-card ng-show="isAuthenticated">
-              <md-card-content layout="row">
+
+            <md-divider></md-divider>
+            <div class="spacer-10"></div>
+
+            <div ng-show="isAuthenticated">
+              <md-content layout="row">
                 <ul flex="100">
                   <li ng-repeat="section in menu.sections" class="parent-list-item" ng-class="{'parentActive' : isSectionSelected(section)}">
                     <h2 class="menu-heading" ng-if="section.type === 'heading'" id="heading_{{ section.name | nospace }}">
@@ -59,8 +63,8 @@
                     <menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>
                   </li>
                 </ul>
-              </md-card-content>
-            </md-card>
+              </md-content>
+            </div>
           </ul>
         </md-content>
       </md-sidenav>
