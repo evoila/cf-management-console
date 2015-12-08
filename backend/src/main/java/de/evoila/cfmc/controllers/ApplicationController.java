@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.evoila.cfmc.api.model.Application;
+import de.evoila.cfmc.api.model.ApplicationStatus;
 import de.evoila.cfmc.api.model.Instance;
 import de.evoila.cfmc.api.model.base.CloudFoundryResource;
 import de.evoila.cfmc.api.model.base.CloudFoundryResources;
@@ -91,6 +92,18 @@ public class ApplicationController {
 		}
 		return instances;
     }
+	
+	@RequestMapping(value = "/applications/{appId}/stats", method = RequestMethod.GET)
+	public @ResponseBody List<CloudFoundryResource<ApplicationStatus>> getApplicationStats(@RequestHeader("Authorization") String token, 
+			@PathVariable("appId") String appId) {
+		
+		Map<String, Object> values = restRepository.customList(token, V2_APPS.concat("/").concat(appId).concat("/stats"), 1);
+		List<CloudFoundryResource<ApplicationStatus>> appStats = new ArrayList<>(); 
+		for (Object value : values.values()) {
+			appStats.add(new CloudFoundryResource<ApplicationStatus>(objectMapper.convertValue(value, ApplicationStatus.class)));
+		}
+		return appStats;
+	}
 	
 	@RequestMapping(value = "/applications/{id}/bindings/{bindingId}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<Instance> getApplicationInstances(@RequestHeader("Authorization") String token, 

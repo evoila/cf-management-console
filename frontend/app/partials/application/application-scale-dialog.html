@@ -1,0 +1,31 @@
+<md-dialog aria-label="Scale application">
+
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Scale {{application.entity.name}}</h2>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <div layout="row" layout-align="space-between center">
+      <md-button class="md-icon-button" aria-label="Decrease instances" ng-disabled="application.entity.instances==0" ng-click="application.entity.instances=application.entity.instances-1">
+        <md-icon md-svg-icon="assets/svg/remove_circle.svg"></md-icon>
+      </md-button>
+      <p>{{application.entity.instances}}</p>
+      <md-button class="md-icon-button" aria-label="Increase instances" ng-click="application.entity.instances=application.entity.instances+1">
+        <md-icon md-svg-icon="assets/svg/add_circle.svg"></md-icon>
+      </md-button>
+    </div>
+
+    <md-dialog-actions flex layout="row">
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      <md-button class="md-raised md-primary" ng-disabled="application.entity.instances==instanceCount" ng-click="scaleApplication(application)">
+        Scale
+      </md-button>
+    </d-dialog-actions>
+
+  </md-dialog-content>
+
+</md-dialog>

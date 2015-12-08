@@ -17,7 +17,6 @@ import de.evoila.cfmc.api.model.base.CloudFoundryResource;
  * @author Johannes Hiemer.
  *
  */
-
 public class Application {
 
 	@JsonProperty("name")
