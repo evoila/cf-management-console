@@ -10,7 +10,7 @@ angular.module('directives')
       template:
         '<div flex="100">' +
           '<md-content layout="column">' +
-            '<md-card>' +
+            '<md-card style="overflow:scroll !important;">' +
               '<md-card-content>' +
                 '<pre>{{ obj | json }}</pre>' +
               '</md-card-content>' +

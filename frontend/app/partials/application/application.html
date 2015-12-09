@@ -1,6 +1,6 @@
 <div flex="100" ng-init="init()">
-  <md-card flex="100" id="single-app" ng-cloak ng-if="application.entity.name != null">
-    <div flex="100" class="app-header" style="background-color:#{{colorString(application.entity.name)}}" layout-gt-md="row" layout="column" layout-align="space-around center">
+  <md-card flex="100" ng-cloak ng-if="application.entity.name != null">
+    <div flex="100" class="app-header" style="background-color:#{{colorString(application.entity.name)}}" layout-gt-md="row" layout="column" layout-align="space-around center" layout-align-gt-md="">
       <div flex="100" flex-gt-md="70">
         <h1 class="app-title" class="md-display-2">{{application.entity.name}}</h1>
       </div>
@@ -124,6 +124,6 @@
     </md-card-content>
   </md-card>
 
-  <div print-json obj="application"></div>
+    <!--<div print-json obj="application"></div>-->
 
 </div>
