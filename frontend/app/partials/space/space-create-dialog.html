@@ -8,12 +8,14 @@
 
     <md-dialog-content>
 
-      <form name="createSpaceForm" ng-submit="submitCreateSpaceForm(createSpaceForm)">
+      <form name="createSpaceForm" ng-submit="createSpaceForm.$valid && submitCreateSpaceForm(createSpaceForm)" novalidate>
 
         <div class="form-group full-width less-vmargins">
           <md-input-container>
             <label>Space name</label>
-            <input ng-model="createSpaceForm.name" ng-required="true" minlength="3">
+            <input ng-model="createSpaceForm.name" name="spacename" required ng-minlength="3">
+            <span class="custom-validation-msg red" ng-show="createSpaceForm.spacename.$touched && createSpaceForm.spacename.$error.required">Required field</span>
+            <span class="custom-validation-msg red" ng-show="createSpaceForm.spacename.$error.minlength">Must be at least 3 characters</span>
             <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
           </md-input-container>
           <md-input-container>
@@ -25,7 +27,7 @@
           <md-button type="button" ng-click="cancel()">
             Cancel
           </md-button>
-          <md-button class="md-raised md-primary" type="submit">
+          <md-button class="md-raised md-primary" ng-disabled="createSpaceForm.$invalid" type="submit">
             Create
           </md-button>
         </md-dialog-actions>

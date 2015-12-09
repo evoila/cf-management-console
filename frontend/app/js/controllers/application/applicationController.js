@@ -26,7 +26,6 @@ angular.module('controllers')
           Restangular.one('applications', $scope.appId).all('instances').getList().then(function(instances) {
             $scope.instances = instances;
 
-            //Restangular.one('applications/' + $scope.appId + '/stats').get().then(function(appStatus) {
             Restangular.one('applications', $scope.appId).all('stats').getList().then(function(appStatus) {
               $scope.appStatus = appStatus;
 
@@ -41,6 +40,8 @@ angular.module('controllers')
             }, function(response) {
               console.log(response)
             })
+          }, function(response) {
+            console.log(response)
           });
 
           angular.forEach(application.entity.service_bindings, function(binding) {
@@ -95,7 +96,10 @@ angular.module('controllers')
             $scope.instanceCount = application.entity.instances;
 
             $scope.scaleApplication = function(application) {
-              Restangular.one('applications', application.metadata.guid).customPUT(application, null, null, null).then(function(data) {
+
+              //delete application.entity.docker_credentials_json;
+
+              Restangular.one('applications', application.metadata.guid).customPUT(application, undefined, undefined, undefined).then(function(data) {
                 responseService.success(data, 'Application was scaled successfully', 'application', {
                   organizationId : application.entity.space.entity.organization_guid,
                   spaceId : application.entity.space.metadata.guid,

@@ -3,54 +3,60 @@
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>
-          <span>Register a new Account</span>
+          <span>Register a new account</span>
         </h2>
       </div>
     </md-toolbar>
     <div layout="row" flex class="md-padding" ng-init="organizationValid = false">
-      <form>
+      <form name="checkOrgForm">
         <div layout="column">
           <md-input-container flex>
             <label>Organization</label>
-            <input ng-model="registerForm.orgName" ng-required="true" ng-change="checkOrgName(registerForm.orgName)" minlength="3">
+            <input ng-model="registerForm.orgName" name="org" ng-change="checkOrgName(registerForm.orgName)" required ng-minlength="3">
+            <span class="custom-validation-msg red" ng-show="checkOrgForm.org.$touched && checkOrgForm.org.$error.required">Required field</span>
+            <span class="custom-validation-msg red" ng-show="checkOrgForm.org.$error.minlength">Must be at least 3 characters</span>
+            <span class="custom-validation-msg red" ng-show="!organizationValid && (registerForm.orgName.length)">Name already in use</span>
           </md-input-container>
-          <p class="red" ng-show="!organizationValid && (registerForm.orgName.length)">Name already exists</p>
         </div>
       </form>
     </div>
     <md-content class="md-padding">
-      <form name="userForm" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" ng-submit="register(registerForm)" ng-show="organizationValid && registerForm.orgName.length">
-        <div layout="column">
+      <form name="registerForm" ng-submit="registerForm.$valid && register(registerForm)">
+
+        <div layout="column" ng-show="organizationValid && registerForm.orgName.length" ng-cloak>
           <md-input-container>
             <label>Email</label>
-            <input ng-model="registerForm.username" type="email" ng-required="true">
+            <input ng-model="registerForm.username" type="email" name="uname" required>
+            <span class="custom-validation-msg red" ng-show="registerForm.uname.$touched && registerForm.uname.$error.required">Required field</span>
+            <span class="custom-validation-msg red" ng-show="registerForm.uname.$touched && registerForm.uname.$error.email">Please provide a valid email address</span>
+            <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
           </md-input-container>
           <md-input-container>
             <label>Firstname</label>
-            <input ng-model="registerForm.firstname" minlength="3" ng-required="true">
+            <input ng-model="registerForm.firstname" name="fname" ng-minlength="3" required>
+            <span class="custom-validation-msg red" ng-show="registerForm.fname.$touched && registerForm.fname.$error.required">Required field</span>
+            <span class="custom-validation-msg red" ng-show="registerForm.fname.$error.minlength">Must be at least 3 characters</span>
           </md-input-container>
           <md-input-container>
             <label>Lastname</label>
-            <input ng-model="registerForm.lastname" minlength="3" ng-required="true">
+            <input ng-model="registerForm.lastname" name="lname" ng-minlength="3" required>
+            <span class="custom-validation-msg red" ng-show="registerForm.lname.$touched && registerForm.lname.$error.required">Required field</span>
+            <span class="custom-validation-msg red" ng-show="registerForm.lname.$error.minlength">Must be at least 3 characters</span>
           </md-input-container>
           <md-input-container>
             <label>Password</label>
-            <input type="password" ng-model="registerForm.password" minlength="5" ng-required="true">
+            <input type="password" ng-model="registerForm.password" name="pword" ng-minlength="6" required>
+            <span class="custom-validation-msg red" ng-show="registerForm.pword.$touched && registerForm.pword.$error.required">Required field</span>
+            <span class="custom-validation-msg red" ng-show="registerForm.pword.$error.minlength">Must be at least 6 characters</span>
           </md-input-container>
         </div>
 
-        <div layout="row" layout-align="end end" layout-align-sm="center center">
-          <md-button class="md-fab detail md-primary md-fab-detail" aria-label="register" type="submit">
-            <ng-md-icon icon="add" size="40" style="fill:white"></ng-md-icon>
-            <md-tooltip>
-              Register
-            </md-tooltip>
-          </md-button>
+        <div layout="column" layout-gt-sm="row" layout-align="space-between center">
+          <a class="md-primary md-button no-hover md-ink-ripple" ui-sref="login">Already have an Account? Login!</a>
+          <md-button flex-sm="100" flex-order-sm="1" type="submit" class="md-raised md-primary" ng-disabled="registerForm.$invalid || checkOrgForm.$invalid || !organizationValid">Create your account</md-button>
         </div>
+
       </form>
-      <div layout="row" layout-align-sm="center center">
-        <a class="md-primary md-button no-hover md-ink-ripple" ui-sref="login">Already have an Account? Login!</a>
-      </div>
     </md-content>
 </div>
 </div>

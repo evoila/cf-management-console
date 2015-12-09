@@ -8,12 +8,14 @@
 
     <md-dialog-content>
 
-      <form name="createDomainForm" ng-submit="submitCreateDomainForm(createDomainForm)">
+      <form name="createDomainForm" ng-submit="createDomainForm.$valid && submitCreateDomainForm(createDomainForm)" novalidate>
 
         <div class="form-group full-width less-vmargins">
           <md-input-container>
             <label>Name</label>
-            <input ng-model="createDomainForm.name" ng-required="true" minlength="4">
+            <input ng-model="createDomainForm.name" required name="dname" ng-minlength="4">
+            <span class="custom-validation-msg red" ng-show="createDomainForm.dname.$touched && createDomainForm.dname.$error.required">Required field</span>
+            <span class="custom-validation-msg red" ng-show="createDomainForm.dname.$error.minlength">Must be at least 4 characters</span>
             <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
           </md-input-container>
           </div>
@@ -22,7 +24,7 @@
             <md-button type="button" ng-click="cancel()">
               Cancel
             </md-button>
-            <md-button class="md-raised md-primary" type="submit">
+            <md-button class="md-raised md-primary" ng-disabled="createDomainForm.$invalid" type="submit">
               Create
             </md-button>
           </d-dialog-actions>

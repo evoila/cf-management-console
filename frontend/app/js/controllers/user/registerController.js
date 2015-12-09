@@ -8,7 +8,6 @@ angular.module('controllers')
     function RegisterController($scope, $state, $http, responseService, envService, Restangular) {
       $scope.state = $state;
       $scope.organizationValid = false;
-      $scope.usernameExists = false;
 
       REST_API = envService.read('restApiUrl');
 
@@ -22,29 +21,34 @@ angular.module('controllers')
         });
       };
 
-      $scope.register = function(registerForm) {
-        if(!$scope.organizationValid)
-          alert('Todo: nice errors, warnings');
+      $scope.register = function(form) {
 
-        else {
-          Restangular.all('users').post(registerForm).then(function(user) {
-            var createdUserId = user.metadata.guid;
+        var usr = {
+          username: form.username,
+          firstname: form.firstname,
+          lastname: form.lastname,
+          password: form.password
+        }
 
-            var organisationContent = {
-              'name': registerForm.orgName,
-              'user_guids': [createdUserId],
-              'manager_guids': [createdUserId]
-            };
+        Restangular.all('users').post(usr).then(function(user) {
+          var createdUserId = user.metadata.guid;
 
-            Restangular.all('organizations').post(organisationContent).then(function(organization) {
-              responseService.success(organization, 'login');
-            }, function(response) {
-                responseService.error(response);
-            });
+          var organizationContent = {
+            'name': registerForm.orgName,
+            'user_guids': [createdUserId],
+            'manager_guids': [createdUserId]
+          };
+
+          Restangular.all('organizations').post(organizationContent).then(function(organization) {
+            responseService.success(organization, 'login');
           }, function(response) {
+              console.log(response)
               responseService.error(response);
           });
-        }
+        }, function(response) {
+          if(response.status == '409')
+            $scope.nameInUse = true;
+        });
       };
 
 

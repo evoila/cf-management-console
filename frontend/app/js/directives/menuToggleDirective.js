@@ -8,7 +8,7 @@ angular.module('directives')
       '  aria-expanded="{{isOpen()}}">\n' +
       '<i ng-class="{\'{{section.icon}}\' : true}" style="width:20px;"></i>'+
       '  {{section.name}}\n' +
-      '  <span aria-hidden="true" class=" pull-right fa fa-chevron-down md-toggle-icon"\n' +
+      '  <span aria-hidden="true" class="pull-right fa fa-chevron-down md-toggle-icon"\n' +
       '  ng-class="{\'toggled\' : isOpen()}"></span>\n' +
       '</md-button>\n' +
       '<ul ng-show="isOpen()" id="docs-menu-{{section.name | nospace}}" class="menu-toggle-list">\n' +

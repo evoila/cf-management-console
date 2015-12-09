@@ -8,33 +8,38 @@
 
     <md-dialog-content>
 
-      <form name="createRouteForm" ng-submit="submitCreateRouteForm(createRouteForm)">
+      <form name="createRouteForm" ng-submit="createRouteForm.$valid && submitCreateRouteForm(createRouteForm)" novalidate>
 
         <div class="form-group full-width less-vmargins">
           <md-input-container>
             <md-select placeholder="Choose domain" ng-model="createRouteForm.domain_guid">
               <md-option ng-value="domain.metadata.guid" ng-repeat="domain in domains">{{domain.entity.name}}</md-option>
             </md-select>
-            <span class="custom-validation-msg" ng-show="!createRouteForm.domain_guid && noDomain">Please choose a domain</span>
+            <span class="custom-validation-msg red" ng-show="!createRouteForm.domain_guid && noDomain">Please choose a domain</span>
           </md-input-container>
           <md-input-container>
             <md-select placeholder="Choose space" ng-model="createRouteForm.space_guid">
               <md-option ng-value="space.metadata.guid" ng-repeat="space in spaces">{{space.entity.name}}</md-option>
             </md-select>
-            <span class="custom-validation-msg" ng-show="!createRouteForm.space_guid && noSpace">Please choose a space</span>
+            <span class="custom-validation-msg red" ng-show="!createRouteForm.space_guid && noSpace">Please choose a space</span>
           </md-input-container>
           <md-input-container>
             <label>Host (optional)</label>
-            <input ng-model="createRouteForm.host" ng-required="false" minlength="4">
+            <input ng-model="createRouteForm.host" name="rhost" minlength="4">
+            <span class="custom-validation-msg red" ng-show="createRouteForm.rhost.$error.minlength">Must be at least 4 characters</span>
           </md-input-container>
           <md-input-container ng-hide="domain.entity.router_group_guid==null">
             <label>Port (optional)</label>
-            <input ng-model="createRouteForm.port" ng-required="false" type="number" min="1024" max="65535">
+            <input ng-model="createRouteForm.port" name="rport" type="number" min="1024" max="65535">
+            <span class="custom-validation-msg red" ng-show="createRouteForm.rport.$error.min">Must be between 1024 and 65535</span>
+            <span class="custom-validation-msg red" ng-show="createRouteForm.rport.$error.max">Must be between 1024 and 65535</span>
           </md-input-container>
           <md-input-container>
             <label>Path (optional)</label>
-            <input ng-model="createRouteForm.path" ng-required="false" minlength="2" maxlength="128">
-            <span class="custom-validation-msg" ng-show="invalidPath">Path must begin with '/', character '?' is not allowed</span>
+            <input ng-model="createRouteForm.path" name="rpath" ng-minlength="2" ng-maxlength="128">
+            <span class="custom-validation-msg red" ng-show="createRouteForm.rpath.$error.minlength">Must be at least 2 characters</span>
+            <span class="custom-validation-msg red" ng-show="createRouteForm.rpath.$error.maxlength">Must not be more than 128 characters</span>
+            <span class="custom-validation-msg red" ng-show="invalidPath">Path must begin with '/', character '?' is not allowed</span>
           </md-input-container>
           </div>
 
@@ -42,7 +47,7 @@
             <md-button type="button" ng-click="cancel()">
               Cancel
             </md-button>
-            <md-button class="md-raised md-primary" type="submit">
+            <md-button class="md-raised md-primary" ng-disabled="createRouteForm.$invalid || !createRouteForm.domain_guid || !createRouteForm.space_guid" type="submit">
               Create
             </md-button>
           </md-dialog-actions>

@@ -5,7 +5,7 @@ angular.module('directives')
       '  ui-sref="{{section.state}}({{section.params}})" ng-click="update(section.orga)">\n' +
       '<i ng-class="{\'{{section.icon}}\' : true}" style="width:20px;"></i>'+
       '  {{section | humanizeDoc}}\n' +
-      '  <span  class="md-visually-hidden "\n' +
+      '  <span class="md-visually-hidden "\n' +
       '    ng-if="isSelected()">\n' +
       '    current page\n' +
       '  </span>\n' +

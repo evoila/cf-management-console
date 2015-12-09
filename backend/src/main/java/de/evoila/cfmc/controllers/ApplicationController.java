@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.evoila.cfmc.api.model.Application;
 import de.evoila.cfmc.api.model.ApplicationStatus;
 import de.evoila.cfmc.api.model.Instance;
+import de.evoila.cfmc.api.model.ServiceBinding;
 import de.evoila.cfmc.api.model.base.CloudFoundryResource;
 import de.evoila.cfmc.api.model.base.CloudFoundryResources;
 import de.evoila.cfmc.api.repositories.RestRepository;
@@ -64,8 +65,8 @@ public class ApplicationController {
 	}
 	
 	@RequestMapping(value = "/applications/{id}", method = RequestMethod.PUT)
-    public CloudFoundryResource<Application> updateApplication(@RequestHeader("Authorization") String token, 
-    		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
+    public CloudFoundryResource<Application> updateApplication(@RequestHeader("Authorization") final String token, 
+    		@PathVariable("id") final String id, @RequestBody CloudFoundryResource<Application> application) {
 		return restRepository.update(token, V2_APPS.concat("/").concat(id), application);
     }
 	
@@ -105,6 +106,14 @@ public class ApplicationController {
 		return appStats;
 	}
 	
+	@RequestMapping(value = "/applications/{appId}/service_bindings", method = RequestMethod.GET)
+	public @ResponseBody List<CloudFoundryResource<ServiceBinding>> getApplicationServiceBindings(@RequestHeader("Authorization") String token,
+			@PathVariable("appId") final String appId) {
+		CloudFoundryResources<ServiceBinding> serviceBindings = restRepository.list(token, V2_APPS.concat("/").concat(appId).concat("/service_bindings"), 1, true);
+		return serviceBindings.getResources();
+	}
+		
+	// TODO: rename binding
 	@RequestMapping(value = "/applications/{id}/bindings/{bindingId}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<Instance> getApplicationInstances(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @PathVariable("bindingId") String bindingId) {

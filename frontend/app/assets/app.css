@@ -4,7 +4,6 @@ html, body {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  #overflow: hidden;
 }
 
 .no-focus:focus {
@@ -19,6 +18,10 @@ html, body {
 }
 .white {
   color: #fff;
+}
+
+.blue {
+  color: #2B5086;
 }
 
 .orange-bg {
@@ -166,6 +169,8 @@ md-dialog-actions {
   border-bottom:1px solid #c9c9c9;
   margin-bottom:3px;
 }
+
+
 
 
 
@@ -390,6 +395,15 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
 .space-apps-grid md-grid-tile img, .space-instances-grid md-grid-tile img {
   height: 50%;
   padding-bottom: 45px;
+}
+
+.failed-app {
+  background-color: grey !important;
+}
+.failed-app md-icon {
+  width: 70px;
+  height: 70px;
+  margin-top: 20px;
 }
 
 

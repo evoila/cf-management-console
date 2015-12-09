@@ -134,7 +134,7 @@ public class Application {
 	private String serviceBindingsUrl;
     
 	@JsonProperty("service_bindings")
-	private List<String> serviceBindings;
+	private List<CloudFoundryResource<ServiceBinding>> serviceBindings;
     
 	@JsonProperty("routes_url")
 	private String routesUrl;
@@ -446,11 +446,11 @@ public class Application {
 		this.serviceBindingsUrl = serviceBindingsUrl;
 	}
 
-	public List<String> getServiceBindings() {
+	public List<CloudFoundryResource<ServiceBinding>> getServiceBindings() {
 		return serviceBindings;
 	}
 
-	public void setServiceBindings(List<String> serviceBindings) {
+	public void setServiceBindings(List<CloudFoundryResource<ServiceBinding>> serviceBindings) {
 		this.serviceBindings = serviceBindings;
 	}
 

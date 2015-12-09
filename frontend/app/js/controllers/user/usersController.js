@@ -4,7 +4,7 @@
 
 angular.module('controllers')
   .controller('usersController',
-    function UsersController($scope, $state, Restangular, menu, clientCacheService, responseService, $mdDialog, $location, envService) {
+    function UsersController($scope, $state, $mdDialog, $location, Restangular, menu, clientCacheService, responseService, envService) {
       $scope.orgId = $state.params.organizationId;
       $scope.cfPrefix = envService.read('cf_prefix');
 
@@ -114,6 +114,7 @@ angular.module('controllers')
           lastname: form.lastname,
           password: form.password
         };
+
         Restangular.all('users').post(usr).then(function(user) {
           var createdUserId = user.metadata.guid;
 

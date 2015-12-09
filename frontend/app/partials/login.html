@@ -8,15 +8,17 @@
       </div>
     </md-toolbar>
     <md-card-content layout="column">
-      <form name="userForm" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" ng-submit="login(userForm)">
+      <form name="userForm" ng-submit="userForm.$valid && login(userForm)" novalidate>
         <div layout="column" layout-sm="column">
           <md-input-container class="md-input-invalid" flex>
             <label>Username (email)</label>
-            <input type="text" ng-model="userForm.email" required="true">
+            <input type="text" ng-model="userForm.email" name="uname" required>
+            <span class="custom-validation-msg red" ng-show="userForm.uname.$touched && userForm.uname.$error.required">Required field</span>
           </md-input-container>
           <md-input-container flex>
             <label>Password</label>
-            <input type="password" ng-model="userForm.password" required="true">
+            <input type="password" ng-model="userForm.password" name="pword" required>
+            <span class="custom-validation-msg red" ng-show="userForm.pword.$touched && userForm.pword.$error.required">Required field</span>
           </md-input-container>
         </div>
         <div layout="row" layout-align="start center">
@@ -32,8 +34,8 @@
           </div>
         </div>
         <div class="fit-to-checkbox" layout="column" layout-gt-sm="row" layout-align="space-between center">
-          <a class="md-primary md-button no-hover md-ink-ripple" ui-sref="register">Don't have an account? Create one now</a>
-          <md-button flex-sm="100" flex-order-sm="1" type="submit" class="md-raised md-primary" ng-disabled="login.$invalid">Log in</md-button>
+          <a class="md-primary md-button no-hover md-ink-ripple" ui-sref="register">Don't have an account? Create one now!</a>
+          <md-button flex-sm="100" flex-order-sm="1" type="submit" class="md-raised md-primary" ng-disabled="userForm.$invalid">Login</md-button>
         </div>
       </form>
     </md-card-content>

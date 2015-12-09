@@ -23,7 +23,7 @@
             <md-button type="button" ng-click="cancel()">
               Cancel
             </md-button>
-            <md-button class="md-raised md-primary" type="submit">
+            <md-button class="md-raised md-primary" ng-disabled="!removeAppForm.app_guid" type="submit">
               Remove
             </md-button>
           </md-dialog-actions>

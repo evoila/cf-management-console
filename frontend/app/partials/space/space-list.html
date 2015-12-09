@@ -43,8 +43,10 @@
 							<md-grid-list class="space-apps-grid" md-cols="1" md-cols-gt-xs="2" md-cols-gt-lg="3" md-row-height="1:1" md-gutter="8px" md-gutter-gt-sm="4px">
 								<md-grid-tile ng-repeat="app in s.entity.apps"
 									style="background-color:#{{colorString(app.entity.name)}}"
+									ng-class="{ 'failed-app': app.entity.package_state=='FAILED' }"
 									ui-sref="application({'applicationId':'{{app.metadata.guid}}','organizationId':'{{s.entity.organization.metadata.guid}}','spaceId':'{{s.metadata.guid}}'})">
-									<img ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
+									<img ng-hide="app.entity.package_state=='FAILED'" ng-src="assets/png/{{servicePng(app.entity.name)}}_w.png" onerror="this.style.display='none'">
+									<md-icon class="white" ng-show="app.entity.package_state=='FAILED'" md-svg-icon="assets/svg/invalid.svg"></md-icon>
 									<md-grid-tile-footer>
 										<h3>
 											{{app.entity.name}}

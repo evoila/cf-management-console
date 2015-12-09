@@ -29,11 +29,13 @@
       </div>
 
       <div ng-show="ctrl.showCreate">
-        <form name="createServiceInstanceForm" ng-submit="submitCreateServiceInstanceForm(createServiceInstanceForm)">
+        <form name="createServiceInstanceForm" ng-submit="createServiceInstanceForm.$valid && submitCreateServiceInstanceForm(createServiceInstanceForm)" novalidate>
           <div flex class="form-group full-width less-vmargins">
             <md-input-container>
               <label>Instance name</label>
-              <input type="text" ng-model="createServiceInstanceForm.instanceName" ng-required="true" minlength="5">
+              <input type="text" ng-model="createServiceInstanceForm.instanceName" name="name" required ng-minlength="5">
+              <span class="custom-validation-msg red" ng-show="createServiceInstanceForm.name.$touched && createServiceInstanceForm.name.$error.required">Required field</span>
+              <span class="custom-validation-msg red" ng-show="createServiceInstanceForm.name.$error.minlength">Must be at least 5 characters</span>
               <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
             </md-input-container>
             <md-input-container>
@@ -44,7 +46,7 @@
             </md-input-container>
 
             <md-chips ng-model="tags" readonly="false" placeholder="Add another" delete-button-label="Remove Tag" delete-hint="Press delete to remove tag" secondary-placeholder="Add a tag"></md-chips>
-            <span class="custom-validation-msg grey">Press enter to apply tag</span>
+            <span class="custom-validation-msg blue">Press enter to apply tag</span>
 
           </div>
           <span flex=""></span>
@@ -52,7 +54,7 @@
             <md-button type="button" ng-click="cancel()">
               Cancel
             </md-button>
-            <md-button class="md-raised md-primary" type="submit">
+            <md-button class="md-raised md-primary" ng-disabled="createServiceInstanceForm.$invalid || !createServiceInstanceForm.spaceId" type="submit">
               Create
             </md-button>
           </md-dialog-actions>

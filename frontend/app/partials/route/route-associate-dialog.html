@@ -23,7 +23,7 @@
             <md-button type="button" ng-click="cancel()">
               Cancel
             </md-button>
-            <md-button class="md-raised md-primary" type="submit">
+            <md-button class="md-raised md-primary" ng-disabled="!associateRouteForm.app_guid" type="submit">
               Associate
             </md-button>
           </md-dialog-actions>

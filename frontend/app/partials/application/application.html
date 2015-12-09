@@ -1,6 +1,6 @@
-<div ng-init="init()">
-  <md-card id="single-app" ng-cloak ng-if="application.entity.name != null">
-    <div class="app-header" style="background-color:#{{colorString(application.entity.name)}}" layout-gt-md="row" layout="column" layout-align="space-around center">
+<div flex="100" ng-init="init()">
+  <md-card flex="100" id="single-app" ng-cloak ng-if="application.entity.name != null">
+    <div flex="100" class="app-header" style="background-color:#{{colorString(application.entity.name)}}" layout-gt-md="row" layout="column" layout-align="space-around center">
       <div flex="100" flex-gt-md="70">
         <h1 class="app-title" class="md-display-2">{{application.entity.name}}</h1>
       </div>
@@ -79,7 +79,7 @@
 
           <div class="custom-grid-item-content">
             <div class="item-header" style="background-color:#{{colorString(application.entity.name)}}">
-              <i class="fa fa-3x white" ng-class="{ 'fa-play-circle' : status.entity.state=='RUNNING', 'fa-stop-circle' : status.entity.state=='DOWN' }"></i>
+              <i class="fa fa-3x white" ng-class="{ 'fa-play-circle' : status.entity.state=='RUNNING', 'fa-ban' : status.entity.state=='DOWN', 'fa-stop-circle' : status.entity.state=='STOPPED' }"></i>
             </div>
 
             <div class="item-content">

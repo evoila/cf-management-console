@@ -76,8 +76,7 @@ public class OrganizationController {
 	 * requires admin token (user registration)
 	 */
 	@RequestMapping(value = "/organizations", method = RequestMethod.POST)
-    public @ResponseBody CloudFoundryResource<Organization> createOrganization(@RequestHeader("Authorization") String token,
-    		@RequestBody Organization organization) {
+    public @ResponseBody CloudFoundryResource<Organization> createOrganization(@RequestBody Organization organization) {
 		String adminToken = userRepository.login();		
 		return restRepository.save(adminToken, V2_ORGANIZATIONS, new CloudFoundryResource<Organization>(organization));
     }

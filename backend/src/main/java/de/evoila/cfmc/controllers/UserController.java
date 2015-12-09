@@ -63,8 +63,8 @@ public class UserController {
 	 * requires admin token (user registration)
 	 */
     @RequestMapping(value = "/users/{userId}/organizations/{orgId}", method = RequestMethod.PUT)
-    public @ResponseBody CloudFoundryResource<OrganizationUser> addUserToOrganization(@RequestHeader("Authorization") final String token,
-    		@PathVariable("userId") final String userId, @PathVariable("orgId") final String orgId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
+    public @ResponseBody CloudFoundryResource<OrganizationUser> addUserToOrganization(@PathVariable("userId") final String userId, 
+    		@PathVariable("orgId") final String orgId, @RequestBody CloudFoundryResource<OrganizationUser> orgUserDummy) {
     		String adminToken = userRepository.login();
     	return restRepository.update(adminToken, V2_USERS.concat(userId).concat("/organizations/").concat(orgId), orgUserDummy);
     }
@@ -216,7 +216,7 @@ public class UserController {
 	 * requires admin token (user registration)
 	 */
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public @ResponseBody Map<String,Object> registerUser(@RequestHeader("Authorization") String token, @RequestBody RegisterUser user) {
+    public @ResponseBody Map<String,Object> registerUser(@RequestBody RegisterUser user) {
     	String adminToken = userRepository.login();
         return userRepository.registerUser(adminToken, user.getUsername(), user.getFirstname(), 
         		user.getLastname(), user.getPassword());
