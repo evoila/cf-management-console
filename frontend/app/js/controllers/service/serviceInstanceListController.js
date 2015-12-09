@@ -10,6 +10,8 @@ angular.module('controllers')
           $scope.space = space;
           $scope.instances = space.entity.service_instances;
           getServiceBindingsDetails($scope.instances);
+
+          console.log($scope.instances)
         })
       };
 

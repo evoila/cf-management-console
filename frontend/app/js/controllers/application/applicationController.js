@@ -6,24 +6,53 @@
 angular.module('controllers')
   .controller('applicationController',
     function ApplicationController($scope, $state, $mdDialog, Restangular, DesignService, responseService) {
-      $scope.loading = true;
       $scope.organizationId = $state.params.organizationId;
-      console.log("ApplicationController");
+      $scope.appId = $state.params.applicationId;
 
-      Restangular.one('applications', $state.params.applicationId).all('instances').getList().then(function(instances) {
-        console.log("applicationInstances: ", instances);
-        $scope.instances = instances;
-      });
+      var originatorEv;
 
-      Restangular.one('applications', $state.params.applicationId).get().then(function(application) {
-        $scope.application = application;
-        $scope.loading = false;
-        angular.forEach(application.entity.service_bindings, function(binding) {
-          Restangular.one('applications', $state.params.applicationId).one('bindings', binding.entity.service_instance_guid).get().then(function(serviceBinding) {
-            console.log("Service Binding - write to var: " + serviceBinding);
+      $scope.query = {
+        filter: '',
+        order: 'entity.stats.host',
+        limit: 10,
+        page: 1
+      };
+
+      $scope.init = function() {
+
+        Restangular.one('applications', $scope.appId).get().then(function(application) {
+          $scope.application = application;
+
+          Restangular.one('applications', $scope.appId).all('instances').getList().then(function(instances) {
+            $scope.instances = instances;
+
+            //Restangular.one('applications/' + $scope.appId + '/stats').get().then(function(appStatus) {
+            Restangular.one('applications', $scope.appId).all('stats').getList().then(function(appStatus) {
+              $scope.appStatus = appStatus;
+
+              appStatus.forEach(function(stat) {
+                stat.entity.stats.uptime = stat.entity.stats.uptime / 3600;
+                stat.entity.stats.usage.mem = stat.entity.stats.usage.mem / 1024 / 1024 / 1024;
+                stat.entity.stats.mem_quota = stat.entity.stats.mem_quota / 1024 / 1024 / 1024;
+                stat.entity.stats.usage.disk = stat.entity.stats.usage.disk / 1024 / 1024 / 1024;
+                stat.entity.stats.disk_quota = stat.entity.stats.disk_quota / 1024 / 1024 / 1024;
+              })
+
+            }, function(response) {
+              console.log(response)
+            })
           });
+
+          angular.forEach(application.entity.service_bindings, function(binding) {
+            Restangular.one('applications', $scope.appId).one('bindings', binding.entity.service_instance_guid).get().then(function(serviceBinding) {
+              console.log(serviceBinding);
+            });
+          });
+        }, function(response) {
+          console.log(response)
         });
-      });
+      };
+
 
       $scope.startApplication = function(application) {
         application.entity.state = "STARTED";
@@ -43,14 +72,54 @@ angular.module('controllers')
         });
       };
 
-      $scope.scaleApplication = function(application, instacesCount) {
-        application.entity.instances = instancesCount;
-
-        Restangular.one('applications', application.metadata.guid).customPUT(application, null, null, null).then(function(data) {
-          console.log("app scaled");
-          responseService.success(data, 'application scaled');
-        });
+      $scope.getInstancesDetails = function() {
+        Restangular.one('applications/' + $state.params.applicationId + '/stats').get().then(function(appStatus) {
+          console.log(appStatus)
+        })
       }
+
+
+      /*
+       *  Dialog for
+       *
+       *  Scale application
+       *
+       */
+      $scope.showScaleAppDialog = function(ev, application) {
+        $mdDialog.show({
+          locals: {
+            application: application
+          },
+          controller: ['$scope', 'application', function($scope, application) {
+            $scope.application = application;
+            $scope.instanceCount = application.entity.instances;
+
+            $scope.scaleApplication = function(application) {
+              Restangular.one('applications', application.metadata.guid).customPUT(application, null, null, null).then(function(data) {
+                responseService.success(data, 'Application was scaled successfully', 'application', {
+                  organizationId : application.entity.space.entity.organization_guid,
+                  spaceId : application.entity.space.metadata.guid,
+                  applicationId : application.metadata.guid
+                });
+              }, function(response) {
+                console.log(response)
+              });
+            }
+
+            $scope.hide = function() {
+              $mdDialog.hide();
+            };
+
+            $scope.cancel = function() {
+              $mdDialog.cancel();
+            };
+          }],
+          templateUrl: 'partials/application/application-scale-dialog.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:false
+        })
+      };
 
       $scope.deleteApplication = function(ev, application) {
          var confirm = $mdDialog.confirm()

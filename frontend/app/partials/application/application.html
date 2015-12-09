@@ -1,238 +1,128 @@
-<md-card id="single-app" ng-cloak ng-if="application.entity.name != null">
-  <div class="app-header" style="background-color:#{{colorString(application.entity.name)}}" layout-gt-md="row" layout="column" layout-align="space-around center">
-    <div flex="100" flex-gt-md="70">
-      <h1 class="app-title" class="md-display-2">{{application.entity.name}}</h1>
+<div ng-init="init()">
+  <md-card id="single-app" ng-cloak ng-if="application.entity.name != null">
+    <div class="app-header" style="background-color:#{{colorString(application.entity.name)}}" layout-gt-md="row" layout="column" layout-align="space-around center">
+      <div flex="100" flex-gt-md="70">
+        <h1 class="app-title" class="md-display-2">{{application.entity.name}}</h1>
+      </div>
+      <div flex="100" flex-gt-md="30">
+        <img class="app-img" ng-src="assets/png/{{servicePng(application.entity.name)}}_w.png" onerror="this.style.display='none'">
+      </div>
     </div>
-    <div flex="100" flex-gt-md="30">
-      <img class="app-img" ng-src="assets/png/{{servicePng(application.entity.name)}}_w.png" onerror="this.style.display='none'">
-    </div>
-  </div>
-  <md-card-content>
-    <md-list>
-      <md-list-item class="md-3-line">
-        <div class="md-list-item-text" layout="column">
-          <div class="decent-line" layout="row" layout-align="space-between center">
-            <p>Memory</p>
-            <p>{{application.entity.memory}}</p>
-          </div>
-          <div class="decent-line" layout="row" layout-align="space-between center">
-            <p>Instances</p>
-            <p>{{application.entity.instances}}</p>
-          </div>
-          <div class="decent-line" layout="row" layout-align="space-between center">
-            <p>Disk Quota</p>
-            <p>{{application.entity.disk_quota}}</p>
-          </div>
-          <div class="decent-line" layout="row" layout-align="space-between center">
-            <p>State</p>
-            <p>{{application.entity.state}}</p>
-          </div>
-          <div class="decent-line" layout="row" layout-align="space-between center">
-            <p>Package State</p>
-            <p>{{app.entity.package_state}}</p>
-          </div>
-        </div>
-      </md-list-item>
-
-
-      <div ng-show="app.showMore" style="margin-top:14px;">
-        <md-divider></md-divider>
-        <md-subheader class="md-no-sticky">Routes ({{app.entity.routes.length}})</md-subheader>
-        <md-list-item class="md-3-line" ng-show="app.expand=='50'">
+    <md-card-content>
+      <md-list>
+        <md-list-item class="md-3-line">
           <div class="md-list-item-text" layout="column">
-            <div layout="row" layout-align="space-between center" ng-repeat="route in app.entity.routes">
-              <p>Host</p>
-              <p>{{route.entity.host}}</p>
+            <div class="decent-line" layout="row" layout-align="space-between center">
+              <p>Memory</p>
+              <p>{{application.entity.memory}}</p>
+            </div>
+            <div class="decent-line" layout="row" layout-align="space-between center">
+              <p>Instances</p>
+              <p>{{application.entity.instances}}</p>
+            </div>
+            <div class="decent-line" layout="row" layout-align="space-between center">
+              <p>Disk Quota</p>
+              <p>{{application.entity.disk_quota}}</p>
+            </div>
+            <div class="decent-line" layout="row" layout-align="space-between center">
+              <p>State</p>
+              <p>{{application.entity.state}}</p>
+            </div>
+            <div class="decent-line" layout="row" layout-align="space-between center">
+              <p>Package State</p>
+              <p>{{application.entity.package_state}}</p>
             </div>
           </div>
         </md-list-item>
-        <md-divider></md-divider>
-        <md-subheader class="md-no-sticky">Service Bindings ({{app.entity.service_bindings.length}})</md-subheader>
+
+
+        <div ng-show="app.showMore" style="margin-top:14px;">
+          <md-divider></md-divider>
+          <md-subheader class="md-no-sticky">Routes ({{app.entity.routes.length}})</md-subheader>
+          <md-list-item class="md-3-line" ng-show="app.expand=='50'">
+            <div class="md-list-item-text" layout="column">
+              <div layout="row" layout-align="space-between center" ng-repeat="route in app.entity.routes">
+                <p>Host</p>
+                <p>{{route.entity.host}}</p>
+              </div>
+            </div>
+          </md-list-item>
+          <md-divider></md-divider>
+          <md-subheader class="md-no-sticky">Service Bindings ({{app.entity.service_bindings.length}})</md-subheader>
+        </div>
+      </md-list>
+      <md-card>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Action 1</md-button>
+          <md-button>Action 2</md-button>
+        </md-card-actions>
+      </md-card>
+    </md-card-content>
+    <md-card-actions layout="column" layout-gt-sm="row" layout-align="space-between  center" style="background-color:#{{colorString(application.entity.name)}}">
+      <div layout="column" layout-gt-sm="row">
+        <md-button ng-click="showScaleAppDialog($event, application)">Scale</md-button>
       </div>
-    </md-list>
-    <md-card>
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Scale Memory</span>
-          <span class="md-subhead">Small</span>
-        </md-card-title-text>
-        <md-card-title-media>
-          <div class="md-media-sm card-media">
-            <i ng-class="{'fa fa-cubes' : true}"></i>
+      <div layout="column" layout-gt-sm="row" layout-align="space-between center">
+        <md-button ng-show="application.entity.state != 'STARTED'" ng-click="startApplication(application)">START</md-button>
+        <md-button ng-show="application.entity.state == 'STARTED'" ng-click="stopApplication(application)">STOP</md-button>
+        <md-button ng-click="deleteApplication($event, application)">DELETE</md-button>
+      </div>
+    </md-card-actions>
+  </md-card>
+
+  <md-card flex="100">
+
+    <md-card-content flex="100">
+
+      <md-grid-list md-cols="1" md-cols-gt-sm="2" md-cols-gt-md="2" md-cols-gt-lg="4" md-row-height="210px" md-gutter="8px" md-gutter-gt-sm="4px">
+        <md-grid-tile class=" custom-grid-tile no-focus no-link" ng-repeat="status in appStatus">
+
+          <div class="custom-grid-item-content">
+            <div class="item-header" style="background-color:#{{colorString(application.entity.name)}}">
+              <i class="fa fa-3x white" ng-class="{ 'fa-play-circle' : status.entity.state=='RUNNING', 'fa-stop-circle' : status.entity.state=='DOWN' }"></i>
+            </div>
+
+            <div class="item-content">
+              <md-list>
+      		      <md-list-item class="md-3-line">
+      		        <div class="md-list-item-text" layout="column">
+      							<div class="decent-line" layout="row" layout-align="space-between center">
+      								<p>Host</p>
+      								<p>{{status.entity.stats.host}}</p>
+      							</div>
+      							<div class="decent-line" layout="row" layout-align="space-between center">
+      								<p>Port</p>
+      								<p>{{status.entity.stats.port}}</p>
+      							</div>
+      							<div class="decent-line" layout="row" layout-align="space-between center">
+      								<p>Uptime</p>
+      								<p>{{status.entity.stats.uptime | number: 2}} h</p>
+      							</div>
+      							<div class="decent-line" layout="row" layout-align="space-between center">
+      								<p>CPU</p>
+      								<p>{{status.entity.stats.usage.cpu | number: 4}}</p>
+      							</div>
+      							<div class="decent-line" layout="row" layout-align="space-between center">
+      								<p>Memory</p>
+      								<p>{{status.entity.stats.usage.mem | number: 2}} | {{ status.entity.stats.mem_quota | number: 2 }} GB</p>
+      							</div>
+                    <div class="decent-line" layout="row" layout-align="space-between center">
+      								<p>Disk</p>
+      								<p>{{status.entity.stats.usage.disk | number: 2}} | {{ status.entity.stats.disk_quota | number: 2 }} GB</p>
+      							</div>
+      		        </div>
+      		      </md-list-item>
+              </md-list>
+            </div>
+
           </div>
-        </md-card-title-media>
-      </md-card-title>
-      <md-card-actions layout="row" layout-align="end center">
-        <md-button>Action 1</md-button>
-        <md-button>Action 2</md-button>
-      </md-card-actions>
-    </md-card>
-  </md-card-content>
-  <md-card-actions layout="column" layout-gt-sm="row" layout-align="space-between  center" style="background-color:#{{colorString(application.entity.name)}}">
-    <div layout="row" layout-align="space-between center">
-      <md-button class="md-icon-button" aria-label="Favorite" ng-click="application.entity.instances=application.entity.instances-1">
-        <md-icon md-svg-icon="assets/svg/add_circle.svg"></md-icon>
-      </md-button>
-      <p>{{application.entity.instances}}</p>
-      <md-button class="md-icon-button" aria-label="Favorite" ng-click="application.entity.instances=application.entity.instances+1">
-        <md-icon md-svg-icon="assets/svg/add_circle.svg"></md-icon>
-      </md-button>
-      <md-button ng-click="scaleApplication(application,instacesCount)">Scale</md-button>
-    </div>
-    <div layout="row" layout-align="space-between center">
-      <md-button ng-show="application.entity.state != 'STARTED'" ng-click="startApplication(application)">START</md-button>
-      <md-button ng-show="application.entity.state == 'STARTED'" ng-click="stopApplication(application)">STOP</md-button>
-      <md-button ng-click="deleteApplication($event, application)">DELETE</md-button>
-    </div>
-  </md-card-actions>
-</md-card>
-<div print-json obj="application"></div>
 
-<!--div ng-hide="loading" flex="50" layout="column">
-	<h2>{{application.entity.name}}</h2>
-	<div layout="row" layout-sm="column">
-		<div flex="50">
-			<h3 class="Tab">Instances</h3>
-		</div>
-		<div flex=50>
-			<p class="Tab">{{application.entity.instances}}</p>
-		</div>
-	</div>
-	<div layout="row" layout-sm="column">
-		<div flex="50">
-			<h3 class="Tab">Memory</h3>
-		</div>
-		<div flex=50>
-			<p class="Tab">{{application.entity.memory}} MB</p>
-		</div>
-	</div>
-	<div layout="row" layout-sm="column">
-		<div flex="50">
-			<h3 class="Tab">Disk Quota</h3>
-		</div>
-		<div flex=50>
-			<p class="Tab">{{application.entity.disk_quota}} MB</p>
-		</div>
-	</div>
-	<div layout="row" layout-sm="column">
-		<div flex="50">
-			<h3 class="Tab">Buildpack</h3>
-		</div>
-		<div flex=50>
-			<p class="Tab">{{application.entity.buildpack}}</p>
-		</div>
-	</div>
-	<div layout="row" layout-sm="column">
-		<div flex="50">
-			<h3 class="Tab">Environment</h3>
-		</div>
-		<div flex=50>
-			<p class="Tab">{{application.entity.environment}}</p>
-		</div>
-	</div>
-	<div layout="row" layout-sm="column">
-		<div flex="50">
-			<h3 class="Tab">URLS</h3>
-		</div>
-		<div flex=50 ng-repeat="url in application.entity.urls">
-			<p class="Tab">{{url}}</p>
-		</div>
-	</div>
-	<div layout="row" layout-sm="column">
-		<md-button class="md-fab detail md-warn md-fab-detail" aria-label="stop" ng-click="">
-			<ng-md-icon icon="stop" size="40" style="fill:white"></ng-md-icon>
-			<md-tooltip>
-				Stop
-			</md-tooltip>
-		</md-button>
-		<md-button class="md-fab detail md-warn md-fab-detail" aria-label="delete" ng-click="deleteApplication(ev, application)">
-			<ng-md-icon icon="delete" size="40" style="fill:white"></ng-md-icon>
-			<md-tooltip>
-				Delete
-			</md-tooltip>
-		</md-button>
-	</div>
-	<md-divider></md-divider>
+        </md-grid-tile>
+      </md-grid-list>
 
-	<h2>Bound Services{{application.entity.serviceInstances.length}}</h2>
-	<div>
-		<div layout="row" layout-sm="column">
-			<div flex="50">
-				<h3 class="Tab">Name</h3>
-			</div>
-			<div flex=50 ng-repeat="service in application.entity.serviceInstances">
-				<p class="Tab">{{service.name}}</p>
-			</div>
-		</div>
-		<div layout="row" layout-sm="column">
-			<div flex="50">
-				<h3 class="Tab">Servics</h3>
-			</div>
-			<div flex=50 ng-repeat="service in application.entity.serviceInstances">
-				<p class="Tab">{{service.servicePlan.service.provider}} {{service.servicePlan.service.name}} {{service.servicePlan.service.version}}</p>
-			</div>
-		</div>
-		<div layout="row" layout-sm="column">
-			<div flex="50">
-				<h3 class="Tab">Plan Level</h3>
-			</div>
-			<div flex=50 ng-repeat="service in application.entity.serviceInstances">
-				<p class="Tab">{{service.servicePlan.name}}</p>
-			</div>
-		</div>
-	</div>
-	<md-divider></md-divider>
+    </md-card-content>
+  </md-card>
 
-	<h2>Instances</h2>
-	<div layout="row" layout-sm="column">
-		<div flex="20" layout="column">
-			<div flex="50">
-				<h3 class="Tab">Instance</h3>
-			</div>
-			<div  ng-repeat="instance in instances">
-				<p class="Tab">{{$index}}</p>
-			</div>
-		</div>
-		<div flex="20" layout="column">
-			<div flex="50">
-				<h3 class="Tab">State</h3>
-			</div>
-			<div  ng-repeat="instance in instances">
-				<p class="Tab">{{instance.entity.state}}</p>
-			</div>
-		</div>
-		<div flex="20" layout="column">
-			<div flex="50">
-				<h3 class="Tab">IP</h3>
-			</div>
-			<div  ng-repeat="instance in instances">
-				<p class="Tab">{{instance.entity.console_ip}}</p>
-			</div>
-		</div>
-		<div flex="20" layout="column">
-			<div flex="50">
-				<h3 class="Tab">Running Since</h3>
-			</div>
-			<div  ng-repeat="instance in instances">
-				<p class="Tab">{{instance.entity.since | date : 'dd.MM.yyyy'}}</p>
-			</div>
-		</div>
-		<div flex="20" layout="column">
-			<div flex="50">
-				<h3 class="Tab">Port</h3>
-			</div>
-			<div  ng-repeat="instance in instances">
-				<p class="Tab">{{instance.entity.console_port}}</p>
-			</div>
-		</div>
-		<div flex="20" layout="column">
-			<div flex="50">
-				<h3 class="Tab">Logs</h3>
-			</div>
-			<div  ng-repeat="instance in instances">
-				<a href="#/app-log/{{organizationId}}/applications/{{application.entity.id}}/instances/{{$index}}/stdout">stdout.log</a>
-				<a href="#/app-log/{{organizationId}}/applications/{{application.entity.id}}/instances/{{$index}}/stderr">stderr.log</a>
-			</div>
-		</div>
-	</div>
-</div-->
+  <div print-json obj="application"></div>
+
+</div>

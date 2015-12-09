@@ -35,4 +35,5 @@ angular.module('controllers')
       function toggleOpen(section) {
         menu.toggleSelectSection(section);
       }
+
     });
