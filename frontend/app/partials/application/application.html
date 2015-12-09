@@ -61,7 +61,6 @@
     <md-card-actions layout="column" layout-gt-sm="row" layout-align="space-between  center" style="background-color:#{{colorString(application.entity.name)}}">
       <div layout="column" layout-gt-sm="row">
         <md-button ng-click="showScaleAppDialog($event, application)">Scale</md-button>
-        <md-button ng-click="init()">Refresh</md-button>
       </div>
       <div layout="column" layout-gt-sm="row" layout-align="space-between center">
         <md-button ng-show="application.entity.state != 'STARTED'" ng-click="startApplication(application)">START</md-button>

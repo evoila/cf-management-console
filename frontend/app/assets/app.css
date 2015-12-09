@@ -171,8 +171,23 @@ md-dialog-actions {
 }
 
 
-
-
+#loading-bar .bar {
+  height: 3px !important;
+}
+#loading-bar .peg {
+  height: 3px !important;
+}
+#loading-bar-spinner .spinner-icon {
+  display: none !important;
+}
+#loading-bar-spinner {
+  display: none !important;
+}
+@media screen and (max-width: 480px) {
+  #loading-bar-spinner {
+    display: none !important;
+  }
+}
 
 
 

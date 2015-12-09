@@ -4,7 +4,7 @@
 
 angular.module('controllers')
   .controller('homeController',
-    function HomeController($scope, $rootScope, $mdSidenav, menu, authenticationService) {
+    function HomeController($scope, $state, $rootScope, $mdSidenav, menu, authenticationService) {
       var vm = this;
       vm.isOpen = isOpen;
       vm.toggleOpen = toggleOpen;
@@ -18,6 +18,10 @@ angular.module('controllers')
             authenticationService.logout();
           }
       });
+
+      $scope.refresh = function() {
+        $state.reload();
+      }
 
       $scope.openMenu = function() {
         $mdSidenav('left').toggle();

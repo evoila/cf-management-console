@@ -8,9 +8,11 @@ angular.module('controllers')
       $scope.spaces = menu.spaces;
       $scope.orgId = $state.params.organizationId;
 
-      Restangular.one('organizations', $state.params.organizationId).all('spaces').getList().then(function(spaces) {
-        $scope.spaces = spaces;
-      });
+      $scope.init = function() {
+        Restangular.one('organizations', $state.params.organizationId).all('spaces').getList().then(function(spaces) {
+          $scope.spaces = spaces;
+        });
+      };
 
       $scope.openMenu = function($mdOpenMenu, ev) {
         originatorEv = ev;

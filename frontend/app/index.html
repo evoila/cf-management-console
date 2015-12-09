@@ -76,6 +76,9 @@
         <md-button class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
          Menu
         </md-button>
+        <md-button class="md-icon-button" ng-click="refresh()" ui-sref-opts="{reload: true}" aria-label="Refresh">
+         <i class="fa fa-lg fa-refresh"></i>
+        </md-button>
           <md-menu md-offset="0 80" ng-show="isAuthenticated" style="min-width:80px;">
             <md-button aria-label="Open profile menu" class="md-primary" ng-click="$mdOpenMenu($event)">
               Profile
