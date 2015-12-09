@@ -13,7 +13,7 @@
         <div class="form-group full-width less-vmargins">
           <md-input-container>
             <label>Username (email)</label>
-            <input type="email" ng-model="createUserForm.username" name="uname" required />
+            <input type="email" ng-model="createUserForm.username" name="uname" required>
             <span class="custom-validation-msg red" ng-show="createUserForm.uname.$touched && createUserForm.uname.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="createUserForm.uname.$touched && createUserForm.uname.$error.email">Please provide a valid email address</span>
             <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>

@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="">
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=400" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
   <!--link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'-->
   <link rel="stylesheet" href="assets/fonts.css" />
@@ -70,7 +70,7 @@
       </md-sidenav>
     </div>
   </div>
-  <div flex>
+  <div id="badguy" flex>
     <md-toolbar id="main-toolbar" layout="row" layout-align="end end">
       <div class="md-toolbar-tools md-whiteframe-z1" layout="row" layout-align="end end">
         <md-button class="menu" hide-gt-md ng-click="openMenu()" aria-label="Show Menu">
@@ -95,9 +95,10 @@
 
 
     <div id="content-wrapper" class="layout-column md-padding">
-      <div class="md-padding" ui-view flex ng-controller="alertController">
+      <div class="md-padding" ui-view flex ng-controller="alertController"></div>
     </div>
 
+  </div>
 
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular-animate/angular-animate.js"></script>
