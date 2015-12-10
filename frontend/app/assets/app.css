@@ -426,7 +426,7 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
 }
 
 
-.app-status {
+.grid-tile-status, .service-instance-status {
   position: absolute;
   bottom: 48px;
   width: 20px;
@@ -445,17 +445,17 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
     background-clip: initial;
     background-color: rgba(0, 0, 0, 0.278431);
 }
-.app-instance-status {
+.app-instance-status, .service-instance-status {
   left: 0;
 }
 .app-instance-package-status {
   left: 20px;
 }
-.app-instance-status i, .app-instance-package-status i {
+.app-instance-status i, .app-instance-package-status i, .service-instance-status i {
   margin-top: 6px;
   font-size: 80%;
 }
-.app-instance-package-status i.fa-ban {
+.app-instance-package-status i.fa-ban, .service-instance-status i.fa-ban {
   color: red;
 }
 
@@ -478,6 +478,7 @@ button.md-icon-button.table-cell-menu-button, .md-button.md-icon-button.table-ce
 
 .app-header {
   padding: 20px;
+  min-height: 220px;
 }
 .app-header .app-title {
   text-align:center;
