@@ -73,13 +73,13 @@ public class ApplicationController {
 	@RequestMapping(value = "/applications/{id}/start", method = RequestMethod.PUT)
     public Application startApplication(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
-		return restRepository.update(token, V3_APPS.concat("/").concat(id).concat("/start"), application).getEntity();
+		return restRepository.update(token, V2_APPS.concat("/").concat(id).concat("/start"), application).getEntity();
     }
 	
 	@RequestMapping(value = "/applications/{id}/stop", method = RequestMethod.PUT)
     public Application stopApplication(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
-		return restRepository.update(token, V3_APPS.concat("/guid-").concat(id).concat("/stop"), application).getEntity();
+		return restRepository.update(token, V2_APPS.concat("/guid-").concat(id).concat("/stop"), application).getEntity();
     }
 	
 	@RequestMapping(value = "/applications/{id}/instances", method = RequestMethod.GET)
@@ -114,6 +114,7 @@ public class ApplicationController {
 	}
 		
 	// TODO: rename binding
+	/*
 	@RequestMapping(value = "/applications/{id}/bindings/{bindingId}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<Instance> getApplicationInstances(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @PathVariable("bindingId") String bindingId) {
@@ -122,6 +123,7 @@ public class ApplicationController {
 		
 		return instance;
     }
+    */
 	 
 	@RequestMapping(value = "/applications/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteApplicationById(@RequestHeader("Authorization") final String token, 

@@ -23,32 +23,32 @@ angular.module('controllers')
         Restangular.one('applications', $scope.appId).get().then(function(application) {
           $scope.application = application;
 
-          Restangular.one('applications', $scope.appId).all('instances').getList().then(function(instances) {
-            $scope.instances = instances;
+          if(application.entity.state == 'STARTED' && application.entity.package_state == 'STAGED') {
 
-            Restangular.one('applications', $scope.appId).all('stats').getList().then(function(appStatus) {
-              $scope.appStatus = appStatus;
+            Restangular.one('applications', $scope.appId).all('instances').getList().then(function(instances) {
+              $scope.instances = instances;
 
-              appStatus.forEach(function(stat) {
-                stat.entity.stats.uptime = stat.entity.stats.uptime / 3600;
-                stat.entity.stats.usage.mem = stat.entity.stats.usage.mem / 1024 / 1024 / 1024;
-                stat.entity.stats.mem_quota = stat.entity.stats.mem_quota / 1024 / 1024 / 1024;
-                stat.entity.stats.usage.disk = stat.entity.stats.usage.disk / 1024 / 1024 / 1024;
-                stat.entity.stats.disk_quota = stat.entity.stats.disk_quota / 1024 / 1024 / 1024;
+              Restangular.one('applications', $scope.appId).all('stats').getList().then(function(appStatus) {
+                $scope.appStatus = appStatus;
+
+                appStatus.forEach(function(stat) {
+                  stat.entity.stats.uptime = stat.entity.stats.uptime / 3600;
+                  stat.entity.stats.usage.mem = stat.entity.stats.usage.mem / 1024 / 1024 / 1024;
+                  stat.entity.stats.mem_quota = stat.entity.stats.mem_quota / 1024 / 1024 / 1024;
+                  stat.entity.stats.usage.disk = stat.entity.stats.usage.disk / 1024 / 1024 / 1024;
+                  stat.entity.stats.disk_quota = stat.entity.stats.disk_quota / 1024 / 1024 / 1024;
+                  stat.entity.stats.usage.cpu = stat.entity.stats.usage.cpu * 100;
+                })
+
+              }, function(response) {
+                console.log(response)
               })
-
             }, function(response) {
               console.log(response)
-            })
-          }, function(response) {
-            console.log(response)
-          });
-
-          angular.forEach(application.entity.service_bindings, function(binding) {
-            Restangular.one('applications', $scope.appId).one('bindings', binding.entity.service_instance_guid).get().then(function(serviceBinding) {
-              console.log(serviceBinding);
             });
-          });
+
+          }
+
         }, function(response) {
           console.log(response)
         });
@@ -57,27 +57,33 @@ angular.module('controllers')
 
       $scope.startApplication = function(application) {
         application.entity.state = "STARTED";
+        delete application.entity.docker_credentials_json;
 
         Restangular.one('applications', application.metadata.guid).customPUT(application, null, null, null).then(function(data) {
-          console.log("app started");
-          responseService.success(data, 'application started');
+          responseService.success(data, 'Application started', 'application', {
+            organizationId : application.entity.space.entity.organization_guid,
+            spaceId : application.entity.space.metadata.guid,
+            applicationId : application.metadata.guid
+          });
+        }, function(response) {
+          console.log(response)
         });
       };
 
       $scope.stopApplication = function(application) {
         application.entity.state = "STOPPED";
+        delete application.entity.docker_credentials_json;
 
         Restangular.one('applications', application.metadata.guid).customPUT(application, null, null, null).then(function(data) {
-          console.log("app stopped");
-          responseService.success(data, 'application stopped');
+          responseService.success(data, 'Application stopped', 'application', {
+            organizationId : application.entity.space.entity.organization_guid,
+            spaceId : application.entity.space.metadata.guid,
+            applicationId : application.metadata.guid
+          });
+        }, function(response) {
+          console.log(response)
         });
       };
-
-      $scope.getInstancesDetails = function() {
-        Restangular.one('applications/' + $state.params.applicationId + '/stats').get().then(function(appStatus) {
-          console.log(appStatus)
-        })
-      }
 
 
       /*
@@ -96,8 +102,7 @@ angular.module('controllers')
             $scope.instanceCount = application.entity.instances;
 
             $scope.scaleApplication = function(application) {
-
-              //delete application.entity.docker_credentials_json;
+              delete application.entity.docker_credentials_json;
 
               Restangular.one('applications', application.metadata.guid).customPUT(application, undefined, undefined, undefined).then(function(data) {
                 responseService.success(data, 'Application was scaled successfully', 'application', {

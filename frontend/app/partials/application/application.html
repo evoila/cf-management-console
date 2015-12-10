@@ -2,6 +2,7 @@
   <md-card flex="100" ng-cloak ng-if="application.entity.name != null">
     <div flex="100" class="app-header" style="background-color:#{{colorString(application.entity.name)}}" layout-gt-md="row" layout="column" layout-align="space-around center" layout-align-gt-md="">
       <div flex="100" flex-gt-md="70">
+        <div class="spacer-50" hide-sm hide-gt-sm hide-md show-gt-md></div>
         <h1 class="app-title" class="md-display-2">{{application.entity.name}}</h1>
       </div>
       <div flex="100" flex-gt-md="30">
@@ -51,12 +52,6 @@
           <md-subheader class="md-no-sticky">Service Bindings ({{app.entity.service_bindings.length}})</md-subheader>
         </div>
       </md-list>
-      <md-card>
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button>Action 1</md-button>
-          <md-button>Action 2</md-button>
-        </md-card-actions>
-      </md-card>
     </md-card-content>
     <md-card-actions layout="column" layout-gt-sm="row" layout-align="space-between  center" style="background-color:#{{colorString(application.entity.name)}}">
       <div layout="column" layout-gt-sm="row">
@@ -73,6 +68,11 @@
   <md-card flex="100">
 
     <md-card-content flex="100">
+
+      <div layout="column" layout-align="start center">
+        <div ng-show="application.entity.state=='STOPPED'"><p class="grey">Application currently not running</p></div>
+        <div ng-show="application.entity.state=='STARTED' && application.entity.package_state=='PENDING'"><p class="grey">Please wait for package state becoming staged...</p></div>
+      </div>
 
       <md-grid-list md-cols="1" md-cols-gt-sm="2" md-cols-gt-md="2" md-cols-gt-lg="4" md-row-height="210px" md-gutter="8px" md-gutter-gt-sm="4px">
         <md-grid-tile class=" custom-grid-tile no-focus no-link" ng-repeat="status in appStatus">
@@ -100,7 +100,7 @@
       							</div>
       							<div class="decent-line" layout="row" layout-align="space-between center">
       								<p>CPU</p>
-      								<p>{{status.entity.stats.usage.cpu | number: 4}}</p>
+      								<p>{{status.entity.stats.usage.cpu | number: 2}} %</p>
       							</div>
       							<div class="decent-line" layout="row" layout-align="space-between center">
       								<p>Memory</p>
@@ -123,6 +123,6 @@
     </md-card-content>
   </md-card>
 
-    <!--<div print-json obj="application"></div>-->
+    <div print-json obj="appStatus"></div>
 
 </div>

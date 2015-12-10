@@ -1,10 +1,13 @@
 package de.evoila.cfmc.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * 
  * @author Tobias Siegl
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApplicationInstanceUsage {
 	
 	private String time;

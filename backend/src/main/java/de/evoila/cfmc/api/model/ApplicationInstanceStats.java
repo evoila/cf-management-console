@@ -1,5 +1,6 @@
 package de.evoila.cfmc.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Tobias Siegl
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApplicationInstanceStats {
 
 	private String name;

@@ -149,6 +149,10 @@ md-dialog-actions {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+.spacer-50 {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
 
 .clickable {
   cursor: pointer;
@@ -419,6 +423,40 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
   width: 70px;
   height: 70px;
   margin-top: 20px;
+}
+
+
+.app-status {
+  position: absolute;
+  bottom: 48px;
+  width: 20px;
+  height: 20px;
+  color: white;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.28) !important;
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgba(0, 0, 0, 0.278431);
+}
+.app-instance-status {
+  left: 0;
+}
+.app-instance-package-status {
+  left: 20px;
+}
+.app-instance-status i, .app-instance-package-status i {
+  margin-top: 6px;
+  font-size: 80%;
+}
+.app-instance-package-status i.fa-ban {
+  color: red;
 }
 
 
