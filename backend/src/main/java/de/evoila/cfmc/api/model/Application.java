@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import de.evoila.cfmc.api.model.base.CloudFoundryResource;
@@ -17,6 +18,7 @@ import de.evoila.cfmc.api.model.base.CloudFoundryResource;
  * @author Johannes Hiemer.
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Application {
 
 	@JsonProperty("name")

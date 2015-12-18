@@ -17,7 +17,6 @@ angular.module('controllers')
 
       if(!self.service) {
         Restangular.one('services', $state.params.serviceId).get().then(function(service) {
-          console.log(service)
           self.service = service;
           getInstances();
         })
@@ -88,9 +87,10 @@ angular.module('controllers')
                 $mdDialog.hide();
                 responseService.success(instance, 'Instance was created successfully', 'service-list', { organizationId : $state.params.organizationId, spaceId : form.spaceId });
               }, function(response) {
-                console.log(response)
                 if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
                   $scope.nameInUse = true;
+                else if(response.status == '500' && response.data.message.indexOf('502') > -1)
+                  responseService.error(response, 'Error. Please make sure that Application is running.');
                 else
                   responseService.error(response);
               })

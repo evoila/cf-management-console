@@ -71,7 +71,7 @@
 
       <div layout="column" layout-align="start center">
         <div ng-show="application.entity.state=='STOPPED'"><p class="grey">Application currently not running</p></div>
-        <div ng-show="application.entity.state=='STARTED' && application.entity.package_state=='PENDING'"><p class="grey">Please wait for package state becoming staged...</p></div>
+        <div ng-show="application.entity.state=='STARTED' && application.entity.package_state=='PENDING'"><p class="grey">Please wait, staging Application...</p></div>
       </div>
 
       <md-grid-list md-cols="1" md-cols-gt-sm="2" md-cols-gt-md="2" md-cols-gt-lg="4" md-row-height="210px" md-gutter="8px" md-gutter-gt-sm="4px">
@@ -123,6 +123,6 @@
     </md-card-content>
   </md-card>
 
-    <div print-json obj="appStatus"></div>
+    <div print-json obj="application"></div>
 
 </div>

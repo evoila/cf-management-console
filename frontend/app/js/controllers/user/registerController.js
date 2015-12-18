@@ -34,13 +34,13 @@ angular.module('controllers')
           var createdUserId = user.metadata.guid;
 
           var organizationContent = {
-            'name': registerForm.orgName,
+            'name': form.orgName,
             'user_guids': [createdUserId],
             'manager_guids': [createdUserId]
           };
 
           Restangular.all('organizations').post(organizationContent).then(function(organization) {
-            responseService.success(organization, 'login');
+            responseService.success(organization, 'Your account has been created', 'login');
           }, function(response) {
               console.log(response)
               responseService.error(response);

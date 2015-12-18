@@ -1,5 +1,5 @@
 /**
- * AppSettingsController
+ * ApplicationController
  **/
 
 
@@ -32,12 +32,14 @@ angular.module('controllers')
                 $scope.appStatus = appStatus;
 
                 appStatus.forEach(function(stat) {
-                  stat.entity.stats.uptime = stat.entity.stats.uptime / 3600;
-                  stat.entity.stats.usage.mem = stat.entity.stats.usage.mem / 1024 / 1024 / 1024;
-                  stat.entity.stats.mem_quota = stat.entity.stats.mem_quota / 1024 / 1024 / 1024;
-                  stat.entity.stats.usage.disk = stat.entity.stats.usage.disk / 1024 / 1024 / 1024;
-                  stat.entity.stats.disk_quota = stat.entity.stats.disk_quota / 1024 / 1024 / 1024;
-                  stat.entity.stats.usage.cpu = stat.entity.stats.usage.cpu * 100;
+                  if(stat.entity.state!='DOWN') {
+                    stat.entity.stats.uptime = stat.entity.stats.uptime / 3600;
+                    stat.entity.stats.usage.mem = stat.entity.stats.usage.mem / 1024 / 1024 / 1024;
+                    stat.entity.stats.mem_quota = stat.entity.stats.mem_quota / 1024 / 1024 / 1024;
+                    stat.entity.stats.usage.disk = stat.entity.stats.usage.disk / 1024 / 1024 / 1024;
+                    stat.entity.stats.disk_quota = stat.entity.stats.disk_quota / 1024 / 1024 / 1024;
+                    stat.entity.stats.usage.cpu = stat.entity.stats.usage.cpu * 100;
+                  }
                 })
 
               }, function(response) {
@@ -105,11 +107,20 @@ angular.module('controllers')
               delete application.entity.docker_credentials_json;
 
               Restangular.one('applications', application.metadata.guid).customPUT(application, undefined, undefined, undefined).then(function(data) {
-                responseService.success(data, 'Application was scaled successfully', 'application', {
-                  organizationId : application.entity.space.entity.organization_guid,
-                  spaceId : application.entity.space.metadata.guid,
-                  applicationId : application.metadata.guid
+
+                application.entity.state = "STOPPED";
+                Restangular.one('applications', application.metadata.guid).customPUT(application, null, null, null).then(function(data) {
+                  application.entity.state = "STARTED";
+                  Restangular.one('applications', application.metadata.guid).customPUT(application, null, null, null).then(function(data) {
+                    $mdDialog.hide();
+                    responseService.success(data, 'Application was scaled successfully', 'application', {
+                      organizationId : application.entity.space.entity.organization_guid,
+                      spaceId : application.entity.space.metadata.guid,
+                      applicationId : application.metadata.guid
+                    });
+                  });
                 });
+
               }, function(response) {
                 console.log(response)
               });

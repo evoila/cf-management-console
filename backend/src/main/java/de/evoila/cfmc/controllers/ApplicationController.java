@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.evoila.cfmc.api.model.Application;
 import de.evoila.cfmc.api.model.ApplicationStatus;
 import de.evoila.cfmc.api.model.Instance;
+import de.evoila.cfmc.api.model.Organization;
 import de.evoila.cfmc.api.model.ServiceBinding;
 import de.evoila.cfmc.api.model.base.CloudFoundryResource;
 import de.evoila.cfmc.api.model.base.CloudFoundryResources;
@@ -63,7 +64,7 @@ public class ApplicationController {
 		CloudFoundryResources<Application> apps = restRepository.list(token, V2_APPS.concat("?q=organization_guid:").concat(orgId), 1, false);
 		return apps.getResources();
 	}
-	
+		
 	@RequestMapping(value = "/applications/{id}", method = RequestMethod.PUT)
     public CloudFoundryResource<Application> updateApplication(@RequestHeader("Authorization") final String token, 
     		@PathVariable("id") final String id, @RequestBody CloudFoundryResource<Application> application) {
@@ -73,13 +74,13 @@ public class ApplicationController {
 	@RequestMapping(value = "/applications/{id}/start", method = RequestMethod.PUT)
     public Application startApplication(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
-		return restRepository.update(token, V2_APPS.concat("/").concat(id).concat("/start"), application).getEntity();
+		return restRepository.update(token, V3_APPS.concat("/").concat(id).concat("/start"), application).getEntity();
     }
 	
 	@RequestMapping(value = "/applications/{id}/stop", method = RequestMethod.PUT)
     public Application stopApplication(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @RequestBody CloudFoundryResource<Application> application) {
-		return restRepository.update(token, V2_APPS.concat("/guid-").concat(id).concat("/stop"), application).getEntity();
+		return restRepository.update(token, V3_APPS.concat("/").concat(id).concat("/stop"), application).getEntity();
     }
 	
 	@RequestMapping(value = "/applications/{id}/instances", method = RequestMethod.GET)
@@ -114,7 +115,6 @@ public class ApplicationController {
 	}
 		
 	// TODO: rename binding
-	/*
 	@RequestMapping(value = "/applications/{id}/bindings/{bindingId}", method = RequestMethod.GET)
     public @ResponseBody CloudFoundryResource<Instance> getApplicationInstances(@RequestHeader("Authorization") String token, 
     		@PathVariable("id") String id, @PathVariable("bindingId") String bindingId) {
@@ -123,7 +123,6 @@ public class ApplicationController {
 		
 		return instance;
     }
-    */
 	 
 	@RequestMapping(value = "/applications/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteApplicationById(@RequestHeader("Authorization") final String token, 

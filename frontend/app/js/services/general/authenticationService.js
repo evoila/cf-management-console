@@ -89,8 +89,10 @@ angular.module('services')
                   $state.go('space-list', {
                     organizationId: organization.metadata.guid
                   });
-                else
+                else {
+                  console.log('ELSE')
                   $state.go($state.current.name, $state.params);
+                }
                 }
             });
           }
