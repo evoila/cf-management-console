@@ -28,7 +28,7 @@ angular.module('controllers')
     }
 
     function getInstances() {
-      Restangular.one('service_instances' + '?q=organization_guid:' + $scope.orgId).getList().then(function(instances) {
+      Restangular.one('service_instances/org/' + $scope.orgId).getList().then(function(instances) {
         var colors = DesignService.getNumberOfVisuallyDistinctColors(self.service.entity.service_plans.length);
 
         instances.forEach(function(instance, instanceIndex) {
@@ -41,7 +41,9 @@ angular.module('controllers')
             }
           })
         })
+        console.log($scope.instances)
       }, function(response) {
+        console.log(response)
         responseService.error(response);
       });
     }

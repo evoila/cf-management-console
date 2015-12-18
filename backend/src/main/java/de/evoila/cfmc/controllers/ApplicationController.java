@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.evoila.cfmc.api.model.Application;
 import de.evoila.cfmc.api.model.ApplicationStatus;
 import de.evoila.cfmc.api.model.Instance;
-import de.evoila.cfmc.api.model.Organization;
 import de.evoila.cfmc.api.model.ServiceBinding;
 import de.evoila.cfmc.api.model.base.CloudFoundryResource;
 import de.evoila.cfmc.api.model.base.CloudFoundryResources;

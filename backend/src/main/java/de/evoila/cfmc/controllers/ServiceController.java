@@ -82,11 +82,12 @@ public class ServiceController {
     	return servicePlans.getResources();
     }
   
-    @RequestMapping(value = "/service_instances{filter}", method = RequestMethod.GET)
-    public @ResponseBody List<CloudFoundryResource<ServiceInstance>> getServiceInstancesForFilter(@RequestHeader("Authorization") String token,
-    		@PathVariable("filter") final String filter) {
+    @RequestMapping(value = "/service_instances/org/{orgId}", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<ServiceInstance>> getServiceInstancesForOrganization(@RequestHeader("Authorization") String token,
+    		@PathVariable("orgId") final String orgId) {
     	String adminToken = userRepository.login();
-    	CloudFoundryResources<ServiceInstance> serviceInstances = restRepository.list(adminToken, V2_SERVICE_INSTANCES.concat(filter), 1, true);
+    	CloudFoundryResources<ServiceInstance> serviceInstances = restRepository.list(adminToken, V2_SERVICE_INSTANCES.concat("?q=organization_guid:").concat(orgId), 1, false);
+    	
     	return serviceInstances.getResources();
     }
     
