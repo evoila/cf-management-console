@@ -22,8 +22,10 @@ angular.module('directives')
         var controller = $element.parent().controller();
 
         $scope.update = function(organization) {
-          if(organization)
-            menu.spacesToMenu(organization.metadata.guid)
+          if(organization) {
+            menu.organization = organization;
+            menu.spacesToMenu(organization)
+          }
         };
       }
     };

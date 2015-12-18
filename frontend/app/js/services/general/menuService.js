@@ -49,7 +49,7 @@ angular.module('services')
             self.orgsToMenu(data, function() {
               Restangular.one('organizations', self.organization.metadata.guid).all('spaces').getList().then(function(spaces) {
                 self.spacesInt = spaces;
-                self.spacesToMenu(self.organization.metadata.guid);
+                self.spacesToMenu(self.organization)
               });
               if (typeof(callback) == "function")
                 callback(self.organization);
@@ -76,7 +76,10 @@ angular.module('services')
             callback();
         },
 
-        spacesToMenu: function(orgaId) {
+        spacesToMenu: function(org) {
+          self.spacesInt = org.entity.spaces;
+          var orgaId = org.metadata.guid;
+
           sections[0].pages = [];
           sections[0].params = { "organizationId" : orgaId };
 
