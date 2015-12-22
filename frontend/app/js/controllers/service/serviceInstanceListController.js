@@ -10,9 +10,18 @@ angular.module('controllers')
           $scope.space = space;
           $scope.instances = space.entity.service_instances;
           getServiceBindingsDetails($scope.instances);
+          getNameOfInstancesService($scope.instances);
         })
       };
 
+      function getNameOfInstancesService(instances) {
+        instances.forEach(function(instance) {
+          var serviceId = instance.entity.service_plan.entity.service_guid;
+          Restangular.one('services', serviceId).get().then(function(service) {
+            instance.serviceName = service.entity.label;
+          })
+        });
+      }
 
       function getServiceBindingsDetails(instances) {
         instances.forEach(function(instance) {
@@ -86,7 +95,11 @@ angular.module('controllers')
           $mdDialog.hide();
           responseService.success(instance, 'Instance was deleted successfully', 'service-list', { organizationId : $scope.orgId, spaceId : $scope.space.metadata.guid });
         }, function(response) {
-          responseService.error(response);
+            console.log(response)
+            if(response.status == '409')
+              responseService.error(response, 'Another operation for that service instance is in progress');
+            else
+              responseService.error(response);
         });
       }
 

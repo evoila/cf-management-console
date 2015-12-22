@@ -87,7 +87,7 @@ angular.module('controllers')
 
               Restangular.all('service_instances').post(instance).then(function(instance) {
                 $mdDialog.hide();
-                responseService.success(instance, 'Instance was created successfully', 'service-list', { organizationId : $state.params.organizationId, spaceId : form.spaceId });
+                responseService.success(instance, 'Creating new Service Instance...', 'service-list', { organizationId : $state.params.organizationId, spaceId : form.spaceId });
               }, function(response) {
                 if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
                   $scope.nameInUse = true;

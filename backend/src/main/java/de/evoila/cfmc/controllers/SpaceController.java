@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.evoila.cfmc.api.model.Service;
 import de.evoila.cfmc.api.model.ServiceInstance;
 import de.evoila.cfmc.api.model.Space;
 import de.evoila.cfmc.api.model.base.CloudFoundryResource;
 import de.evoila.cfmc.api.model.base.CloudFoundryResources;
 import de.evoila.cfmc.api.repositories.RestRepository;
+import de.evoila.cfmc.api.repositories.UserRepository;
 
 /**
  * 
@@ -31,6 +33,9 @@ import de.evoila.cfmc.api.repositories.RestRepository;
 @RequestMapping(value = "/api")
 public class SpaceController {
 
+	@Autowired
+    private UserRepository userRepository;
+	
 	@Autowired
     private RestRepository restRepository;
 	
@@ -59,6 +64,14 @@ public class SpaceController {
     public @ResponseBody CloudFoundryResource<Space> updateSpace(@RequestHeader("Authorization") String token, @PathVariable("id") String id, 
     		@RequestBody CloudFoundryResource<Space> space) {
     	 return restRepository.update(token, V2_SPACES.concat("/").concat(id).concat("?collection-method=add"), space);
+    }
+    
+    @RequestMapping(value = "/spaces/{spaceId}/services", method = RequestMethod.GET)
+    public @ResponseBody List<CloudFoundryResource<Service>> getServicesOfSpace(@RequestHeader("Authorization") String token, 
+    		@PathVariable("spaceId") String spaceId) {
+    	String adminToken = userRepository.login();
+    	CloudFoundryResources<Service> services = restRepository.list(adminToken, V2_SPACES.concat("/").concat(spaceId).concat("/services"), 1, true);
+    	return services.getResources();
     }
     
     @RequestMapping(value = "/spaces/{id}/service_instances", method = RequestMethod.GET)

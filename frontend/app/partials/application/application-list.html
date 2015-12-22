@@ -28,11 +28,17 @@
 							</div>
 							<div class="decent-line" layout="row" layout-align="space-between center">
 								<p>State</p>
-								<p>{{app.entity.state}}</p>
+								<p>
+									{{app.entity.state}}
+									<i class="fa" ng-class="{ 'fa-play': app.entity.state=='STARTED', 'fa-stop': app.entity.state=='STOPPED' }"></i>
+								</p>
 							</div>
 							<div class="decent-line" layout="row" layout-align="space-between center">
 								<p>Package State</p>
-								<p>{{app.entity.package_state}}</p>
+								<p>
+									{{app.entity.package_state}}
+									<i class="fa" ng-class="{ 'fa-check': app.entity.package_state=='STAGED', 'fa-ban': app.entity.package_state=='FAILED', 'fa-hourglass-start': app.entity.package_state=='PENDING' }"></i>
+								</p>
 							</div>
 		        </div>
 		      </md-list-item>

@@ -8,6 +8,7 @@
 		<md-card style="background-color:#{{colorString(instance.entity.name)}};">
 			<div class="img-container">
 				<img ng-src="assets/png/{{servicePng(instance.entity.service_plan.entity.unique_id)}}_w.png" onerror="this.style.display='none'">
+				<span class="instance-servicename">{{instance.serviceName}}</span>
 			</div>
 			<md-card-content>
 				<h1 class="md-title">{{instance.entity.name}}</h1>
@@ -38,11 +39,17 @@
 							</div>
 							<div layout="row" layout-align="space-between center">
 								<p>Last Operation</p>
-								<p>{{instance.entity.last_operation.type}}</p>
+								<p>
+									{{instance.entity.last_operation.type}}
+									<i class="fa" ng-class="{ 'fa-plus-circle': instance.entity.last_operation.type=='create', 'fa-arrow-circle-o-up': instance.entity.last_operation.type=='update', 'fa-minus-circle': instance.entity.last_operation.type=='delete' }"></i>
+								</p>
 							</div>
 							<div layout="row" layout-align="space-between center">
 								<p>State</p>
-								<p>{{instance.entity.last_operation.state}}</p>
+								<p>
+									{{instance.entity.last_operation.state}}
+									<i class="fa" ng-class="{ 'fa-check': instance.entity.last_operation.state=='succeeded', 'fa-ban': instance.entity.last_operation.state=='failed', 'fa-hourglass-start': instance.entity.last_operation.state=='in progress' }"></i>
+								</p>
 							</div>
 							<div layout="row" layout-align="space-between center">
 								<p>Created</p>

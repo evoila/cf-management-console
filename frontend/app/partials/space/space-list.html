@@ -8,7 +8,10 @@
 					</md-button>
 					<md-menu-content width="2">
 						<md-menu-item>
-							<md-button class="md-warn" ng-click="showConfirm($event, s)">Delete</md-button>
+							<md-button ng-click="prepareCreateServiceInstanceDialog($event, s)">New Service Instance</md-button>
+						</md-menu-item>
+						<md-menu-item>
+							<md-button class="md-warn" ng-click="showConfirm($event, s)">Delete {{s.entity.name}}</md-button>
 						</md-menu-item>
 					</md-menu-content>
 				</md-menu>

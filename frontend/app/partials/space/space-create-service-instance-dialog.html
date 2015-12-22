@@ -1,0 +1,54 @@
+<md-dialog aria-label="Create new Service Instance" ng-controller="spaceListController as ctrl">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools" layout="column">
+        <h2>Create new Service Instance</h2>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+
+      <form name="createServiceInstanceForm" ng-submit="createServiceInstanceForm.$valid && submitCreateServiceInstanceForm(createServiceInstanceForm)" novalidate>
+        <div flex class="form-group full-width less-vmargins">
+
+          <md-input-container>
+            <md-select placeholder="Choose Service" ng-model="createServiceInstanceForm.service" ng-change="setService(createServiceInstanceForm.service)">
+              <md-option ng-value="service" ng-repeat="service in services">{{service.entity.label}}</md-option>
+            </md-select>
+            <span class="custom-validation-msg red" ng-show="!createServiceInstanceForm.service && noService">Please choose a Service</span>
+          </md-input-container>
+
+          <md-input-container>
+            <md-select placeholder="Choose Service plan" ng-model="createServiceInstanceForm.planId" ng-disabled="!createServiceInstanceForm.service">
+              <md-option ng-value="plan.metadata.guid" ng-repeat="plan in plans">{{plan.entity.name}}</md-option>
+            </md-select>
+            <span class="custom-validation-msg red" ng-show="!createServiceInstanceForm.planId && noPlan">Please choose a Service</span>
+          </md-input-container>
+
+          <md-input-container>
+            <label>Instance name</label>
+            <input type="text" ng-model="createServiceInstanceForm.instanceName" name="name" required ng-minlength="5">
+            <span class="custom-validation-msg red" ng-show="createServiceInstanceForm.name.$touched && createServiceInstanceForm.name.$error.required">Required field</span>
+            <span class="custom-validation-msg red" ng-show="createServiceInstanceForm.name.$error.minlength">Must be at least 5 characters</span>
+            <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
+          </md-input-container>
+
+          <md-chips ng-model="tags" readonly="false" placeholder="Add another" delete-button-label="Remove Tag" delete-hint="Press delete to remove tag" secondary-placeholder="Add a tag"></md-chips>
+          <span class="custom-validation-msg blue">Press enter to apply tag</span>
+
+        </div>
+        <span flex=""></span>
+        <md-dialog-actions flex layout="row">
+          <md-button type="button" ng-click="cancel()">
+            Cancel
+          </md-button>
+          <md-button class="md-raised md-primary" ng-disabled="createServiceInstanceForm.$invalid || !createServiceInstanceForm.service || !createServiceInstanceForm.planId" type="submit">
+            Create
+          </md-button>
+        </md-dialog-actions>
+      </form>
+
+
+    </md-dialog-content>
+
+</md-dialog>

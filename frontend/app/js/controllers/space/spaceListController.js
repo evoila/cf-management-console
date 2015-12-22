@@ -101,6 +101,77 @@ angular.module('controllers')
         })
       };
 
+
+      $scope.prepareCreateServiceInstanceDialog = function(ev, space) {
+        Restangular.one('spaces', space.metadata.guid).all('services').getList().then(function(services) {
+          services.forEach(function(service) {
+            service.plans = service.entity.service_plans;
+          })
+          $scope.showCreateServiceInstanceDialog(ev, space, services);
+
+        }, function(response) {
+          responseService.error(response);
+        });
+      }
+
+      /*
+       *  Dialog for
+       *
+       *  Create new Service Instance
+       *
+       */
+      $scope.showCreateServiceInstanceDialog = function(ev, space, services) {
+        $mdDialog.show({
+          locals: {
+            space: space,
+            services: services
+          },
+          controller: ['$scope', 'space', 'services', function($scope, space, services) {
+            $scope.space = space;
+            $scope.services = services;
+            $scope.tags = [];
+
+            $scope.setService = function(service) {
+              $scope.plans = service.plans;
+            }
+
+            $scope.submitCreateServiceInstanceForm = function(form) {
+              var instance = {
+                'space_guid': $scope.space.metadata.guid,
+                'name': form.instanceName,
+                'service_plan_guid': form.planId,
+                'tags': $scope.tags
+              };
+
+              Restangular.all('service_instances').post(instance).then(function(instance) {
+                $mdDialog.hide();
+                responseService.success(instance, 'Creating new Service Instance...', 'service-list', { organizationId : $state.params.organizationId, spaceId : $scope.space.metadata.guid });
+              }, function(response) {
+                if(response.status == '400' && response.data.message.indexOf('is taken') > -1)
+                  $scope.nameInUse = true;
+                else if(response.status == '500' && response.data.message.indexOf('502') > -1)
+                  responseService.error(response, 'Error. Please make sure that Application is running.');
+                else
+                  responseService.error(response);
+              })
+            };
+
+            $scope.hide = function() {
+              $mdDialog.hide();
+            };
+
+            $scope.cancel = function() {
+              $mdDialog.cancel();
+            };
+
+          }],
+          templateUrl: 'partials/space/space-create-service-instance-dialog.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:false
+        })
+      };
+
       $scope.hide = function() {
         $mdDialog.hide();
       };

@@ -571,3 +571,9 @@ button.md-icon-button.table-cell-menu-button, .md-button.md-icon-button.table-ce
     color: #BBB;
     margin: -10px;
 }
+
+.instance-servicename {
+  color: #fff;
+  opacity: .4;
+  margin-left: 16px;
+}
