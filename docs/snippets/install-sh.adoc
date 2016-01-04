@@ -1,0 +1,9 @@
+[source,shell]
+.app.rb
+----
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+----
