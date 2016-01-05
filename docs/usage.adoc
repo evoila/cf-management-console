@@ -1,1 +1,189 @@
-== Usage
+= Usage
+Tobias Siegl <tsiegl@evoila.de>
+v1.0, 2016-05-05
+:toc:
+:toclevels: 4
+:imagesdir: assets/images/usage
+:homepage: http://www.evoila.de
+
+'''
+
+////
+
+      R E G I S T R A T I O N
+
+////
+
+== Registration
+The first step of registering an account is to provide a valid name for your Organization. +
+While typing the name, the application automatically verifies that there is no other
+Organization holding that name.
+
+[%hardbreaks]
+
+If your desired name is available and valid, you will be able to proceed with completing your account's credentials.
+
+[%hardbreaks]
+
+In summary, the following information is required:
+
+[%hardbreaks]
+
+.Registration form
+|===
+|attribute |type |min-length |max-length |required
+
+|Organization name
+|text
+|3
+|?
+|yes
+
+|email (username)
+|email address
+|3
+|?
+|yes
+
+|firstname
+|text
+|3
+|?
+|yes
+
+|lastname
+|text
+|3
+|?
+|yes
+
+|password
+|password
+|6
+|?
+|yes
+|===
+
+
+////
+
+      S P A C E S
+
+////
+
+== Spaces
+About displayed content...
+
+=== Create a new Space
+A new Space is created by clicking the blue button at the bottom right corner.
+
+[%hardbreaks]
+
+.Create Space form
+|===
+|attribute |type |min-length |max-length |required
+
+|Space name
+|text
+|3
+|?
+|yes
+
+|allow SSH
+|boolean
+|-
+|-
+|-
+|===
+
+=== Delete a Space
+A Space is deleted by using the according option of the Space's context menu:
+
+image::spaces_delete-space.png[alt="delete space", width="800", height="227"]
+
+
+=== Create a Service Instance
+
+=== Applications
+
+==== Application List
+
+===== Delete a Service Binding
+
+===== Delete an Application
+
+==== Application Details
+
+===== Scale Application Instances
+
+===== Start/stop an Application
+
+===== Delete an Application
+
+=== Service Instances
+
+==== Service Instances List
+
+===== Delete a Service Binding
+
+===== Delete a Service Instance
+
+
+////
+
+      U S E R S
+
+////
+
+== Users
+About users...
+
+=== Create a new User
+
+=== Delete an User
+
+=== Modify User Roles
+
+
+////
+
+      M A R K E T P L A C E
+
+////
+
+== Marketplace
+About displayed content...
+
+=== Create a Service Instance
+
+
+////
+
+      D O M A I N S
+
+////
+
+== Domains
+About Domains...
+
+=== Create a new Domain
+
+=== Delete a Domain
+
+
+////
+
+      R O U T E S
+
+////
+
+== Routes
+About Routes...
+
+=== Create a new Route
+
+=== Edit a Route
+
+=== Manage associated Apps
+
+=== Delete a Route
