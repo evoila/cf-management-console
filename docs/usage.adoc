@@ -41,8 +41,8 @@ In summary, the following information is required:
 
 |email (username)
 |email address
-|3
-|?
+|-
+|-
 |yes
 
 |firstname
@@ -75,7 +75,8 @@ In summary, the following information is required:
 About displayed content...
 
 === Create a new Space
-A new Space is created by clicking the blue button at the bottom right corner.
+A new Space is created by clicking the blue button at the bottom right corner. +
+The appearing dialog will prompt for the following information:
 
 [%hardbreaks]
 
@@ -103,30 +104,89 @@ image::spaces_delete-space.png[alt="delete space", width="800", height="227"]
 
 
 === Create a Service Instance
+The Space's context menu also enables you to quickly create a new Service Instance:
+
+[%hardbreaks]
+
+.Create Service Instance form (Spaces)
+|===
+|attribute |type |min-length |max-length |required
+
+|Service
+|CF Service
+|-
+|-
+|yes
+
+|Service Plan
+|CF Service Plan
+|-
+|-
+|yes
+
+|Instance name
+|text
+|5
+|?
+|yes
+
+|Tags
+|text
+|-
+|-
+|no
+|===
+
 
 === Applications
+About Applications...
+
 
 ==== Application List
+The Application list view is accessed by clicking the 'Apps' heading of the according Space:
+
+image::spaces_apps-list.png[alt="delete space", width="800", height="379"]
+
 
 ===== Delete a Service Binding
+In order to delete a Service Binding, you have to expand the Application's container by clicking
+the 'MORE' button at the bottom right corner first, +
+and then the text saying 'Service Bindings'. Now you can delete a binding by clicking the red icon next to it.
+
+image::spaces_delete-service-binding.png[alt="delete space", width="307", height="400"]
+
 
 ===== Delete an Application
+WARNING: An Application can only be deleted, if there are no more Service Bindings available.
+
 
 ==== Application Details
+The Application details view is accessed by clicking the Application's tile directly.
 
-===== Scale Application Instances
+The following actions can be performed:
 
-===== Start/stop an Application
+* Scale Application Instances
+* Start/stop Application
+* Delete Application
 
-===== Delete an Application
 
 === Service Instances
+About Service Instances...
 
 ==== Service Instances List
+The Service Instances list view is accessed by clicking the 'Service Instances' heading of the according Space:
+
+image::spaces_instances-list.png[alt="delete space", width="737", height="379"]
+
 
 ===== Delete a Service Binding
+In order to delete a Service Binding, you have to expand the Instance's container by clicking
+the 'MORE' button at the bottom right corner first, +
+and then the text saying 'Service Bindings'. Now you can delete a binding by clicking the red icon next to it.
+
 
 ===== Delete a Service Instance
+WARNING: A Service Instance can only be deleted, if there are no more Service Bindings available.
 
 
 ////
@@ -139,10 +199,54 @@ image::spaces_delete-space.png[alt="delete space", width="800", height="227"]
 About users...
 
 === Create a new User
+To create a new User, click the 'plus' button next to the heading:
+
+image::users_create-user.png[alt="delete space", width="468", height="200"]
+
+The following information will be prompted:
+
+.Create User form
+|===
+|attribute |type |min-length |max-length |required
+
+|Username (email)
+|email address
+|-
+|-
+|yes
+
+|First name
+|text
+|3
+|?
+|yes
+
+|Last name
+|text
+|3
+|?
+|yes
+
+|Password
+|password
+|6
+|?
+|yes
+|===
+
 
 === Delete an User
+To delete an User, you have to choose the according option of the User's context menu which will be accessible
+after hovering over the desired User:
 
-=== Modify User Roles
+image::users_menu.png[alt="user context menu", width="231", height="200"]
+
+
+=== Manage User Roles
+The view for managing User Roles is accessible via the User's context menu too.
+You will be able to edit the User's Organization roles and the roles of all available Spaces in addition:
+
+image::users_manage-roles.png[alt="manage user roles", width="800", height="298"]
 
 
 ////
@@ -167,8 +271,23 @@ About displayed content...
 About Domains...
 
 === Create a new Domain
+To create a new Domain, click the 'plus' button next to the heading.
+
+.Create Domain form
+|===
+|attribute |type |min-length |max-length |required
+
+|Domain name
+|text
+|4
+|?
+|yes
+|===
+
 
 === Delete a Domain
+To delete a Domain, you have to choose the according option of the Domain's context menu which will be accessible
+after hovering over the desired Domain.
 
 
 ////
@@ -181,9 +300,68 @@ About Domains...
 About Routes...
 
 === Create a new Route
+To create a new Route, click the 'plus' button next to the heading.
+
+You have to provide the following information:
+
+.Create Route form
+|===
+|attribute |type |min-length/value |max-length/value |required
+
+|Domain
+|CF Domain
+|-
+|-
+|yes
+
+|Space
+|CF Space
+|-
+|-
+|yes
+
+|Host
+|text
+|4
+|?
+|no
+
+|Port (1)
+|number
+|1024
+|65535
+|no
+
+|Path (2)
+|text
+|2
+|128
+|no
+|===
+
+NOTE: (1) The port input field will only be visible, if the selected Domain is part of a TCP router group +
+(2) The path must start with '"/"' and must not contain '"?"'
+
 
 === Edit a Route
+To edit a Route, click the according option of the Route's context menu. +
+Currently only Host, Path and Port are editable. +
+To save or dismiss your changes, use the respective option of the context menu.
+
 
 === Manage associated Apps
+In order to associate a Route with an Application, you have to use the respective option of the Route's context menu.
+To remove an Association, proceed similarly.
+
+[%hardbreaks]
+
+All Applications of the Route's Space will be selectable.
+
+[%hardbreaks]
+
+The numbers showing in the 'Apps' column provide the following information: +
+( 'Applications associated' | 'Applications available' )
+
 
 === Delete a Route
+Use the respective option of the Route's context menu.
