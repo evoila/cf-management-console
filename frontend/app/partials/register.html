@@ -8,13 +8,14 @@
       </div>
     </md-toolbar>
     <div layout="row" flex class="md-padding" ng-init="organizationValid = false">
-      <form name="checkOrgForm">
+      <form name="checkOrgForm" style="width:220px;">
         <div layout="column">
           <md-input-container flex>
             <label>Organization</label>
-            <input ng-model="registerForm.orgName" name="org" ng-change="checkOrgName(registerForm.orgName)" required ng-minlength="3">
+            <input ng-model="registerForm.orgName" name="org" ng-change="checkOrgName(registerForm.orgName)" required ng-minlength="3" ng-maxlength="64">
             <span class="custom-validation-msg red" ng-show="checkOrgForm.org.$touched && checkOrgForm.org.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="checkOrgForm.org.$error.minlength">Must be at least 3 characters</span>
+            <span class="custom-validation-msg red" ng-show="checkOrgForm.org.$error.maxlength">Must be not more than 64 characters</span>
             <span class="custom-validation-msg red" ng-show="!organizationValid && (registerForm.orgName.length)">Name already in use</span>
           </md-input-container>
         </div>
@@ -26,28 +27,32 @@
         <div layout="column" ng-show="organizationValid && registerForm.orgName.length" ng-cloak>
           <md-input-container>
             <label>Email</label>
-            <input ng-model="registerForm.username" type="email" name="uname" required>
+            <input ng-model="registerForm.username" type="email" name="uname" ng-maxlength="129" required>
             <span class="custom-validation-msg red" ng-show="registerForm.uname.$touched && registerForm.uname.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="registerForm.uname.$touched && registerForm.uname.$error.email">Please provide a valid email address</span>
+            <span class="custom-validation-msg red" ng-show="registerForm.uname.$touched && registerForm.uname.$error.maxlength">Must be not more than 129 characters</span>
             <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
           </md-input-container>
           <md-input-container>
             <label>Firstname</label>
-            <input ng-model="registerForm.firstname" name="fname" ng-minlength="3" required>
+            <input ng-model="registerForm.firstname" name="fname" ng-minlength="3" ng-maxlength="64" required>
             <span class="custom-validation-msg red" ng-show="registerForm.fname.$touched && registerForm.fname.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="registerForm.fname.$error.minlength">Must be at least 3 characters</span>
+            <span class="custom-validation-msg red" ng-show="registerForm.fname.$error.maxlength">Must be not more than 64 characters</span>
           </md-input-container>
           <md-input-container>
             <label>Lastname</label>
-            <input ng-model="registerForm.lastname" name="lname" ng-minlength="3" required>
+            <input ng-model="registerForm.lastname" name="lname" ng-minlength="3" ng-maxlength="64" required>
             <span class="custom-validation-msg red" ng-show="registerForm.lname.$touched && registerForm.lname.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="registerForm.lname.$error.minlength">Must be at least 3 characters</span>
+            <span class="custom-validation-msg red" ng-show="registerForm.lname.$error.maxlength">Must be not more than 64 characters</span>
           </md-input-container>
           <md-input-container>
             <label>Password</label>
-            <input type="password" ng-model="registerForm.password" name="pword" ng-minlength="6" required>
+            <input type="password" ng-model="registerForm.password" name="pword" ng-minlength="6" ng-maxlength="64" required>
             <span class="custom-validation-msg red" ng-show="registerForm.pword.$touched && registerForm.pword.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="registerForm.pword.$error.minlength">Must be at least 6 characters</span>
+            <span class="custom-validation-msg red" ng-show="registerForm.pword.$error.maxlength">Must be not more than 64 characters</span>
           </md-input-container>
         </div>
 

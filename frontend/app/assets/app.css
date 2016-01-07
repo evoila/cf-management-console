@@ -209,6 +209,11 @@ md-toolbar h1 {
   margin: auto;
 }
 
+.md-toolbar-tools h1 {
+  overflow: scroll;
+  margin-right: 8px;
+}
+
 
 /* Sidenav area */
 
@@ -425,6 +430,10 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
   margin-top: 20px;
 }
 
+.md-toolbar-tools h2 {
+  overflow: scroll;
+  margin-right: 8px;
+}
 
 .grid-tile-status, .service-instance-status {
   position: absolute;
@@ -550,6 +559,7 @@ button.md-icon-button.table-cell-menu-button, .md-button.md-icon-button.table-ce
   color: #444;
   margin-top: 0;
   margin-bottom: 0;
+  overflow: scroll;
 }
 .single-instance .instance-bindings {
   padding:0 16px;

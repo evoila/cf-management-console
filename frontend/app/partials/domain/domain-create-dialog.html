@@ -13,9 +13,10 @@
         <div class="form-group full-width less-vmargins">
           <md-input-container>
             <label>Name</label>
-            <input ng-model="createDomainForm.name" required name="dname" ng-minlength="4">
+            <input ng-model="createDomainForm.name" name="dname" ng-minlength="4" ng-maxlength="64" required>
             <span class="custom-validation-msg red" ng-show="createDomainForm.dname.$touched && createDomainForm.dname.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="createDomainForm.dname.$error.minlength">Must be at least 4 characters</span>
+            <span class="custom-validation-msg red" ng-show="createDomainForm.dname.$error.maxlength">Must be not more than 64 characters</span>
             <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
           </md-input-container>
           </div>

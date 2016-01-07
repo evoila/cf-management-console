@@ -13,28 +13,32 @@
         <div class="form-group full-width less-vmargins">
           <md-input-container>
             <label>Username (email)</label>
-            <input type="email" ng-model="createUserForm.username" name="uname" required>
+            <input type="email" ng-model="createUserForm.username" name="uname" ng-maxlength="129" required>
             <span class="custom-validation-msg red" ng-show="createUserForm.uname.$touched && createUserForm.uname.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="createUserForm.uname.$touched && createUserForm.uname.$error.email">Please provide a valid email address</span>
+            <span class="custom-validation-msg red" ng-show="createUserForm.uname.$touched && createUserForm.uname.$error.maxlength">Must be not more than 129 characters</span>
             <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
           </md-input-container>
           <md-input-container>
-            <label>First Name</label>
-            <input ng-model="createUserForm.firstname" name="fname" required ng-minlength="3">
+            <label>Firstname</label>
+            <input ng-model="createUserForm.firstname" name="fname" ng-minlength="3" ng-maxlength="64" required>
             <span class="custom-validation-msg red" ng-show="createUserForm.fname.$touched && createUserForm.fname.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="createUserForm.fname.$error.minlength">Must be at least 3 characters</span>
+            <span class="custom-validation-msg red" ng-show="createUserForm.fname.$error.maxlength">Must be not more than 64 characters</span>
           </md-input-container>
           <md-input-container>
-            <label>Last Name</label>
-            <input ng-model="createUserForm.lastname" name="lname" required ng-minlength="3">
+            <label>Lastname</label>
+            <input ng-model="createUserForm.lastname" name="lname" ng-minlength="3" ng-maxlength="64" required>
             <span class="custom-validation-msg red" ng-show="createUserForm.lname.$touched && createUserForm.lname.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="createUserForm.lname.$error.minlength">Must be at least 3 characters</span>
+            <span class="custom-validation-msg red" ng-show="createUserForm.lname.$error.maxlength">Must be not more than 64 characters</span>
           </md-input-container>
           <md-input-container>
             <label>Password</label>
-            <input ng-model="createUserForm.password" name="pword" required type="password" ng-minlength="6">
+            <input ng-model="createUserForm.password" name="pword" type="password" ng-minlength="6" ng-maxlength="64" required>
             <span class="custom-validation-msg red" ng-show="createUserForm.pword.$touched && createUserForm.pword.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="createUserForm.pword.$error.minlength">Must be at least 6 characters</span>
+            <span class="custom-validation-msg red" ng-show="createUserForm.pword.$error.maxlength">Must be not more than 64 characters</span>
           </md-input-container>
           </div>
 

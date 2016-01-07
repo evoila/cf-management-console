@@ -13,9 +13,10 @@
         <div class="form-group full-width less-vmargins">
           <md-input-container>
             <label>Space name</label>
-            <input ng-model="createSpaceForm.name" name="spacename" required ng-minlength="3">
+            <input ng-model="createSpaceForm.name" name="spacename" required ng-minlength="3" ng-maxlength="64">
             <span class="custom-validation-msg red" ng-show="createSpaceForm.spacename.$touched && createSpaceForm.spacename.$error.required">Required field</span>
             <span class="custom-validation-msg red" ng-show="createSpaceForm.spacename.$error.minlength">Must be at least 3 characters</span>
+            <span class="custom-validation-msg red" ng-show="createSpaceForm.spacename.$error.maxlength">Must be not more than 64 characters</span>
             <span class="custom-validation-msg red" ng-show="nameInUse">Name already in use</span>
           </md-input-container>
           <md-input-container>

@@ -25,8 +25,9 @@
           </md-input-container>
           <md-input-container>
             <label>Host (optional)</label>
-            <input ng-model="createRouteForm.host" name="rhost" minlength="4">
+            <input ng-model="createRouteForm.host" name="rhost" ng-minlength="4" ng-maxlength="64">
             <span class="custom-validation-msg red" ng-show="createRouteForm.rhost.$error.minlength">Must be at least 4 characters</span>
+            <span class="custom-validation-msg red" ng-show="createRouteForm.rhost.$error.maxlength">Must be not more than 64 characters</span>
           </md-input-container>
           <md-input-container ng-hide="domain.entity.router_group_guid==null">
             <label>Port (optional)</label>
@@ -38,7 +39,7 @@
             <label>Path (optional)</label>
             <input ng-model="createRouteForm.path" name="rpath" ng-minlength="2" ng-maxlength="128">
             <span class="custom-validation-msg red" ng-show="createRouteForm.rpath.$error.minlength">Must be at least 2 characters</span>
-            <span class="custom-validation-msg red" ng-show="createRouteForm.rpath.$error.maxlength">Must not be more than 128 characters</span>
+            <span class="custom-validation-msg red" ng-show="createRouteForm.rpath.$error.maxlength">Must be not more than 128 characters</span>
             <span class="custom-validation-msg red" ng-show="invalidPath">Path must begin with '/', character '?' is not allowed</span>
           </md-input-container>
           </div>

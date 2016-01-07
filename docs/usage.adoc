@@ -36,31 +36,31 @@ In summary, the following information is required:
 |Organization name
 |text
 |3
-|?
+|64
 |yes
 
-|email (username)
+|Email (username)
 |email address
 |-
-|-
+|129
 |yes
 
-|firstname
+|Firstname
 |text
 |3
-|?
+|64
 |yes
 
-|lastname
+|Lastname
 |text
 |3
-|?
+|64
 |yes
 
-|password
+|Password
 |password
 |6
-|?
+|64
 |yes
 |===
 
@@ -87,7 +87,7 @@ The appearing dialog will prompt for the following information:
 |Space name
 |text
 |3
-|?
+|64
 |yes
 
 |allow SSH
@@ -126,8 +126,8 @@ The Space's context menu also enables you to quickly create a new Service Instan
 
 |Instance name
 |text
-|5
-|?
+|3
+|50
 |yes
 
 |Tags
@@ -212,25 +212,25 @@ The following information will be prompted:
 |Username (email)
 |email address
 |-
-|-
+|129
 |yes
 
-|First name
+|Firstname
 |text
 |3
-|?
+|64
 |yes
 
-|Last name
+|Lastname
 |text
 |3
-|?
+|64
 |yes
 
 |Password
 |password
 |6
-|?
+|64
 |yes
 |===
 
@@ -280,7 +280,7 @@ To create a new Domain, click the 'plus' button next to the heading.
 |Domain name
 |text
 |4
-|?
+|64
 |yes
 |===
 
@@ -323,7 +323,7 @@ You have to provide the following information:
 |Host
 |text
 |4
-|?
+|64
 |no
 
 |Port (1)
@@ -349,7 +349,7 @@ Currently only Host, Path and Port are editable. +
 To save or dismiss your changes, use the respective option of the context menu.
 
 
-=== Manage associated Apps
+=== Manage associated Applications
 In order to associate a Route with an Application, you have to use the respective option of the Route's context menu.
 To remove an Association, proceed similarly.
 
