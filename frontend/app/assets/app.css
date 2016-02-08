@@ -210,7 +210,6 @@ md-toolbar h1 {
 }
 
 .md-toolbar-tools h1 {
-  overflow: scroll;
   margin-right: 8px;
 }
 
@@ -431,7 +430,6 @@ md-grid-list md-grid-tile md-grid-tile-header h3, md-grid-list md-grid-tile md-g
 }
 
 .md-toolbar-tools h2 {
-  overflow: scroll;
   margin-right: 8px;
 }
 
