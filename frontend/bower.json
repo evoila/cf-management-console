@@ -19,8 +19,7 @@
     "angular-material-data-table": "~0.8.14",
     "angular-environment": "~1.0.3",
     "angular-loading-bar": "~0.8.0",
-    "angular-scroll": "~1.0.0",
-    "angular-elasticsearch-logger": "~0.0.1"
+    "angular-scroll": "~1.0.0"
   },
   "resolutions": {
     "angular-material": ">0.11.4"
