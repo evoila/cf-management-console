@@ -6,7 +6,7 @@
   "license": "todo",
   "private": true,
   "dependencies": {
-    "angular": "^1.4.x",
+    "angular": "~1.5.x",
     "angular-animate": "^1.4.x",
     "angular-aria": "^1.4.x",
     "angular-material": "1.0.0-rc4",
@@ -22,6 +22,7 @@
     "angular-scroll": "~1.0.0"
   },
   "resolutions": {
-    "angular-material": ">0.11.4"
+    "angular-material": ">0.11.4",
+    "angular": ">=1.5.0"
   }
 }
