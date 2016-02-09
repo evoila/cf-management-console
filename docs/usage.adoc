@@ -72,7 +72,10 @@ In summary, the following information is required:
 ////
 
 == Spaces
-About displayed content...
+Applications and Services are organized within an Organization's Spaces. +
+Because of that importance, the Spaces view will be visible directly after logging in. +
+The Spaces view offers you a neatly arranged tile grid layout, which provides fast access to your Applications and Service Instances.
+
 
 === Create a new Space
 A new Space is created by clicking the blue button at the bottom right corner. +
@@ -131,7 +134,7 @@ The Space's context menu also enables you to quickly create a new Service Instan
 |yes
 
 |Tags
-|text
+|text (array)
 |-
 |-
 |no
@@ -139,7 +142,7 @@ The Space's context menu also enables you to quickly create a new Service Instan
 
 
 === Applications
-About Applications...
+
 
 
 ==== Application List
