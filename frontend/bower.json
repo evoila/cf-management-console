@@ -1,9 +1,9 @@
 {
-  "name": "cfmc",
+  "name": "angular-material-starter",
   "description": "todo",
-  "version": "1.0.0",
-  "homepage": "todo",
-  "license": "todo",
+  "version": "0.0.2",
+  "homepage": "https://github.com/angular/material-start",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "angular": "~1.5.x",
