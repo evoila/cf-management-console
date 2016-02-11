@@ -67,23 +67,6 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
         .icon("twitter", "./../assets/svg/twitter.svg", 512)
         .icon("phone", "./..assets/svg/phone.svg", 512);
 
-      esLoggingProvider.setElasticSearchConfig({
-        'host': 'http://88.198.249.61:9200',
-        'apiVersion': '1.7'
-      });
-
-      esLoggingProvider.setLogConfig({
-        'index': 'cf-management-console',
-        'type': 'jslog',
-        'bufferSize': 50,
-        'flushIntervalInMS': 3000
-      });
-
-      esLoggingProvider.setApplicationLogContext({
-        'appNameTag': 'cf-management-console',
-        'envTag': envServiceProvider.get()
-      });
-
     }
   ])
   .run(function($rootScope, $state, $http, $timeout, $location, clientCacheService, Restangular, envService, authenticationService, CMRESLogger) {
