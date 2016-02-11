@@ -2,7 +2,6 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
     'ngMdIcons', 'ngClipboard', 'restangular', 'ngAnimate', 'environment', 'angular-loading-bar', 'duScroll',
   ])
   .config(['ngClipProvider', '$mdThemingProvider', '$mdIconProvider', 'envServiceProvider',
-    'CMRESLoggerProvider',
     function(ngClipProvider, $mdThemingProvider, $mdIconProvider, envServiceProvider, esLoggingProvider) {
 
       envServiceProvider.config({
