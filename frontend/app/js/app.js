@@ -69,7 +69,7 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
 
     }
   ])
-  .run(function($rootScope, $state, $http, $timeout, $location, clientCacheService, Restangular, envService, authenticationService, CMRESLogger) {
+  .run(function($rootScope, $state, $http, $timeout, $location, clientCacheService, Restangular, envService, authenticationService) {
     Restangular.setBaseUrl(envService.read('restApiUrl'))
       .setDefaultHeaders({
         "Content-Type": "application/json;charset=UTF-8",
@@ -77,7 +77,6 @@ angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'control
       })
       .setErrorInterceptor(function(response, deferred, responseHandler) {
         if ([401, 403].indexOf(response.status) != -1) {
-          CMRESLogger.info("loginRequired - setErrorIntercetpor", response, deferred, responseHandler);
           console.log("loginRequired - setErrorIntercetpor", response, deferred, responseHandler);
           authenticationService.authenticate(false);
 
