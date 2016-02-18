@@ -64,6 +64,7 @@
         <md-button ng-click="showScaleAppDialog($event, application)">Scale</md-button>
       </div>
       <div layout="column" layout-gt-sm="row" layout-align="space-between center">
+        <md-button ng-show="application.entity.state == 'STARTED'" ng-click="restartApplication(application)">RESTART</md-button>
         <md-button ng-show="application.entity.state != 'STARTED'" ng-click="startApplication(application)">START</md-button>
         <md-button ng-show="application.entity.state == 'STARTED'" ng-click="stopApplication(application)">STOP</md-button>
         <md-button ng-click="deleteApplication($event, application)">DELETE</md-button>

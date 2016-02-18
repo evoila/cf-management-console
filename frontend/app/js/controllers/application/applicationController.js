@@ -87,6 +87,18 @@ angular.module('controllers')
         });
       };
 
+      $scope.restartApplication = function(application) {
+        application.entity.state = "STOPPED";
+        delete application.entity.docker_credentials_json;
+
+        Restangular.one('applications', application.metadata.guid).customPUT(application, null, null, null).then(function(data) {
+          $scope.startApplication(application)
+        }, function(response) {
+          console.log(response)
+        });
+
+      }
+
 
       /*
        *  Dialog for
