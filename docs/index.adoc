@@ -2,6 +2,7 @@
 Johannes Hiemer, Christian Müller and Tobias Siegl <info@evoila.de>
 v0.1, 2016-01-01
 :toc:
+:imagesdir: assets/images/usage
 :homepage: http://www.evoila.de/cloudfoundry-management-console
 The following document contains the whole documentation for Cloud Foundry Service Broker by evoila GmbH.
 

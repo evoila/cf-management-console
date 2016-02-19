@@ -3,7 +3,6 @@ Tobias Siegl <tsiegl@evoila.de>
 v1.0, 2016-05-05
 :toc:
 :toclevels: 4
-:imagesdir: assets/images/usage
 :homepage: http://www.evoila.de
 
 '''
