@@ -1,1 +1,3 @@
 put -r cfmcHtml docs
+put -r assets docs/cfmcHtml
+put -r snippets docs/cfmcHtml
