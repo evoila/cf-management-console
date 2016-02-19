@@ -66,7 +66,7 @@
 						<div class="app-bindings grey" ng-show="showBindings">
 							<div ng-repeat="binding in app.bindingsDetails" layout="column">
 								<div layout="row" layout-align="center center">
-									<div flex="10" layout="column"><i class="fa fa-times no-focus clickable delete red" ng-click=""></i></div>
+									<div flex="10" layout="column"><i class="fa fa-times no-focus clickable delete red" ng-click="deleteApplication($event, application)"></i></div>
 									<div flex="70" layout="column">{{binding.instance_name}}</div>
 								</div>
 								<div class="spacer-10"></div>
