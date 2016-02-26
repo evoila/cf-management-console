@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir -p cfmc
+cp -r assets cfmc/assets
+cp -r snippets cfmc/snippets
