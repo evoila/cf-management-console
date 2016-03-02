@@ -557,6 +557,7 @@ button.md-icon-button.table-cell-menu-button, .md-button.md-icon-button.table-ce
   color: #444;
   margin-top: 0;
   margin-bottom: 0;
+  overflow: scroll;
 }
 .single-instance .instance-bindings {
   padding:0 16px;
