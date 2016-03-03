@@ -64,6 +64,9 @@ md-grid-tile-footer {
 
     overflow: scroll !important;
 }
+md-grid-tile-footer::-webkit-scrollbar {
+    display: none;
+}
 
 md-grid-tile-footer h3 {
   display: inline;
@@ -561,6 +564,9 @@ button.md-icon-button.table-cell-menu-button, .md-button.md-icon-button.table-ce
   margin-top: 0;
   margin-bottom: 0;
   overflow: scroll;
+}
+.single-instance md-card-content h1.md-title::-webkit-scrollbar {
+    display: none;
 }
 .single-instance .instance-bindings {
   padding:0 16px;
