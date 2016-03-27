@@ -1,5 +1,5 @@
 angular.module('cf-management-console', ['ngMaterial', 'md.data.table', 'controllers', 'directives', 'services', 'routes',
-    'ngMdIcons', 'ngClipboard', 'restangular', 'ngAnimate', 'environment', 'angular-loading-bar', 'duScroll',
+    'ngMdIcons', 'ngClipboard', 'restangular', 'ngAnimate', 'environment', 'angular-loading-bar', 'duScroll', 'customFilters',
   ])
   .config(['ngClipProvider', '$mdThemingProvider', '$mdIconProvider', 'envServiceProvider',
     function(ngClipProvider, $mdThemingProvider, $mdIconProvider, envServiceProvider, esLoggingProvider) {
