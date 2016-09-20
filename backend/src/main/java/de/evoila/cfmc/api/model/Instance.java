@@ -38,6 +38,9 @@ public class Instance {
     @JsonProperty("created_at")
     private String created_at;
     
+    @JsonProperty("uptime")
+    private String uptime;
+    
 	public String getState() {
 		return state;
 	}
@@ -108,6 +111,14 @@ public class Instance {
 
 	public void setCreated_at(String created_at) {
 		this.created_at = created_at;
+	}
+
+	public String getUptime() {
+		return uptime;
+	}
+
+	public void setUptime(String uptime) {
+		this.uptime = uptime;
 	}
     
 }

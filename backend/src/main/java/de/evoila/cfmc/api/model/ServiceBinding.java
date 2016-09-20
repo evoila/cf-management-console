@@ -1,5 +1,6 @@
 package de.evoila.cfmc.api.model;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -37,6 +38,9 @@ public class ServiceBinding {
 	
 	@JsonProperty("service_instance_url")
 	private String serviceInstanceUrl;
+	
+	@JsonProperty("volume_mounts")
+	private List<String> volumeMounts;
 
 	public UUID getAppGuid() {
 		return appGuid;
@@ -108,6 +112,14 @@ public class ServiceBinding {
 
 	public void setServiceInstanceUrl(String serviceInstanceUrl) {
 		this.serviceInstanceUrl = serviceInstanceUrl;
+	}
+
+	public List<String> getVolumeMounts() {
+		return volumeMounts;
+	}
+
+	public void setVolumeMounts(List<String> volumeMounts) {
+		this.volumeMounts = volumeMounts;
 	}
 	
 }

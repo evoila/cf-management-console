@@ -1,8 +1,8 @@
 cf:
-  api: https://api.onevoila.rocks/
-  uaa: https://uaa.onevoila.rocks/
+  api: https://api.cf.onevoila.rocks/
+  uaa: https://uaa.cf.onevoila.rocks/
   client: admin
-  secret: c1oudc0w
+  secret: 0nst4ckC1oudC0w
   
 ---
 spring:
